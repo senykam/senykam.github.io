@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Deterministic Encryption on Outsourced Bits</title>
+    <link>http://outsourcedbits.org/tags/deterministic-encryption/</link>
+    <description>Recent content in Deterministic Encryption on Outsourced Bits</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Mon, 14 Oct 2013 23:34:09 -0300</lastBuildDate>
+    <atom:link href="http://outsourcedbits.org/tags/deterministic-encryption/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>How to Search on Encrypted Data: Deterministic Encryption (Part 2)</title>
+      <link>http://outsourcedbits.org/2013/10/14/how-to-search-on-encrypted-data-deterministic-encryption-part-2</link>
+      <pubDate>Mon, 14 Oct 2013 23:34:09 -0300</pubDate>
+      
+      <guid>http://outsourcedbits.org/2013/10/14/how-to-search-on-encrypted-data-deterministic-encryption-part-2</guid>
+      <description>&lt;p&gt;&lt;em&gt;This is the second part of a series on searching on encrypted data. See parts &lt;a href=&#34;http://outsourcedbits.org/2013/10/06/how-to-search-on-encrypted-data-part-1/&#34;&gt;1&lt;/a&gt;, &lt;a href=&#34;https://outsourcedbits.org/2013/10/30/how-to-search-on-encrypted-data-part-3/&#34;&gt;3&lt;/a&gt;, &lt;a href=&#34;https://outsourcedbits.org/2013/12/20/how-to-search-on-encrypted-data-part-4-oblivious-rams/&#34;&gt;4&lt;/a&gt; and &lt;a href=&#34;https://outsourcedbits.org/2014/08/21/how-to-search-on-encrypted-data-searchable-symmetric-encryption-part-5/&#34;&gt;5&lt;/a&gt;.&lt;/em&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;http://outsourcedbits.org/img/search.jpg&#34; class=&#34;alignright&#34; width=&#34;250&#34;&gt;
+In this post we&#39;ll cover the simplest way to search on encrypted data. This is
+usually the solution people come up with when they first think of the problem of
+encrypted search and, as we&#39;ll see this, this approach has some nice properties
+but also some limitations.&lt;/p&gt;
+
+&lt;p&gt;To make this work we&#39; ll need a special type of encryption scheme called a
+&lt;em&gt;property-preserving encryption&lt;/em&gt; (PPE) scheme.  PPE schemes encrypt
+messages in a way that leaks certain properties of the underlying message.&lt;/p&gt;
+
+&lt;p&gt;There are different types of PPE schemes that each leak different properties.
+The simplest form is &lt;em&gt;deterministic&lt;/em&gt; encryption which
+always encrypts the same message to the same ciphertext &lt;sup class=&#34;footnote-ref&#34; id=&#34;fnref:1&#34;&gt;&lt;a class=&#34;footnote&#34; href=&#34;#fn:1&#34;&gt;1&lt;/a&gt;&lt;/sup&gt;.  The property
+preserved by deterministic encryption is &lt;em&gt;equality&lt;/em&gt; since, given two
+encryptions&lt;/p&gt;
+
+&lt;p&gt;&lt;span  class=&#34;math&#34;&gt;\[
+c_1 = {\sf Enc}_K(m_1) \textrm{ and } c_2 = {\sf Enc}_K(m_2),
+\]&lt;/span&gt;&lt;/p&gt;
+
+&lt;p&gt;one can test if the underlying messages are equal by just checking if &lt;span  class=&#34;math&#34;&gt;\(c_1 =
+c_2\)&lt;/span&gt; &lt;sup class=&#34;footnote-ref&#34; id=&#34;fnref:2&#34;&gt;&lt;a class=&#34;footnote&#34; href=&#34;#fn:2&#34;&gt;2&lt;/a&gt;&lt;/sup&gt;. More complex PPE schemes include &lt;a href=&#34;http://www.cc.gatech.edu/~aboldyre/papers/bclo.pdf&#34;&gt;order-preserving
+encryption&lt;/a&gt; (OPE) and
+&lt;a href=&#34;http://www.cs.utexas.edu/~jrous/documents/191.pdf&#34;&gt;orthogonlity-preserving
+encryption&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;The approach we&#39;ll describe here works with any PPE scheme but is easier to
+explain with deterministic encryption so that&#39;s what we&#39;ll use.  PPE-based
+encrypted search was first proposed in the Database community and later studied
+more formally in the Cryptography community. The first paper to provide a
+cryptographic treatment of this approach was a 2006 paper by Bellare, Boldyreva
+and O&#39; Neill [&lt;a href=&#34;http://eprint.iacr.org/2006/186.pdf&#34;&gt;BBO06&lt;/a&gt;].&lt;/p&gt;
+
+&lt;p&gt;The authors formally study the notion of deterministic encryption and show how
+to apply it to the problem of encrypted search.  While Bellare et al. were
+motivated in part by searching on encrypted data, the notion of deterministic
+encryption is interesting to cryptographers in its own right and the formal
+study of deterministic encryption that was initiated by this paper has led to
+other applications and deepened our understanding of encryption.&lt;/p&gt;
+
+&lt;p&gt;As mentioned above, another&lt;br&gt;
+important type of PPE is OPE which was introduced by Agrawal, Kiernan,
+Srikant and Xu in [&lt;a href=&#34;http://rsrikant.com/papers/sigmod04.pdf&#34;&gt;AKSX04&lt;/a&gt;]
+and studied more formally by Boldyreva, Chenette, Lee and O&#39; Neill
+[&lt;a href=&#34;http://www.cc.gatech.edu/~aboldyre/papers/bclo.pdf&#34;&gt;BCLO09&lt;/a&gt;] and
+[&lt;a href=&#34;http://www.cc.gatech.edu/~aboldyre/papers/operev.pdf&#34;&gt;BCO11&lt;/a&gt;].&lt;/p&gt;
+
+&lt;h2 id=&#34;the-highlevel-idea&#34;&gt;The High-Level Idea&lt;/h2&gt;
+
+&lt;p&gt;Suppose we  have both a deterministic encryption scheme &lt;span  class=&#34;math&#34;&gt;\({\sf Enc}^D\)&lt;/span&gt; and a standard
+&lt;a href=&#34;http://en.wikipedia.org/wiki/Ciphertext_indistinguishability&#34;&gt;CPA-secure&lt;/a&gt;
+(i.e., randomized) encryption scheme &lt;span  class=&#34;math&#34;&gt;\({\sf Enc}^R\)&lt;/span&gt;.&lt;/p&gt;
+
+&lt;p&gt;We can then create an encrypted database &lt;span  class=&#34;math&#34;&gt;\({\sf EDB}\)&lt;/span&gt; as follows. For each document
+&lt;span  class=&#34;math&#34;&gt;\(D_i\)&lt;/span&gt; in the collection &lt;span  class=&#34;math&#34;&gt;\((D_1, \dots, D_n)\)&lt;/span&gt;, the client computes deterministic
+encryptions of each keyword of &lt;span  class=&#34;math&#34;&gt;\(D_i\)&lt;/span&gt;. Assuming each document &lt;span  class=&#34;math&#34;&gt;\(D_i\)&lt;/span&gt; has &lt;span  class=&#34;math&#34;&gt;\(m\)&lt;/span&gt;
+keywords &lt;span  class=&#34;math&#34;&gt;\((w_{i,1}, \dots, w_{i,m})\)&lt;/span&gt;, the {\sf EDB} then simply consists of &lt;span  class=&#34;math&#34;&gt;\(n\)&lt;/span&gt; tuples&lt;/p&gt;
+
+&lt;p&gt;&lt;span  class=&#34;math&#34;&gt;\[
+r_i = (d_{i,1}, \dots, d_{i,m}, {\sf ptr}(c_i)), 
+\]&lt;/span&gt;&lt;/p&gt;
+
+&lt;p&gt;where &lt;span  class=&#34;math&#34;&gt;\(d_{i,j} = {\sf Enc}^D_{K_2}(w_{i,j})\)&lt;/span&gt;, &lt;span  class=&#34;math&#34;&gt;\(c_i = {\sf Enc}^R_{K_1}(D_i)\)&lt;/span&gt; and &lt;span  class=&#34;math&#34;&gt;\({\sf ptr}(c_i)\)&lt;/span&gt; is a
+pointer to ciphertext &lt;span  class=&#34;math&#34;&gt;\(c_i\)&lt;/span&gt;.&lt;/p&gt;
+
+&lt;p&gt;Recall that in our setting, the client sends the encrypted database&lt;/p&gt;
+
+&lt;p&gt;&lt;span  class=&#34;math&#34;&gt;\[
+{\sf EDB} = (r_1, \dots, r_n)
+\]&lt;/span&gt;&lt;/p&gt;
+
+&lt;p&gt;to the server along with the randomized encryptions of the
+documents &lt;span  class=&#34;math&#34;&gt;\((c_1, \dots, c_n)\)&lt;/span&gt;.&lt;/p&gt;
+
+&lt;p&gt;To search for keyword &lt;span  class=&#34;math&#34;&gt;\(w\)&lt;/span&gt;, the client just sends a
+deterministic encryption of &lt;span  class=&#34;math&#34;&gt;\(w\)&lt;/span&gt; to the server.  This encryption of the keyword,
+&lt;span  class=&#34;math&#34;&gt;\(d_w = {\sf Enc}^D_{K_1}(w)\)&lt;/span&gt;, will serve as the token.  Now all the server has
+to do is compare &lt;span  class=&#34;math&#34;&gt;\(d_w\)&lt;/span&gt; to all the deterministic encryptions in &lt;span  class=&#34;math&#34;&gt;\({\sf EDB}\)&lt;/span&gt;. If &lt;span  class=&#34;math&#34;&gt;\(d_w\)&lt;/span&gt;
+is equal to any of them, the server follows the corresponding pointer and
+returns the encrypted document. In other words, for all &lt;span  class=&#34;math&#34;&gt;\(1 \leq i \leq n\)&lt;/span&gt; and &lt;span  class=&#34;math&#34;&gt;\(1
+\leq j \leq m\)&lt;/span&gt;, the server tests if &lt;span  class=&#34;math&#34;&gt;\(d_w = d_{i,j}\)&lt;/span&gt; and if they are equal it
+follows &lt;span  class=&#34;math&#34;&gt;\({\sf ptr}(c_i)\)&lt;/span&gt; and returns &lt;span  class=&#34;math&#34;&gt;\(c_i\)&lt;/span&gt;.&lt;/p&gt;
+
+&lt;p&gt;This clearly works but there is a limitation in the way the
+scheme is described: the search time for the server is &lt;span  class=&#34;math&#34;&gt;\(O(nm)\)&lt;/span&gt;, i.e., linear in
+the number of documents (let&#39;s just assume &lt;span  class=&#34;math&#34;&gt;\(m\)&lt;/span&gt; is very small here). Obviously,
+linear-time search is too slow for practice but in reality this is not a problem
+because we can just store the deterministic encryptions of
+&lt;span  class=&#34;math&#34;&gt;\({\sf EDB}\)&lt;/span&gt; in data structures that support fast search (e.g., a binary search
+tree) so that search can be performed very quickly (e.g., in time &lt;span  class=&#34;math&#34;&gt;\(O(\log(n))\)&lt;/span&gt;.&lt;/p&gt;
+
+&lt;h2 id=&#34;is-this-secure&#34;&gt;Is This Secure?&lt;/h2&gt;
+
+&lt;p&gt;As we&#39;ve seen, PPE-based solutions can achieve fast (i.e., sub-linear)
+server-side encrypted search.  They do, however,  have some limitations with
+respect to security as discussed and formalized by Bellare et al.&lt;/p&gt;
+
+&lt;p&gt;The first problem is that the encrypted database &lt;span  class=&#34;math&#34;&gt;\({\sf EDB}\)&lt;/span&gt; leaks quite a bit of
+information to the server about the data collection---even before the client
+has performed any searches. In particular, recall that the keywords in &lt;span  class=&#34;math&#34;&gt;\({\sf EDB}\)&lt;/span&gt; are
+encrypted using a deterministic encryption scheme so the same keyword &lt;span  class=&#34;math&#34;&gt;\(w\)&lt;/span&gt; will
+always encrypt to the same ciphertext.&lt;/p&gt;
+
+&lt;p&gt;This means that if the server sees two or
+more equal ciphertexts in &lt;span  class=&#34;math&#34;&gt;\({\sf EDB}\)&lt;/span&gt; it knows that the corresponding encrypted
+documents contain a keyword in common. In addition, the server learns the
+frequency with which keywords appear which makes the encrypted database vulnerable to
+&lt;a href=&#34;http://en.wikipedia.org/wiki/Frequency_analysis&#34;&gt;frequency analysis&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;Another issue is that since tokens are deterministic encryptions of the
+search terms, the server will always know whether the client is
+repeating a search a not.&lt;/p&gt;
+
+&lt;p&gt;A third issue occurs when the deterministic encryption scheme (or any form of
+PPE scheme) is public-key. In this case, all the deterministic encryptions (both
+in &lt;span  class=&#34;math&#34;&gt;\({\sf EDB}\)&lt;/span&gt; and in the tokens) are encrypted under the client&#39;s public key which
+is, obviously, public and available to the server. The server can then mount a
+dictionary attack on the encrypted database by encrypting a list of possible
+keywords and comparing them to the ones found in &lt;span  class=&#34;math&#34;&gt;\({\sf EDB}\)&lt;/span&gt; and in the tokens. If it
+gets a match then it knows the keyword.&lt;/p&gt;
+
+&lt;p&gt;This attack clearly shows that public-key PPE-based solutions should probably
+not be used for &amp;quot;normal&amp;quot; data (e.g., text, emails, PII etc.). But does it mean
+we can&#39;t use it all?  Not quite. As Bellare et al. observe in their paper, such a
+solution can be used when the data has high min-entropy, which is a way of
+saying that the data looks random to the server.&lt;/p&gt;
+
+&lt;p&gt;The problem of course is that it&#39;s not clear when this applies in practice.
+Also, note that even if the keywords do have high min-entropy, the other two
+issues still remain.&lt;/p&gt;
+
+&lt;h2 id=&#34;conclusions&#34;&gt;Conclusions&lt;/h2&gt;
+
+&lt;p&gt;So we&#39;ve seen one approach to searching on encrypted data based on
+property-preserving encryption. It results in a solution that supports fast
+search on encrypted data but, unfortunately, leaks quite a bit of information to
+the server. In the next post we&#39;ll go over another solution that provides a
+different tradeoff: it leaks less information to the server but achieves slower
+search time.&lt;/p&gt;
+&lt;div class=&#34;footnotes&#34;&gt;
+
+&lt;hr&gt;
+
+&lt;ol&gt;
+&lt;li id=&#34;fn:1&#34;&gt;In general it is a terrible idea to encrypt with deterministic encryption since we&#39;ve known since [&lt;a href=&#34;http://theory.lcs.mit.edu/~cis/pubs/shafi/1984-jcss.pdf}{this}&#34;&gt;GM84&lt;/a&gt;] that any &lt;a href=&#34;http://en.wikipedia.org/wiki/Semantic_security&#34;&gt;secure&lt;/a&gt; encryption scheme has to be randomized. The point here, however, is that we may be willing to use weaker primitives in order to design more functional encryption schemes.
+ &lt;a class=&#34;footnote-return&#34; href=&#34;#fnref:1&#34;&gt;↩&lt;/a&gt;&lt;/li&gt;
+&lt;li id=&#34;fn:2&#34;&gt;Technically, we do not need a deterministic &lt;em&gt;encryption&lt;/em&gt; scheme since we&#39;ll never need to decrypt so (in the symmetric setting) one could use a &lt;a href=&#34;http://en.wikipedia.org/wiki/Pseudorandom_function_family&#34;&gt;pseudo-random function&lt;/a&gt;.
+ &lt;a class=&#34;footnote-return&#34; href=&#34;#fnref:2&#34;&gt;↩&lt;/a&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/div&gt;
+</description>
+    </item>
+    
+  </channel>
+</rss>

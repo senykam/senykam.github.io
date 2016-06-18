@@ -1,0 +1,950 @@
+<!DOCTYPE html>
+<html lang="en-us">
+<head>
+    <title>Are Compliance and Privacy Always at Odds? &middot; Outsourced Bits</title>
+    <meta name="generator" content="Hugo 0.16" />
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="author" content="Seny Kamara">
+    
+      <meta name="description" content="">
+    
+    
+    <link rel="icon" href="http://outsourcedbits.org/favicon.ico">
+    <link rel="apple-touch-icon" href="http://outsourcedbits.org/apple-touch-icon.png" />
+    <link rel="stylesheet" href="http://outsourcedbits.org/css/style.css">
+    <link rel="stylesheet" href="http://outsourcedbits.org/css/font-awesome.min.css">
+    <link rel="stylesheet" href="http://outsourcedbits.org/css/monokai.css">
+    <link rel="stylesheet" href="http://outsourcedbits.org/fancybox/jquery.fancybox.css">
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400italic,400,600' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Source+Code+Pro' rel='stylesheet' type='text/css'>
+    <meta property="og:title" content="Are Compliance and Privacy Always at Odds?" />
+<meta property="og:description" content="Chris Soghoian points to an interesting article in the Wall Street Journal. It describes mounting pressure on the NSA to re-design its phone-data program---the program under which it compels telecommunications companies (telcos) like Verizon to turn over their phone record data. In the article, Timothy Edgar, a former privacy lawyer who served in the Bush and Obama administrations is quoted as saying: Privacy technology under development would allow for anonymous searches of databases, keeping data out of government hands but also preventing phone companies from learning the purpose of NSA searches." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://outsourcedbits.org/2013/07/23/are-compliance-and-privacy-always-at-odds" />
+
+
+<meta property="og:updated_time" content="2013-07-23T22:23:59-03:00"/>
+
+
+
+
+
+
+
+
+
+
+    
+    
+<meta itemprop="name" content="Are Compliance and Privacy Always at Odds?">
+<meta itemprop="description" content="Chris Soghoian points to an interesting article in the Wall Street Journal. It describes mounting pressure on the NSA to re-design its phone-data program---the program under which it compels telecommunications companies (telcos) like Verizon to turn over their phone record data. In the article, Timothy Edgar, a former privacy lawyer who served in the Bush and Obama administrations is quoted as saying: Privacy technology under development would allow for anonymous searches of databases, keeping data out of government hands but also preventing phone companies from learning the purpose of NSA searches.">
+
+
+<meta itemprop="dateModified" content="2013-07-23T22:23:59-03:00" />
+<meta itemprop="wordCount" content="1983">
+
+
+
+<meta itemprop="keywords" content="applied-crypto,applied-cryptography,cloud-computing,encrypted-search,graph-encryption,inference-attacks,learning,misc,policy,surveillance,cryptdb,deterministic-encryption,dte,fhe,fisa,functional-encryption,learning,machine-learning,metadata,mpc,msr,nsa,ope,oram,ot,pets,pir,ppe,sat,searchable-encryption,section-215,sse,ste," />
+
+    
+
+  <meta name="twitter:card" content="summary"/>
+
+
+
+<meta name="twitter:title" content="Are Compliance and Privacy Always at Odds?"/>
+<meta name="twitter:description" content="Chris Soghoian points to an interesting article in the Wall Street Journal. It describes mounting pressure on the NSA to re-design its phone-data program---the program under which it compels telecommunications companies (telcos) like Verizon to turn over their phone record data. In the article, Timothy Edgar, a former privacy lawyer who served in the Bush and Obama administrations is quoted as saying: Privacy technology under development would allow for anonymous searches of databases, keeping data out of government hands but also preventing phone companies from learning the purpose of NSA searches."/>
+<meta name="twitter:site" content="@senykam"/>
+
+
+    
+
+    
+</head>
+<body>
+<div class="container">
+
+
+<div id="container">
+	<header id="header">
+  <div id="header-main" class="header-inner">
+    <div class="outer">
+      <a href="http://outsourcedbits.org/" id="logo"><span class="site-title">Outsourced Bits</span></a>
+      <nav id="main-nav">
+          
+
+          
+
+          
+      </nav>
+        <nav id="sub-nav">
+          <div class="profile" id="profile-nav">
+            <a id="profile-anchor" href="javascript:;"><img class="avatar" src="http://outsourcedbits.org//img/sk.jpg"><i class="fa fa-caret-down"></i></a>
+          </div>
+        </nav>
+        <div id="search-form-wrap">
+          <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form">
+              <input type="search" name="q" results="0" class="search-form-input" placeholder="Search">
+              <button type="submit" class="search-form-submit">
+              </button>
+              <input type="hidden" name="q" value="site:http://outsourcedbits.org/">
+         </form>
+        </div>
+    </div>
+  </div>
+  <div id="main-nav-mobile" class="header-sub header-inner">
+    <table class="menu outer">
+      <tbody>
+          <tr>
+          
+
+          
+
+          
+          <td>
+          <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form">
+          <input type="search" name="q" results="0" class="search-form-input" placeholder="Search">
+          <input type="hidden" name="q" value="site:http://outsourcedbits.org/">
+          </form>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+</header>
+
+   	
+   	<div class="outer">
+   		
+	    <aside id="profile">
+  <div class="inner profile-inner">
+    <div class="base-info profile-block">
+      <img id="avatar" src="http://outsourcedbits.org/img/sk.jpg" width="200" class="avatar">
+      
+      
+      <p class="mybio">My name is Seny Kamara. I am an Associate Professor of <a href="http://cs.brown.edu">Computer Science</a> at <a href="http://brown.edu">Brown</a>. Prior to that, I was a researcher at Microsoft Research. <br><br> My work is focused on designing and studying cryptographic algorithms,
+protocols and systems; often motivated by privacy issues in cloud computing,
+surveillance and databases. <br><br> This is a blog about my research and interests. For more about my work see my
+<a href="http://cs.brown.edu/~seny">homepage</a>.</p>
+      <span id="location"><i class="fa fa-map-marker"></i>Rio</span>
+      
+    </div>
+    
+    <div class="contact-info profile-block">
+      <table class="contact-list">
+        <tr>
+          
+<td><a href="//github.com/senykam" target="_blank" title="GitHub"><i class="fa fa-github"></i></a></td>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<td><a href="//twitter.com/senykam" target="_blank" title="Twitter"><i class="fa fa-twitter"></i></a></td>
+
+
+          <td><a href="" target="_blank" title="RSS"><i class="fa fa-rss"></i></a></td>
+        </tr>
+      </table>
+    </div>
+  </div>
+</aside>
+
+	    
+
+	    
+<section id="main">
+
+    <article id="page-undefined" class="article article-type-page" itemscope="" itemprop="blogPost">
+        <div class="article-inner">
+            
+
+            <header class="article-header">
+    <a href="http://outsourcedbits.org/2013/07/23/are-compliance-and-privacy-always-at-odds">
+    <h1 class="article-title" itemprop="name">
+        Are Compliance and Privacy Always at Odds?
+    </h1>
+    </a>
+    <div class="article-meta">
+        <div class="article-date">
+            <i class="fa fa-calendar"></i>
+            <time datetime="2013-07-23 22:23:59 -0300 STD" itemprop="datePublished">2013-07-23</time>
+            &middot;
+            1983
+            words
+            &middot;
+            10
+            minute read
+        </div>
+
+        
+        
+            
+            
+            <div class="article-category">
+                <i class="fa fa-folder"></i>
+                
+                <a class="article-category-link" href="http://outsourcedbits.org/categories/surveillance">Surveillance</a>
+                &middot;
+                
+                <a class="article-category-link" href="http://outsourcedbits.org/categories/encrypted-search">Encrypted search</a>
+                
+                
+            </div>
+            
+        
+
+        
+            
+            
+            <div class="article-category">
+                <i class="fa fa-tags"></i>
+                
+                <a class="article-category-link" href="http://outsourcedbits.org/tags/mpc">MPC</a>
+                &middot;
+                
+                <a class="article-category-link" href="http://outsourcedbits.org/tags/ot">OT</a>
+                &middot;
+                
+                <a class="article-category-link" href="http://outsourcedbits.org/tags/pir">PIR</a>
+                &middot;
+                
+                <a class="article-category-link" href="http://outsourcedbits.org/tags/sse">SSE</a>
+                
+                
+            </div>
+            
+        
+    </div>
+</header>
+
+            <div class="article-entry" itemprop="articleBody">
+                <p><img src="/img/obey.jpg" class="alignright" width="250">
+Chris Soghoian
+<a href="https://twitter.com/csoghoian/status/358613839094362112">points</a> to an
+interesting
+<a href="http://http//online.wsj.com/article/SB10001424127887324448104578615881436052760.html">article</a>
+in the Wall Street Journal. It describes mounting pressure on the NSA to
+re-design its phone-data program---the program under which it compels
+telecommunications companies (telcos) like Verizon to turn over their phone
+record data.</p>
+
+<p>In the article, Timothy Edgar, a former privacy lawyer who served in the Bush
+and Obama administrations is quoted as saying:</p>
+
+<blockquote>
+<p>Privacy technology under development would allow for anonymous searches of
+databases, keeping data out of government hands but also preventing phone
+companies from learning the purpose of NSA searches. Overhauling the
+surveillance program would provide a reason to speed up the technology's
+deployment.</p>
+</blockquote>
+
+<p>So this motivates the following interesting technical question:
+<em>how would one design such a privacy-preserving phone-data program exactly?</em></p>
+
+<p>The first thing we need is that the telcos keep their data, as opposed to
+sending it all to the NSA. The issue with such an approach, of course, is that
+the NSA would have to disclose its queries to the telco in order to retrieve
+any information---which for obvious reasons is not going to happen.</p>
+
+<p>So what we need is a mechanism with which the telcos can keep their data and
+the NSA can access it without disclosing its queries. This might sound
+impossible, but it turns out we've known how to do this (in theory at least)
+for over <em>15</em> years!</p>
+
+<h2 id="private-information-retrieval">Private Information Retrieval</h2>
+
+<p>One answer to this problem could be to use something called <a href="http://en.wikipedia.org/wiki/Private_information_retrieval">private
+information
+retrieval</a> (PIR).
+With PIR, a client can retrieve information from a server <em>without the server
+learning anything about which item is being retrieved</em>.  Standard PIR protocols
+only allow the client to retrieve information by memory location but there are
+more sophisticated variants that also support retrieval based on
+<a href="http://eprint.iacr.org/1998/003">keywords</a>.</p>
+
+<p>PIR was first introduced in 1995 in a
+<a href="http://people.csail.mit.edu/madhu/papers/1995/pir-journ.pdf">paper</a> by Chor,
+Kushilevitz, Goldreich and Sudan. Initially, PIR only worked if the data could
+be stored on two (or more) servers that could not collude. In a breakthrough
+paper, Kushilevitz and Ostrovsky showed in 1997 that PIR could be achieved even
+with a single server.  Since then, there has been a lot of work and many
+advances on PIR and, recently, Ian Goldberg from the University of Waterloo and
+his students have been trying to make PIR practical (improving both efficiency
+and functionality). If you are interested in this topic (especially in the
+practical aspects) I highly recommend the thesis of
+<a href="http://uwspace.uwaterloo.ca/bitstream/10012/6142/1/Olumofin_Femi.pdf">Olumofin</a>.</p>
+
+<p>So a simple idea to solve our problem is to have the telco keep its data and to
+have the NSA query it through a PIR protocol. While this might seem like a good
+solution, there are two important problems.</p>
+
+<p>The first is that while PIR will protect the query of the NSA (i.e., the telco will not learn anything about the query) it will not necessarily protect the telco's dataset from the NSA; that is, the NSA could learn information about individuals that are not included in its query.</p>
+
+<p>The second problem is that the telco has no way of knowing if the NSA' s query is legitimate. What if the NSA keeps submitting queries indiscriminately and eventually just learns the entire database? How does the telco know whether a particular query is even legal?</p>
+
+<p>Fortunately, both problems can be addressed!</p>
+
+<h2 id="oblivious-transfer">Oblivious Transfer</h2>
+
+<p>To handle the first problem, we need a stronger form of PIR called <a href="http://en.wikipedia.org/wiki/Oblivious_transfer">oblivious
+transfer</a> (OT). With an OT
+protocol, a client can select an item from a server's dataset while maintaining
+the following guarantees: (1) the server learns
+nothing about the client's query; and (2) the
+client learns nothing about the items it does not query. So unlike PIR, OT
+protects both parties; which is why it is sometimes called symmetric PIR.</p>
+
+<p>Like PIR, standard OT protocols only allow clients to retrieve items by their
+location in memory so, in practice, we would prefer to use a keyword-based OT;
+that is, an OT protocol where items can be labeled with keywords and where the
+clients can retrieve them based on search terms. Fortunately, we already know
+how to design such protocols. The first keyword OT is due to Ogata and Kurosawa
+(see this <a href="http://seculab.cis.ibaraki.ac.jp/~kurosawa/2004/OKS.pdf">paper</a>) but
+their scheme does not scale very well (each query would require the NSA to do
+work that is linear in the size of the dataset). A more efficient approach is
+due to Freedman, Ishai, Pinkas and Reingold and is described in this
+<a href="https://www.cs.princeton.edu/~mfreed/docs/FIPR05-ks.pdf">paper</a>.</p>
+
+<h2 id="keyword-ot">Keyword OT</h2>
+
+<p>The high-level idea of Freedman et al.'s keyword OT is as follows. As before,
+the server is the telco and the client is the NSA. Suppose the telco's dataset
+consists of <span  class="math">\(n\)</span> pairs <span  class="math">\((w_1, d_1), \dots, (w_n, d_n)\)</span>, where <span  class="math">\(w_i\)</span> is a keyword
+and <span  class="math">\(d_i\)</span> is some data associated to <span  class="math">\(w_i\)</span>. In practice, the keywords could be
+names and the data could be phone, address, etc. The telco starts by encrypting
+this dataset by replacing each pair <span  class="math">\((w_i, d_i)\)</span> by a label/ciphertext pair
+<span  class="math">\((\ell_i, d_i \oplus p_i)\)</span>, where the label <span  class="math">\(\ell_i\)</span> and the pad <span  class="math">\(p_i\)</span> are
+(pseudo-)random strings generated from <span  class="math">\(w_i\)</span> using a pseudo-random function
+with a secret key <span  class="math">\(K\)</span>. More formally, we would write that for all <span  class="math">\(i\)</span>,</p>
+
+<p><span  class="math">\[
+F_K(w_i) = (\ell_i, p_i),
+\]</span></p>
+
+<p>where <span  class="math">\(F\)</span> is the PRF. A PRF is sort of like a keyed
+hash. <sup class="footnote-ref" id="fnref:1"><a class="footnote" href="#fn:1">1</a></sup> The main property of PRFs is that if we evaluate them with a random
+key <span  class="math">\(K\)</span> on any input, they output a random looking
+string.</p>
+
+<p>Note that this new encrypted dataset reveals no information about the real
+dataset since the <span  class="math">\(\ell_i\)</span> values are pseudo-random
+(and therefore effectively independent of the
+<span  class="math">\(w_i\)</span>'s) and because the ciphertexts <span  class="math">\(d_i\oplus
+p_i\)</span> are effectively one-time pad (OTP) encryptions of the
+<span  class="math">\(d_i\)</span>'s. <sup class="footnote-ref" id="fnref:2"><a class="footnote" href="#fn:2">2</a></sup> The telco now sends this encrypted
+dataset to the NSA who stores it. Remember: it reveals no information
+whatsoever about the real dataset so this is OK!</p>
+
+<p>Now suppose the NSA needs to lookup information related to some keyword <span  class="math">\(w\)</span> and
+remember that the encrypted dataset it holds consists of labels <span  class="math">\(\ell_i\)</span> and
+ciphertexts <span  class="math">\(d_i \oplus p_i\)</span>. To extract the information it needs from the
+encrypted dataset, it therefore needs to figure out: (1) the label for keyword
+<span  class="math">\(w\)</span> (so it can lookup the appropriate OTP ciphertext); and (2) the pad <span  class="math">\(p_i\)</span>
+used in the associated ciphertext.</p>
+
+<p>Of course the NSA cannot do this on its own because it does not know the
+telco's secret key <span  class="math">\(K\)</span> for the PRF used to generate these items. But we have a
+problem. If the NSA sends its keyword w to the telco so that the latter
+computes and returns <span  class="math">\(F_K(w)\)</span>, the telco will learn the keyword. And if the
+telco sends its key <span  class="math">\(K\)</span> to the NSA so that it computes <span  class="math">\(F_K(w)\)</span> on its own, the
+NSA will be able to decrypt the entire dataset.</p>
+
+<p>The solution here is to use another amazing cryptographic technology called
+<a href="http://en.wikipedia.org/wiki/Secure_multi-party_computation#Two-party_computation">secure two-party
+computation</a>
+(2PC). I won't try to explain how 2PC works but if you are interested a good
+place to start is the <a href="http://mpclounge.au.dk/">MPC Lounge</a>. The important
+thing to know about 2PC is that we can use it to solve our problem. In other
+words, the telco and the NSA can execute a 2PC protocol that will result in the
+NSA learning <span  class="math">\(F_K(w)\)</span> and therefore the label and the pad for <span  class="math">\(w\)</span>, without it
+learning anything about the telco's key and without the telco learning anything
+about <span  class="math">\(w\)</span> <sup class="footnote-ref" id="fnref:3"><a class="footnote" href="#fn:3">3</a></sup>.</p>
+
+<h2 id="authorized-queries">Authorized Queries</h2>
+
+<p>Now on to the second problem: how does the telco know if the NSA' s query is
+legitimate? To address this we first need to incorporate an extra party into
+our model that has the power to decide if an NSA query is legitimate or not. In
+practice, this would be the <a href="http://en.wikipedia.org/wiki/United_States_Foreign_Intelligence_Surveillance_Court">FISA
+court</a>
+<sup class="footnote-ref" id="fnref:4"><a class="footnote" href="#fn:4">4</a></sup> and we' ll assume this court can digitally sign, i.e., it has a secret
+signing key and a public verification key that is known to the telco.</p>
+
+<p>Now suppose the NSA wants to retrieve information about a user Alice from the
+telco. It first sends its query to the court. If the court approves the query,
+it signs it and returns the signature to the NSA. At this point, we only need
+to make a small change to the protocol described above. Instead of executing a
+2PC that evaluates the PRF so as to generate a label and pad for the NSA's
+query; the parties will execute a 2PC that first verifies the court's signature
+and then (if the signature checks out) evaluates the PRF (i.e., generates the
+label and pad for the keyword). The properties of the 2PC will hide the
+signature and the keyword from the telco, and the secret key
+<span  class="math">\(K\)</span> from the NSA. <sup class="footnote-ref" id="fnref:5"><a class="footnote" href="#fn:5">5</a></sup></p>
+
+<h2 id="is-this-really-possible">Is this really possible?</h2>
+
+<p>The design described above is possible in theory. But of course the interesting
+question is whether something like this could be used in practice.</p>
+
+<p>I don't really know how large telco datasets are but I would guess on the order
+of hundreds of millions of users. Encrypting such a dataset and sending it to
+the NSA would be expensive but definitely possible as the encryption process
+here would consist of relatively cheap operations like PRF evaluations and
+XORs. The query stage, however would be very inefficient due to the execution
+of the 2PC protocol. But if we look at things carefully, the bottlenecks would
+likely be (1) the verification of the signature (due to the complexity of
+signature verification); and (2) the generation of the pads (since they have to
+be as long as the data they will be XORed with).</p>
+
+<p>Fortunately there are a few things we can do to mitigate these problems.
+Instead of using a signature scheme, we could use a message authentication code
+(MAC). This would require the court to share a secret key with the telco but
+this doesn't seem like such a severe requirement. MACs are much simpler
+computationally than signatures so the 2PC verification would be much faster
+<sup class="footnote-ref" id="fnref:6"><a class="footnote" href="#fn:6">6</a></sup>.</p>
+
+<p>With respect to the length of the pads, we could use the PRF to generate a
+short string instead (say 128 bits long) and use
+that as a seed to a pseudo-random generator to generate a larger pad. This
+would change how the telco and NSA encrypt and decrypt items of the dataset but
+it is a minor change that would not effect the efficiency of encryption and
+decryption much.</p>
+
+<p>With these changes, the 2PC would only have to compute two PRF evaluations and
+one equality check which is definitely within practical reach.</p>
+
+<p><strong>Update:</strong> For a high-level description of the protocol I designed in this
+post see
+<a href="http://boingboing.net/2014/03/01/trustycon-how-to-redesign-nsa.html">this</a>
+great talk by Ed Felten.</p>
+
+<p><em>Thanks to Matt Green and Payman Mohassel for comments on a draft of this post
+and to Chris Soghoian for motivating me to think about this problem.</em></p>
+<div class="footnotes">
+
+<hr>
+
+<ol>
+<li id="fn:1">PRFs are like keyed hash functions only in idealized models like the random oracle model.
+ <a class="footnote-return" href="#fnref:1">↩</a></li>
+<li id="fn:2">Technically, since the labels and pads are pseudo-random (as opposed to random), <span  class="math">\(\ell_i\)</span> is not independent of <span  class="math">\(w_i\)</span> and <span  class="math">\(d_i \oplus p_i\)</span> is not a one-time pad. More precisely, <span  class="math">\(\ell_i\)</span> and <span  class="math">\(d_i \oplus p_i\)</span> reveal no partial information about <span  class="math">\(w_i\)</span> and <span  class="math">\(d_i\)</span> to a computationally-bounded adversary.
+ <a class="footnote-return" href="#fnref:2">↩</a></li>
+<li id="fn:3">Protocols that evaluate PRFs in this manner are usually called oblivious PRF (OPRF) protocols. The 2PC-based OPRF protocol is the simplest to understand conceptually but we know of more efficient OPRF protocols not based on 2PC (e.g., the Freedman et al. paper describes one such construction).
+ <a class="footnote-return" href="#fnref:3">↩</a></li>
+<li id="fn:4">There is debate as to whether the FISA court exercises proper oversight over the NSA or not (for example see <a href="http://www.nytimes.com/2013/07/26/us/politics/robertss-picks-reshaping-secret-surveillance-court.html?_r=0">this article</a> from the New York Times), but for the purpose of this exercise we'll just assume that it does.
+ <a class="footnote-return" href="#fnref:4">↩</a></li>
+<li id="fn:5">The reason we also need to hide the signature from the telco is that signatures can leak information about their message.
+ <a class="footnote-return" href="#fnref:5">↩</a></li>
+<li id="fn:6">Here we also assume the data is hashed with a collision-resistant hash function before being MACed.
+ <a class="footnote-return" href="#fnref:6">↩</a></li>
+</ol>
+</div>
+
+            </div>
+            <footer class="article-footer">
+    <a data-url="http://outsourcedbits.org/2013/07/23/are-compliance-and-privacy-always-at-odds" data-id="8f9e668ef1950079cf69fae695cc11e4" class="article-share-link">
+        Share
+    </a>
+    
+    <a href="http://outsourcedbits.org/2013/07/23/are-compliance-and-privacy-always-at-odds/#disqus_thread" class="article-comment-link">
+        Comments
+    </a>
+    
+</footer>
+
+        </div>
+
+        
+<nav id="article-nav">
+    
+    <a href="http://outsourcedbits.org/2012/09/29/applying-fully-homomorphic-encryption-part-2" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">
+          Older
+      </strong>
+      <div class="article-nav-title">Applying Fully Homomorphic Encryption (Part 2)</div>
+    </a>
+    
+
+    
+    <a href="http://outsourcedbits.org/2013/07/28/a-note-on-crypto-design-vs-crypto-engineering" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">
+          Newer
+      </strong>
+      <div class="article-nav-title">A Note on Crypto Design vs Crypto Engineering</div>
+    </a>
+    
+</nav>
+
+
+    </article>
+
+    
+    <section id="comments">
+        <div id="disqus_thread">
+            <div id="disqus_thread"></div>
+<script type="text/javascript">
+    var disqus_shortname = 'outsourcedbits';
+    var disqus_identifier = 'http:\/\/outsourcedbits.org\/2013\/07\/23\/are-compliance-and-privacy-always-at-odds';
+    var disqus_title = 'Are Compliance and Privacy Always at Odds?';
+    var disqus_url = 'http:\/\/outsourcedbits.org\/2013\/07\/23\/are-compliance-and-privacy-always-at-odds';
+
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+        </div>
+    </section>
+    
+</section>
+
+
+	    
+	    <aside id="sidebar">
+    
+
+    
+
+
+<div class="widget-wrap">
+    <h3 class="widget-title">Categories</h3>
+    <div class="widget">
+        <ul class="category-list">
+            
+            <li class="category-list-item">
+                <a class="category-list-link" href="http://outsourcedbits.org/categories/applied-crypto">
+                    applied-crypto
+                </a>
+                <span class="category-list-count">3</span>
+            </li>
+            
+            <li class="category-list-item">
+                <a class="category-list-link" href="http://outsourcedbits.org/categories/applied-cryptography">
+                    applied-cryptography
+                </a>
+                <span class="category-list-count">1</span>
+            </li>
+            
+            <li class="category-list-item">
+                <a class="category-list-link" href="http://outsourcedbits.org/categories/cloud-computing">
+                    cloud-computing
+                </a>
+                <span class="category-list-count">2</span>
+            </li>
+            
+            <li class="category-list-item">
+                <a class="category-list-link" href="http://outsourcedbits.org/categories/encrypted-search">
+                    encrypted-search
+                </a>
+                <span class="category-list-count">11</span>
+            </li>
+            
+            <li class="category-list-item">
+                <a class="category-list-link" href="http://outsourcedbits.org/categories/graph-encryption">
+                    graph-encryption
+                </a>
+                <span class="category-list-count">1</span>
+            </li>
+            
+            <li class="category-list-item">
+                <a class="category-list-link" href="http://outsourcedbits.org/categories/inference-attacks">
+                    inference-attacks
+                </a>
+                <span class="category-list-count">1</span>
+            </li>
+            
+            <li class="category-list-item">
+                <a class="category-list-link" href="http://outsourcedbits.org/categories/learning">
+                    learning
+                </a>
+                <span class="category-list-count">1</span>
+            </li>
+            
+            <li class="category-list-item">
+                <a class="category-list-link" href="http://outsourcedbits.org/categories/misc">
+                    misc
+                </a>
+                <span class="category-list-count">1</span>
+            </li>
+            
+            <li class="category-list-item">
+                <a class="category-list-link" href="http://outsourcedbits.org/categories/policy">
+                    policy
+                </a>
+                <span class="category-list-count">2</span>
+            </li>
+            
+            <li class="category-list-item">
+                <a class="category-list-link" href="http://outsourcedbits.org/categories/surveillance">
+                    surveillance
+                </a>
+                <span class="category-list-count">2</span>
+            </li>
+            
+        </ul>
+    </div>
+</div>
+
+
+
+    
+
+
+<div class="widget-wrap">
+    <h3 class="widget-title">
+        Tags
+    </h3>
+    <div class="widget">
+        <ul class="category-list">
+            
+            <li class="category-list-item">
+                <a class="category-list-link" href="http://outsourcedbits.org/tags/cryptdb">
+                    cryptdb
+                </a>
+                <span class="category-list-count">1</span>
+            </li>
+            
+            <li class="category-list-item">
+                <a class="category-list-link" href="http://outsourcedbits.org/tags/deterministic-encryption">
+                    deterministic-encryption
+                </a>
+                <span class="category-list-count">1</span>
+            </li>
+            
+            <li class="category-list-item">
+                <a class="category-list-link" href="http://outsourcedbits.org/tags/dte">
+                    dte
+                </a>
+                <span class="category-list-count">1</span>
+            </li>
+            
+            <li class="category-list-item">
+                <a class="category-list-link" href="http://outsourcedbits.org/tags/fhe">
+                    fhe
+                </a>
+                <span class="category-list-count">2</span>
+            </li>
+            
+            <li class="category-list-item">
+                <a class="category-list-link" href="http://outsourcedbits.org/tags/fisa">
+                    fisa
+                </a>
+                <span class="category-list-count">1</span>
+            </li>
+            
+            <li class="category-list-item">
+                <a class="category-list-link" href="http://outsourcedbits.org/tags/functional-encryption">
+                    functional-encryption
+                </a>
+                <span class="category-list-count">1</span>
+            </li>
+            
+            <li class="category-list-item">
+                <a class="category-list-link" href="http://outsourcedbits.org/tags/learning">
+                    learning
+                </a>
+                <span class="category-list-count">1</span>
+            </li>
+            
+            <li class="category-list-item">
+                <a class="category-list-link" href="http://outsourcedbits.org/tags/machine-learning">
+                    machine-learning
+                </a>
+                <span class="category-list-count">1</span>
+            </li>
+            
+            <li class="category-list-item">
+                <a class="category-list-link" href="http://outsourcedbits.org/tags/metadata">
+                    metadata
+                </a>
+                <span class="category-list-count">2</span>
+            </li>
+            
+            <li class="category-list-item">
+                <a class="category-list-link" href="http://outsourcedbits.org/tags/mpc">
+                    mpc
+                </a>
+                <span class="category-list-count">3</span>
+            </li>
+            
+            <li class="category-list-item">
+                <a class="category-list-link" href="http://outsourcedbits.org/tags/msr">
+                    msr
+                </a>
+                <span class="category-list-count">1</span>
+            </li>
+            
+            <li class="category-list-item">
+                <a class="category-list-link" href="http://outsourcedbits.org/tags/nsa">
+                    nsa
+                </a>
+                <span class="category-list-count">2</span>
+            </li>
+            
+            <li class="category-list-item">
+                <a class="category-list-link" href="http://outsourcedbits.org/tags/ope">
+                    ope
+                </a>
+                <span class="category-list-count">1</span>
+            </li>
+            
+            <li class="category-list-item">
+                <a class="category-list-link" href="http://outsourcedbits.org/tags/oram">
+                    oram
+                </a>
+                <span class="category-list-count">1</span>
+            </li>
+            
+            <li class="category-list-item">
+                <a class="category-list-link" href="http://outsourcedbits.org/tags/ot">
+                    ot
+                </a>
+                <span class="category-list-count">1</span>
+            </li>
+            
+            <li class="category-list-item">
+                <a class="category-list-link" href="http://outsourcedbits.org/tags/pets">
+                    pets
+                </a>
+                <span class="category-list-count">1</span>
+            </li>
+            
+            <li class="category-list-item">
+                <a class="category-list-link" href="http://outsourcedbits.org/tags/pir">
+                    pir
+                </a>
+                <span class="category-list-count">1</span>
+            </li>
+            
+            <li class="category-list-item">
+                <a class="category-list-link" href="http://outsourcedbits.org/tags/ppe">
+                    ppe
+                </a>
+                <span class="category-list-count">2</span>
+            </li>
+            
+            <li class="category-list-item">
+                <a class="category-list-link" href="http://outsourcedbits.org/tags/sat">
+                    sat
+                </a>
+                <span class="category-list-count">1</span>
+            </li>
+            
+            <li class="category-list-item">
+                <a class="category-list-link" href="http://outsourcedbits.org/tags/searchable-encryption">
+                    searchable-encryption
+                </a>
+                <span class="category-list-count">1</span>
+            </li>
+            
+            <li class="category-list-item">
+                <a class="category-list-link" href="http://outsourcedbits.org/tags/section-215">
+                    section-215
+                </a>
+                <span class="category-list-count">2</span>
+            </li>
+            
+            <li class="category-list-item">
+                <a class="category-list-link" href="http://outsourcedbits.org/tags/sse">
+                    sse
+                </a>
+                <span class="category-list-count">4</span>
+            </li>
+            
+            <li class="category-list-item">
+                <a class="category-list-link" href="http://outsourcedbits.org/tags/ste">
+                    ste
+                </a>
+                <span class="category-list-count">2</span>
+            </li>
+            
+        </ul>
+    </div>
+</div>
+
+
+
+    
+
+
+<div class="widget-wrap">
+    <h3 class="widget-title">
+        Tag cloud
+    </h3>
+    <div class="widget tagcloud">
+        
+        <a href="http://outsourcedbits.org/tags/cryptdb" style="font-size: 12px;">cryptdb</a>
+        
+        <a href="http://outsourcedbits.org/tags/deterministic-encryption" style="font-size: 12px;">deterministic-encryption</a>
+        
+        <a href="http://outsourcedbits.org/tags/dte" style="font-size: 12px;">dte</a>
+        
+        <a href="http://outsourcedbits.org/tags/fhe" style="font-size: 12px;">fhe</a>
+        
+        <a href="http://outsourcedbits.org/tags/fisa" style="font-size: 12px;">fisa</a>
+        
+        <a href="http://outsourcedbits.org/tags/functional-encryption" style="font-size: 12px;">functional-encryption</a>
+        
+        <a href="http://outsourcedbits.org/tags/learning" style="font-size: 12px;">learning</a>
+        
+        <a href="http://outsourcedbits.org/tags/machine-learning" style="font-size: 12px;">machine-learning</a>
+        
+        <a href="http://outsourcedbits.org/tags/metadata" style="font-size: 12px;">metadata</a>
+        
+        <a href="http://outsourcedbits.org/tags/mpc" style="font-size: 12px;">mpc</a>
+        
+        <a href="http://outsourcedbits.org/tags/msr" style="font-size: 12px;">msr</a>
+        
+        <a href="http://outsourcedbits.org/tags/nsa" style="font-size: 12px;">nsa</a>
+        
+        <a href="http://outsourcedbits.org/tags/ope" style="font-size: 12px;">ope</a>
+        
+        <a href="http://outsourcedbits.org/tags/oram" style="font-size: 12px;">oram</a>
+        
+        <a href="http://outsourcedbits.org/tags/ot" style="font-size: 12px;">ot</a>
+        
+        <a href="http://outsourcedbits.org/tags/pets" style="font-size: 12px;">pets</a>
+        
+        <a href="http://outsourcedbits.org/tags/pir" style="font-size: 12px;">pir</a>
+        
+        <a href="http://outsourcedbits.org/tags/ppe" style="font-size: 12px;">ppe</a>
+        
+        <a href="http://outsourcedbits.org/tags/sat" style="font-size: 12px;">sat</a>
+        
+        <a href="http://outsourcedbits.org/tags/searchable-encryption" style="font-size: 12px;">searchable-encryption</a>
+        
+        <a href="http://outsourcedbits.org/tags/section-215" style="font-size: 12px;">section-215</a>
+        
+        <a href="http://outsourcedbits.org/tags/sse" style="font-size: 12px;">sse</a>
+        
+        <a href="http://outsourcedbits.org/tags/ste" style="font-size: 12px;">ste</a>
+        
+    </div>
+</div>
+
+
+
+
+    <div id="toTop" class="fa fa-chevron-up"></div>
+</aside>
+
+	    
+	</div>
+</div>
+
+<footer id="footer">
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2016
+      Powered by <a href="//gohugo.io">Hugo</a>. Theme by <a href="http://github.com/ppoffice">PPOffice</a>.
+    </div>
+  </div>
+</footer>
+
+
+<script>
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-79501268-1', 'auto');
+ga('send', 'pageview');
+</script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+<script src="http://outsourcedbits.org/fancybox/jquery.fancybox.pack.js"></script>
+<script src="http://outsourcedbits.org/js/script.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.8.0/highlight.min.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+
+
+
+ 
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+  extensions: ["tex2jax.js"],
+  jax: ["input/TeX", "output/HTML-CSS"],
+  tex2jax: {
+    inlineMath: [['$','$'], ['\\(','\\)']],
+    displayMath: [['$$','$$'], ['\\[','\\]']],
+    processEscapes: true,
+    processEnvironments: true,
+    skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
+    TeX: { equationNumbers: { autoNumber: "AMS" },
+         extensions: ["AMSmath.js", "AMSsymbols.js"] }
+  },
+  "HTML-CSS": {availableFonts: ["TeX"]}, 
+  scale: [200]
+});
+</script>
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    
+    
+    
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i = 0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+});
+</script>
+<script type="text/javascript"
+  src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+</body>
+</html>

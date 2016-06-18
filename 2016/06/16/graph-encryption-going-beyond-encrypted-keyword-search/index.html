@@ -1,0 +1,1008 @@
+<!DOCTYPE html>
+<html lang="en-us">
+<head>
+    <title>Graph Encryption: Going Beyond Encrypted Keyword Search &middot; Outsourced Bits</title>
+    <meta name="generator" content="Hugo 0.16" />
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="author" content="Seny Kamara">
+    
+      <meta name="description" content="">
+    
+    
+    <link rel="icon" href="http://outsourcedbits.org/favicon.ico">
+    <link rel="apple-touch-icon" href="http://outsourcedbits.org/apple-touch-icon.png" />
+    <link rel="stylesheet" href="http://outsourcedbits.org/css/style.css">
+    <link rel="stylesheet" href="http://outsourcedbits.org/css/font-awesome.min.css">
+    <link rel="stylesheet" href="http://outsourcedbits.org/css/monokai.css">
+    <link rel="stylesheet" href="http://outsourcedbits.org/fancybox/jquery.fancybox.css">
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400italic,400,600' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Source+Code+Pro' rel='stylesheet' type='text/css'>
+    <meta property="og:title" content="Graph Encryption: Going Beyond Encrypted Keyword Search" />
+<meta property="og:description" content="This is a guest post by Xianrui Meng from Boston University about a paper he presented at CCS 2015, written in collaboration with Kobbi Nissim, George Kollios and myself. Note that Xianrui is on the job market. Encrypted search has attracted a lot of attention from practitioners and researchers in academia and industry. In previous posts, Seny already described different ways one can search on encrypted data. Here, I would like to discuss search on encrypted graph databases which are gaining a lot of popularity." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://outsourcedbits.org/2016/06/16/graph-encryption-going-beyond-encrypted-keyword-search" />
+
+
+<meta property="og:updated_time" content="2016-06-16T12:32:12-03:00"/>
+
+
+
+
+
+
+
+
+
+
+    
+    
+<meta itemprop="name" content="Graph Encryption: Going Beyond Encrypted Keyword Search">
+<meta itemprop="description" content="This is a guest post by Xianrui Meng from Boston University about a paper he presented at CCS 2015, written in collaboration with Kobbi Nissim, George Kollios and myself. Note that Xianrui is on the job market. Encrypted search has attracted a lot of attention from practitioners and researchers in academia and industry. In previous posts, Seny already described different ways one can search on encrypted data. Here, I would like to discuss search on encrypted graph databases which are gaining a lot of popularity.">
+
+
+<meta itemprop="dateModified" content="2016-06-16T12:32:12-03:00" />
+<meta itemprop="wordCount" content="2576">
+
+
+
+<meta itemprop="keywords" content="applied-crypto,applied-cryptography,cloud-computing,encrypted-search,graph-encryption,inference-attacks,learning,misc,policy,surveillance,cryptdb,deterministic-encryption,dte,fhe,fisa,functional-encryption,learning,machine-learning,metadata,mpc,msr,nsa,ope,oram,ot,pets,pir,ppe,sat,searchable-encryption,section-215,sse,ste," />
+
+    
+
+  <meta name="twitter:card" content="summary"/>
+
+
+
+<meta name="twitter:title" content="Graph Encryption: Going Beyond Encrypted Keyword Search"/>
+<meta name="twitter:description" content="This is a guest post by Xianrui Meng from Boston University about a paper he presented at CCS 2015, written in collaboration with Kobbi Nissim, George Kollios and myself. Note that Xianrui is on the job market. Encrypted search has attracted a lot of attention from practitioners and researchers in academia and industry. In previous posts, Seny already described different ways one can search on encrypted data. Here, I would like to discuss search on encrypted graph databases which are gaining a lot of popularity."/>
+<meta name="twitter:site" content="@senykam"/>
+
+
+    
+
+    
+</head>
+<body>
+<div class="container">
+
+
+<div id="container">
+	<header id="header">
+  <div id="header-main" class="header-inner">
+    <div class="outer">
+      <a href="http://outsourcedbits.org/" id="logo"><span class="site-title">Outsourced Bits</span></a>
+      <nav id="main-nav">
+          
+
+          
+
+          
+      </nav>
+        <nav id="sub-nav">
+          <div class="profile" id="profile-nav">
+            <a id="profile-anchor" href="javascript:;"><img class="avatar" src="http://outsourcedbits.org//img/sk.jpg"><i class="fa fa-caret-down"></i></a>
+          </div>
+        </nav>
+        <div id="search-form-wrap">
+          <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form">
+              <input type="search" name="q" results="0" class="search-form-input" placeholder="Search">
+              <button type="submit" class="search-form-submit">
+              </button>
+              <input type="hidden" name="q" value="site:http://outsourcedbits.org/">
+         </form>
+        </div>
+    </div>
+  </div>
+  <div id="main-nav-mobile" class="header-sub header-inner">
+    <table class="menu outer">
+      <tbody>
+          <tr>
+          
+
+          
+
+          
+          <td>
+          <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form">
+          <input type="search" name="q" results="0" class="search-form-input" placeholder="Search">
+          <input type="hidden" name="q" value="site:http://outsourcedbits.org/">
+          </form>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+</header>
+
+   	
+   	<div class="outer">
+   		
+	    <aside id="profile">
+  <div class="inner profile-inner">
+    <div class="base-info profile-block">
+      <img id="avatar" src="http://outsourcedbits.org/img/sk.jpg" width="200" class="avatar">
+      
+      
+      <p class="mybio">My name is Seny Kamara. I am an Associate Professor of <a href="http://cs.brown.edu">Computer Science</a> at <a href="http://brown.edu">Brown</a>. Prior to that, I was a researcher at Microsoft Research. <br><br> My work is focused on designing and studying cryptographic algorithms,
+protocols and systems; often motivated by privacy issues in cloud computing,
+surveillance and databases. <br><br> This is a blog about my research and interests. For more about my work see my
+<a href="http://cs.brown.edu/~seny">homepage</a>.</p>
+      <span id="location"><i class="fa fa-map-marker"></i>Rio</span>
+      
+    </div>
+    
+    <div class="contact-info profile-block">
+      <table class="contact-list">
+        <tr>
+          
+<td><a href="//github.com/senykam" target="_blank" title="GitHub"><i class="fa fa-github"></i></a></td>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<td><a href="//twitter.com/senykam" target="_blank" title="Twitter"><i class="fa fa-twitter"></i></a></td>
+
+
+          <td><a href="" target="_blank" title="RSS"><i class="fa fa-rss"></i></a></td>
+        </tr>
+      </table>
+    </div>
+  </div>
+</aside>
+
+	    
+
+	    
+<section id="main">
+
+    <article id="page-undefined" class="article article-type-page" itemscope="" itemprop="blogPost">
+        <div class="article-inner">
+            
+
+            <header class="article-header">
+    <a href="http://outsourcedbits.org/2016/06/16/graph-encryption-going-beyond-encrypted-keyword-search">
+    <h1 class="article-title" itemprop="name">
+        Graph Encryption: Going Beyond Encrypted Keyword Search
+    </h1>
+    </a>
+    <div class="article-meta">
+        <div class="article-date">
+            <i class="fa fa-calendar"></i>
+            <time datetime="2016-06-16 12:32:12 -0300 STD" itemprop="datePublished">2016-06-16</time>
+            &middot;
+            2576
+            words
+            &middot;
+            13
+            minute read
+        </div>
+
+        
+        
+            
+            
+            <div class="article-category">
+                <i class="fa fa-folder"></i>
+                
+                <a class="article-category-link" href="http://outsourcedbits.org/categories/encrypted-search">Encrypted Search</a>
+                &middot;
+                
+                <a class="article-category-link" href="http://outsourcedbits.org/categories/graph-encryption">Graph Encryption</a>
+                
+                
+            </div>
+            
+        
+
+        
+            
+            
+            <div class="article-category">
+                <i class="fa fa-tags"></i>
+                
+                <a class="article-category-link" href="http://outsourcedbits.org/tags/sse">SSE</a>
+                &middot;
+                
+                <a class="article-category-link" href="http://outsourcedbits.org/tags/ste">STE</a>
+                
+                
+            </div>
+            
+        
+    </div>
+</header>
+
+            <div class="article-entry" itemprop="articleBody">
+                <p><em>This is a guest post by <a href="http://www.xianruimeng.org/">Xianrui Meng</a> from
+Boston University about a paper he presented at CCS 2015, written in
+collaboration with <a href="https://www.cs.bgu.ac.il/~kobbi/">Kobbi Nissim</a>, <a href="http://www.cs.bu.edu/~gkollios/">George
+Kollios</a>  and myself. Note that Xianrui is on
+the job market.</em></p>
+
+<p><img src="/img/graph21.jpg" class="alignright" width="250">
+Encrypted search has attracted a lot of attention from practitioners and
+researchers in academia and industry. In previous posts, Seny already described
+different ways one can search on encrypted data. Here, I would like to discuss
+search on encrypted <em>graph</em> databases which are gaining a lot of
+popularity.</p>
+
+<h2 id="graph-databases-and-graph-privacy">Graph Databases and Graph Privacy</h2>
+
+<p>As today's data is getting bigger and bigger, traditional
+relational database management systems (RDBMS) cannot scale to the massive
+amounts of data generated by end users and organizations. In addition, RDBMSs
+cannot effectively capture certain data relationships; for example in
+object-oriented data structures which are used in many applications. Today,
+<a href="http://nosql-database.org/">NoSQL</a> (Not Only SQL) has emerged as a good
+alternative to RDBMSs.  One of the many advantages of NoSQL systems is that
+they are capable of storing, processing, and managing large volumes of
+structured, semi-structured, and even unstructured data. NoSQL databases (e.g.,
+document stores, wide-column stores, key-value (tuple) stores, object
+databases, and graph databases) can provide the scale and availability needed
+in cloud environments.</p>
+
+<p>In an Internet-connected world, graph databases have become an increasingly
+significant data model among NoSQL technologies.  Social networks (e.g.,
+Facebook, Twitter, Snapchat), protein networks, electrical grid, Web, XML
+documents, networked systems can all be modeled as graphs.  One nice thing
+about graph databases is that they store the relations between entities
+(objects) in addition to the entities themselves and their properties.  This
+allows the search engine to navigate both the data and their relationships
+extremely efficiently. Graph databases rely on the node-link-node relationship,
+where a node can be a profile or an object and the edge can be any relation
+defined by the application. Usually, we are interested in the structural
+characteristics of such a graph databases.</p>
+
+<p>What do we mean by the confidentiality of a graph? And how to do we protect it?
+The problem has been studied by both the security and database communities. For
+example, in the database and data mining community, many solutions have been
+proposed based on <em>graph anonymization</em>. The core idea here is to
+anonymize the nodes and edges in the graph so that re-identification is hard.
+Although this approach may be efficient, from a security point view it is hard
+to tell what is achieved. Also, by leveraging auxiliary information,
+researchers have studied how to attack this kind of approach. On the other
+hand, cryptographers have some really compelling and provably-secure tools such
+as ORAM and FHE (mentioned in Seny's previous posts) that can protect all the
+information in a graph database.  The problem, however, is their performance,
+which is crucial  for databases. In today's world, efficiency is more  than
+running in polynomial time; we need solutions that run and scale to massive
+volumes of data. Many real world graph datasets, such as biological networks
+and social networks, have millions of nodes, some even have billions of nodes
+and edges. Therefore, besides security, scalability is one of main aspects we
+have to consider.</p>
+
+<h2 id="graph-encryption">Graph Encryption</h2>
+
+<p>Previous work in encrypted search has focused on how to
+search encrypted documents, e.g., doing keyword search, conjunctive queries,
+etc. Graph encryption, on the other hand, focuses on performing graph queries
+on encrypted graphs rather than keyword search on encrypted documents.  In some
+cases, this makes the problem harder since some graph queries can be extremely
+complex.  Another technical challenge is that the  privacy of nodes and edges
+needs to be protected but also the <em>structure</em> of the graph, {\bf which can
+lead to many interesting research directions}.</p>
+
+<p>Graph encryption was introduced by Melissa Chase and Seny in
+[<a href="http://eprint.iacr.org/2011/010.pdf">CK10</a>]. That paper shows how
+to encrypt graphs so that certain graph queries (e.g., neighborhood, adjacency
+and focused subgraphs) can be performed (though the paper is more general as it
+describes <em>structured encryption</em>). Seny and I, together with Kobbi Nissim
+and George Kollios, followed this up with a paper last year
+[<a href="http://eprint.iacr.org/2015/266.pdf">MKNK15</a>] that showed how to
+handle more complex graphs queries.</p>
+
+<h2 id="queries-on-encrypted-graph-databases">Queries on Encrypted Graph Databases</h2>
+
+<h3 id="neighbor-queries-and-adjacency-queries">Neighbor Queries and Adjacency Queries</h3>
+
+<p>As I mentioned earlier,
+[<a href="http://eprint.iacr.org/2011/010.pdf">CK10</a>] studied some simple
+graph queries, such as adjacency queries and neighbor queries. An adjacency
+query is takes two nodes as input and returns whether they have an edge in
+common. A neighbor query takes a node as input and returns all the nodes that
+share an edge with it.</p>
+
+<p>The construction for neighbor queries is mainly based on the searchable
+symmetric encryption (SSE), where the input graph is viewed as particular kind
+of document collection. Another novel technique that is proposed in the paper
+is to use  an efficient symmetric non-committing encryption scheme to achieve
+adaptive security efficiently. The paper also proposes a nice solution for
+focused subgraph queries, which are an essential part of the seminal HITS
+ranking algorithm of Kleinberg but are also useful in their own right.</p>
+
+<h3 id="approximate-shortest-distance-queries">Approximate Shortest Distance Queries</h3>
+
+<p>Shortest distance queries are arguably one of the most fundamental and
+well-studied graph queries due to their numerous applications. A shortest
+distance query takes as input two nods and returns the smallest number of edges
+in the shortest path between them. In social networks these queries allow you
+to  find the smallest number of friends (or collaborators, peers, etc) between
+two people.  So a graph encryption scheme that supports shortest distance
+queries would potentially have many applications in graph database security,
+and could be a major building block for other graph encryption schemes. In the
+following, I briefly give an overview on our solution for <em>approximate</em>
+shortest distance queries.</p>
+
+<p>As I mentioned, to design a secure yet scalable graph encryption
+scheme, we have to take into account many things, including the storage space on
+the server side, the bandwidth for the query, the computational overhead for
+both client and server, etc. Suppose we are given a graph <span  class="math">\(G= (V, E)\)</span> and let
+<span  class="math">\(n= |V|\)</span>, <span  class="math">\(m = |E|\)</span>. If we were to use traditional shortest distance algorithm such as
+Dijsktra's algorithm, the query time would be <span  class="math">\(O(n\log n+m)\)</span>, which can be very
+slow for large graphs. The benefit of course would be that we would not need
+extra storage. Another approach is to build an encrypted adjacency matrix (see
+[<a href="http://eprint.iacr.org/2011/010.pdf">CK10</a>]) that somehow supports
+shortest distance queries.  The problem there is that we would need to pay at
+least <span  class="math">\(O(n^2)\)</span> storage, which is obviously expensive when the <span  class="math">\(n\)</span> is, say, <span  class="math">\(1\)</span>
+million.</p>
+
+<p>Fortunately, thanks to brilliant algorithmic computer scientists, there exists
+a really nice and neat data structure called a <em>distance oracle</em> (DO)
+[<a href="http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.94.333&amp;rep=rep1&amp;type=pdf">TZ05</a>,
+<a href="http://research.microsoft.com/pubs/115785/wsdm2010.pdf">SGNP10</a>,
+<a href="http://research-srv.microsoft.com/pubs/201773/cosn-similarity.pdf">CDFGGW13</a>].
+Using such a structure, one can use much less storage overhead (typically <span  class="math">\(O(n
+\log n)\)</span>) and fast query performance (typically <span  class="math">\(O(\log n)\)</span>). However, most
+distance oracles return the <em>approximate</em> distance rather than the exact
+one. But one one can tweak the parameters in order to get the best trade-off
+between performance and approximation.  When I first looked at these data
+structures, I felt that this was a really amazing tool; not only because of its
+functionality but also due to its  simplicity.</p>
+
+<p>There are many ways of generating distance oracles. Some of them offer
+better approximation while others can have better performance. Here I just
+describe one kind which are <em>sketch-based</em> distance oracles. In a such an
+oracle, every node <span  class="math">\(v\)</span> has a sketch, <span  class="math">\(Sk_v\)</span> (normally generated by some
+randomized algorithm). <span  class="math">\(Sk_v\)</span> is a set containing many node pairs <span  class="math">\(\langle
+w_i,d(v, w_i)\rangle\)</span>, where <span  class="math">\(w_i\)</span> is some node id and <span  class="math">\(d(v, w_i)\)</span> is the
+distance between <span  class="math">\(v\)</span> and <span  class="math">\(w_i\)</span>. For example, the following sketch <span  class="math">\(Sk_v\)</span> consists of
+three pairs</p>
+
+<p><span  class="math">\[ Sk_v = \{\langle w_1, d(v, w_1)\rangle, \langle w_2, d(v, w_2)\rangle,
+\langle w_3, d(v, w_3)\rangle \}.
+\]</span></p>
+
+<p>Querying the shortest distance
+between <span  class="math">\(u\)</span> and <span  class="math">\(v\)</span> is quite simple. We only need to retrieve <span  class="math">\(Sk_u\)</span> and
+<span  class="math">\(Sk_v\)</span>, and find the common nodes in both sketches and add up their
+corresponding distances. We then return the minimum sum as the
+shortest distance. Formally, let <span  class="math">\(I\)</span> be the common nodes that appear in both
+<span  class="math">\(Sk_u\)</span> and <span  class="math">\(Sk_v\)</span>. Then, the approximate shortest distance between <span  class="math">\(u\)</span> and <span  class="math">\(v\)</span>,
+<span  class="math">\(d(u,v)\)</span>, is</p>
+
+<p><span  class="math">\[d(u, v) = argmin_{s \in I}\{ d(u, s) + d(v, s)\}\]</span></p>
+
+<p>The design of this distance oracle guarantees that the returned distance is no
+greater than <span  class="math">\(\alpha\times \mathsf{dist}(u,v)\)</span>, where <span  class="math">\(\mathsf{dist}(u, v)\)</span> is
+the true shortest distance between <span  class="math">\(u\)</span> and <span  class="math">\(v\)</span> and <span  class="math">\(\alpha\)</span> is the
+approximation ratio. Note that the approximation ration <span  class="math">\(\alpha\)</span> is a function
+of some parameters of the sketch so to one controls the approximation by
+tweaking the sketch which in turns effects both setup and query efficiency.  In
+our solution, we leverage sketched-based distance oracles but we have to be
+very careful not to affect their  approximation ration.</p>
+
+<p>A distance oracle encryption scheme
+<span  class="math">\(\mathsf{Graph} = (\mathsf{Setup}, \mathsf{DistQuery})\)</span> consists of a polynomial-time algorithm
+and a polynomial-time two-party protocol that work as follows:</p>
+
+<ul>
+<li><p><span  class="math">\((K, \mathsf{EO}) \leftarrow \mathsf{Setup}(1^k, \Omega, \alpha, \varepsilon)\)</span>: is a
+probabilistic algorithm that takes as input a security parameter <span  class="math">\(k\)</span>, an oracle<br>
+<span  class="math">\(\Omega\)</span>,   an approximation factor <span  class="math">\(\alpha\)</span>, and an error parameter <span  class="math">\(\varepsilon\)</span>.
+It outputs a secret key <span  class="math">\(K\)</span> and an encrypted oracle <span  class="math">\(\mathsf{EO}\)</span>.</p></li>
+
+<li><p>item <span  class="math">\((d, \bot) \leftarrow \mathsf{DistQuery}_{C,S}\big((K, q), \mathsf{EO}\big)\)</span>: is a
+two-party protocol between a client <span  class="math">\(C\)</span> that holds a key <span  class="math">\(K\)</span> and a shortest
+distance query <span  class="math">\(q = (u, v) \in V^2\)</span> and a server <span  class="math">\(S\)</span> that holds an encrypted
+oracle <span  class="math">\(\mathsf{EO}\)</span>. After executing the protocol, the <span  class="math">\(C\)</span> receives a distance <span  class="math">\(d
+\geq 0\)</span> and server <span  class="math">\(S\)</span> receives <span  class="math">\(\bot\)</span>.</p></li>
+</ul>
+
+<p>For <span  class="math">\(\alpha \geq 1\)</span> and <span  class="math">\(\varepsilon \lt 1\)</span>, we say that <span  class="math">\(\mathsf{Graph}\)</span> is
+<span  class="math">\((\alpha, \varepsilon)\)</span>-correct if for all <span  class="math">\(k \in \mathbb{N}\)</span>, for all <span  class="math">\(\Omega\)</span>
+and for all <span  class="math">\(q = (u, v) \in V^2\)</span>,</p>
+
+<p><span  class="math">\[
+\mbox{Pr}\big[d \leq \alpha\cdot {\sf dist}(u, v)\big] \geq 1 - \varepsilon, 
+\]</span></p>
+
+<p>where the probability is over the randomness in computing <span  class="math">\((K, \mathsf{EO}) \leftarrow
+\mathsf{Setup}(1^k, \Omega, \alpha, \varepsilon)\)</span> and then <span  class="math">\((d, \bot) \leftarrow
+\mathsf{DistQuery}\big((K, q), \mathsf{EO}\big)\)</span>. I skip the adaptive security definition
+as it is similar to adaptive security for SSE and is captured by the general
+notion of security for structured encryption given in
+[<a href="http://eprint.iacr.org/2011/010.pdf">CK10</a>].  Next, I will go over
+two solutions for the oracle encryption.</p>
+
+<p><strong>A computationally-efficient solution.</strong>
+This approach is rather straightforward, so here I briefly sketch its description. The <span  class="math">\(\mathsf{Setup}\)</span> algorithm works as follows:</p>
+
+<ol>
+<li>For each node <span  class="math">\(v \in V\)</span>, generate a token by applying a PRF to <span  class="math">\(v\)</span>: <span  class="math">\(\mathsf{tk}_v = F_K(v)\)</span>.</li>
+<li>Pad the sketches to the same length and encrypt each sketch <span  class="math">\(Sk_v\)</span> as <span  class="math">\({\sf Enc}_K(Sk_v)\)</span> using a symmetric encryption scheme.</li>
+<li>For each node <span  class="math">\(v \in V\)</span>, store the pair <span  class="math">\((\mathsf{tk}_v, {\sf Enc}_K(Sk_v))\)</span> in a <a href="https://en.wikipedia.org/wiki/Associative_array}">dictionary data structure</a> <span  class="math">\(\mathsf{DX}\)</span> (you should do the insertions at random).</li>
+</ol>
+
+<p>The <span  class="math">\(\mathsf{DistQuery}\)</span> algorithm is quite simple: given nodes <span  class="math">\(u\)</span> and <span  class="math">\(v\)</span>, the
+client just computes <span  class="math">\(F_K(u)\)</span> and <span  class="math">\(F_K(v)\)</span> and sends them to the server as the
+token. After receiving the token, the server just retrieves <span  class="math">\(\mathsf{DX}[F_K(u)]\)</span> and
+<span  class="math">\(\mathsf{DX}[F_K(v)]\)</span> and sends back the encrypted sketches <span  class="math">\({\sf Enc}_K(Sk_u)\)</span> and
+<span  class="math">\({\sf Enc}_K(Sk_v)\)</span>.  Finally, the client decrypts the sketches, and computes the
+approximate shortest distance as is normally done in sketch-based distance
+oracles.  This approach is efficient and simple since we use symmetric
+encryption. We show in the paper that this scheme is adaptively secure and that
+the leakage for this scheme are the size of the graph, maximum size of the
+distance oracle, and the query pattern (see paper for a precise definition).</p>
+
+<p><strong>Communication-efficient solution.</strong>
+The problem with the scheme described above is that the communication
+complexity is linear in the maximum sketch size.  As I mentioned above, this
+can be a bottleneck in practice when the graphs are large.  Now, at very high
+level, I briefly discuss how we can achieve a solution with optimal <span  class="math">\(O(1)\)</span>
+communication complexity.  The scheme makes use of a PRF, a degree-<span  class="math">\(2\)</span> somewhat
+homomorphic encryption scheme <span  class="math">\(\mathsf{SHE} = ({\sf Gen}, {\sf Enc}, {\sf Dec})\)</span>, and a hash function <span  class="math">\(h:
+V\to [t]\)</span>.</p>
+
+<ul>
+<li><p><span  class="math">\(\mathsf{Setup}(1^k, \Omega, \alpha, \varepsilon)\)</span>: Given <span  class="math">\(1^k\)</span>, <span  class="math">\(\Omega\)</span>,
+<span  class="math">\(\alpha\)</span>, and <span  class="math">\(\varepsilon\)</span> as inputs, it generates a public/secret-key pair
+<span  class="math">\(({\sf pk}, {\sf sk})\)</span> for <span  class="math">\(\mathsf{SHE}\)</span>. Let <span  class="math">\(D\)</span> be the maximum distance over
+all the sketches and <span  class="math">\(S\)</span> be the maximum sketch size.  <span  class="math">\(\mathsf{Setup}\)</span> sets <span  class="math">\(N
+\leftarrow 2\cdot D +1\)</span>  and samples a hash function <span  class="math">\(h \leftarrow \mathcal{H}\)</span>
+with domain <span  class="math">\(V\)</span> and co-domain <span  class="math">\([t]\)</span>, where <span  class="math">\(t = 2\cdot
+S^2\cdot\varepsilon^{-1}\)</span>.  It then creates a hash table for each node <span  class="math">\(v \in
+V\)</span>. More precisely, for each node <span  class="math">\(v\)</span>, it processes each pair <span  class="math">\((w_i, d_i) \in
+sk_v\)</span> and stores <span  class="math">\({\sf Enc}_{pk}(2^{N - \delta_i})\)</span> at location <span  class="math">\(h(w_i)\)</span> of a
+<span  class="math">\(t\)</span>-size array <span  class="math">\(\mathsf{T}_v\)</span>. In other words, for all <span  class="math">\(v \in V\)</span>, it creates an
+array <span  class="math">\(\mathsf{T}_v\)</span> such that for all <span  class="math">\((w_i, \delta_i) \in Sk_v\)</span>,
+<span  class="math">\(\mathsf{T}_v[h(w_i)] \leftarrow {\sf Enc}_{pk}(2^{N - \delta_i})\)</span>.  It then fills
+the empty   cells of <span  class="math">\(\mathsf{T}_v\)</span> with homomorphic encryptions of <span  class="math">\(0\)</span> and
+stores each hash table <span  class="math">\(\mathsf{T}_{v_1}\)</span> through <span  class="math">\(\mathsf{T}_{v_n}\)</span> in a
+dictionary <span  class="math">\(\mathsf{DX}\)</span> by setting, for all <span  class="math">\(v \in V\)</span>, <span  class="math">\(\mathsf{DX}[F_K(v)]
+\leftarrow \mathsf{T}_v\)</span>. Finally, it outputs <span  class="math">\(\mathsf{DX}\)</span> as the encrypted
+oracle <span  class="math">\(\mathsf{EO}\)</span>.</p></li>
+
+<li><p>The <span  class="math">\(\mathsf{DistQuery}\)</span> protocol works as follows. Given a query <span  class="math">\(q = (u,
+v)\)</span>, the client sends tokens <span  class="math">\((\mathsf{tk}_1, \mathsf{tk}_2) = (F_K(u),
+F_K(v))\)</span> to the server which  uses them to retrieve the hash tables of nodes
+<span  class="math">\(u\)</span> and <span  class="math">\(v\)</span> by computing <span  class="math">\(\mathsf{T}_u := \mathsf{DX}[\mathsf{tk}_1]\)</span> and
+<span  class="math">\(\mathsf{T}_v := \mathsf{DX}[\mathsf{tk}_2]\)</span>. The server then homomorphically
+evaluates an inner product over the hash tables. More precisely, it computes <span  class="math">\(c
+:= \sum_{i=1}^t \mathsf{T}_u[i]\cdot\mathsf{T}_v[i]\)</span>, where <span  class="math">\(\sum\)</span> and <span  class="math">\(\cdot\)</span>
+refer to the homomorphic addition and multiplication operations of of the SHE
+scheme. Finally, the server returns only <span  class="math">\(c\)</span> to the client who decrypts it and
+outputs <span  class="math">\(2N - \log_2 \left({\sf Dec}_{\sf sk}(c)\right)\)</span>.</p></li>
+</ul>
+
+<p>See the paper for more details and an analysis of the construction. What is
+important to note is that we can show that the scheme does not affect the
+quality of underlying oracle's approximation too much and, in fact, in certain
+cases it improves it!</p>
+
+<p>It is also worth of mentioning that, in the paper, we also propose a third
+scheme that has <span  class="math">\(O(1)\)</span> communication complexity but with some additional
+leakage which we call the sketch pattern leakage. This third scheme is far more
+efficient than the one above. One interesting subtlety is that, unlike more
+standard encrypted schemes schemes, where the leakage is over a structure that
+holds all the original data (e.g., an inverted index with full indexing), the
+leakage in this case is only over a data structure that holds a random subset
+of the data.</p>
+
+<p>Finally, We implemented all our constructions and verified their efficiency
+experimentally.</p>
+
+<h2 id="conclusions-and-future-work">Conclusions and Future Work</h2>
+
+<p>I went over our graph encryption schemes with support for approximate shortest distance
+queries. The solutions I described are all adaptively-secure. Of course, there
+are other possible approaches based on ORAM or FHE which can provide stronger
+security (even hide access pattern!) but at a higher cost.  As graph databases become more and more
+popular, I believe graph encryption will play an increasingly important role in
+database security. We live in a data-centric world that generates network and
+graph data of all kinds.  There are still more challenging and exciting open
+problems in graph database security: e.g., how to construct graph encryption
+schemes for more complex graph queries?  Can we support graph mining tasks,
+e.g.,  can we construct graph encryption schemes that allow us to detect
+communities over encrypted social networks?  And of course, as is common in
+encrypted search, how can we quantify the security of our graph encryption
+schemes?  Any briliant ideas? Talk to us! :-)</p>
+
+            </div>
+            <footer class="article-footer">
+    <a data-url="http://outsourcedbits.org/2016/06/16/graph-encryption-going-beyond-encrypted-keyword-search" data-id="007b8b7c40f9ba8023df7984b35953e1" class="article-share-link">
+        Share
+    </a>
+    
+    <a href="http://outsourcedbits.org/2016/06/16/graph-encryption-going-beyond-encrypted-keyword-search/#disqus_thread" class="article-comment-link">
+        Comments
+    </a>
+    
+</footer>
+
+        </div>
+
+        
+<nav id="article-nav">
+    
+    <a href="http://outsourcedbits.org/2015/09/07/attacking-encrypted-database-systems" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">
+          Older
+      </strong>
+      <div class="article-nav-title">Attacking Encrypted Database Systems</div>
+    </a>
+    
+
+    
+</nav>
+
+
+    </article>
+
+    
+    <section id="comments">
+        <div id="disqus_thread">
+            <div id="disqus_thread"></div>
+<script type="text/javascript">
+    var disqus_shortname = 'outsourcedbits';
+    var disqus_identifier = 'http:\/\/outsourcedbits.org\/2016\/06\/16\/graph-encryption-going-beyond-encrypted-keyword-search';
+    var disqus_title = 'Graph Encryption: Going Beyond Encrypted Keyword Search';
+    var disqus_url = 'http:\/\/outsourcedbits.org\/2016\/06\/16\/graph-encryption-going-beyond-encrypted-keyword-search';
+
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+        </div>
+    </section>
+    
+</section>
+
+
+	    
+	    <aside id="sidebar">
+    
+
+    
+
+
+<div class="widget-wrap">
+    <h3 class="widget-title">Categories</h3>
+    <div class="widget">
+        <ul class="category-list">
+            
+            <li class="category-list-item">
+                <a class="category-list-link" href="http://outsourcedbits.org/categories/applied-crypto">
+                    applied-crypto
+                </a>
+                <span class="category-list-count">3</span>
+            </li>
+            
+            <li class="category-list-item">
+                <a class="category-list-link" href="http://outsourcedbits.org/categories/applied-cryptography">
+                    applied-cryptography
+                </a>
+                <span class="category-list-count">1</span>
+            </li>
+            
+            <li class="category-list-item">
+                <a class="category-list-link" href="http://outsourcedbits.org/categories/cloud-computing">
+                    cloud-computing
+                </a>
+                <span class="category-list-count">2</span>
+            </li>
+            
+            <li class="category-list-item">
+                <a class="category-list-link" href="http://outsourcedbits.org/categories/encrypted-search">
+                    encrypted-search
+                </a>
+                <span class="category-list-count">11</span>
+            </li>
+            
+            <li class="category-list-item">
+                <a class="category-list-link" href="http://outsourcedbits.org/categories/graph-encryption">
+                    graph-encryption
+                </a>
+                <span class="category-list-count">1</span>
+            </li>
+            
+            <li class="category-list-item">
+                <a class="category-list-link" href="http://outsourcedbits.org/categories/inference-attacks">
+                    inference-attacks
+                </a>
+                <span class="category-list-count">1</span>
+            </li>
+            
+            <li class="category-list-item">
+                <a class="category-list-link" href="http://outsourcedbits.org/categories/learning">
+                    learning
+                </a>
+                <span class="category-list-count">1</span>
+            </li>
+            
+            <li class="category-list-item">
+                <a class="category-list-link" href="http://outsourcedbits.org/categories/misc">
+                    misc
+                </a>
+                <span class="category-list-count">1</span>
+            </li>
+            
+            <li class="category-list-item">
+                <a class="category-list-link" href="http://outsourcedbits.org/categories/policy">
+                    policy
+                </a>
+                <span class="category-list-count">2</span>
+            </li>
+            
+            <li class="category-list-item">
+                <a class="category-list-link" href="http://outsourcedbits.org/categories/surveillance">
+                    surveillance
+                </a>
+                <span class="category-list-count">2</span>
+            </li>
+            
+        </ul>
+    </div>
+</div>
+
+
+
+    
+
+
+<div class="widget-wrap">
+    <h3 class="widget-title">
+        Tags
+    </h3>
+    <div class="widget">
+        <ul class="category-list">
+            
+            <li class="category-list-item">
+                <a class="category-list-link" href="http://outsourcedbits.org/tags/cryptdb">
+                    cryptdb
+                </a>
+                <span class="category-list-count">1</span>
+            </li>
+            
+            <li class="category-list-item">
+                <a class="category-list-link" href="http://outsourcedbits.org/tags/deterministic-encryption">
+                    deterministic-encryption
+                </a>
+                <span class="category-list-count">1</span>
+            </li>
+            
+            <li class="category-list-item">
+                <a class="category-list-link" href="http://outsourcedbits.org/tags/dte">
+                    dte
+                </a>
+                <span class="category-list-count">1</span>
+            </li>
+            
+            <li class="category-list-item">
+                <a class="category-list-link" href="http://outsourcedbits.org/tags/fhe">
+                    fhe
+                </a>
+                <span class="category-list-count">2</span>
+            </li>
+            
+            <li class="category-list-item">
+                <a class="category-list-link" href="http://outsourcedbits.org/tags/fisa">
+                    fisa
+                </a>
+                <span class="category-list-count">1</span>
+            </li>
+            
+            <li class="category-list-item">
+                <a class="category-list-link" href="http://outsourcedbits.org/tags/functional-encryption">
+                    functional-encryption
+                </a>
+                <span class="category-list-count">1</span>
+            </li>
+            
+            <li class="category-list-item">
+                <a class="category-list-link" href="http://outsourcedbits.org/tags/learning">
+                    learning
+                </a>
+                <span class="category-list-count">1</span>
+            </li>
+            
+            <li class="category-list-item">
+                <a class="category-list-link" href="http://outsourcedbits.org/tags/machine-learning">
+                    machine-learning
+                </a>
+                <span class="category-list-count">1</span>
+            </li>
+            
+            <li class="category-list-item">
+                <a class="category-list-link" href="http://outsourcedbits.org/tags/metadata">
+                    metadata
+                </a>
+                <span class="category-list-count">2</span>
+            </li>
+            
+            <li class="category-list-item">
+                <a class="category-list-link" href="http://outsourcedbits.org/tags/mpc">
+                    mpc
+                </a>
+                <span class="category-list-count">3</span>
+            </li>
+            
+            <li class="category-list-item">
+                <a class="category-list-link" href="http://outsourcedbits.org/tags/msr">
+                    msr
+                </a>
+                <span class="category-list-count">1</span>
+            </li>
+            
+            <li class="category-list-item">
+                <a class="category-list-link" href="http://outsourcedbits.org/tags/nsa">
+                    nsa
+                </a>
+                <span class="category-list-count">2</span>
+            </li>
+            
+            <li class="category-list-item">
+                <a class="category-list-link" href="http://outsourcedbits.org/tags/ope">
+                    ope
+                </a>
+                <span class="category-list-count">1</span>
+            </li>
+            
+            <li class="category-list-item">
+                <a class="category-list-link" href="http://outsourcedbits.org/tags/oram">
+                    oram
+                </a>
+                <span class="category-list-count">1</span>
+            </li>
+            
+            <li class="category-list-item">
+                <a class="category-list-link" href="http://outsourcedbits.org/tags/ot">
+                    ot
+                </a>
+                <span class="category-list-count">1</span>
+            </li>
+            
+            <li class="category-list-item">
+                <a class="category-list-link" href="http://outsourcedbits.org/tags/pets">
+                    pets
+                </a>
+                <span class="category-list-count">1</span>
+            </li>
+            
+            <li class="category-list-item">
+                <a class="category-list-link" href="http://outsourcedbits.org/tags/pir">
+                    pir
+                </a>
+                <span class="category-list-count">1</span>
+            </li>
+            
+            <li class="category-list-item">
+                <a class="category-list-link" href="http://outsourcedbits.org/tags/ppe">
+                    ppe
+                </a>
+                <span class="category-list-count">2</span>
+            </li>
+            
+            <li class="category-list-item">
+                <a class="category-list-link" href="http://outsourcedbits.org/tags/sat">
+                    sat
+                </a>
+                <span class="category-list-count">1</span>
+            </li>
+            
+            <li class="category-list-item">
+                <a class="category-list-link" href="http://outsourcedbits.org/tags/searchable-encryption">
+                    searchable-encryption
+                </a>
+                <span class="category-list-count">1</span>
+            </li>
+            
+            <li class="category-list-item">
+                <a class="category-list-link" href="http://outsourcedbits.org/tags/section-215">
+                    section-215
+                </a>
+                <span class="category-list-count">2</span>
+            </li>
+            
+            <li class="category-list-item">
+                <a class="category-list-link" href="http://outsourcedbits.org/tags/sse">
+                    sse
+                </a>
+                <span class="category-list-count">4</span>
+            </li>
+            
+            <li class="category-list-item">
+                <a class="category-list-link" href="http://outsourcedbits.org/tags/ste">
+                    ste
+                </a>
+                <span class="category-list-count">2</span>
+            </li>
+            
+        </ul>
+    </div>
+</div>
+
+
+
+    
+
+
+<div class="widget-wrap">
+    <h3 class="widget-title">
+        Tag cloud
+    </h3>
+    <div class="widget tagcloud">
+        
+        <a href="http://outsourcedbits.org/tags/cryptdb" style="font-size: 12px;">cryptdb</a>
+        
+        <a href="http://outsourcedbits.org/tags/deterministic-encryption" style="font-size: 12px;">deterministic-encryption</a>
+        
+        <a href="http://outsourcedbits.org/tags/dte" style="font-size: 12px;">dte</a>
+        
+        <a href="http://outsourcedbits.org/tags/fhe" style="font-size: 12px;">fhe</a>
+        
+        <a href="http://outsourcedbits.org/tags/fisa" style="font-size: 12px;">fisa</a>
+        
+        <a href="http://outsourcedbits.org/tags/functional-encryption" style="font-size: 12px;">functional-encryption</a>
+        
+        <a href="http://outsourcedbits.org/tags/learning" style="font-size: 12px;">learning</a>
+        
+        <a href="http://outsourcedbits.org/tags/machine-learning" style="font-size: 12px;">machine-learning</a>
+        
+        <a href="http://outsourcedbits.org/tags/metadata" style="font-size: 12px;">metadata</a>
+        
+        <a href="http://outsourcedbits.org/tags/mpc" style="font-size: 12px;">mpc</a>
+        
+        <a href="http://outsourcedbits.org/tags/msr" style="font-size: 12px;">msr</a>
+        
+        <a href="http://outsourcedbits.org/tags/nsa" style="font-size: 12px;">nsa</a>
+        
+        <a href="http://outsourcedbits.org/tags/ope" style="font-size: 12px;">ope</a>
+        
+        <a href="http://outsourcedbits.org/tags/oram" style="font-size: 12px;">oram</a>
+        
+        <a href="http://outsourcedbits.org/tags/ot" style="font-size: 12px;">ot</a>
+        
+        <a href="http://outsourcedbits.org/tags/pets" style="font-size: 12px;">pets</a>
+        
+        <a href="http://outsourcedbits.org/tags/pir" style="font-size: 12px;">pir</a>
+        
+        <a href="http://outsourcedbits.org/tags/ppe" style="font-size: 12px;">ppe</a>
+        
+        <a href="http://outsourcedbits.org/tags/sat" style="font-size: 12px;">sat</a>
+        
+        <a href="http://outsourcedbits.org/tags/searchable-encryption" style="font-size: 12px;">searchable-encryption</a>
+        
+        <a href="http://outsourcedbits.org/tags/section-215" style="font-size: 12px;">section-215</a>
+        
+        <a href="http://outsourcedbits.org/tags/sse" style="font-size: 12px;">sse</a>
+        
+        <a href="http://outsourcedbits.org/tags/ste" style="font-size: 12px;">ste</a>
+        
+    </div>
+</div>
+
+
+
+
+    <div id="toTop" class="fa fa-chevron-up"></div>
+</aside>
+
+	    
+	</div>
+</div>
+
+<footer id="footer">
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2016
+      Powered by <a href="//gohugo.io">Hugo</a>. Theme by <a href="http://github.com/ppoffice">PPOffice</a>.
+    </div>
+  </div>
+</footer>
+
+
+<script>
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-79501268-1', 'auto');
+ga('send', 'pageview');
+</script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+<script src="http://outsourcedbits.org/fancybox/jquery.fancybox.pack.js"></script>
+<script src="http://outsourcedbits.org/js/script.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.8.0/highlight.min.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+
+
+
+ 
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+  extensions: ["tex2jax.js"],
+  jax: ["input/TeX", "output/HTML-CSS"],
+  tex2jax: {
+    inlineMath: [['$','$'], ['\\(','\\)']],
+    displayMath: [['$$','$$'], ['\\[','\\]']],
+    processEscapes: true,
+    processEnvironments: true,
+    skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
+    TeX: { equationNumbers: { autoNumber: "AMS" },
+         extensions: ["AMSmath.js", "AMSsymbols.js"] }
+  },
+  "HTML-CSS": {availableFonts: ["TeX"]}, 
+  scale: [200]
+});
+</script>
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    
+    
+    
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i = 0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+});
+</script>
+<script type="text/javascript"
+  src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+</body>
+</html>

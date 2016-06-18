@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Sat on Outsourced Bits</title>
+    <link>http://outsourcedbits.org/tags/sat/</link>
+    <description>Recent content in Sat on Outsourced Bits</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Wed, 26 Nov 2014 20:22:09 -0300</lastBuildDate>
+    <atom:link href="http://outsourcedbits.org/tags/sat/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>Workshop on Surveillance and Technology</title>
+      <link>http://outsourcedbits.org/2014/11/26/workshop-on-surveillance-and-technology</link>
+      <pubDate>Wed, 26 Nov 2014 20:22:09 -0300</pubDate>
+      
+      <guid>http://outsourcedbits.org/2014/11/26/workshop-on-surveillance-and-technology</guid>
+      <description>&lt;p&gt;&lt;em&gt;This is an announcement for a workshop that I am organizing in conjunction with
+the &lt;a href=&#34;https://petsymposium.org/2015/&#34;&gt;Privacy Enhancing Technologies Symposium&lt;/a&gt; (PETS).&lt;/em&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;http://outsourcedbits.org/img/camera.jpg&#34; class=&#34;alignright&#34; width=&#34;250&#34;&gt;
+Due to the Snowden disclosures, mass surveillance has become one of the most
+highly-discussed and controversial issues in politics, policy, technology and
+international affairs. Modern surveillance, however, relies heavily on
+technology and, therefore, our community has a unique role to play in not only
+understanding surveillance but in mitigating it when excessive and
+restraining/limiting it when appropriate.&lt;/p&gt;
+
+&lt;p&gt;The &lt;a href=&#34;https://satsymposium.org/&#34;&gt;Workshop on Surveillance and Technology&lt;/a&gt;  (SAT)
+will aim to bring together researchers and scholars in privacy, security,
+cryptography, Law, policy, behavioral economics and psychology to discuss all
+aspects of surveillance including (but not limited to):&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Anonymity systems,&lt;/li&gt;
+&lt;li&gt;Anti-surveillance technologies,&lt;/li&gt;
+&lt;li&gt;Case studies of real-world surveillance and censorship,&lt;/li&gt;
+&lt;li&gt;Cryptographic techniques for anti-surveillance,&lt;/li&gt;
+&lt;li&gt;Cryptographic techniques for privacy-preserving surveillance,&lt;/li&gt;
+&lt;li&gt;Legal analysis of surveillance,&lt;/li&gt;
+&lt;li&gt;Measurement studies of surveillance activity,&lt;/li&gt;
+&lt;li&gt;Privacy-preserving surveillance technologies,&lt;/li&gt;
+&lt;li&gt;Psychological impacts and aspects of surveillance,&lt;/li&gt;
+&lt;li&gt;Policy implications of surveillance,&lt;/li&gt;
+&lt;li&gt;The economics of surveillance,&lt;/li&gt;
+&lt;li&gt;Surveillance and censorship,&lt;/li&gt;
+&lt;li&gt;Surveillance and diplomacy,&lt;/li&gt;
+&lt;li&gt;Surveillance and human rights,&lt;/li&gt;
+&lt;li&gt;Surveillance and the private sector&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;The workshop will be held on June 29th, 2015 in Philadelphia, PA, USA. We will
+have several invited speakers, one of which is &lt;a href=&#34;https://www.dubfire.net/&#34;&gt;Christopher
+Soghoian&lt;/a&gt; , Principal Technologist in the Speech,
+Privacy and Technology Project at the ACLU. Other invited speakers will be
+announced later.&lt;/p&gt;
+
+&lt;p&gt;For more information about the workshop, including important dates, please see:
+&lt;a href=&#34;http://satsymposium.org&#34;&gt;satsymposium.org&lt;/a&gt;.&lt;/p&gt;
+</description>
+    </item>
+    
+  </channel>
+</rss>

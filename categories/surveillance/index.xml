@@ -1,0 +1,295 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Surveillance on Outsourced Bits</title>
+    <link>http://outsourcedbits.org/categories/surveillance/</link>
+    <description>Recent content in Surveillance on Outsourced Bits</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Wed, 26 Nov 2014 20:22:09 -0300</lastBuildDate>
+    <atom:link href="http://outsourcedbits.org/categories/surveillance/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>Workshop on Surveillance and Technology</title>
+      <link>http://outsourcedbits.org/2014/11/26/workshop-on-surveillance-and-technology</link>
+      <pubDate>Wed, 26 Nov 2014 20:22:09 -0300</pubDate>
+      
+      <guid>http://outsourcedbits.org/2014/11/26/workshop-on-surveillance-and-technology</guid>
+      <description>&lt;p&gt;&lt;em&gt;This is an announcement for a workshop that I am organizing in conjunction with
+the &lt;a href=&#34;https://petsymposium.org/2015/&#34;&gt;Privacy Enhancing Technologies Symposium&lt;/a&gt; (PETS).&lt;/em&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;http://outsourcedbits.org/img/camera.jpg&#34; class=&#34;alignright&#34; width=&#34;250&#34;&gt;
+Due to the Snowden disclosures, mass surveillance has become one of the most
+highly-discussed and controversial issues in politics, policy, technology and
+international affairs. Modern surveillance, however, relies heavily on
+technology and, therefore, our community has a unique role to play in not only
+understanding surveillance but in mitigating it when excessive and
+restraining/limiting it when appropriate.&lt;/p&gt;
+
+&lt;p&gt;The &lt;a href=&#34;https://satsymposium.org/&#34;&gt;Workshop on Surveillance and Technology&lt;/a&gt;  (SAT)
+will aim to bring together researchers and scholars in privacy, security,
+cryptography, Law, policy, behavioral economics and psychology to discuss all
+aspects of surveillance including (but not limited to):&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Anonymity systems,&lt;/li&gt;
+&lt;li&gt;Anti-surveillance technologies,&lt;/li&gt;
+&lt;li&gt;Case studies of real-world surveillance and censorship,&lt;/li&gt;
+&lt;li&gt;Cryptographic techniques for anti-surveillance,&lt;/li&gt;
+&lt;li&gt;Cryptographic techniques for privacy-preserving surveillance,&lt;/li&gt;
+&lt;li&gt;Legal analysis of surveillance,&lt;/li&gt;
+&lt;li&gt;Measurement studies of surveillance activity,&lt;/li&gt;
+&lt;li&gt;Privacy-preserving surveillance technologies,&lt;/li&gt;
+&lt;li&gt;Psychological impacts and aspects of surveillance,&lt;/li&gt;
+&lt;li&gt;Policy implications of surveillance,&lt;/li&gt;
+&lt;li&gt;The economics of surveillance,&lt;/li&gt;
+&lt;li&gt;Surveillance and censorship,&lt;/li&gt;
+&lt;li&gt;Surveillance and diplomacy,&lt;/li&gt;
+&lt;li&gt;Surveillance and human rights,&lt;/li&gt;
+&lt;li&gt;Surveillance and the private sector&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;The workshop will be held on June 29th, 2015 in Philadelphia, PA, USA. We will
+have several invited speakers, one of which is &lt;a href=&#34;https://www.dubfire.net/&#34;&gt;Christopher
+Soghoian&lt;/a&gt; , Principal Technologist in the Speech,
+Privacy and Technology Project at the ACLU. Other invited speakers will be
+announced later.&lt;/p&gt;
+
+&lt;p&gt;For more information about the workshop, including important dates, please see:
+&lt;a href=&#34;http://satsymposium.org&#34;&gt;satsymposium.org&lt;/a&gt;.&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Are Compliance and Privacy Always at Odds?</title>
+      <link>http://outsourcedbits.org/2013/07/23/are-compliance-and-privacy-always-at-odds</link>
+      <pubDate>Tue, 23 Jul 2013 22:23:59 -0300</pubDate>
+      
+      <guid>http://outsourcedbits.org/2013/07/23/are-compliance-and-privacy-always-at-odds</guid>
+      <description>&lt;p&gt;&lt;img src=&#34;http://outsourcedbits.org/img/obey.jpg&#34; class=&#34;alignright&#34; width=&#34;250&#34;&gt;
+Chris Soghoian
+&lt;a href=&#34;https://twitter.com/csoghoian/status/358613839094362112&#34;&gt;points&lt;/a&gt; to an
+interesting
+&lt;a href=&#34;http://http//online.wsj.com/article/SB10001424127887324448104578615881436052760.html&#34;&gt;article&lt;/a&gt;
+in the Wall Street Journal. It describes mounting pressure on the NSA to
+re-design its phone-data program---the program under which it compels
+telecommunications companies (telcos) like Verizon to turn over their phone
+record data.&lt;/p&gt;
+
+&lt;p&gt;In the article, Timothy Edgar, a former privacy lawyer who served in the Bush
+and Obama administrations is quoted as saying:&lt;/p&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;Privacy technology under development would allow for anonymous searches of
+databases, keeping data out of government hands but also preventing phone
+companies from learning the purpose of NSA searches. Overhauling the
+surveillance program would provide a reason to speed up the technology&#39;s
+deployment.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;So this motivates the following interesting technical question:
+&lt;em&gt;how would one design such a privacy-preserving phone-data program exactly?&lt;/em&gt;&lt;/p&gt;
+
+&lt;p&gt;The first thing we need is that the telcos keep their data, as opposed to
+sending it all to the NSA. The issue with such an approach, of course, is that
+the NSA would have to disclose its queries to the telco in order to retrieve
+any information---which for obvious reasons is not going to happen.&lt;/p&gt;
+
+&lt;p&gt;So what we need is a mechanism with which the telcos can keep their data and
+the NSA can access it without disclosing its queries. This might sound
+impossible, but it turns out we&#39;ve known how to do this (in theory at least)
+for over &lt;em&gt;15&lt;/em&gt; years!&lt;/p&gt;
+
+&lt;h2 id=&#34;private-information-retrieval&#34;&gt;Private Information Retrieval&lt;/h2&gt;
+
+&lt;p&gt;One answer to this problem could be to use something called &lt;a href=&#34;http://en.wikipedia.org/wiki/Private_information_retrieval&#34;&gt;private
+information
+retrieval&lt;/a&gt; (PIR).
+With PIR, a client can retrieve information from a server &lt;em&gt;without the server
+learning anything about which item is being retrieved&lt;/em&gt;.  Standard PIR protocols
+only allow the client to retrieve information by memory location but there are
+more sophisticated variants that also support retrieval based on
+&lt;a href=&#34;http://eprint.iacr.org/1998/003&#34;&gt;keywords&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;PIR was first introduced in 1995 in a
+&lt;a href=&#34;http://people.csail.mit.edu/madhu/papers/1995/pir-journ.pdf&#34;&gt;paper&lt;/a&gt; by Chor,
+Kushilevitz, Goldreich and Sudan. Initially, PIR only worked if the data could
+be stored on two (or more) servers that could not collude. In a breakthrough
+paper, Kushilevitz and Ostrovsky showed in 1997 that PIR could be achieved even
+with a single server.  Since then, there has been a lot of work and many
+advances on PIR and, recently, Ian Goldberg from the University of Waterloo and
+his students have been trying to make PIR practical (improving both efficiency
+and functionality). If you are interested in this topic (especially in the
+practical aspects) I highly recommend the thesis of
+&lt;a href=&#34;http://uwspace.uwaterloo.ca/bitstream/10012/6142/1/Olumofin_Femi.pdf&#34;&gt;Olumofin&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;So a simple idea to solve our problem is to have the telco keep its data and to
+have the NSA query it through a PIR protocol. While this might seem like a good
+solution, there are two important problems.&lt;/p&gt;
+
+&lt;p&gt;The first is that while PIR will protect the query of the NSA (i.e., the telco will not learn anything about the query) it will not necessarily protect the telco&#39;s dataset from the NSA; that is, the NSA could learn information about individuals that are not included in its query.&lt;/p&gt;
+
+&lt;p&gt;The second problem is that the telco has no way of knowing if the NSA&#39; s query is legitimate. What if the NSA keeps submitting queries indiscriminately and eventually just learns the entire database? How does the telco know whether a particular query is even legal?&lt;/p&gt;
+
+&lt;p&gt;Fortunately, both problems can be addressed!&lt;/p&gt;
+
+&lt;h2 id=&#34;oblivious-transfer&#34;&gt;Oblivious Transfer&lt;/h2&gt;
+
+&lt;p&gt;To handle the first problem, we need a stronger form of PIR called &lt;a href=&#34;http://en.wikipedia.org/wiki/Oblivious_transfer&#34;&gt;oblivious
+transfer&lt;/a&gt; (OT). With an OT
+protocol, a client can select an item from a server&#39;s dataset while maintaining
+the following guarantees: (1) the server learns
+nothing about the client&#39;s query; and (2) the
+client learns nothing about the items it does not query. So unlike PIR, OT
+protects both parties; which is why it is sometimes called symmetric PIR.&lt;/p&gt;
+
+&lt;p&gt;Like PIR, standard OT protocols only allow clients to retrieve items by their
+location in memory so, in practice, we would prefer to use a keyword-based OT;
+that is, an OT protocol where items can be labeled with keywords and where the
+clients can retrieve them based on search terms. Fortunately, we already know
+how to design such protocols. The first keyword OT is due to Ogata and Kurosawa
+(see this &lt;a href=&#34;http://seculab.cis.ibaraki.ac.jp/~kurosawa/2004/OKS.pdf&#34;&gt;paper&lt;/a&gt;) but
+their scheme does not scale very well (each query would require the NSA to do
+work that is linear in the size of the dataset). A more efficient approach is
+due to Freedman, Ishai, Pinkas and Reingold and is described in this
+&lt;a href=&#34;https://www.cs.princeton.edu/~mfreed/docs/FIPR05-ks.pdf&#34;&gt;paper&lt;/a&gt;.&lt;/p&gt;
+
+&lt;h2 id=&#34;keyword-ot&#34;&gt;Keyword OT&lt;/h2&gt;
+
+&lt;p&gt;The high-level idea of Freedman et al.&#39;s keyword OT is as follows. As before,
+the server is the telco and the client is the NSA. Suppose the telco&#39;s dataset
+consists of &lt;span  class=&#34;math&#34;&gt;\(n\)&lt;/span&gt; pairs &lt;span  class=&#34;math&#34;&gt;\((w_1, d_1), \dots, (w_n, d_n)\)&lt;/span&gt;, where &lt;span  class=&#34;math&#34;&gt;\(w_i\)&lt;/span&gt; is a keyword
+and &lt;span  class=&#34;math&#34;&gt;\(d_i\)&lt;/span&gt; is some data associated to &lt;span  class=&#34;math&#34;&gt;\(w_i\)&lt;/span&gt;. In practice, the keywords could be
+names and the data could be phone, address, etc. The telco starts by encrypting
+this dataset by replacing each pair &lt;span  class=&#34;math&#34;&gt;\((w_i, d_i)\)&lt;/span&gt; by a label/ciphertext pair
+&lt;span  class=&#34;math&#34;&gt;\((\ell_i, d_i \oplus p_i)\)&lt;/span&gt;, where the label &lt;span  class=&#34;math&#34;&gt;\(\ell_i\)&lt;/span&gt; and the pad &lt;span  class=&#34;math&#34;&gt;\(p_i\)&lt;/span&gt; are
+(pseudo-)random strings generated from &lt;span  class=&#34;math&#34;&gt;\(w_i\)&lt;/span&gt; using a pseudo-random function
+with a secret key &lt;span  class=&#34;math&#34;&gt;\(K\)&lt;/span&gt;. More formally, we would write that for all &lt;span  class=&#34;math&#34;&gt;\(i\)&lt;/span&gt;,&lt;/p&gt;
+
+&lt;p&gt;&lt;span  class=&#34;math&#34;&gt;\[
+F_K(w_i) = (\ell_i, p_i),
+\]&lt;/span&gt;&lt;/p&gt;
+
+&lt;p&gt;where &lt;span  class=&#34;math&#34;&gt;\(F\)&lt;/span&gt; is the PRF. A PRF is sort of like a keyed
+hash. &lt;sup class=&#34;footnote-ref&#34; id=&#34;fnref:1&#34;&gt;&lt;a class=&#34;footnote&#34; href=&#34;#fn:1&#34;&gt;1&lt;/a&gt;&lt;/sup&gt; The main property of PRFs is that if we evaluate them with a random
+key &lt;span  class=&#34;math&#34;&gt;\(K\)&lt;/span&gt; on any input, they output a random looking
+string.&lt;/p&gt;
+
+&lt;p&gt;Note that this new encrypted dataset reveals no information about the real
+dataset since the &lt;span  class=&#34;math&#34;&gt;\(\ell_i\)&lt;/span&gt; values are pseudo-random
+(and therefore effectively independent of the
+&lt;span  class=&#34;math&#34;&gt;\(w_i\)&lt;/span&gt;&#39;s) and because the ciphertexts &lt;span  class=&#34;math&#34;&gt;\(d_i\oplus
+p_i\)&lt;/span&gt; are effectively one-time pad (OTP) encryptions of the
+&lt;span  class=&#34;math&#34;&gt;\(d_i\)&lt;/span&gt;&#39;s. &lt;sup class=&#34;footnote-ref&#34; id=&#34;fnref:2&#34;&gt;&lt;a class=&#34;footnote&#34; href=&#34;#fn:2&#34;&gt;2&lt;/a&gt;&lt;/sup&gt; The telco now sends this encrypted
+dataset to the NSA who stores it. Remember: it reveals no information
+whatsoever about the real dataset so this is OK!&lt;/p&gt;
+
+&lt;p&gt;Now suppose the NSA needs to lookup information related to some keyword &lt;span  class=&#34;math&#34;&gt;\(w\)&lt;/span&gt; and
+remember that the encrypted dataset it holds consists of labels &lt;span  class=&#34;math&#34;&gt;\(\ell_i\)&lt;/span&gt; and
+ciphertexts &lt;span  class=&#34;math&#34;&gt;\(d_i \oplus p_i\)&lt;/span&gt;. To extract the information it needs from the
+encrypted dataset, it therefore needs to figure out: (1) the label for keyword
+&lt;span  class=&#34;math&#34;&gt;\(w\)&lt;/span&gt; (so it can lookup the appropriate OTP ciphertext); and (2) the pad &lt;span  class=&#34;math&#34;&gt;\(p_i\)&lt;/span&gt;
+used in the associated ciphertext.&lt;/p&gt;
+
+&lt;p&gt;Of course the NSA cannot do this on its own because it does not know the
+telco&#39;s secret key &lt;span  class=&#34;math&#34;&gt;\(K\)&lt;/span&gt; for the PRF used to generate these items. But we have a
+problem. If the NSA sends its keyword w to the telco so that the latter
+computes and returns &lt;span  class=&#34;math&#34;&gt;\(F_K(w)\)&lt;/span&gt;, the telco will learn the keyword. And if the
+telco sends its key &lt;span  class=&#34;math&#34;&gt;\(K\)&lt;/span&gt; to the NSA so that it computes &lt;span  class=&#34;math&#34;&gt;\(F_K(w)\)&lt;/span&gt; on its own, the
+NSA will be able to decrypt the entire dataset.&lt;/p&gt;
+
+&lt;p&gt;The solution here is to use another amazing cryptographic technology called
+&lt;a href=&#34;http://en.wikipedia.org/wiki/Secure_multi-party_computation#Two-party_computation&#34;&gt;secure two-party
+computation&lt;/a&gt;
+(2PC). I won&#39;t try to explain how 2PC works but if you are interested a good
+place to start is the &lt;a href=&#34;http://mpclounge.au.dk/&#34;&gt;MPC Lounge&lt;/a&gt;. The important
+thing to know about 2PC is that we can use it to solve our problem. In other
+words, the telco and the NSA can execute a 2PC protocol that will result in the
+NSA learning &lt;span  class=&#34;math&#34;&gt;\(F_K(w)\)&lt;/span&gt; and therefore the label and the pad for &lt;span  class=&#34;math&#34;&gt;\(w\)&lt;/span&gt;, without it
+learning anything about the telco&#39;s key and without the telco learning anything
+about &lt;span  class=&#34;math&#34;&gt;\(w\)&lt;/span&gt; &lt;sup class=&#34;footnote-ref&#34; id=&#34;fnref:3&#34;&gt;&lt;a class=&#34;footnote&#34; href=&#34;#fn:3&#34;&gt;3&lt;/a&gt;&lt;/sup&gt;.&lt;/p&gt;
+
+&lt;h2 id=&#34;authorized-queries&#34;&gt;Authorized Queries&lt;/h2&gt;
+
+&lt;p&gt;Now on to the second problem: how does the telco know if the NSA&#39; s query is
+legitimate? To address this we first need to incorporate an extra party into
+our model that has the power to decide if an NSA query is legitimate or not. In
+practice, this would be the &lt;a href=&#34;http://en.wikipedia.org/wiki/United_States_Foreign_Intelligence_Surveillance_Court&#34;&gt;FISA
+court&lt;/a&gt;
+&lt;sup class=&#34;footnote-ref&#34; id=&#34;fnref:4&#34;&gt;&lt;a class=&#34;footnote&#34; href=&#34;#fn:4&#34;&gt;4&lt;/a&gt;&lt;/sup&gt; and we&#39; ll assume this court can digitally sign, i.e., it has a secret
+signing key and a public verification key that is known to the telco.&lt;/p&gt;
+
+&lt;p&gt;Now suppose the NSA wants to retrieve information about a user Alice from the
+telco. It first sends its query to the court. If the court approves the query,
+it signs it and returns the signature to the NSA. At this point, we only need
+to make a small change to the protocol described above. Instead of executing a
+2PC that evaluates the PRF so as to generate a label and pad for the NSA&#39;s
+query; the parties will execute a 2PC that first verifies the court&#39;s signature
+and then (if the signature checks out) evaluates the PRF (i.e., generates the
+label and pad for the keyword). The properties of the 2PC will hide the
+signature and the keyword from the telco, and the secret key
+&lt;span  class=&#34;math&#34;&gt;\(K\)&lt;/span&gt; from the NSA. &lt;sup class=&#34;footnote-ref&#34; id=&#34;fnref:5&#34;&gt;&lt;a class=&#34;footnote&#34; href=&#34;#fn:5&#34;&gt;5&lt;/a&gt;&lt;/sup&gt;&lt;/p&gt;
+
+&lt;h2 id=&#34;is-this-really-possible&#34;&gt;Is this really possible?&lt;/h2&gt;
+
+&lt;p&gt;The design described above is possible in theory. But of course the interesting
+question is whether something like this could be used in practice.&lt;/p&gt;
+
+&lt;p&gt;I don&#39;t really know how large telco datasets are but I would guess on the order
+of hundreds of millions of users. Encrypting such a dataset and sending it to
+the NSA would be expensive but definitely possible as the encryption process
+here would consist of relatively cheap operations like PRF evaluations and
+XORs. The query stage, however would be very inefficient due to the execution
+of the 2PC protocol. But if we look at things carefully, the bottlenecks would
+likely be (1) the verification of the signature (due to the complexity of
+signature verification); and (2) the generation of the pads (since they have to
+be as long as the data they will be XORed with).&lt;/p&gt;
+
+&lt;p&gt;Fortunately there are a few things we can do to mitigate these problems.
+Instead of using a signature scheme, we could use a message authentication code
+(MAC). This would require the court to share a secret key with the telco but
+this doesn&#39;t seem like such a severe requirement. MACs are much simpler
+computationally than signatures so the 2PC verification would be much faster
+&lt;sup class=&#34;footnote-ref&#34; id=&#34;fnref:6&#34;&gt;&lt;a class=&#34;footnote&#34; href=&#34;#fn:6&#34;&gt;6&lt;/a&gt;&lt;/sup&gt;.&lt;/p&gt;
+
+&lt;p&gt;With respect to the length of the pads, we could use the PRF to generate a
+short string instead (say 128 bits long) and use
+that as a seed to a pseudo-random generator to generate a larger pad. This
+would change how the telco and NSA encrypt and decrypt items of the dataset but
+it is a minor change that would not effect the efficiency of encryption and
+decryption much.&lt;/p&gt;
+
+&lt;p&gt;With these changes, the 2PC would only have to compute two PRF evaluations and
+one equality check which is definitely within practical reach.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Update:&lt;/strong&gt; For a high-level description of the protocol I designed in this
+post see
+&lt;a href=&#34;http://boingboing.net/2014/03/01/trustycon-how-to-redesign-nsa.html&#34;&gt;this&lt;/a&gt;
+great talk by Ed Felten.&lt;/p&gt;
+
+&lt;p&gt;&lt;em&gt;Thanks to Matt Green and Payman Mohassel for comments on a draft of this post
+and to Chris Soghoian for motivating me to think about this problem.&lt;/em&gt;&lt;/p&gt;
+&lt;div class=&#34;footnotes&#34;&gt;
+
+&lt;hr&gt;
+
+&lt;ol&gt;
+&lt;li id=&#34;fn:1&#34;&gt;PRFs are like keyed hash functions only in idealized models like the random oracle model.
+ &lt;a class=&#34;footnote-return&#34; href=&#34;#fnref:1&#34;&gt;↩&lt;/a&gt;&lt;/li&gt;
+&lt;li id=&#34;fn:2&#34;&gt;Technically, since the labels and pads are pseudo-random (as opposed to random), &lt;span  class=&#34;math&#34;&gt;\(\ell_i\)&lt;/span&gt; is not independent of &lt;span  class=&#34;math&#34;&gt;\(w_i\)&lt;/span&gt; and &lt;span  class=&#34;math&#34;&gt;\(d_i \oplus p_i\)&lt;/span&gt; is not a one-time pad. More precisely, &lt;span  class=&#34;math&#34;&gt;\(\ell_i\)&lt;/span&gt; and &lt;span  class=&#34;math&#34;&gt;\(d_i \oplus p_i\)&lt;/span&gt; reveal no partial information about &lt;span  class=&#34;math&#34;&gt;\(w_i\)&lt;/span&gt; and &lt;span  class=&#34;math&#34;&gt;\(d_i\)&lt;/span&gt; to a computationally-bounded adversary.
+ &lt;a class=&#34;footnote-return&#34; href=&#34;#fnref:2&#34;&gt;↩&lt;/a&gt;&lt;/li&gt;
+&lt;li id=&#34;fn:3&#34;&gt;Protocols that evaluate PRFs in this manner are usually called oblivious PRF (OPRF) protocols. The 2PC-based OPRF protocol is the simplest to understand conceptually but we know of more efficient OPRF protocols not based on 2PC (e.g., the Freedman et al. paper describes one such construction).
+ &lt;a class=&#34;footnote-return&#34; href=&#34;#fnref:3&#34;&gt;↩&lt;/a&gt;&lt;/li&gt;
+&lt;li id=&#34;fn:4&#34;&gt;There is debate as to whether the FISA court exercises proper oversight over the NSA or not (for example see &lt;a href=&#34;http://www.nytimes.com/2013/07/26/us/politics/robertss-picks-reshaping-secret-surveillance-court.html?_r=0&#34;&gt;this article&lt;/a&gt; from the New York Times), but for the purpose of this exercise we&#39;ll just assume that it does.
+ &lt;a class=&#34;footnote-return&#34; href=&#34;#fnref:4&#34;&gt;↩&lt;/a&gt;&lt;/li&gt;
+&lt;li id=&#34;fn:5&#34;&gt;The reason we also need to hide the signature from the telco is that signatures can leak information about their message.
+ &lt;a class=&#34;footnote-return&#34; href=&#34;#fnref:5&#34;&gt;↩&lt;/a&gt;&lt;/li&gt;
+&lt;li id=&#34;fn:6&#34;&gt;Here we also assume the data is hashed with a collision-resistant hash function before being MACed.
+ &lt;a class=&#34;footnote-return&#34; href=&#34;#fnref:6&#34;&gt;↩&lt;/a&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/div&gt;
+</description>
+    </item>
+    
+  </channel>
+</rss>

@@ -1,0 +1,866 @@
+<!DOCTYPE html>
+<html lang="en-us">
+<head>
+    <title>Is the NSA Metadata Program Legal? &middot; Outsourced Bits</title>
+    <meta name="generator" content="Hugo 0.16" />
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="author" content="Seny Kamara">
+    
+      <meta name="description" content="">
+    
+    
+    <link rel="icon" href="http://outsourcedbits.org/favicon.ico">
+    <link rel="apple-touch-icon" href="http://outsourcedbits.org/apple-touch-icon.png" />
+    <link rel="stylesheet" href="http://outsourcedbits.org/css/style.css">
+    <link rel="stylesheet" href="http://outsourcedbits.org/css/font-awesome.min.css">
+    <link rel="stylesheet" href="http://outsourcedbits.org/css/monokai.css">
+    <link rel="stylesheet" href="http://outsourcedbits.org/fancybox/jquery.fancybox.css">
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400italic,400,600' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Source+Code+Pro' rel='stylesheet' type='text/css'>
+    <meta property="og:title" content="Is the NSA Metadata Program Legal?" />
+<meta property="og:description" content="One of the most interesting aspects of the NSA metadata program is whether it is legal or not. Unlike the questions we usually think about in computer science, this question has no definitive answer. The program is legal in some sense, but the logic needed for the argument to go through is so questionable that you could just as well say that it&#39;s not. Recall that the program requires telephone providers to hand to the NSA (each day) the metadata of every US-to-foreign, foreign-to-US and US-to-US call." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://outsourcedbits.org/2014/04/29/is-the-nsa-metadata-program-legal" />
+
+
+<meta property="og:updated_time" content="2014-04-29T17:21:47-03:00"/>
+
+
+
+
+
+
+
+
+
+
+    
+    
+<meta itemprop="name" content="Is the NSA Metadata Program Legal?">
+<meta itemprop="description" content="One of the most interesting aspects of the NSA metadata program is whether it is legal or not. Unlike the questions we usually think about in computer science, this question has no definitive answer. The program is legal in some sense, but the logic needed for the argument to go through is so questionable that you could just as well say that it&#39;s not. Recall that the program requires telephone providers to hand to the NSA (each day) the metadata of every US-to-foreign, foreign-to-US and US-to-US call.">
+
+
+<meta itemprop="dateModified" content="2014-04-29T17:21:47-03:00" />
+<meta itemprop="wordCount" content="1090">
+
+
+
+<meta itemprop="keywords" content="applied-crypto,applied-cryptography,cloud-computing,encrypted-search,graph-encryption,inference-attacks,learning,misc,policy,surveillance,cryptdb,deterministic-encryption,dte,fhe,fisa,functional-encryption,learning,machine-learning,metadata,mpc,msr,nsa,ope,oram,ot,pets,pir,ppe,sat,searchable-encryption,section-215,sse,ste," />
+
+    
+
+  <meta name="twitter:card" content="summary"/>
+
+
+
+<meta name="twitter:title" content="Is the NSA Metadata Program Legal?"/>
+<meta name="twitter:description" content="One of the most interesting aspects of the NSA metadata program is whether it is legal or not. Unlike the questions we usually think about in computer science, this question has no definitive answer. The program is legal in some sense, but the logic needed for the argument to go through is so questionable that you could just as well say that it&#39;s not. Recall that the program requires telephone providers to hand to the NSA (each day) the metadata of every US-to-foreign, foreign-to-US and US-to-US call."/>
+<meta name="twitter:site" content="@senykam"/>
+
+
+    
+
+    
+</head>
+<body>
+<div class="container">
+
+
+<div id="container">
+	<header id="header">
+  <div id="header-main" class="header-inner">
+    <div class="outer">
+      <a href="http://outsourcedbits.org/" id="logo"><span class="site-title">Outsourced Bits</span></a>
+      <nav id="main-nav">
+          
+
+          
+
+          
+      </nav>
+        <nav id="sub-nav">
+          <div class="profile" id="profile-nav">
+            <a id="profile-anchor" href="javascript:;"><img class="avatar" src="http://outsourcedbits.org//img/sk.jpg"><i class="fa fa-caret-down"></i></a>
+          </div>
+        </nav>
+        <div id="search-form-wrap">
+          <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form">
+              <input type="search" name="q" results="0" class="search-form-input" placeholder="Search">
+              <button type="submit" class="search-form-submit">
+              </button>
+              <input type="hidden" name="q" value="site:http://outsourcedbits.org/">
+         </form>
+        </div>
+    </div>
+  </div>
+  <div id="main-nav-mobile" class="header-sub header-inner">
+    <table class="menu outer">
+      <tbody>
+          <tr>
+          
+
+          
+
+          
+          <td>
+          <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form">
+          <input type="search" name="q" results="0" class="search-form-input" placeholder="Search">
+          <input type="hidden" name="q" value="site:http://outsourcedbits.org/">
+          </form>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+</header>
+
+   	
+   	<div class="outer">
+   		
+	    <aside id="profile">
+  <div class="inner profile-inner">
+    <div class="base-info profile-block">
+      <img id="avatar" src="http://outsourcedbits.org/img/sk.jpg" width="200" class="avatar">
+      
+      
+      <p class="mybio">My name is Seny Kamara. I am an Associate Professor of <a href="http://cs.brown.edu">Computer Science</a> at <a href="http://brown.edu">Brown</a>. Prior to that, I was a researcher at Microsoft Research. <br><br> My work is focused on designing and studying cryptographic algorithms,
+protocols and systems; often motivated by privacy issues in cloud computing,
+surveillance and databases. <br><br> This is a blog about my research and interests. For more about my work see my
+<a href="http://cs.brown.edu/~seny">homepage</a>.</p>
+      <span id="location"><i class="fa fa-map-marker"></i>Rio</span>
+      
+    </div>
+    
+    <div class="contact-info profile-block">
+      <table class="contact-list">
+        <tr>
+          
+<td><a href="//github.com/senykam" target="_blank" title="GitHub"><i class="fa fa-github"></i></a></td>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<td><a href="//twitter.com/senykam" target="_blank" title="Twitter"><i class="fa fa-twitter"></i></a></td>
+
+
+          <td><a href="" target="_blank" title="RSS"><i class="fa fa-rss"></i></a></td>
+        </tr>
+      </table>
+    </div>
+  </div>
+</aside>
+
+	    
+
+	    
+<section id="main">
+
+    <article id="page-undefined" class="article article-type-page" itemscope="" itemprop="blogPost">
+        <div class="article-inner">
+            
+
+            <header class="article-header">
+    <a href="http://outsourcedbits.org/2014/04/29/is-the-nsa-metadata-program-legal">
+    <h1 class="article-title" itemprop="name">
+        Is the NSA Metadata Program Legal?
+    </h1>
+    </a>
+    <div class="article-meta">
+        <div class="article-date">
+            <i class="fa fa-calendar"></i>
+            <time datetime="2014-04-29 17:21:47 -0300 STD" itemprop="datePublished">2014-04-29</time>
+            &middot;
+            1090
+            words
+            &middot;
+            6
+            minute read
+        </div>
+
+        
+        
+            
+            
+            <div class="article-category">
+                <i class="fa fa-folder"></i>
+                
+                <a class="article-category-link" href="http://outsourcedbits.org/categories/policy">Policy</a>
+                
+                
+            </div>
+            
+        
+
+        
+            
+            
+            <div class="article-category">
+                <i class="fa fa-tags"></i>
+                
+                <a class="article-category-link" href="http://outsourcedbits.org/tags/fisa">FISA</a>
+                &middot;
+                
+                <a class="article-category-link" href="http://outsourcedbits.org/tags/nsa">NSA</a>
+                &middot;
+                
+                <a class="article-category-link" href="http://outsourcedbits.org/tags/section-215">Section 215</a>
+                &middot;
+                
+                <a class="article-category-link" href="http://outsourcedbits.org/tags/metadata">Metadata</a>
+                
+                
+            </div>
+            
+        
+    </div>
+</header>
+
+            <div class="article-entry" itemprop="articleBody">
+                <p><img src="/img/justice.jpg" class="alignright" width="200">
+One of the most interesting aspects of the NSA metadata program is whether it
+is legal or not. Unlike the questions we usually think about in computer
+science, this question has no definitive answer. The program is legal in some
+sense, but the logic needed for the argument to go through is so questionable
+that you could just as well say that it's not.</p>
+
+<p>Recall that the program requires telephone providers to hand to the NSA (each
+day) the metadata of every US-to-foreign, foreign-to-US and US-to-US call. This
+metadata consists of the origin and destination numbers, the time and duration
+of the call, the international mobile subscriber identity (IMSI) number, the
+trunk identifier and telephone calling card numbers.  This data is stored and
+queried by the NSA and each record has to be deleted after 5 years.</p>
+
+<p>I had decided to include a high-level overview of this question in an invited
+paper I wrote for the
+<a href="http://www.dcsec.uni-hannover.de/wahc14.html">Workshop on Applied Homomorphic Cryptography</a>
+but I had to take it out due to space restrictions.
+Even though I'll eventually include the overview in the full version of the
+paper, in the meantime, I thought it might make for a useful blog post;
+especially for computer scientists who are curious about the legal aspects of
+this issue but don't have the  background to make sense of it.</p>
+
+<p>The question of whether the NSA metadata program is legal reduces to the
+following two questions: (1) does the program violate the Fourth Amendment of
+the US Constitution?; and (2) is the program compliant with the amendments to
+the Foreign Intelligence Surveillance Act (FISA) put forth in the USA PATRIOT
+Act of 2001 which, in the Government's view, authorize this program.</p>
+
+<h2 id="does-it-violate-the-fourth-amendment">Does it Violate the Fourth Amendment?</h2>
+
+<p>The <a href="https://en.wikipedia.org/wiki/Fourth_Amendment_to_the_United_States_Constitution">Fourth
+Amendment</a>
+protects the privacy of American citizens. The Amendment states:</p>
+
+<blockquote>
+<p>The right of the people to be secure in their persons, houses, papers, and
+effects, against unreasonable searches and seizures, shall not be violated,
+and no warrants shall issue, but upon probable cause, supported by oath or
+affirmation, and particularly describing the place to be searched, and the
+persons or things to be seized.</p>
+</blockquote>
+
+<p>Roughly speaking, it protects citizens against unreasonable search and seizures
+by requiring the Government to obtain a warrant supported by probable cause
+from an independent
+<a href="https://en.wikipedia.org/wiki/Magistrate#United_States">magistrate</a>.</p>
+
+<p>Historically, courts tended to limit the protections of the Fourth Amendment to
+a person's physical property, including their home and personal effects, but in
+1967, in <a href="https://en.wikipedia.org/wiki/Katz_v_United_States">Katz v. United
+States</a>, the Supreme Court
+greatly widened the scope of the Fourth Amendment. In particular, the Court
+decided that Fourth Amendment protections apply to &quot;people, not places&quot; and
+that a person is afforded protection as long as they have a &quot;reasonable
+expectation of privacy&quot; in the items or location to be searched.</p>
+
+<p>Warrantless searches are per se unreasonable under the Fourth Amendment, unless
+they fall within a recognized exception. Given that a warrant embodies the
+notion of of &quot;reasonableness&quot; under the Fourth Amendment, the Government would
+bear a heavy burden to explain exactly how the metadata program---which collects
+metadata on individuals without a warrant---involves a &quot;reasonable&quot; search under
+the Fourth Amendment.</p>
+
+<p>Following Katz v. United States, however, there were two important cases that
+solidified what is now known as the third party doctrine, which holds that
+Fourth Amendment protections do not apply to information that is voluntarily
+disclosed to a third party since there is then <em>no reasonable expectation
+of privacy with respect to such information</em>.  These Supreme Court decisions
+were <a href="https://en.wikipedia.org/wiki/United_States_v_Miller">United States v. Miller</a>
+in 1976 and
+<a href="https://en.wikipedia.org/wiki/Smith_v_Maryland">Smith v. Maryland</a>
+in 1979. In the Miller decision, the Supreme Court ruled that the Government did
+not violate the Fourth Amendment by obtaining Miller's bank records without a
+warrant. In the Smith decision, the Court found no Fourth Amendment violation
+when the Government obtained records of phone numbers dialed by Smith from the
+phone company without a warrant.  Though these decisions were issued in the
+1970's and concerned bank records and telephone companies, an argument could be
+made that the third party doctrine also extends to ISPs, mobile networks and
+cloud providers.</p>
+
+<p>So in light of the third party doctrine, the warrantless collection of metadata
+on (potentially) every American may not violate the Fourth Amendment, because
+such metadata has been voluntarily provided by users to their service providers.</p>
+
+<p>This issue is highly controversial, however, and at least
+<a href="http://en.wikipedia.org/wiki/Richard_J._Leon">one judge</a> has found
+that the scale of the program and the massive technological changes that have
+occurred in the last 30 years mean that the Miller and Smith decisions are not
+necessarily controlling (i.e., completely binding).</p>
+
+<h2 id="is-it-compliant-with-the-fisapatriot-act">Is it Compliant with the FISA/PATRIOT Act?</h2>
+
+<p>The second question is whether the program exceeds the scope of <a href="http://en.wikipedia.org/wiki/Section_summary_of_the_Patriot_Act,_Title_II#Section_215:_Access_to_records_and_other_items_under_FISA">Section
+215</a>
+of the <a href="http://en.wikipedia.org/wiki/Patriot_act">PATRIOT Act</a>, which amended
+Section 501 of the <a href="http://en.wikipedia.org/wiki/FISA">Foreign Intelligence Surveillance
+Act</a> (FISA).</p>
+
+<p>FISA is a law from 1978 that prescribes how the Government can conduct domestic
+surveillance for national security-related investigations. The law was initially
+passed to curb the domestic surveillance activities of the Government which
+included abuses such as
+<a href="http://en.wikipedia.org/wiki/Watergate">Watergate</a>, as well as the
+FBI <a href="http://en.wikipedia.org/wiki/Cointel_Pro">COINTELPRO</a> and the
+NSA <a href="https://en.wikipedia.org/wiki/Project_MINARET">MINARET</a> programs.</p>
+
+<p>One of the law's provisions was to create a court, referred to as the
+<a href="http://en.wikipedia.org/wiki/FISA_Court">FISA</a>, which was assigned the role of
+providing judicial oversight over the Government's domestic surveillance
+activities in national security-related investigations.  To protect national
+security,  public visibility into the court's activities was limited. <sup class="footnote-ref" id="fnref:1"><a class="footnote" href="#fn:1">1</a></sup></p>
+
+<p>FISA has been amended several times since its introduction but perhaps the most
+controversial amendment was in Section 215 of the USA PATRIOT Act of 2001.
+Roughly speaking, Section 215 allows the Government to compel a third-party
+provider---without a warrant---to hand over &quot;business records&quot; about a customer
+&quot;if there are reasonable grounds to believe that the tangible things sought are
+relevant to an authorized investigation&quot;.</p>
+
+<p>Part of the argument for the legality of the NSA metadata program rests on the
+meaning of the term relevant. Indeed, as explained in a
+<a href="https://www.aclu.org/files/natsec/nsa/br13-09-primary-order.pdf">declassified opinion</a>
+from the FISA Court, the court decided to interpret the term
+&quot;relevant&quot; to mean bearing upon or being pertinent to an investigation, as
+opposed to directly related to a specific investigation target (e.g., the
+records of the specific individual being investigated).</p>
+
+<p>The former interpretation of &quot;relevant&quot; combined with submissions from the NSA
+that their investigative tools required the metadata of all customers in order
+to work properly in any investigation, led the FISA court to hold that the
+program is legal.</p>
+<div class="footnotes">
+
+<hr>
+
+<ol>
+<li id="fn:1">If you're curious about the FISA court and, especially about what it's door looks like, see  this <a href="https://konklone.com/post/the-door-to-the-fisa-court">post</a> by Eric Mill.
+ <a class="footnote-return" href="#fnref:1">↩</a></li>
+</ol>
+</div>
+
+            </div>
+            <footer class="article-footer">
+    <a data-url="http://outsourcedbits.org/2014/04/29/is-the-nsa-metadata-program-legal" data-id="3b068017282f88daa0853d0a95532dd4" class="article-share-link">
+        Share
+    </a>
+    
+    <a href="http://outsourcedbits.org/2014/04/29/is-the-nsa-metadata-program-legal/#disqus_thread" class="article-comment-link">
+        Comments
+    </a>
+    
+</footer>
+
+        </div>
+
+        
+<nav id="article-nav">
+    
+    <a href="http://outsourcedbits.org/2014/03/10/restructuring-the-nsa-metadata-program" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">
+          Older
+      </strong>
+      <div class="article-nav-title">Restructuring the NSA Metadata Program</div>
+    </a>
+    
+
+    
+    <a href="http://outsourcedbits.org/2014/08/21/how-to-search-on-encrypted-data-searchable-symmetric-encryption-part-5" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">
+          Newer
+      </strong>
+      <div class="article-nav-title">How to Search on Encrypted Data: Searchable Symmetric Encryption (Part 5)</div>
+    </a>
+    
+</nav>
+
+
+    </article>
+
+    
+    <section id="comments">
+        <div id="disqus_thread">
+            <div id="disqus_thread"></div>
+<script type="text/javascript">
+    var disqus_shortname = 'outsourcedbits';
+    var disqus_identifier = 'http:\/\/outsourcedbits.org\/2014\/04\/29\/is-the-nsa-metadata-program-legal';
+    var disqus_title = 'Is the NSA Metadata Program Legal?';
+    var disqus_url = 'http:\/\/outsourcedbits.org\/2014\/04\/29\/is-the-nsa-metadata-program-legal';
+
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+        </div>
+    </section>
+    
+</section>
+
+
+	    
+	    <aside id="sidebar">
+    
+
+    
+
+
+<div class="widget-wrap">
+    <h3 class="widget-title">Categories</h3>
+    <div class="widget">
+        <ul class="category-list">
+            
+            <li class="category-list-item">
+                <a class="category-list-link" href="http://outsourcedbits.org/categories/applied-crypto">
+                    applied-crypto
+                </a>
+                <span class="category-list-count">3</span>
+            </li>
+            
+            <li class="category-list-item">
+                <a class="category-list-link" href="http://outsourcedbits.org/categories/applied-cryptography">
+                    applied-cryptography
+                </a>
+                <span class="category-list-count">1</span>
+            </li>
+            
+            <li class="category-list-item">
+                <a class="category-list-link" href="http://outsourcedbits.org/categories/cloud-computing">
+                    cloud-computing
+                </a>
+                <span class="category-list-count">2</span>
+            </li>
+            
+            <li class="category-list-item">
+                <a class="category-list-link" href="http://outsourcedbits.org/categories/encrypted-search">
+                    encrypted-search
+                </a>
+                <span class="category-list-count">11</span>
+            </li>
+            
+            <li class="category-list-item">
+                <a class="category-list-link" href="http://outsourcedbits.org/categories/graph-encryption">
+                    graph-encryption
+                </a>
+                <span class="category-list-count">1</span>
+            </li>
+            
+            <li class="category-list-item">
+                <a class="category-list-link" href="http://outsourcedbits.org/categories/inference-attacks">
+                    inference-attacks
+                </a>
+                <span class="category-list-count">1</span>
+            </li>
+            
+            <li class="category-list-item">
+                <a class="category-list-link" href="http://outsourcedbits.org/categories/learning">
+                    learning
+                </a>
+                <span class="category-list-count">1</span>
+            </li>
+            
+            <li class="category-list-item">
+                <a class="category-list-link" href="http://outsourcedbits.org/categories/misc">
+                    misc
+                </a>
+                <span class="category-list-count">1</span>
+            </li>
+            
+            <li class="category-list-item">
+                <a class="category-list-link" href="http://outsourcedbits.org/categories/policy">
+                    policy
+                </a>
+                <span class="category-list-count">2</span>
+            </li>
+            
+            <li class="category-list-item">
+                <a class="category-list-link" href="http://outsourcedbits.org/categories/surveillance">
+                    surveillance
+                </a>
+                <span class="category-list-count">2</span>
+            </li>
+            
+        </ul>
+    </div>
+</div>
+
+
+
+    
+
+
+<div class="widget-wrap">
+    <h3 class="widget-title">
+        Tags
+    </h3>
+    <div class="widget">
+        <ul class="category-list">
+            
+            <li class="category-list-item">
+                <a class="category-list-link" href="http://outsourcedbits.org/tags/cryptdb">
+                    cryptdb
+                </a>
+                <span class="category-list-count">1</span>
+            </li>
+            
+            <li class="category-list-item">
+                <a class="category-list-link" href="http://outsourcedbits.org/tags/deterministic-encryption">
+                    deterministic-encryption
+                </a>
+                <span class="category-list-count">1</span>
+            </li>
+            
+            <li class="category-list-item">
+                <a class="category-list-link" href="http://outsourcedbits.org/tags/dte">
+                    dte
+                </a>
+                <span class="category-list-count">1</span>
+            </li>
+            
+            <li class="category-list-item">
+                <a class="category-list-link" href="http://outsourcedbits.org/tags/fhe">
+                    fhe
+                </a>
+                <span class="category-list-count">2</span>
+            </li>
+            
+            <li class="category-list-item">
+                <a class="category-list-link" href="http://outsourcedbits.org/tags/fisa">
+                    fisa
+                </a>
+                <span class="category-list-count">1</span>
+            </li>
+            
+            <li class="category-list-item">
+                <a class="category-list-link" href="http://outsourcedbits.org/tags/functional-encryption">
+                    functional-encryption
+                </a>
+                <span class="category-list-count">1</span>
+            </li>
+            
+            <li class="category-list-item">
+                <a class="category-list-link" href="http://outsourcedbits.org/tags/learning">
+                    learning
+                </a>
+                <span class="category-list-count">1</span>
+            </li>
+            
+            <li class="category-list-item">
+                <a class="category-list-link" href="http://outsourcedbits.org/tags/machine-learning">
+                    machine-learning
+                </a>
+                <span class="category-list-count">1</span>
+            </li>
+            
+            <li class="category-list-item">
+                <a class="category-list-link" href="http://outsourcedbits.org/tags/metadata">
+                    metadata
+                </a>
+                <span class="category-list-count">2</span>
+            </li>
+            
+            <li class="category-list-item">
+                <a class="category-list-link" href="http://outsourcedbits.org/tags/mpc">
+                    mpc
+                </a>
+                <span class="category-list-count">3</span>
+            </li>
+            
+            <li class="category-list-item">
+                <a class="category-list-link" href="http://outsourcedbits.org/tags/msr">
+                    msr
+                </a>
+                <span class="category-list-count">1</span>
+            </li>
+            
+            <li class="category-list-item">
+                <a class="category-list-link" href="http://outsourcedbits.org/tags/nsa">
+                    nsa
+                </a>
+                <span class="category-list-count">2</span>
+            </li>
+            
+            <li class="category-list-item">
+                <a class="category-list-link" href="http://outsourcedbits.org/tags/ope">
+                    ope
+                </a>
+                <span class="category-list-count">1</span>
+            </li>
+            
+            <li class="category-list-item">
+                <a class="category-list-link" href="http://outsourcedbits.org/tags/oram">
+                    oram
+                </a>
+                <span class="category-list-count">1</span>
+            </li>
+            
+            <li class="category-list-item">
+                <a class="category-list-link" href="http://outsourcedbits.org/tags/ot">
+                    ot
+                </a>
+                <span class="category-list-count">1</span>
+            </li>
+            
+            <li class="category-list-item">
+                <a class="category-list-link" href="http://outsourcedbits.org/tags/pets">
+                    pets
+                </a>
+                <span class="category-list-count">1</span>
+            </li>
+            
+            <li class="category-list-item">
+                <a class="category-list-link" href="http://outsourcedbits.org/tags/pir">
+                    pir
+                </a>
+                <span class="category-list-count">1</span>
+            </li>
+            
+            <li class="category-list-item">
+                <a class="category-list-link" href="http://outsourcedbits.org/tags/ppe">
+                    ppe
+                </a>
+                <span class="category-list-count">2</span>
+            </li>
+            
+            <li class="category-list-item">
+                <a class="category-list-link" href="http://outsourcedbits.org/tags/sat">
+                    sat
+                </a>
+                <span class="category-list-count">1</span>
+            </li>
+            
+            <li class="category-list-item">
+                <a class="category-list-link" href="http://outsourcedbits.org/tags/searchable-encryption">
+                    searchable-encryption
+                </a>
+                <span class="category-list-count">1</span>
+            </li>
+            
+            <li class="category-list-item">
+                <a class="category-list-link" href="http://outsourcedbits.org/tags/section-215">
+                    section-215
+                </a>
+                <span class="category-list-count">2</span>
+            </li>
+            
+            <li class="category-list-item">
+                <a class="category-list-link" href="http://outsourcedbits.org/tags/sse">
+                    sse
+                </a>
+                <span class="category-list-count">4</span>
+            </li>
+            
+            <li class="category-list-item">
+                <a class="category-list-link" href="http://outsourcedbits.org/tags/ste">
+                    ste
+                </a>
+                <span class="category-list-count">2</span>
+            </li>
+            
+        </ul>
+    </div>
+</div>
+
+
+
+    
+
+
+<div class="widget-wrap">
+    <h3 class="widget-title">
+        Tag cloud
+    </h3>
+    <div class="widget tagcloud">
+        
+        <a href="http://outsourcedbits.org/tags/cryptdb" style="font-size: 12px;">cryptdb</a>
+        
+        <a href="http://outsourcedbits.org/tags/deterministic-encryption" style="font-size: 12px;">deterministic-encryption</a>
+        
+        <a href="http://outsourcedbits.org/tags/dte" style="font-size: 12px;">dte</a>
+        
+        <a href="http://outsourcedbits.org/tags/fhe" style="font-size: 12px;">fhe</a>
+        
+        <a href="http://outsourcedbits.org/tags/fisa" style="font-size: 12px;">fisa</a>
+        
+        <a href="http://outsourcedbits.org/tags/functional-encryption" style="font-size: 12px;">functional-encryption</a>
+        
+        <a href="http://outsourcedbits.org/tags/learning" style="font-size: 12px;">learning</a>
+        
+        <a href="http://outsourcedbits.org/tags/machine-learning" style="font-size: 12px;">machine-learning</a>
+        
+        <a href="http://outsourcedbits.org/tags/metadata" style="font-size: 12px;">metadata</a>
+        
+        <a href="http://outsourcedbits.org/tags/mpc" style="font-size: 12px;">mpc</a>
+        
+        <a href="http://outsourcedbits.org/tags/msr" style="font-size: 12px;">msr</a>
+        
+        <a href="http://outsourcedbits.org/tags/nsa" style="font-size: 12px;">nsa</a>
+        
+        <a href="http://outsourcedbits.org/tags/ope" style="font-size: 12px;">ope</a>
+        
+        <a href="http://outsourcedbits.org/tags/oram" style="font-size: 12px;">oram</a>
+        
+        <a href="http://outsourcedbits.org/tags/ot" style="font-size: 12px;">ot</a>
+        
+        <a href="http://outsourcedbits.org/tags/pets" style="font-size: 12px;">pets</a>
+        
+        <a href="http://outsourcedbits.org/tags/pir" style="font-size: 12px;">pir</a>
+        
+        <a href="http://outsourcedbits.org/tags/ppe" style="font-size: 12px;">ppe</a>
+        
+        <a href="http://outsourcedbits.org/tags/sat" style="font-size: 12px;">sat</a>
+        
+        <a href="http://outsourcedbits.org/tags/searchable-encryption" style="font-size: 12px;">searchable-encryption</a>
+        
+        <a href="http://outsourcedbits.org/tags/section-215" style="font-size: 12px;">section-215</a>
+        
+        <a href="http://outsourcedbits.org/tags/sse" style="font-size: 12px;">sse</a>
+        
+        <a href="http://outsourcedbits.org/tags/ste" style="font-size: 12px;">ste</a>
+        
+    </div>
+</div>
+
+
+
+
+    <div id="toTop" class="fa fa-chevron-up"></div>
+</aside>
+
+	    
+	</div>
+</div>
+
+<footer id="footer">
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2016
+      Powered by <a href="//gohugo.io">Hugo</a>. Theme by <a href="http://github.com/ppoffice">PPOffice</a>.
+    </div>
+  </div>
+</footer>
+
+
+<script>
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-79501268-1', 'auto');
+ga('send', 'pageview');
+</script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+<script src="http://outsourcedbits.org/fancybox/jquery.fancybox.pack.js"></script>
+<script src="http://outsourcedbits.org/js/script.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.8.0/highlight.min.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+
+
+
+ 
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+  extensions: ["tex2jax.js"],
+  jax: ["input/TeX", "output/HTML-CSS"],
+  tex2jax: {
+    inlineMath: [['$','$'], ['\\(','\\)']],
+    displayMath: [['$$','$$'], ['\\[','\\]']],
+    processEscapes: true,
+    processEnvironments: true,
+    skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
+    TeX: { equationNumbers: { autoNumber: "AMS" },
+         extensions: ["AMSmath.js", "AMSsymbols.js"] }
+  },
+  "HTML-CSS": {availableFonts: ["TeX"]}, 
+  scale: [200]
+});
+</script>
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    
+    
+    
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i = 0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+});
+</script>
+<script type="text/javascript"
+  src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+</body>
+</html>

@@ -1,0 +1,903 @@
+<!DOCTYPE html>
+<html lang="en-us">
+<head>
+    <title>How to Search on Encrypted Data: Functional Encryption (Part 3) &middot; Outsourced Bits</title>
+    <meta name="generator" content="Hugo 0.16" />
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="author" content="Seny Kamara">
+    
+      <meta name="description" content="">
+    
+    
+    <link rel="icon" href="http://outsourcedbits.org/favicon.ico">
+    <link rel="apple-touch-icon" href="http://outsourcedbits.org/apple-touch-icon.png" />
+    <link rel="stylesheet" href="http://outsourcedbits.org/css/style.css">
+    <link rel="stylesheet" href="http://outsourcedbits.org/css/font-awesome.min.css">
+    <link rel="stylesheet" href="http://outsourcedbits.org/css/monokai.css">
+    <link rel="stylesheet" href="http://outsourcedbits.org/fancybox/jquery.fancybox.css">
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400italic,400,600' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Source+Code+Pro' rel='stylesheet' type='text/css'>
+    <meta property="og:title" content="How to Search on Encrypted Data: Functional Encryption (Part 3)" />
+<meta property="og:description" content="This is the third part of a series on searching on encrypted data. See parts 1, 2, 4 and 5. Previously, we covered the simplest solution for encrypted search which consisted of using a deterministic encryption scheme (more generally, using a property-preserving encryption scheme) to encrypt keywords. This resulted in an encrypted search solution with sub-linear (in \(n\)) search time but that leaked quite a bit of information to the server." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://outsourcedbits.org/2013/10/30/how-to-search-on-encrypted-data-functional-encryption-part-3" />
+
+
+<meta property="og:updated_time" content="2013-10-30T11:02:40-03:00"/>
+
+
+
+
+
+
+
+
+
+
+    
+    
+<meta itemprop="name" content="How to Search on Encrypted Data: Functional Encryption (Part 3)">
+<meta itemprop="description" content="This is the third part of a series on searching on encrypted data. See parts 1, 2, 4 and 5. Previously, we covered the simplest solution for encrypted search which consisted of using a deterministic encryption scheme (more generally, using a property-preserving encryption scheme) to encrypt keywords. This resulted in an encrypted search solution with sub-linear (in \(n\)) search time but that leaked quite a bit of information to the server.">
+
+
+<meta itemprop="dateModified" content="2013-10-30T11:02:40-03:00" />
+<meta itemprop="wordCount" content="1443">
+
+
+
+<meta itemprop="keywords" content="applied-crypto,applied-cryptography,cloud-computing,encrypted-search,graph-encryption,inference-attacks,learning,misc,policy,surveillance,cryptdb,deterministic-encryption,dte,fhe,fisa,functional-encryption,learning,machine-learning,metadata,mpc,msr,nsa,ope,oram,ot,pets,pir,ppe,sat,searchable-encryption,section-215,sse,ste," />
+
+    
+
+  <meta name="twitter:card" content="summary"/>
+
+
+
+<meta name="twitter:title" content="How to Search on Encrypted Data: Functional Encryption (Part 3)"/>
+<meta name="twitter:description" content="This is the third part of a series on searching on encrypted data. See parts 1, 2, 4 and 5. Previously, we covered the simplest solution for encrypted search which consisted of using a deterministic encryption scheme (more generally, using a property-preserving encryption scheme) to encrypt keywords. This resulted in an encrypted search solution with sub-linear (in \(n\)) search time but that leaked quite a bit of information to the server."/>
+<meta name="twitter:site" content="@senykam"/>
+
+
+    
+
+    
+</head>
+<body>
+<div class="container">
+
+
+<div id="container">
+	<header id="header">
+  <div id="header-main" class="header-inner">
+    <div class="outer">
+      <a href="http://outsourcedbits.org/" id="logo"><span class="site-title">Outsourced Bits</span></a>
+      <nav id="main-nav">
+          
+
+          
+
+          
+      </nav>
+        <nav id="sub-nav">
+          <div class="profile" id="profile-nav">
+            <a id="profile-anchor" href="javascript:;"><img class="avatar" src="http://outsourcedbits.org//img/sk.jpg"><i class="fa fa-caret-down"></i></a>
+          </div>
+        </nav>
+        <div id="search-form-wrap">
+          <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form">
+              <input type="search" name="q" results="0" class="search-form-input" placeholder="Search">
+              <button type="submit" class="search-form-submit">
+              </button>
+              <input type="hidden" name="q" value="site:http://outsourcedbits.org/">
+         </form>
+        </div>
+    </div>
+  </div>
+  <div id="main-nav-mobile" class="header-sub header-inner">
+    <table class="menu outer">
+      <tbody>
+          <tr>
+          
+
+          
+
+          
+          <td>
+          <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form">
+          <input type="search" name="q" results="0" class="search-form-input" placeholder="Search">
+          <input type="hidden" name="q" value="site:http://outsourcedbits.org/">
+          </form>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+</header>
+
+   	
+   	<div class="outer">
+   		
+	    <aside id="profile">
+  <div class="inner profile-inner">
+    <div class="base-info profile-block">
+      <img id="avatar" src="http://outsourcedbits.org/img/sk.jpg" width="200" class="avatar">
+      
+      
+      <p class="mybio">My name is Seny Kamara. I am an Associate Professor of <a href="http://cs.brown.edu">Computer Science</a> at <a href="http://brown.edu">Brown</a>. Prior to that, I was a researcher at Microsoft Research. <br><br> My work is focused on designing and studying cryptographic algorithms,
+protocols and systems; often motivated by privacy issues in cloud computing,
+surveillance and databases. <br><br> This is a blog about my research and interests. For more about my work see my
+<a href="http://cs.brown.edu/~seny">homepage</a>.</p>
+      <span id="location"><i class="fa fa-map-marker"></i>Rio</span>
+      
+    </div>
+    
+    <div class="contact-info profile-block">
+      <table class="contact-list">
+        <tr>
+          
+<td><a href="//github.com/senykam" target="_blank" title="GitHub"><i class="fa fa-github"></i></a></td>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<td><a href="//twitter.com/senykam" target="_blank" title="Twitter"><i class="fa fa-twitter"></i></a></td>
+
+
+          <td><a href="" target="_blank" title="RSS"><i class="fa fa-rss"></i></a></td>
+        </tr>
+      </table>
+    </div>
+  </div>
+</aside>
+
+	    
+
+	    
+<section id="main">
+
+    <article id="page-undefined" class="article article-type-page" itemscope="" itemprop="blogPost">
+        <div class="article-inner">
+            
+
+            <header class="article-header">
+    <a href="http://outsourcedbits.org/2013/10/30/how-to-search-on-encrypted-data-functional-encryption-part-3">
+    <h1 class="article-title" itemprop="name">
+        How to Search on Encrypted Data: Functional Encryption (Part 3)
+    </h1>
+    </a>
+    <div class="article-meta">
+        <div class="article-date">
+            <i class="fa fa-calendar"></i>
+            <time datetime="2013-10-30 11:02:40 -0300 -0300" itemprop="datePublished">2013-10-30</time>
+            &middot;
+            1443
+            words
+            &middot;
+            7
+            minute read
+        </div>
+
+        
+        
+            
+            
+            <div class="article-category">
+                <i class="fa fa-folder"></i>
+                
+                <a class="article-category-link" href="http://outsourcedbits.org/categories/encrypted-search">Encrypted Search</a>
+                
+                
+            </div>
+            
+        
+
+        
+            
+            
+            <div class="article-category">
+                <i class="fa fa-tags"></i>
+                
+                <a class="article-category-link" href="http://outsourcedbits.org/tags/functional-encryption">functional encryption</a>
+                
+                
+            </div>
+            
+        
+    </div>
+</header>
+
+            <div class="article-entry" itemprop="articleBody">
+                <p><em>This is the third part of a series on searching on encrypted data. See parts <a href="http://outsourcedbits.org/2013/10/06/how-to-search-on-encrypted-data-part-1/">1</a>, <a href="https://outsourcedbits.org/2013/10/30/how-to-search-on-encrypted-data-part-2/">2</a>, <a href="https://outsourcedbits.org/2013/12/20/how-to-search-on-encrypted-data-part-4-oblivious-rams/">4</a> and <a href="https://outsourcedbits.org/2014/08/21/how-to-search-on-encrypted-data-searchable-symmetric-encryption-part-5/">5</a>.</em></p>
+
+<p><img src="/img/search.jpg" class="alignright" width="250">
+Previously, we covered the simplest solution for encrypted search  which
+consisted of using a deterministic encryption scheme (more generally, using a
+property-preserving encryption scheme) to encrypt keywords. This resulted in an
+encrypted search solution with sub-linear (in <span  class="math">\(n\)</span>) search time but that leaked
+quite a bit of information to the server.</p>
+
+<p>We' ll now describe a different approach that provides the opposite properties:
+slow search but better security.  At a high-level, one can view this approach
+as simply replacing  the PPE scheme in the previous solution with a <em>functional
+encryption</em> (FE) scheme.</p>
+
+<h2 id="functional-and-identitybased-encryption">Functional and Identity-Based Encryption</h2>
+
+<p>The notion of FE was first described by Sahai and Waters in a  talk
+[<a href="http://www.cs.utexas.edu/~bwaters/presentations/files/functional.ppt">SW09</a>]
+and later formalized by Boneh, Sahai and Waters
+[<a href="http://eprint.iacr.org/2010/543.pdf">BSW10</a>] and by O'Neill
+[<a href="http://eprint.iacr.org/2010/556">O10</a>].  Starting with the work of Boneh
+and Franklin on <a href="http://en.wikipedia.org/wiki/ID-based_encryption">identity-based
+encryption</a>, there was a slew
+of new encryption schemes achieving various properties (e.g., attribute-based
+encryption, hidden vector encryption, predicate encryption).   Many of these
+constructions felt loosely related so the idea behind FE was to capture all
+these schemes under a single framework.</p>
+
+<p>Though everything we'll cover can be done with FE, for concreteness, we'll
+consider the special case of IBE, which was first suggested by Shamir
+[<a href="http://discovery.csc.ncsu.edu/Courses/csc774-S07/shamir84.pdf">Shamir84</a>]
+and realized by Boneh and Franklin
+[<a href="http://crypto.stanford.edu/~dabo/pubs/papers/bfibe.pdf">BF01</a>].</p>
+
+<p>A public-key IBE scheme consists of four algorithms:</p>
+
+<ul>
+<li>A setup algorithm <span  class="math">\({\sf Setup}\)</span> used to generate a master secret and public key
+pair <span  class="math">\((msk, mpk)\)</span>.</li>
+<li>An encryption algorithm <span  class="math">\({\sf Enc}\)</span> that takes as input the master public-key
+<span  class="math">\(mpk\)</span>, an identity <span  class="math">\(id\)</span> and a message <span  class="math">\(m\)</span> as input and returns a ciphertext <span  class="math">\(c\)</span>.</li>
+<li>A key generation algorithm <span  class="math">\({\sf Keygen}\)</span> that takes as input the master secret
+key <span  class="math">\(msk\)</span> and an identity <span  class="math">\(id\)</span> and returns a secret key <span  class="math">\(sk_{id}\)</span>.</li>
+<li>And finally a decryption algorithm <span  class="math">\({\sf Dec}\)</span> that takes as input a secret key
+<span  class="math">\(sk_{id}\)</span> and a ciphertext <span  class="math">\(c\)</span> and returns a message <span  class="math">\(m\)</span> or a failure symbol <span  class="math">\(\bot\)</span>.</li>
+</ul>
+
+<p>The motivation behind IBE is key distribution. In particular, using an IBE
+scheme should be easier than using a standard (public-key) encryption scheme
+where public keys have to be certified, revoked and verified.</p>
+
+<p>Let's consider a concrete example.  Suppose Alice wants to send an encrypted
+message to Bob who works at Microsoft.  The idea is that Microsoft would first
+generate a pair of master keys <span  class="math">\((msk, mpk)\)</span> and distribute <span  class="math">\(mpk\)</span> together with a
+certificate. To send her message <span  class="math">\(m\)</span>, Alice would retrieve Microsoft's master
+public key <span  class="math">\(mpk\)</span>, verify its certificate and then encrypt <span  class="math">\(m\)</span> under Bob's
+identity by computing:</p>
+
+<p><span  class="math">\[
+c = {\sf Enc}(mpk, "\texttt{bob@microsoft.com}", m).
+\]</span></p>
+
+<p>To decrypt the ciphertext <span  class="math">\(c\)</span>, Bob needs to hold a secret key for his identity
+under Microsoft's master key:</p>
+
+<p><span  class="math">\[
+sk = {\sf Keygen}(msk, "\texttt{bob@microsoft.com}").
+\]</span></p>
+
+<p>Given this key, he can then recover the message by computing <span  class="math">\(m = {\sf Dec}(sk, c)\)</span>.</p>
+
+<p>Notice that Alice never needed to know what Bob's public key was or to verify
+any certificate for his key. The only certificate she had to verify was for
+Microsoft's master public key but once that key is authenticated she can send
+email to anyone at Microsoft without any additional work.</p>
+
+<h2 id="publickey-encrypted-search">Public-Key Encrypted Search</h2>
+
+<p>We are now ready to see how (anonymous) IBE can be used to search over
+encrypted data.  This idea was first proposed by Boneh, Di Crescenzo, Ostrovsky
+and Persiano
+[<a href="http://crypto.stanford.edu/~dabo/pubs/papers/encsearch.pdf">BCOP04</a>] and is
+best explained by considering the following email scenario where Alice wants to
+send an encrypted email to Bob.</p>
+
+<p>Bob first generates a master secret and public key pair for the IBE scheme
+<span  class="math">\((msk, mpk)\)</span> and a secret and public key pair for a standard public-key
+encryption scheme <span  class="math">\((sk, pk)\)</span>. He then makes the public keys <span  class="math">\((mpk, pk)\)</span> public
+and keeps the secret keys <span  class="math">\((msk, sk)\)</span> private.  Alice encrypts her message under
+<span  class="math">\(pk\)</span> using the standard public-key encryption scheme, resulting in a ciphertext
+<span  class="math">\(c\)</span>. She then attaches IBE encryptions of &quot;1&quot; under Bob's master public key
+<span  class="math">\(mpk\)</span> with the keywords as the identity. This results in a set of IBE encryptions
+<span  class="math">\((e_1, \dots, e_m)\)</span> where each <span  class="math">\(e_j\)</span> (for <span  class="math">\(1 \leq j \leq m\)</span>) is defined as</p>
+
+<p><span  class="math">\[
+e_j = {\sf Enc}(mpk, w_j), 
+\]</span></p>
+
+<p>where <span  class="math">\((w_1, \dots, w_m)\)</span> are the keywords.</p>
+
+<p>Let's suppose Bob's email server has received <span  class="math">\(n\)</span> emails of this form, so that
+it now  holds a set of encrypted emails <span  class="math">\((c_1, \dots, c_n)\)</span> and an encrypted
+database</p>
+
+<p><span  class="math">\[
+{\sf EDB} = \bigg(\big(e_{1, 1}, \dots, e_{1, m}, {\sf ptr}(c_1)\big), \dots,
+\big(e_{n,1}, \dots, e_{n,m}, {\sf ptr}(c_n)\big)\bigg).
+\]</span></p>
+
+<p>Now, if Bob wants to retrieve the emails with keyword <span  class="math">\(w\)</span>, he just needs to
+generate a secret IBE key as <span  class="math">\(sk_w = {\sf Keygen}(msk, w)\)</span> and send it as the token
+to the server. The server then tries to decrypt each IBE ciphertext in
+<span  class="math">\({\sf EDB}\)</span> and if successful follows the associated pointer to return the
+appropriate encrypted email.</p>
+
+<p>An important observation is that a standard IBE scheme here will not be enough.
+The problem is that the notion of IBE does not necessarily guarantee that a
+ciphertext  hides information about the identity used to create it.
+This means that if we were to use a standard IBE scheme, <span  class="math">\({\sf EDB}\)</span> could leak the
+keywords to the server. To address this, Boneh et al. observe that what you
+actually need is an <em>anonymous</em> IBE scheme which essentially means that the
+ciphertexts  do not reveal information about the identities. Fortunately, we
+know how to construct such schemes efficiently so this is not a major concern
+from a practical point of view (e.g., the Boneh-Franklin IBE scheme is
+anonymous).</p>
+
+<p><strong>Efficiency.</strong>
+Search time for the server is <span  class="math">\(O(nm)\)</span> since it has to try to decrypt each
+ciphertext in the <span  class="math">\({\sf EDB}\)</span>.  Assuming <span  class="math">\(m \ll n\)</span>, this is <span  class="math">\(O(n)\)</span> which is a <em>a
+lot</em> slower than the solution based on deterministic encryption described in the
+<a href="http://outsourcedbits.org/2013/10/14/how-to-search-on-encrypted-data-part-2/">previous post</a>
+which required time <span  class="math">\(o(n)\)</span> (i.e., sub-linear in <span  class="math">\(n\)</span>).</p>
+
+<h2 id="is-this-secure">Is this Secure?</h2>
+
+<p>While this approach is slower than the PPE-based approach, it has better security
+properties.  First, the encrypted database by itself does not reveal much useful
+information to the server since---unlike the deterministic approach---keywords
+are encrypted using a <em>randomized</em> (identity-based) encryption scheme. So
+even if two documents have keywords in common, the encrypted keywords in <span  class="math">\({\sf EDB}\)</span>
+will be different. This means that we don't have to make unnatural assumptions
+about the data (e.g., that it has high entropy) to use it safely.</p>
+
+<p>There is an issue, however, with this approach: <em>it
+does not protect the search terms</em>.  In particular, the server could mount the
+following attack to figure out which keyword the client is searching for.</p>
+
+<p>Suppose the server has some dictionary <span  class="math">\(W\)</span> of <span  class="math">\(d\)</span> words. For each keyword <span  class="math">\(w \in
+W\)</span> it encrypts &quot;1&quot; with key <span  class="math">\(mpk\)</span> and identity <span  class="math">\(w\)</span>.
+This results in a set of <span  class="math">\(d\)</span> (identity-based) encryptions <span  class="math">\((e'_1, \dots, e'_d)\)</span>.
+Now, given some token <span  class="math">\(sk_w\)</span>, the server can learn <span  class="math">\(w\)</span> by simply trying to
+decrypt each of the ciphertext <span  class="math">\(e'_i\)</span> with <span  class="math">\(sk_w\)</span>. If the decryption works for
+some <span  class="math">\(e'_i\)</span>, then the server knows that <span  class="math">\(sk_w\)</span> is for the identity used to
+generate <span  class="math">\(e'_i\)</span>.</p>
+
+<p>Notice that the attack does not result from a deficiency of any particular IBE
+scheme but that it applies to <em>any</em> public-key encrypted search solution.
+The fundamental problem is that the server has both the ability to create EDBs
+(since it has the public-key) and to search over them. So what this tells us is
+that, as defined, the notion of search on publicly-encrypted data cannot
+protect search terms.</p>
+
+<p>So what can we do about this? Recently, Boneh, Raghunathan and Segev
+[<a href="http://eprint.iacr.org/2013/283.pdf">BRS13</a>] and Ariaga and Tang
+[<a href="http://eprint.iacr.org/2013/330.pdf">AT13</a>] set out to design
+public-key encrypted search solutions that achieved the best possible level of
+confidentiality for search terms. Roughly speaking, what this means is that if
+the search terms are hard enough to guess, then the schemes proposed  will
+protect them.</p>
+
+<p>But what do we do if (as in most cases) our search terms are not hard to guess?
+Well, we don't really have a good answer except that this problem does not occur
+in the symmetric setting since only the client can generate EDBs so,
+depending on the application, a symmetric solution might be preferable.</p>
+
+<h2 id="conclusions">Conclusions</h2>
+
+<p>So far, we' ve seen two approaches to searching on encrypted data. The first,
+the
+<a href="http://outsourcedbits.org/2013/10/14/how-to-search-on-encrypted-data-part-2/">PPE-based
+approach</a>,
+resulted in schemes with fast search (sub-linear in <span  class="math">\(n\)</span>) but with relatively
+weak security guarantees. The second, the FE-based approach, resulted in
+schemes with slow search (linear in <span  class="math">\(n\)</span>) but with better security guarantees.</p>
+
+<p>In the next post, we'll go over solutions that are even slower, but that achieve
+the strongest possible levels of security!</p>
+
+            </div>
+            <footer class="article-footer">
+    <a data-url="http://outsourcedbits.org/2013/10/30/how-to-search-on-encrypted-data-functional-encryption-part-3" data-id="0097d80bef0d3a77b4ffe35dcf8dc2db" class="article-share-link">
+        Share
+    </a>
+    
+    <a href="http://outsourcedbits.org/2013/10/30/how-to-search-on-encrypted-data-functional-encryption-part-3/#disqus_thread" class="article-comment-link">
+        Comments
+    </a>
+    
+</footer>
+
+        </div>
+
+        
+<nav id="article-nav">
+    
+    <a href="http://outsourcedbits.org/2013/10/14/how-to-search-on-encrypted-data-deterministic-encryption-part-2" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">
+          Older
+      </strong>
+      <div class="article-nav-title">How to Search on Encrypted Data: Deterministic Encryption (Part 2)</div>
+    </a>
+    
+
+    
+    <a href="http://outsourcedbits.org/2013/12/20/how-to-search-on-encrypted-data-oblivious-rams-part-4" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">
+          Newer
+      </strong>
+      <div class="article-nav-title">How to Search on Encrypted Data: Oblivious RAMs (Part 4)</div>
+    </a>
+    
+</nav>
+
+
+    </article>
+
+    
+    <section id="comments">
+        <div id="disqus_thread">
+            <div id="disqus_thread"></div>
+<script type="text/javascript">
+    var disqus_shortname = 'outsourcedbits';
+    var disqus_identifier = 'http:\/\/outsourcedbits.org\/2013\/10\/30\/how-to-search-on-encrypted-data-functional-encryption-part-3';
+    var disqus_title = 'How to Search on Encrypted Data: Functional Encryption (Part 3)';
+    var disqus_url = 'http:\/\/outsourcedbits.org\/2013\/10\/30\/how-to-search-on-encrypted-data-functional-encryption-part-3';
+
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+        </div>
+    </section>
+    
+</section>
+
+
+	    
+	    <aside id="sidebar">
+    
+
+    
+
+
+<div class="widget-wrap">
+    <h3 class="widget-title">Categories</h3>
+    <div class="widget">
+        <ul class="category-list">
+            
+            <li class="category-list-item">
+                <a class="category-list-link" href="http://outsourcedbits.org/categories/applied-crypto">
+                    applied-crypto
+                </a>
+                <span class="category-list-count">3</span>
+            </li>
+            
+            <li class="category-list-item">
+                <a class="category-list-link" href="http://outsourcedbits.org/categories/applied-cryptography">
+                    applied-cryptography
+                </a>
+                <span class="category-list-count">1</span>
+            </li>
+            
+            <li class="category-list-item">
+                <a class="category-list-link" href="http://outsourcedbits.org/categories/cloud-computing">
+                    cloud-computing
+                </a>
+                <span class="category-list-count">2</span>
+            </li>
+            
+            <li class="category-list-item">
+                <a class="category-list-link" href="http://outsourcedbits.org/categories/encrypted-search">
+                    encrypted-search
+                </a>
+                <span class="category-list-count">11</span>
+            </li>
+            
+            <li class="category-list-item">
+                <a class="category-list-link" href="http://outsourcedbits.org/categories/graph-encryption">
+                    graph-encryption
+                </a>
+                <span class="category-list-count">1</span>
+            </li>
+            
+            <li class="category-list-item">
+                <a class="category-list-link" href="http://outsourcedbits.org/categories/inference-attacks">
+                    inference-attacks
+                </a>
+                <span class="category-list-count">1</span>
+            </li>
+            
+            <li class="category-list-item">
+                <a class="category-list-link" href="http://outsourcedbits.org/categories/learning">
+                    learning
+                </a>
+                <span class="category-list-count">1</span>
+            </li>
+            
+            <li class="category-list-item">
+                <a class="category-list-link" href="http://outsourcedbits.org/categories/misc">
+                    misc
+                </a>
+                <span class="category-list-count">1</span>
+            </li>
+            
+            <li class="category-list-item">
+                <a class="category-list-link" href="http://outsourcedbits.org/categories/policy">
+                    policy
+                </a>
+                <span class="category-list-count">2</span>
+            </li>
+            
+            <li class="category-list-item">
+                <a class="category-list-link" href="http://outsourcedbits.org/categories/surveillance">
+                    surveillance
+                </a>
+                <span class="category-list-count">2</span>
+            </li>
+            
+        </ul>
+    </div>
+</div>
+
+
+
+    
+
+
+<div class="widget-wrap">
+    <h3 class="widget-title">
+        Tags
+    </h3>
+    <div class="widget">
+        <ul class="category-list">
+            
+            <li class="category-list-item">
+                <a class="category-list-link" href="http://outsourcedbits.org/tags/cryptdb">
+                    cryptdb
+                </a>
+                <span class="category-list-count">1</span>
+            </li>
+            
+            <li class="category-list-item">
+                <a class="category-list-link" href="http://outsourcedbits.org/tags/deterministic-encryption">
+                    deterministic-encryption
+                </a>
+                <span class="category-list-count">1</span>
+            </li>
+            
+            <li class="category-list-item">
+                <a class="category-list-link" href="http://outsourcedbits.org/tags/dte">
+                    dte
+                </a>
+                <span class="category-list-count">1</span>
+            </li>
+            
+            <li class="category-list-item">
+                <a class="category-list-link" href="http://outsourcedbits.org/tags/fhe">
+                    fhe
+                </a>
+                <span class="category-list-count">2</span>
+            </li>
+            
+            <li class="category-list-item">
+                <a class="category-list-link" href="http://outsourcedbits.org/tags/fisa">
+                    fisa
+                </a>
+                <span class="category-list-count">1</span>
+            </li>
+            
+            <li class="category-list-item">
+                <a class="category-list-link" href="http://outsourcedbits.org/tags/functional-encryption">
+                    functional-encryption
+                </a>
+                <span class="category-list-count">1</span>
+            </li>
+            
+            <li class="category-list-item">
+                <a class="category-list-link" href="http://outsourcedbits.org/tags/learning">
+                    learning
+                </a>
+                <span class="category-list-count">1</span>
+            </li>
+            
+            <li class="category-list-item">
+                <a class="category-list-link" href="http://outsourcedbits.org/tags/machine-learning">
+                    machine-learning
+                </a>
+                <span class="category-list-count">1</span>
+            </li>
+            
+            <li class="category-list-item">
+                <a class="category-list-link" href="http://outsourcedbits.org/tags/metadata">
+                    metadata
+                </a>
+                <span class="category-list-count">2</span>
+            </li>
+            
+            <li class="category-list-item">
+                <a class="category-list-link" href="http://outsourcedbits.org/tags/mpc">
+                    mpc
+                </a>
+                <span class="category-list-count">3</span>
+            </li>
+            
+            <li class="category-list-item">
+                <a class="category-list-link" href="http://outsourcedbits.org/tags/msr">
+                    msr
+                </a>
+                <span class="category-list-count">1</span>
+            </li>
+            
+            <li class="category-list-item">
+                <a class="category-list-link" href="http://outsourcedbits.org/tags/nsa">
+                    nsa
+                </a>
+                <span class="category-list-count">2</span>
+            </li>
+            
+            <li class="category-list-item">
+                <a class="category-list-link" href="http://outsourcedbits.org/tags/ope">
+                    ope
+                </a>
+                <span class="category-list-count">1</span>
+            </li>
+            
+            <li class="category-list-item">
+                <a class="category-list-link" href="http://outsourcedbits.org/tags/oram">
+                    oram
+                </a>
+                <span class="category-list-count">1</span>
+            </li>
+            
+            <li class="category-list-item">
+                <a class="category-list-link" href="http://outsourcedbits.org/tags/ot">
+                    ot
+                </a>
+                <span class="category-list-count">1</span>
+            </li>
+            
+            <li class="category-list-item">
+                <a class="category-list-link" href="http://outsourcedbits.org/tags/pets">
+                    pets
+                </a>
+                <span class="category-list-count">1</span>
+            </li>
+            
+            <li class="category-list-item">
+                <a class="category-list-link" href="http://outsourcedbits.org/tags/pir">
+                    pir
+                </a>
+                <span class="category-list-count">1</span>
+            </li>
+            
+            <li class="category-list-item">
+                <a class="category-list-link" href="http://outsourcedbits.org/tags/ppe">
+                    ppe
+                </a>
+                <span class="category-list-count">2</span>
+            </li>
+            
+            <li class="category-list-item">
+                <a class="category-list-link" href="http://outsourcedbits.org/tags/sat">
+                    sat
+                </a>
+                <span class="category-list-count">1</span>
+            </li>
+            
+            <li class="category-list-item">
+                <a class="category-list-link" href="http://outsourcedbits.org/tags/searchable-encryption">
+                    searchable-encryption
+                </a>
+                <span class="category-list-count">1</span>
+            </li>
+            
+            <li class="category-list-item">
+                <a class="category-list-link" href="http://outsourcedbits.org/tags/section-215">
+                    section-215
+                </a>
+                <span class="category-list-count">2</span>
+            </li>
+            
+            <li class="category-list-item">
+                <a class="category-list-link" href="http://outsourcedbits.org/tags/sse">
+                    sse
+                </a>
+                <span class="category-list-count">4</span>
+            </li>
+            
+            <li class="category-list-item">
+                <a class="category-list-link" href="http://outsourcedbits.org/tags/ste">
+                    ste
+                </a>
+                <span class="category-list-count">2</span>
+            </li>
+            
+        </ul>
+    </div>
+</div>
+
+
+
+    
+
+
+<div class="widget-wrap">
+    <h3 class="widget-title">
+        Tag cloud
+    </h3>
+    <div class="widget tagcloud">
+        
+        <a href="http://outsourcedbits.org/tags/cryptdb" style="font-size: 12px;">cryptdb</a>
+        
+        <a href="http://outsourcedbits.org/tags/deterministic-encryption" style="font-size: 12px;">deterministic-encryption</a>
+        
+        <a href="http://outsourcedbits.org/tags/dte" style="font-size: 12px;">dte</a>
+        
+        <a href="http://outsourcedbits.org/tags/fhe" style="font-size: 12px;">fhe</a>
+        
+        <a href="http://outsourcedbits.org/tags/fisa" style="font-size: 12px;">fisa</a>
+        
+        <a href="http://outsourcedbits.org/tags/functional-encryption" style="font-size: 12px;">functional-encryption</a>
+        
+        <a href="http://outsourcedbits.org/tags/learning" style="font-size: 12px;">learning</a>
+        
+        <a href="http://outsourcedbits.org/tags/machine-learning" style="font-size: 12px;">machine-learning</a>
+        
+        <a href="http://outsourcedbits.org/tags/metadata" style="font-size: 12px;">metadata</a>
+        
+        <a href="http://outsourcedbits.org/tags/mpc" style="font-size: 12px;">mpc</a>
+        
+        <a href="http://outsourcedbits.org/tags/msr" style="font-size: 12px;">msr</a>
+        
+        <a href="http://outsourcedbits.org/tags/nsa" style="font-size: 12px;">nsa</a>
+        
+        <a href="http://outsourcedbits.org/tags/ope" style="font-size: 12px;">ope</a>
+        
+        <a href="http://outsourcedbits.org/tags/oram" style="font-size: 12px;">oram</a>
+        
+        <a href="http://outsourcedbits.org/tags/ot" style="font-size: 12px;">ot</a>
+        
+        <a href="http://outsourcedbits.org/tags/pets" style="font-size: 12px;">pets</a>
+        
+        <a href="http://outsourcedbits.org/tags/pir" style="font-size: 12px;">pir</a>
+        
+        <a href="http://outsourcedbits.org/tags/ppe" style="font-size: 12px;">ppe</a>
+        
+        <a href="http://outsourcedbits.org/tags/sat" style="font-size: 12px;">sat</a>
+        
+        <a href="http://outsourcedbits.org/tags/searchable-encryption" style="font-size: 12px;">searchable-encryption</a>
+        
+        <a href="http://outsourcedbits.org/tags/section-215" style="font-size: 12px;">section-215</a>
+        
+        <a href="http://outsourcedbits.org/tags/sse" style="font-size: 12px;">sse</a>
+        
+        <a href="http://outsourcedbits.org/tags/ste" style="font-size: 12px;">ste</a>
+        
+    </div>
+</div>
+
+
+
+
+    <div id="toTop" class="fa fa-chevron-up"></div>
+</aside>
+
+	    
+	</div>
+</div>
+
+<footer id="footer">
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2016
+      Powered by <a href="//gohugo.io">Hugo</a>. Theme by <a href="http://github.com/ppoffice">PPOffice</a>.
+    </div>
+  </div>
+</footer>
+
+
+<script>
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-79501268-1', 'auto');
+ga('send', 'pageview');
+</script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+<script src="http://outsourcedbits.org/fancybox/jquery.fancybox.pack.js"></script>
+<script src="http://outsourcedbits.org/js/script.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.8.0/highlight.min.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+
+
+
+ 
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+  extensions: ["tex2jax.js"],
+  jax: ["input/TeX", "output/HTML-CSS"],
+  tex2jax: {
+    inlineMath: [['$','$'], ['\\(','\\)']],
+    displayMath: [['$$','$$'], ['\\[','\\]']],
+    processEscapes: true,
+    processEnvironments: true,
+    skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
+    TeX: { equationNumbers: { autoNumber: "AMS" },
+         extensions: ["AMSmath.js", "AMSsymbols.js"] }
+  },
+  "HTML-CSS": {availableFonts: ["TeX"]}, 
+  scale: [200]
+});
+</script>
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    
+    
+    
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i = 0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+});
+</script>
+<script type="text/javascript"
+  src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+</body>
+</html>

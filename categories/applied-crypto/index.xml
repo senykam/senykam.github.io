@@ -1,0 +1,552 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Applied Crypto on Outsourced Bits</title>
+    <link>http://outsourcedbits.org/categories/applied-crypto/</link>
+    <description>Recent content in Applied Crypto on Outsourced Bits</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Tue, 09 Dec 2014 20:40:06 -0300</lastBuildDate>
+    <atom:link href="http://outsourcedbits.org/categories/applied-crypto/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>Applied Crypto Highlights: Restricted Oblivious RAMs and Hidden Volume Encryption</title>
+      <link>http://outsourcedbits.org/2014/12/09/applied-crypto-highlights-restricted-oblivious-rams-and-hidden-volume-encryption</link>
+      <pubDate>Tue, 09 Dec 2014 20:40:06 -0300</pubDate>
+      
+      <guid>http://outsourcedbits.org/2014/12/09/applied-crypto-highlights-restricted-oblivious-rams-and-hidden-volume-encryption</guid>
+      <description>&lt;p&gt;&lt;em&gt;This is the first in a series of guest posts highlighting new research in
+applied cryptography. This post is written by &lt;a href=&#34;http://www.ccs.neu.edu/home/travism/&#34;&gt;Travis
+Mayberry&lt;/a&gt; from Northeastern University.
+Note that Travis is graduating this year and will be on the job market.&lt;/em&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;http://outsourcedbits.org/img/steam.jpg&#34; class=&#34;alignright&#34; width=&#34;250&#34;&gt;&lt;/p&gt;
+
+&lt;h2 id=&#34;oram-background&#34;&gt;ORAM Background&lt;/h2&gt;
+
+&lt;p&gt;Oblivious RAM is a very hot research topic right now.  As Seny has written
+about
+&lt;a href=&#34;http://outsourcedbits.org/2013/12/20/how-to-search-on-encrypted-data-part-4-oblivious-rams&#34;&gt;here&lt;/a&gt;,
+it can be used to perform searches over outsourced encrypted data while
+maintaining the highest possible levels of security against a malicious storage
+provider.  As noted in that post, however, in exchange for this security it
+imposes a very significant overhead on the client.  In contrast, searchable
+encryption gives us almost as much security at a much lower cost.  So, why
+should we care about ORAM then, and why is it so interesting to researchers
+right now?  In this post I&#39;m going to attempt to answer that question as well
+as highlight some  advances in ORAM efficiency that I recently presented at
+&lt;a href=&#34;https://eprint.iacr.org/2014/344.pdf&#34;&gt;CCS&lt;/a&gt; and a few interesting applications
+for it that you may not have seen.&lt;/p&gt;
+
+&lt;p&gt;Broadly, the answer to my question above is that the security you give up for
+improved efficiency might not be acceptable.  The motivating example I usually
+give is one of a hospital that wants to outsource its patient records to the
+cloud.  Of course, they are concerned about patient privacy and so they encrypt
+those records to prevent the cloud provider from learning sensitive information
+from those records.  Unfortunately, beyond the data itself, a careful adversary
+can learn a lot of sensitive information from where, when and how often a client
+accesses their data.  In this case, if the provider sees that a cancer doctor
+has accessed my records, they will learn that I have (or at least suspect I
+have) cancer, regardless of whether they can decrypt my actual records or not.
+The most dangerous aspect of these types of attacks is that they are cumulative.
+An adversary may learn only a small amount from any one access, but over time
+they can aggregate everything that they have seen with any side knowledge of the
+client  they might have to reveal a surprising amount of sensitive information.
+With more data being outsourced to the cloud every day, this becomes a bigger
+and bigger problem.&lt;/p&gt;
+
+&lt;p&gt;Here is, of course, where Oblivious RAM comes in. Remember that ORAM can be used
+for secure searching, but it is actually a very general tool that can hide
+&lt;em&gt;any&lt;/em&gt; access pattern a user wishes to perform from the server it is
+performing it on.  An ORAM scheme provides an interface &lt;span  class=&#34;math&#34;&gt;\((\mathsf{Read},
+\mathsf{Write})\)&lt;/span&gt;, which guarantees that the addresses a client reads and writes
+to are hidden from the server. Specifically, given any two sequences of accesses
+&lt;span  class=&#34;math&#34;&gt;\(S_0\)&lt;/span&gt; and &lt;span  class=&#34;math&#34;&gt;\(S_1\)&lt;/span&gt;, and a random bit &lt;span  class=&#34;math&#34;&gt;\(b \leftarrow_{\$} \{0,1\}\)&lt;/span&gt;, there should not
+exist any probabilistic polynomial time adversary &lt;span  class=&#34;math&#34;&gt;\(\mathcal{A}\)&lt;/span&gt; such that
+&lt;span  class=&#34;math&#34;&gt;\(\mathcal{A}(\mathsf{ORAM}(S_b)) \rightarrow b\)&lt;/span&gt; with probability non-negligibly
+greater than &lt;span  class=&#34;math&#34;&gt;\(1/2\)&lt;/span&gt;.  Here we use &lt;span  class=&#34;math&#34;&gt;\(\mathsf{ORAM}(S_b)\)&lt;/span&gt; to signify the series of
+accesses performed on the server by the ORAM algorithm when running &lt;span  class=&#34;math&#34;&gt;\(S_b\)&lt;/span&gt;.&lt;/p&gt;
+
+&lt;p&gt;This is accomplished by continually shuffling and refreshing the data on the
+server so that each individual access is indistinguishable from random.  Again,
+refer to the previous
+&lt;a href=&#34;http://outsourcedbits.org/2013/12/20/how-to-search-on-encrypted-data-part-4-oblivious-rams&#34;&gt;post&lt;/a&gt;
+for a good example of how an ORAM works, but there are a few things worth
+restating:&lt;/p&gt;
+
+&lt;ol&gt;
+&lt;li&gt;&lt;p&gt;ORAMs are highly stateful.  Every read and write operation will change the
+data structure on the server, and every subsequent operation will depend on the
+current state of the storage device.  This often means that the client has to
+keep additional auxiliary information beyond long-term secrets in order to
+correctly access the data on the server.  We refer to this as the \emph{client
+memory}.&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;Each access the client performs will require more than one (oftem many
+more) &amp;quot;raw&amp;quot; accesses on the storage device.  This is a consequence of the fact
+that the client must hide which block of data they are actually interested in.&lt;/p&gt;&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;&lt;strong&gt;Efficiency.&lt;/strong&gt; The main property which we evaluate ORAM algorithms on is
+their communication efficiency.  For every operation the ORAM performs, how much
+data must be transferred to and from the server?  This is very important for
+cloud scenarios because communication overhead translates directly to cost.
+Efficiency is expressed in terms of the number of blocks in the data store, &lt;span  class=&#34;math&#34;&gt;\(n\)&lt;/span&gt;,
+and the size of each block &lt;span  class=&#34;math&#34;&gt;\(B\)&lt;/span&gt;.  Usually, however, &lt;span  class=&#34;math&#34;&gt;\(B\)&lt;/span&gt; is left out and the cost
+is expressed as a multiple of &lt;span  class=&#34;math&#34;&gt;\(B\)&lt;/span&gt;.  This gives an intuitive notion of
+&amp;quot;overhead&amp;quot; compared to a normal access, which simply costs &lt;span  class=&#34;math&#34;&gt;\(B\)&lt;/span&gt; communication.
+Additionally, we must consider the amount of client memory that a scheme
+requires.  If the client needs a huge amount of memory then it would be
+counterproductive in a scenario meant specifically to alleviate the client&#39;s
+storage burden.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Existing work.&lt;/strong&gt;  As I alluded to before, there has been a flurry of
+research lately on ORAM.  The two most notable papers have been by Shi et al.
+[&lt;a href=&#34;https://eprint.iacr.org/2011/407.pdf&#34;&gt;SCSL11&lt;/a&gt;] and Stefanov et al.
+[&lt;a href=&#34;https://www.cs.umd.edu/~elaine/docs/pathoram.pdf&#34;&gt;SDS+13&lt;/a&gt;].  The
+first paper introduced a new paradigm for ORAMs, constructing a data structure
+with a binary tree where each node is itself a smaller Oblivious RAM.  This has
+inspired much of the subsequent research, and it would require its own post to
+do it justice, but suffice it to say that they achieve overhead of
+&lt;span  class=&#34;math&#34;&gt;\(O(\log^3{n})\)&lt;/span&gt; with only &lt;span  class=&#34;math&#34;&gt;\(O(1)\)&lt;/span&gt; client memory.  Stefanov et al. introduced an
+improved tree construction with &lt;span  class=&#34;math&#34;&gt;\(O(\log^2{n})\)&lt;/span&gt; efficiency and &lt;span  class=&#34;math&#34;&gt;\(O(\log{n})\)&lt;/span&gt;
+client memory.  Additionally, in a later revision of the paper, they were able
+to introduce a tweak which reduces the overhead of both schemes by a
+&lt;span  class=&#34;math&#34;&gt;\(O(\log{n})\)&lt;/span&gt; factor.  This, finally, gives us a scheme with constant memory and
+&lt;span  class=&#34;math&#34;&gt;\(O(\log^2{n})\)&lt;/span&gt; overhead, and one with higher, logarithmic memory but only
+&lt;span  class=&#34;math&#34;&gt;\(O(\log{n})\)&lt;/span&gt; overhead.  In terms of efficiency, Path ORAM represents the state
+of the art for Oblivious RAM.&lt;/p&gt;
+
+&lt;h2 id=&#34;writeonly-oram-construction&#34;&gt;Write-only ORAM construction&lt;/h2&gt;
+
+&lt;p&gt;Although tree-based ORAMs provide drastically improved efficiency over more
+traditional hierarchical or square-root schemes, they still impose a non-trivial
+overhead that makes many applications cost-prohibitive.  As a simple reference,
+setting &lt;span  class=&#34;math&#34;&gt;\(n=2^{20}\)&lt;/span&gt; (a modestly sized database) in Path ORAM  induces an overhead
+of at least 80x, and potentially much more depending on the size of &lt;span  class=&#34;math&#34;&gt;\(B\)&lt;/span&gt; and the
+security parameter.  There is little known about ORAM lower bounds, but it has
+been shown that under certain conditions the best you can do is an overhead of
+&lt;span  class=&#34;math&#34;&gt;\(\Omega(\log{n})\)&lt;/span&gt; [&lt;a href=&#34;http://dl.acm.org/citation.cfm?id=28416&#34;&gt;Goldreich87&lt;/a&gt;].
+While there are some rather large loopholes in that proof, such as the
+requirement that the client have &lt;span  class=&#34;math&#34;&gt;\(O(1)\)&lt;/span&gt; memory and the memory blocks be all of
+equal size, this level of overhead seems unavoidable when using a tree-based
+scheme simpy because the height of the tree will be &lt;span  class=&#34;math&#34;&gt;\(O(\log{n})\)&lt;/span&gt;.&lt;/p&gt;
+
+&lt;p&gt;It is interesting, then, to consider whether a more restricted Oblivious RAM
+might achieve better efficiency.  Consider an ORAM which attempts to hide not
+read and write accesses, but writes alone.  Suppose for the time being that
+there is an alternative, secure way for the client to read from the storage
+device, and it only wants to hide updates.  It turns out that this goal is
+achievable in a rather simple way that induces only &lt;span  class=&#34;math&#34;&gt;\(O(1)\)&lt;/span&gt; overhead!&lt;/p&gt;
+
+&lt;p&gt;&lt;span  class=&#34;math&#34;&gt;\({\sf Setup}\)&lt;/span&gt;: To start with, we initialize an array of size &lt;span  class=&#34;math&#34;&gt;\(2n\)&lt;/span&gt; on the storage
+device to hold &lt;span  class=&#34;math&#34;&gt;\(n\)&lt;/span&gt; logical blocks of data.  Every location is initially empty,
+and the client has a local data structure which maps a logical block ID in the
+range &lt;span  class=&#34;math&#34;&gt;\([0,n)\)&lt;/span&gt; to a storage location in the range &lt;span  class=&#34;math&#34;&gt;\([0, 2n)\)&lt;/span&gt;.  This way, the
+client always knows which location a block is in if they want to retrieve it.&lt;/p&gt;
+
+&lt;p&gt;&lt;span  class=&#34;math&#34;&gt;\({\sf Write}(id, data)\)&lt;/span&gt;: Every write operation starts by choosing &lt;span  class=&#34;math&#34;&gt;\(k\)&lt;/span&gt; unique
+positions in the array uniformly at random, &lt;span  class=&#34;math&#34;&gt;\(P = \{p_0, ..., p_k\}\)&lt;/span&gt;.  Since
+there are &lt;span  class=&#34;math&#34;&gt;\(2n\)&lt;/span&gt; &amp;quot;slots&amp;quot; for only &lt;span  class=&#34;math&#34;&gt;\(n\)&lt;/span&gt; real blocks, if we choose &lt;span  class=&#34;math&#34;&gt;\(k\)&lt;/span&gt; to be
+moderately large we will be guaranteed that for at least one &lt;span  class=&#34;math&#34;&gt;\(i \leq k\)&lt;/span&gt;, &lt;span  class=&#34;math&#34;&gt;\(p_i\)&lt;/span&gt;
+will be empty.  The client then picks one of these empty blocks and writes
+&lt;span  class=&#34;math&#34;&gt;\(data\)&lt;/span&gt; into it, reencrypting all blocks in &lt;span  class=&#34;math&#34;&gt;\(P\)&lt;/span&gt; that \emph{are} full already, and
+writing random strings into the free blocks of &lt;span  class=&#34;math&#34;&gt;\(P\)&lt;/span&gt; that were not used.  Finally,
+the client updates their map data structure so that the record for &lt;span  class=&#34;math&#34;&gt;\(id\)&lt;/span&gt; points
+to the new location.  The old location of that block will still hang around,
+with &amp;quot;stale&amp;quot; data in it, but if it is ever chosen again in a set &lt;span  class=&#34;math&#34;&gt;\(P\)&lt;/span&gt; it will
+be considered free for the purposes of storing new data.  In that way, we avoid
+having to touch the existing location of a block when we are updating its value,
+leading to more efficient hiding of the access pattern.&lt;/p&gt;
+
+&lt;p&gt;Security for this scheme follows from the security of the encryption.  If it is
+indistinguishable from random (IND-CPA), then the adversary sees &lt;span  class=&#34;math&#34;&gt;\(k\)&lt;/span&gt; random
+blocks being filled with random strings.  Since everything is independent of the
+IDs which the client is actually writing to, the access pattern is completely
+hidden from the server.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Efficiency:&lt;/strong&gt;  While we can achieve communication overhead of &lt;span  class=&#34;math&#34;&gt;\(O(1)\)&lt;/span&gt; with
+the above scheme, there are two problems still 1) the map structure on the
+client is very large (&lt;span  class=&#34;math&#34;&gt;\(O(n \log{n})\)&lt;/span&gt;) and 2) &lt;span  class=&#34;math&#34;&gt;\(k\)&lt;/span&gt; needs to be rather large to
+guarantee an empty block is found.  The first issue can be neatly solved by
+storing the map itself in an ORAM, recursively.  This is a relatively common
+technique, and with a trick from
+[&lt;a href=&#34;https://www.cs.umd.edu/~elaine/docs/pathoram.pdf&#34;&gt;SDS+13&lt;/a&gt;], we can
+guarantee that this will induce only an &lt;span  class=&#34;math&#34;&gt;\(O(1)\)&lt;/span&gt; overhead.&lt;/p&gt;
+
+&lt;p&gt;On the other hand, as described above, &lt;span  class=&#34;math&#34;&gt;\(k\)&lt;/span&gt; needs to be &lt;span  class=&#34;math&#34;&gt;\(\Omega(\lambda)\)&lt;/span&gt; where
+&lt;span  class=&#34;math&#34;&gt;\(\lambda\)&lt;/span&gt; is the security parameter.  Since any block chosen randomly has
+probability &lt;span  class=&#34;math&#34;&gt;\(1/2\)&lt;/span&gt; to be empty, to make the failure probability
+&lt;span  class=&#34;math&#34;&gt;\(O(2^{-\lambda})\)&lt;/span&gt;, one must set &lt;span  class=&#34;math&#34;&gt;\(k=\Omega(\lambda)\)&lt;/span&gt;.  Fortunately, we can take
+advantage of the fact that, although failure rate is only low enough when &lt;span  class=&#34;math&#34;&gt;\(k\)&lt;/span&gt; is
+large, the expected number of empty blocks that the client will find is actually
+&lt;span  class=&#34;math&#34;&gt;\(k/2\)&lt;/span&gt;.  Instead of giving up when we don&#39;t find an empty block, we can store a
+stash of blocks on the client which did not make it into the array, and when we
+find more than one empty block we can write out extras from the stash.  This
+allows us to set &lt;span  class=&#34;math&#34;&gt;\(k=3\)&lt;/span&gt; and, with some queueing theory analysis, maintain a stash
+of size &lt;span  class=&#34;math&#34;&gt;\(O(\lambda) = \Theta(\log n)\)&lt;/span&gt;.&lt;/p&gt;
+
+&lt;p&gt;In conclusion, we can achieve write-only secure Oblivious RAM with only &lt;span  class=&#34;math&#34;&gt;\(O(1)\)&lt;/span&gt;
+overhead, and in practice very small constants.  This allows fully practical use
+of ORAM for the first time ever, in a reduced set of use cases.&lt;/p&gt;
+
+&lt;h2 id=&#34;uses-for-writeonly-oram&#34;&gt;Uses for write-only ORAM&lt;/h2&gt;
+
+&lt;p&gt;Okay, so we have this write-only ORAM that is pretty efficient, but what does
+that really get us?  In the example I gave above, you clearly need both reading
+and writing.  Well, this idea is very new, but I do have a few ideas.  If you
+want to write a lot more than you read, but still occasionally do some reads,
+then you can do something like is suggested in
+[&lt;a href=&#34;http://eprint.iacr.org/2013/694.pdf&#34;&gt;LD13&lt;/a&gt;] and actually use PIR to
+independently read from the database.  Of course, PIR is very inefficient, but
+if your writes outnumber your reads by orders of magnitude, then the savings
+from more efficient ORAM may outweight the inefficient PIR.  This could be
+useful in data warehousing situations where you need to store files in case they
+are needed in the future, but the vast majority of them will not be needed.&lt;/p&gt;
+
+&lt;p&gt;A more useful, and practical situation would be for online backup or mirroring
+services.  Consider Dropbox for example.  Each client has a local copy of the
+storage device, so when they read from it Dropbox does not get to see these
+accesses.  When they write, however, the client pushes the changes to the
+server, which then distributes them to the other clients.  The adversary in this
+scenario is effectively &amp;quot;write-only&amp;quot;.  Using this ORAM, you could have access
+pattern protection on Dropbox now at very little cost.&lt;/p&gt;
+
+&lt;p&gt;I leave the most interesting case for the end, of course.  Think about encrypted
+hard disks.  A common scenario is that a user wishes to encrypt their so that if
+their machine is ever lost of stolen, sensitive information on it cannot be
+retrieved without the encryption key.  Just as in the case above, it might be
+that you leak more information than you think just through the access pattern
+you induce on your hard drive, and not the encrypted data itself.  Particularly,
+if an adversary is able to compromise your disk on more than one occassion
+(every night when you leave your computer at your desk, for instance).&lt;/p&gt;
+
+&lt;h2 id=&#34;hidden-volume-encryption&#34;&gt;Hidden volume encryption&lt;/h2&gt;
+
+&lt;p&gt;Now, I know this sounds really paranoid, but stay with me because it is pretty
+interesting.  There is also a notion of &amp;quot;hidden volume&amp;quot; encryption, introduced
+by TrueCrypt.  With this type of encryption, a user can have not one encrypted
+volume on their disk, but two.  The second volume lives on the portions of the
+disk which are marked &amp;quot;free&amp;quot; on the first volume.  This allows for a user to
+actually \emph{deny} that this second volume even exists.  Why would you want to
+do that?  Imagine someone compromises your machine.  They know that you have
+\emph{something} encrypted on there, so they coerce you (through legal or maybe
+not so legal means) into revealing your password.  If you have all of your
+really secret information stored on your hidden volume, you can safely give up
+the key to the outer volume and they will have no way of knowing whether you
+have any further information to give up or not.  If the coersion you are facing
+is of a legal sort, they probably can&#39;t continue to pressure you with absolutely
+no proof that you have any more information to give up at all.  If it is of the
+less legal variety, then it \emph{might} help you, depending on the incentives
+that they have to keep torturing you.  There has been some
+&lt;a href=&#34;https://defuse.ca/truecrypt-plausible-deniability-useless-by-game-theory.htm&#34;&gt;game theory analysis&lt;/a&gt; of the situation, but it does not cover many situations.&lt;/p&gt;
+
+&lt;p&gt;Getting back to Oblivious RAM, the hidden volume approach that is incorporated
+into TrueCrypt fails spectacularly when someone has access to your machine on
+more than one occasion.  It becomes obvious that the client is writing into a
+hidden volume when the adversary sees a &amp;quot;free&amp;quot; area spontaneously and
+repeatedly changing its value.  The key weakness here is that the main volume
+and hidden volume are neatly separated from each other, and writing into a
+certain location reliably is a dead giveaway of the existence of another volume.&lt;/p&gt;
+
+&lt;p&gt;Fortunately, hiding access patterns is what ORAM was designed for.  And, as I
+said before, hard drives require just &amp;quot;write-only&amp;quot; security, meaning that we
+can use our new, optimally efficient construction.  Reference our CCS paper for
+the full details, or my
+&lt;a href=&#34;http://research.microsoft.com/apps/video/default.aspx?id=231705&#34;&gt;talk at MSR&lt;/a&gt;, but the idea is fairly straightforward.  The user initializes a number
+of different ORAMs on the disk, one for every potential volume that they might
+be using.  They choose this number sufficiently larger than the number of
+volumes that they want to actually use, so that there is some uncertainty as to
+exactly how many are really being used.  For instance, I could choose a maximum
+of 10 but only use 4.  The goal is that, the user can give up &lt;span  class=&#34;math&#34;&gt;\(i \lt max\)&lt;/span&gt;
+passwords, and an adversary should not be able to guess whether there is another
+volume greater than &lt;span  class=&#34;math&#34;&gt;\(i\)&lt;/span&gt; in use, or if &lt;span  class=&#34;math&#34;&gt;\(i\)&lt;/span&gt; is the last volume.&lt;/p&gt;
+
+&lt;p&gt;Every access, the user writes to the volume that they want to actually change,
+and they do a &amp;quot;dummy&amp;quot; operation on the other volumes, which looks identical to
+a real operation but does not change anything.  So, upon compromising the
+machine, an adversary sees the number of operations that have been done, but not
+which volumes they were on.  There are some subtleties that you will have to
+read the full paper for, but any access pattern that may have given away the
+existence of a hidden volume is effectively protected by the ORAM.&lt;/p&gt;
+
+&lt;h2 id=&#34;conclusion&#34;&gt;Conclusion&lt;/h2&gt;
+
+&lt;p&gt;Hopefully I have convinced you at this point that Oblivious RAM is an
+interesting cryptographic primitive, and that it is on the verge of being
+practical in some key situations.  When it comes down to it, if you don&#39;t think
+that access pattern security is an issue, then the extra cost associated with
+ORAM will never be worth it to you.  But if you are worried about adversaries
+that could aggregate accesses and potentially learn critical private
+information, then I highly encourage you to keep an eye on future research in
+the area.&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Thoughts on Applied Cryptography Research</title>
+      <link>http://outsourcedbits.org/2014/12/05/thoughts-on-applied-cryptography-research</link>
+      <pubDate>Fri, 05 Dec 2014 20:37:48 -0300</pubDate>
+      
+      <guid>http://outsourcedbits.org/2014/12/05/thoughts-on-applied-cryptography-research</guid>
+      <description>&lt;p&gt;If you follow me on Twitter you have no doubt heard my occasional outbursts and
+rants on what I perceive to be biases in the current publication model in
+cryptography. In short, I think that top cryptography conferences are heavily
+biased against certain areas of cryptography and for others.&lt;/p&gt;
+
+&lt;p&gt;Some of the areas that I think have a much harder time getting into top-tier
+crypto conferences include Applied Cryptography. I don’t think this is
+particularly controversial and, from what I hear, CRYPTO has even tried to
+rectify this recently (e.g., by accepting some applied MPC papers).&lt;/p&gt;
+
+&lt;p&gt;Nevertheless, this is a serious problem for applied crypto research since
+applied crypto papers don’t really have a home. Realistically, your choice in
+venues include CCS, NDSS, Usenix, Oakland and Financial Crypto. Notice that all
+these conferences are security conferences and as such they only have a limited
+number of places for crypto research. And a consequence of this is that
+competition for these few places is very high.&lt;/p&gt;
+
+&lt;p&gt;Another consequence of the current situation is that applied crypto papers are
+dispersed in many different venues. In addition to the ones listed above you
+also find them in Esorics, AsiaCCS, ACNS etc. This makes it very hard to keep
+track of new results (having ePrint helps a bit here) and even harder to build
+any kind of community since no one is at the same place at the same time. This
+impacts possible collaborations, opportunities for students etc.&lt;/p&gt;
+
+&lt;p&gt;Another issue is that these papers don’t get the visibility they deserve and
+this is problematic because some of the work is very strong and, more
+importantly, this is the work that has the most potential for impact. Think
+about that for a second: the type of work that has the highest chance of having
+impact on society has a harder time being accepted at top-tier conferences. How
+can this not be a serious problem for the community?&lt;/p&gt;
+
+&lt;p&gt;A final consequence is that because these works do not receive the visibility
+they deserve, less people tend to work on applied problems. I may be cynical,
+but unfortunately I think many researchers choose their problems (at least in
+part) as a function of the recognition they might receive from their community
+for their work. I can’t always blame researchers for this since the academic
+system is setup to incentivize this (especially when you are student). With the
+current situation, therefore, I suspect that many researchers and students who
+might be interested in (or at least open to) applied work may shy away from it
+since the short-term rewards like top-tier crypto papers and visibility is less
+likely to materialize. An alternative way in which this could be affecting
+researchers is that the pull from other areas that do get more recognition (in
+the form of top-tier papers and visibility) is too hard to compete with for
+applied crypto.&lt;/p&gt;
+
+&lt;p&gt;Obviously, I would like this to be fixed somehow especially so that applied
+crypto can still attract good students. But my sense is that the larger crypto
+community doesn’t really care that much (modulo, perhaps, the alleged efforts
+made by CRYPTO recently).&lt;/p&gt;
+
+&lt;p&gt;In the meantime, I thought it might be good to highlight a few applied crypto
+papers written by up-and-coming researchers (i.e., mostly students, postdocs
+and junior researchers) that I find particularly interesting. So I asked a
+handful of young researchers if they would be interested in writing guest posts
+summarizing some of their work. I’ll be posting some of these summaries in a
+new series that will start soon. How long the series will be will obviously
+depend on how many people are interested in writing. Hopefully we will have at
+least two or three.&lt;/p&gt;
+
+&lt;p&gt;Let me stress that this series will obviously be subjective and biased towards
+topics that I like and people that I know (though I won’t be hesitant to invite
+people I don’t know if I like their work). This is unavoidable since these are
+papers that I‘m inviting to be summarized on my blog. So please do not complain
+in the comments that your paper was not invited to be discussed.&lt;/p&gt;
+
+&lt;p&gt;With that out of the way, I hope you enjoy the series.&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>A Note on Crypto Design vs Crypto Engineering</title>
+      <link>http://outsourcedbits.org/2013/07/28/a-note-on-crypto-design-vs-crypto-engineering</link>
+      <pubDate>Sun, 28 Jul 2013 23:03:34 -0300</pubDate>
+      
+      <guid>http://outsourcedbits.org/2013/07/28/a-note-on-crypto-design-vs-crypto-engineering</guid>
+      <description>&lt;p&gt;&lt;img src=&#34;http://outsourcedbits.org/img/hand.jpg&#34; class=&#34;alignright&#34; width=&#34;150&#34;&gt;
+In my
+&lt;a href=&#34;http://outsourcedbits.org/2013/07/23/are-compliance-and-privacy-always-at-odds/&#34;&gt;previous
+post&lt;/a&gt;,
+I described a cryptographic protocol that could  allow a telecommunications
+company to keep its data, and the NSA to legally access it (i.e., with
+authorization from a FISA court) without revealing its queries.&lt;/p&gt;
+
+&lt;p&gt;In response to the post, a few people have asked me whether the protocol was
+implemented and, if not, where they could get implementations of the underlying
+components.&lt;/p&gt;
+
+&lt;p&gt;My response is that &lt;em&gt;I did not implement it&lt;/em&gt; but, for what it&#39;s worth, I
+added a section to the blog with links to implementations of various
+cryptographic primitives and protocols
+(&lt;a href=&#34;http://outsourcedbits.org/coding-list/&#34;&gt;here&lt;/a&gt;).&lt;/p&gt;
+
+&lt;p&gt;These questions about implementations, however, made me realize that I
+should provide some context since I&#39;m afraid the way I described the
+protocol might have made it looked easy to implement---which is definitely not
+the case!&lt;/p&gt;
+
+&lt;p&gt;So in this post, I&#39;d like to discuss the differences (as I see them) between
+the various aspects of cryptography.&lt;/p&gt;
+
+&lt;h2 id=&#34;theory-vs-design-vs-engineering&#34;&gt;Theory vs. Design vs. Engineering&lt;/h2&gt;
+
+&lt;p&gt;When one is doing cryptography, there are roughly three different types of work
+that are of interest: studying cryptography (theory), constructing cryptography
+(design) and implementing cryptography (engineering). The problem is that each
+task requires a lot of experience to master and each one requires a different
+combination of skillsets.  For this reason, most people specialize in just one
+or at most two of these tasks.&lt;/p&gt;
+
+&lt;p&gt;&lt;em&gt;Theory&lt;/em&gt; is mostly about understanding the limits of cryptography---what can and
+can&#39;t be done and why. This includes trying to understand what it means for
+cryptosystems to be secure and understanding the relationships between various
+cryptographic objects. Often this requires understanding of theoretical computer
+science (i.e., complexity theory and algorithms) and math (i.e., probability
+theory, combinatorics and algebra).&lt;/p&gt;
+
+&lt;p&gt;&lt;em&gt;Design&lt;/em&gt; is mostly about constructing (relatively) efficient primitives
+and protocols. This usually requires understanding of crypto theory and math
+(especially number theory and algebra).&lt;/p&gt;
+
+&lt;p&gt;&lt;em&gt;Engineering&lt;/em&gt; is mostly about implementing the primitives and protocols securely
+and efficiently and about integrating them in larger useful systems. This
+usually requires an understanding of crypto design, algorithms and data
+structures, software engineering and system design/engineering.&lt;/p&gt;
+
+&lt;p&gt;Of course this is a very coarse description, but I think it captures the
+differences at a high-level and explains why there is such  little overlap and
+so many disputes between the communities: there are just too few people who
+possess the skills needed to work in more than a single area.&lt;/p&gt;
+
+&lt;h2 id=&#34;crypto-abstractions&#34;&gt;Crypto Abstractions&lt;/h2&gt;
+
+&lt;p&gt;My
+&lt;a href=&#34;http://outsourcedbits.org/2013/07/23/are-compliance-and-privacy-always-at-odds/&#34;&gt;previous&lt;/a&gt;
+was an exercise in &lt;em&gt;design&lt;/em&gt; and for the purpose of design it is
+useful to abstract/hide away many details that are crucial for engineering.  As
+a concrete example, consider the part of the post where I casually say:&lt;/p&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;More formally, we would write that for all $i$,
+$F_K(w_i) = (\ell_i, p_i),$
+where $F$ is a pseudo-random function (PRF).  A PRF is sort of like a keyed hash.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;A statement like this is hard to work with form an engineering perspective.
+First of all what the hell is a PRF? Are there any implementations of it in
+crypto library $X$? If not, how do I implement one? Is there a limit to how
+long PRF inputs can be? If so, what happens if $w_i$ is longer than that limit?
+What does &amp;quot;sort of&amp;quot; mean?&lt;/p&gt;
+
+&lt;p&gt;The answers to all these questions are non-trivial and it takes quite a
+bit of expertise to ask these types of questions properly and to solve them. This is
+partly why crypto engineering is so difficult and why it&#39;s usually advised to let
+experts do it.&lt;/p&gt;
+
+&lt;p&gt;But understanding cryptography through these abstractions is very useful for the
+task of design.  The process of designing a protocol (or primitive) for a given
+problem mostly requires one to isolate and understand the security challenges
+imposed by the problem and then to use, invent or combine, crypto building
+blocks to overcome these challenges. To do this properly, one is not interested
+in how the building blocks are implemented (though as I&#39;ll discuss below, this
+can have severe consequences). What one cares about is what &lt;em&gt;security
+properties&lt;/em&gt; the building blocks possess so that they can be used and combined to
+overcome a particular challenge.&lt;/p&gt;
+
+&lt;p&gt;This is why &amp;quot;crypto designers&amp;quot; usually talk about things like pseudo-random
+functions, pseudo-random permutations, hash functions, signatures and
+zero-knowledge proofs and not about HMAC, AES, SHA2, DSA, or Schnorr signatures.
+These abstractions are useful for design because they focus on, and make
+very explicit, the security properties one gets from the object. For example,
+HMAC is a PRF but HMAC is other things as well. If, in my previous post I had said:&lt;/p&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;More formally, we would write that for all $i$,
+$\textrm{HMAC}_K(w_i) = (\ell_i, p_i),$&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;one might wonder why I&#39; m using HMAC. Which property exactly of HMAC are we
+taking advantage of? What is the problem we&#39;re trying to solve by using HMAC
+here? Why HMAC and not something else?&lt;/p&gt;
+
+&lt;h2 id=&#34;limitations-of-abstractions&#34;&gt;Limitations of Abstractions&lt;/h2&gt;
+
+&lt;p&gt;So there are benefits to thinking in terms of theoretical abstractions for the
+purpose of design. Unfortunately there are also serious downsides.&lt;/p&gt;
+
+&lt;p&gt;The most obvious one is that it makes the jump from design to engineering
+harder. As discussed above, one has to know or figure out what the abstraction
+corresponds to in practice and sometimes the abstraction can be more than one
+level deep (e.g., a PRF should be instantiated with HMAC and HMAC
+should be instantiated with SHA2).&lt;/p&gt;
+
+&lt;p&gt;The second problem is efficiency. It might not matter
+how a primitive is instantiated for the purpose of a design exercise, but it does
+matter for practice since different primitives achieve different levels of
+efficiency.&lt;/p&gt;
+
+&lt;p&gt;And finally, it matters for security. The reason is that many of the
+abstractions we have created over the years to make the task of design and
+theory easier to achieve, hide details that---it turns out---have an important impact
+on security.&lt;/p&gt;
+
+&lt;p&gt;The best example of this are
+&lt;a href=&#34;http://en.wikipedia.org/wiki/Side_channel_attack&#34;&gt;side-channel attacks&lt;/a&gt;
+which were not captured by the abstractions until very recently &lt;sup class=&#34;footnote-ref&#34; id=&#34;fnref:1&#34;&gt;&lt;a class=&#34;footnote&#34; href=&#34;#fn:1&#34;&gt;1&lt;/a&gt;&lt;/sup&gt;.
+This has had the bizarre consequence that one could design protocols that looked
+fine from a design perspective but that were completely broken in reality.&lt;/p&gt;
+
+&lt;p&gt;The fact that side-channels were ignored for so long at the theory and design
+levels also meant that engineers had to take it upon themselves to fix the
+problem. So side-channel expertise has really become a skillset that crypto
+engineers need to have (which adds another layer of complexity to crypto
+engineering) and that designers and theorists severely lack.&lt;/p&gt;
+
+&lt;h2 id=&#34;conclusions&#34;&gt;Conclusions&lt;/h2&gt;
+
+&lt;p&gt;So all this to say that for most posts, I&#39;ll be discussing design-level problems
+and solutions and using design-level abstractions to do so but it&#39;s important to
+keep in mind the limitations of and consequences of this approach.&lt;/p&gt;
+
+&lt;p&gt;The main reasons for this decision are that: (1) I only have basic knowledge
+of crypto engineering so I wouldn&#39;t have anything interesting to say about it;
+and (2) there are others with more expertise who do have interesting things to
+say.&lt;/p&gt;
+
+&lt;p&gt;So if you are interested in crypto engineering, the first thing you should do
+is read Matt Green&#39;s &lt;a href=&#34;http://blog.cryptographyengineering.com/&#34;&gt;blog&lt;/a&gt; (though
+Matt also discusses design and theory issues). Other good blogs to read are
+&lt;a href=&#34;https://www.imperialviolet.org/&#34;&gt;Imperial Violet&lt;/a&gt;, &lt;a href=&#34;http://www.daemonology.net/blog/&#34;&gt;Daeomic
+Dispatches&lt;/a&gt; and &lt;a href=&#34;http://rdist.root.org/&#34;&gt;Root
+Labs&lt;/a&gt;. Good resources are the Matasano &lt;a href=&#34;http://www.matasano.com/articles/crypto-challenges/&#34;&gt;crypto
+challenges&lt;/a&gt; and the &lt;a href=&#34;http://nacl.cr.yp.to/index.html&#34;&gt;NaCl
+project&lt;/a&gt;.  Finally, the
+&lt;a href=&#34;http://www.chesworkshop.org/}&#34;&gt;CHES&lt;/a&gt; and &lt;a href=&#34;http://realworldcrypto.wordpress.com/&#34;&gt;Real-World
+Cryptography&lt;/a&gt; workshops are good events
+to attend.&lt;/p&gt;
+
+&lt;p&gt;If you are interested in theory and/or design I would recommend the
+&lt;a href=&#34;http://mpclounge.wordpress.com/&#34;&gt;MPC Lounge&lt;/a&gt;, the
+&lt;a href=&#34;http://bristolcrypto.blogspot.com/&#34;&gt;Bristol Cryptography Blog&lt;/a&gt; and
+&lt;a href=&#34;http://jonkatz.wordpress.com/}&#34;&gt;Random Bits&lt;/a&gt; (it hasn&#39;t been updated in
+a while but the archives are worth reading).&lt;/p&gt;
+
+&lt;p&gt;If you&#39;re interested in theory I would recommend
+&lt;a href=&#34;http://windowsontheory.org/&#34;&gt;Windows on Theory&lt;/a&gt; and
+&lt;a href=&#34;http://lucatrevisan.wordpress.com/&#34;&gt;In Theory&lt;/a&gt; (though these cover a
+lot more than crypto).&lt;/p&gt;
+&lt;div class=&#34;footnotes&#34;&gt;
+
+&lt;hr&gt;
+
+&lt;ol&gt;
+&lt;li id=&#34;fn:1&#34;&gt;There is a recent line of work in cryptographic theory called &lt;em&gt;leakage-resilient cryptography&lt;/em&gt; that tries to study the impact of side-channels and tries to inform crypto design. The area is relatively new and a bit late considering side-channels were first demonstrated in 1996 in &lt;a href=&#34;http://www.cryptography.com/public/pdf/TimingAttacks.pdf&#34;&gt;this paper&lt;/a&gt; by Paul Kocher. So far it&#39;s not clear whether the work in this area will have any significant impact on crypto design or engineering but I hope it will.&lt;br&gt;
+ &lt;a class=&#34;footnote-return&#34; href=&#34;#fnref:1&#34;&gt;â†©&lt;/a&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/div&gt;
+</description>
+    </item>
+    
+  </channel>
+</rss>

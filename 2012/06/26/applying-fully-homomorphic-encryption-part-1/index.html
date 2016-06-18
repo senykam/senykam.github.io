@@ -1,0 +1,897 @@
+<!DOCTYPE html>
+<html lang="en-us">
+<head>
+    <title>Applying Fully Homomorphic Encryption (Part 1) &middot; Outsourced Bits</title>
+    <meta name="generator" content="Hugo 0.16" />
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="author" content="Seny Kamara">
+    
+      <meta name="description" content="">
+    
+    
+    <link rel="icon" href="http://outsourcedbits.org/favicon.ico">
+    <link rel="apple-touch-icon" href="http://outsourcedbits.org/apple-touch-icon.png" />
+    <link rel="stylesheet" href="http://outsourcedbits.org/css/style.css">
+    <link rel="stylesheet" href="http://outsourcedbits.org/css/font-awesome.min.css">
+    <link rel="stylesheet" href="http://outsourcedbits.org/css/monokai.css">
+    <link rel="stylesheet" href="http://outsourcedbits.org/fancybox/jquery.fancybox.css">
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400italic,400,600' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Source+Code+Pro' rel='stylesheet' type='text/css'>
+    <meta property="og:title" content="Applying Fully Homomorphic Encryption (Part 1)" />
+<meta property="og:description" content="This is the first part of a series on applying fully-homomorphic encryption. See part 2 In 2009, Craig Gentry published a paper showing---for the first time---how to construct a fully-homomorphic encryption (FHE) scheme. This was a landmark event in cryptographic research that will eventually have huge practical implications for security and privacy. An often cited (especially by the press) application of FHE is cloud computing. Unfortunately, few (if any) details are usually given as to how exactly FHE is useful for cloud computing." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://outsourcedbits.org/2012/06/26/applying-fully-homomorphic-encryption-part-1" />
+
+
+<meta property="og:updated_time" content="2012-06-26T16:48:56-03:00"/>
+
+
+
+
+
+
+
+
+
+
+    
+    
+<meta itemprop="name" content="Applying Fully Homomorphic Encryption (Part 1)">
+<meta itemprop="description" content="This is the first part of a series on applying fully-homomorphic encryption. See part 2 In 2009, Craig Gentry published a paper showing---for the first time---how to construct a fully-homomorphic encryption (FHE) scheme. This was a landmark event in cryptographic research that will eventually have huge practical implications for security and privacy. An often cited (especially by the press) application of FHE is cloud computing. Unfortunately, few (if any) details are usually given as to how exactly FHE is useful for cloud computing.">
+
+
+<meta itemprop="dateModified" content="2012-06-26T16:48:56-03:00" />
+<meta itemprop="wordCount" content="1647">
+
+
+
+<meta itemprop="keywords" content="applied-crypto,applied-cryptography,cloud-computing,encrypted-search,graph-encryption,inference-attacks,learning,misc,policy,surveillance,cryptdb,deterministic-encryption,dte,fhe,fisa,functional-encryption,learning,machine-learning,metadata,mpc,msr,nsa,ope,oram,ot,pets,pir,ppe,sat,searchable-encryption,section-215,sse,ste," />
+
+    
+
+  <meta name="twitter:card" content="summary"/>
+
+
+
+<meta name="twitter:title" content="Applying Fully Homomorphic Encryption (Part 1)"/>
+<meta name="twitter:description" content="This is the first part of a series on applying fully-homomorphic encryption. See part 2 In 2009, Craig Gentry published a paper showing---for the first time---how to construct a fully-homomorphic encryption (FHE) scheme. This was a landmark event in cryptographic research that will eventually have huge practical implications for security and privacy. An often cited (especially by the press) application of FHE is cloud computing. Unfortunately, few (if any) details are usually given as to how exactly FHE is useful for cloud computing."/>
+<meta name="twitter:site" content="@senykam"/>
+
+
+    
+
+    
+</head>
+<body>
+<div class="container">
+
+
+<div id="container">
+	<header id="header">
+  <div id="header-main" class="header-inner">
+    <div class="outer">
+      <a href="http://outsourcedbits.org/" id="logo"><span class="site-title">Outsourced Bits</span></a>
+      <nav id="main-nav">
+          
+
+          
+
+          
+      </nav>
+        <nav id="sub-nav">
+          <div class="profile" id="profile-nav">
+            <a id="profile-anchor" href="javascript:;"><img class="avatar" src="http://outsourcedbits.org//img/sk.jpg"><i class="fa fa-caret-down"></i></a>
+          </div>
+        </nav>
+        <div id="search-form-wrap">
+          <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form">
+              <input type="search" name="q" results="0" class="search-form-input" placeholder="Search">
+              <button type="submit" class="search-form-submit">
+              </button>
+              <input type="hidden" name="q" value="site:http://outsourcedbits.org/">
+         </form>
+        </div>
+    </div>
+  </div>
+  <div id="main-nav-mobile" class="header-sub header-inner">
+    <table class="menu outer">
+      <tbody>
+          <tr>
+          
+
+          
+
+          
+          <td>
+          <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form">
+          <input type="search" name="q" results="0" class="search-form-input" placeholder="Search">
+          <input type="hidden" name="q" value="site:http://outsourcedbits.org/">
+          </form>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+</header>
+
+   	
+   	<div class="outer">
+   		
+	    <aside id="profile">
+  <div class="inner profile-inner">
+    <div class="base-info profile-block">
+      <img id="avatar" src="http://outsourcedbits.org/img/sk.jpg" width="200" class="avatar">
+      
+      
+      <p class="mybio">My name is Seny Kamara. I am an Associate Professor of <a href="http://cs.brown.edu">Computer Science</a> at <a href="http://brown.edu">Brown</a>. Prior to that, I was a researcher at Microsoft Research. <br><br> My work is focused on designing and studying cryptographic algorithms,
+protocols and systems; often motivated by privacy issues in cloud computing,
+surveillance and databases. <br><br> This is a blog about my research and interests. For more about my work see my
+<a href="http://cs.brown.edu/~seny">homepage</a>.</p>
+      <span id="location"><i class="fa fa-map-marker"></i>Rio</span>
+      
+    </div>
+    
+    <div class="contact-info profile-block">
+      <table class="contact-list">
+        <tr>
+          
+<td><a href="//github.com/senykam" target="_blank" title="GitHub"><i class="fa fa-github"></i></a></td>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<td><a href="//twitter.com/senykam" target="_blank" title="Twitter"><i class="fa fa-twitter"></i></a></td>
+
+
+          <td><a href="" target="_blank" title="RSS"><i class="fa fa-rss"></i></a></td>
+        </tr>
+      </table>
+    </div>
+  </div>
+</aside>
+
+	    
+
+	    
+<section id="main">
+
+    <article id="page-undefined" class="article article-type-page" itemscope="" itemprop="blogPost">
+        <div class="article-inner">
+            
+
+            <header class="article-header">
+    <a href="http://outsourcedbits.org/2012/06/26/applying-fully-homomorphic-encryption-part-1">
+    <h1 class="article-title" itemprop="name">
+        Applying Fully Homomorphic Encryption (Part 1)
+    </h1>
+    </a>
+    <div class="article-meta">
+        <div class="article-date">
+            <i class="fa fa-calendar"></i>
+            <time datetime="2012-06-26 16:48:56 -0300 STD" itemprop="datePublished">2012-06-26</time>
+            &middot;
+            1647
+            words
+            &middot;
+            8
+            minute read
+        </div>
+
+        
+        
+
+        
+            
+            
+            <div class="article-category">
+                <i class="fa fa-tags"></i>
+                
+                <a class="article-category-link" href="http://outsourcedbits.org/tags/fhe">FHE</a>
+                
+                
+            </div>
+            
+        
+    </div>
+</header>
+
+            <div class="article-entry" itemprop="articleBody">
+                <p><em>This is the first part of a series on applying fully-homomorphic encryption.
+See part <a href="http://outsourcedbits.org/2012/06/26/applying-fully-homomorphic-encryption-part-2/">2</a></em></p>
+
+<p><img src="/img/grail.jpg" class="alignright" width="250">
+In 2009, Craig Gentry published a paper showing---for the first time---how to
+construct a fully-homomorphic encryption (FHE) scheme. This was a landmark
+event in cryptographic research that will eventually have huge practical
+implications for security and privacy. An often cited (especially by the press)
+application of FHE is cloud computing. Unfortunately, few (if any) details
+are usually given as to how exactly FHE is useful for cloud computing.</p>
+
+<p>This is the first part in a series of posts that will focus on
+<em>applications</em> of FHE. What it can and can't do (and why) and how exactly
+it might be used in the cloud.  But before we can discuss applications, we first
+have to understand exactly what FHE is.</p>
+
+<h2 id="what-is-fhe">What is FHE?</h2>
+
+<p>Throughout, I'll assume familiarity with
+<a href="http://en.wikipedia.org/wiki/Public-key_cryptography">public-key encryption</a>.</p>
+
+<p>A homomorphic encryption (HE) scheme encrypts data in such a way that computations
+can be performed on the encrypted data without knowing the secret key. So, given
+two encryptions <span  class="math">\(c_1 = E_{pk}(m_1)\)</span> and <span  class="math">\(c_2 = E_{pk}(m_2)\)</span> of messages <span  class="math">\(m_1\)</span> and
+<span  class="math">\(m_2\)</span> under public key <span  class="math">\(pk\)</span>, a HE scheme allows anyone to compute an encryption
+<span  class="math">\(E_{pk}(m_1\otimes m_2)\)</span> without needing to decrypt either <span  class="math">\(c_1\)</span> or <span  class="math">\(c_2\)</span>. Here
+<span  class="math">\(\otimes\)</span> denotes some arbitrary operation (as we'll see there are many HE
+schemes each supporting different operations over the ciphertexts).</p>
+
+<p>As an example, consider the
+<a href="http://en.wikipedia.org/wiki/RSA_(algorithm)">RSA</a> public-key encryption scheme
+which produces ciphertexts of the form <span  class="math">\(m^e \mod N\)</span>, where <span  class="math">\(m\)</span> is the message,
+<span  class="math">\(e\)</span> is the public key and N is the product of two primes. Given two encryptions
+<span  class="math">\(c_1 = m_1^e \mod N\)</span> and <span  class="math">\(c_2 = m_2^e \mod N\)</span> it is easy to compute an
+encryption of <span  class="math">\(m_1\times m_2\)</span> by computing:</p>
+
+<p><span  class="math">\[
+c_1\times c_2 = m_1^e \times m_2^e = (m_1\times m_2)^e \mod N.
+\]</span></p>
+
+<p>This example shows that RSA supports multiplications over encrypted data, i.e.,
+given the encryptions of two messages anyone can compute the encryption of
+their product <sup class="footnote-ref" id="fnref:1"><a class="footnote" href="#fn:1">1</a></sup>. We therefore say that RSA is <em>multiplicatively
+homomorphic</em>. It turns out that many public-key encryption schemes are
+homomorphic including El Gamal which is also multiplicatively homomorphic,
+Goldwasser-Micali which is XOR homomorphic (i.e., supports XORs), and the
+Benaloh and Paillier schemes which are both additively homomorphic (i.e.,
+support additions).  If you' re curious about these schemes and how they work
+see <a href="http://en.wikipedia.org/wiki/Privacy_homomorphism">this</a> page.</p>
+
+<p>So we've known how to do addition, multiplications and XOR over encrypted data
+for a long time  and even being able to perform these simple operations has
+been tremendously useful (e.g., for doing things like <a href="http://web.mit.edu/6.857/OldStuff/Fall02/handouts/L15-voting.pdf">electronic
+voting</a>,
+<a href="http://en.wikipedia.org/wiki/Secure_multi-party_computation">secure multi-party
+computation</a> and
+<a href="http://en.wikipedia.org/wiki/Private_information_retrieval">private information
+retrieval</a>. Notice,
+however, that all these schemes support only a <em>single</em> operation. For example,
+the Benaloh scheme only supports additions but not multiplications or XOR.
+Similarly, El Gamal supports multiplications but not additions.</p>
+
+<p>It goes without saying that ideally we would like to support as many operations
+as possible so that we can perform a varied set of computations on encrypted
+data. It turns out, however, that as long as we can support two specific
+operations---namely, addition and multiplication---we can support any
+operation! <sup class="footnote-ref" id="fnref:2"><a class="footnote" href="#fn:2">2</a></sup></p>
+
+<p>And this is exactly what a fully-homomorphic encryption scheme is: an encryption
+scheme that supports <em>any</em> computation on encrypted data.</p>
+
+<p>Cryptographers have long wondered whether it was possible to construct a FHE
+scheme. In 2005, Boneh, Goh and Nissim came pretty close by constructing a
+scheme that could support any number of additions and <em>one</em>
+multiplication. This was a real breakthrough and gave some hope that perhaps
+FHE could be achieved. Note that while this scheme was not fully-homomorphic it
+already enabled a host of interesting applications.</p>
+
+<p>Then, in 2009, Gentry finally figured out how to construct a FHE scheme. It's
+hard to overstate how important this was for cryptography. FHE was one of those
+crazy ideas that cryptographers dreamed about but that always remained out of
+reach. I don't think I' m exaggerating when I say that almost anyone who has
+ever tried to design a cryptographic primitive or protocol and failed thought
+at some point: &quot;I'd be able to make it work if only I had a FHE scheme&quot;. FHE is
+such a powerful primitive that it has forced researchers to re-think almost
+every area of cryptography in order to figure out what is now possible. As
+Barak and Brakerski put it in their
+<a href="http://windowsontheory.org/2012/05/01/the-swiss-army-knife-of-cryptography/">overview</a>
+of FHE: FHE is the swiss-army knife of cryptography.</p>
+
+<h2 id="how-does-it-work">How does it Work?</h2>
+
+<p>Current FHE schemes are relatively complex <sup class="footnote-ref" id="fnref:3"><a class="footnote" href="#fn:3">3</a></sup> so I won't go into the details
+of how they work. Also, there are very good high-level descriptions if you are
+interested in more details.
+<a href="http://windowsontheory.org/2012/05/02/building-the-swiss-army-knife/">This</a>
+blog post by Barak and Brakerski is highly recommended. Once you've read that
+you might want to check out Gentry' s
+<a href="http://crypto.stanford.edu/craig/easy-fhe.pdf">overview</a> FHE construction and
+Vaikuntanathan' s
+<a href="http://www.cs.toronto.edu/~vinodv/FHE-focs-survey.pdf">survey</a> on the more
+recent developments in the area.  Also, Gentry's
+<a href="http://crypto.stanford.edu/craig/">thesis</a> provides a very good introduction
+to HE, FHE and the high level ideas he developed to construct the scheme.</p>
+
+<p>Here, I just want to give a high-level overview of what is referred to as
+Gentry's blueprint for constructing FHE schemes.</p>
+
+<p><strong>Somewhat homomorphic encryption (SHE).</strong>
+The first step is to design a SHE scheme which is a scheme that supports
+<em>some</em>  computations over encrypted data. Gentry then showed that if
+you can manage to design a SHE scheme that supports the evaluation of its own
+decryption algorithm (and a little more) then there is a
+general technique to transform the SHE scheme into a FHE scheme. A SHE that can
+evaluate its own decryption algorithm homomorphically is called
+<em>bootstrappable</em> and the technique that transforms a bootstrappable SHE
+scheme into a FHE scheme is called <em>bootstrapping</em>.</p>
+
+<p><strong>Bootstrapping.</strong>
+So how does bootstrapping work and why is bootstrappability such a useful
+property?  To understand this, you first have to  know how the currently-known
+SHE schemes work. Roughly speaking, the ciphertexts of all these schemes have
+noise inside of them and unfortunately this noise gets larger as more and more
+homomorphic operations are performed.  At some point there is so much noise
+that the encryptions becomes useless (i.e., they do not decrypt correctly).
+This is the main limitation of SHE schemes and this is the reason that they can
+only perform a restricted set of computations. Bootstrapping allows us to
+control this noise. <sup class="footnote-ref" id="fnref:5"><a class="footnote" href="#fn:5">4</a></sup></p>
+
+<p>The idea is to take  a ciphertext with a lot of noise in it and an encryption
+of the secret key and to homomorphically decrypt the ciphertext. Note that this
+can only work if the SHE scheme has enough homomorphic capacity to evaluate its
+own decryption algorithm which is why we need the SHE scheme to be
+bootstrappable. This homomorphically computed decryption will result in a  new
+encryption of the message but without the noise (or at least with less noise
+than before). More concretely, say we have two ciphertexts</p>
+
+<p><span  class="math">\[
+c_1 = E_{pk}(m_1) \textrm{ and } c_2 = E_{pk}(m_2)
+\]</span></p>
+
+<p>with noise <span  class="math">\(n_1\)</span> and <span  class="math">\(n_2\)</span>, respectively. We can multiply these encryptions
+using the homomorphic property of the SHE scheme to get an encryption</p>
+
+<p><span  class="math">\[
+c_3 = E_{pk}(m_1\times m_2)
+\]</span></p>
+
+<p>of <span  class="math">\(m_1\times m_2\)</span> under key <span  class="math">\(pk\)</span> but <span  class="math">\(c_3\)</span> will now have noise <span  class="math">\(n_1\times n_2\)</span>.
+The idea behind bootstrapping is to get rid of this noise as follows. First, we
+encrypt <span  class="math">\(c_3\)</span> and <span  class="math">\(sk\)</span> under <span  class="math">\(pk\)</span>. <sup class="footnote-ref" id="fnref:4"><a class="footnote" href="#fn:4">5</a></sup> This results in two new ciphertexts</p>
+
+<p><span  class="math">\[
+c_4 = E_{pk}(c_3) = E_{pk}(E_{pk}(m_1\times m_2)) \textrm{ and } c_5 = E_{pk}(sk).
+\]</span></p>
+
+<p>Given <span  class="math">\(c_4\)</span> and <span  class="math">\(c_5\)</span> we now <em>homomorphically</em> decrypt <span  class="math">\(c_4\)</span> using <span  class="math">\(c_5\)</span>.
+In other words, we compute the following operation over <span  class="math">\(c_4\)</span> and <span  class="math">\(c_5\)</span>:
+&quot;decrypt <span  class="math">\(c_3 = E_{pk}(m_1\times m_2)\)</span> using <span  class="math">\(sk\)</span>&quot;. This is allowed since the
+scheme has enough homomorphic capacity to evaluate its own decryption algorithm.</p>
+
+<p>By using this technique throughout a computation whenever the ciphertexts get
+too noisy, we can remove the main limitation of the SHE scheme and turn it into
+a FHE scheme.</p>
+
+<p>It turns out that constructing a bootstrappable SHE scheme is difficult. To do
+this, Gentry had to build his scheme using sophisticated techniques <sup class="footnote-ref" id="fnref:6"><a class="footnote" href="#fn:6">6</a></sup> so a
+lot of the recent work in FHE has tried to figure out how to design simpler
+bootstrappable SHE schemes.  Vaikuntanathan's
+<a href="http://www.cs.toronto.edu/~vinodv/FHE-focs-survey.pdf">survey</a> gives a good
+overview of the latest results in this direction.</p>
+
+<p>In the next posts, we' ll start discussing applications.</p>
+<div class="footnotes">
+
+<hr>
+
+<ol>
+<li id="fn:1">Note that as described here RSA is technically not really secure (see <a href="http://en.wikipedia.org/wiki/RSA_algorithm#Attacks_against_plain_RSA">here</a> for more details) and if we were to describe the secure version of RSA then it would not be homomorphic anymore.
+ <a class="footnote-return" href="#fnref:1">↩</a></li>
+<li id="fn:2">Matt Green's <a href="http://blog.cryptographyengineering.com/2012/01/very-casual-introduction-to-fully.html">post</a> gives a good overview of why this is the case.
+ <a class="footnote-return" href="#fnref:2">↩</a></li>
+<li id="fn:3">Actually current schemes are not that complex in the sense that their correctness and security can be verified relatively easily. Developing an intuition as to <em>why</em> they work and why they were designed the way they were, however, is not as easy.
+ <a class="footnote-return" href="#fnref:3">↩</a></li>
+<li id="fn:5">It's important to note that the noise is crucial to the security of the schemes. In other words, with bootsrapping we don't want to get rid of the noise completely, just reduce it once it becomes too difficult to deal with.
+ <a class="footnote-return" href="#fnref:5">↩</a></li>
+<li id="fn:4">For typical encryption schemes, encrypting the secret key <span  class="math">\(sk\)</span> under the public key <span  class="math">\(pk\)</span> is not secure. There are specially-designed schemes for which this is allowed and Gentry provides in his thesis an argument as to why his construction is likely to satisfy this requirement.
+ <a class="footnote-return" href="#fnref:4">↩</a></li>
+<li id="fn:6">Gentry's construction is lattice-based. Lattice-based schemes have several nice properties, one of them being that their decryption algorithms tend to be  &quot;simple&quot; in the sense that they require a relatively small number of multiplications and additions. This makes them ideal for building bootstrappable  SHE schemes. Unfortunately, using lattices was not enough to achieve bootstrappability so Gentry introduced a general technique to simplify the decryption algorithm further. This technique is called <em>squashing</em> and relies on non-standard assumptions so recent work has tried to remove the need for squashing altogether.<br>
+ <a class="footnote-return" href="#fnref:6">↩</a></li>
+</ol>
+</div>
+
+            </div>
+            <footer class="article-footer">
+    <a data-url="http://outsourcedbits.org/2012/06/26/applying-fully-homomorphic-encryption-part-1" data-id="0ffe1e33618fecbe0f3bb17378295554" class="article-share-link">
+        Share
+    </a>
+    
+    <a href="http://outsourcedbits.org/2012/06/26/applying-fully-homomorphic-encryption-part-1/#disqus_thread" class="article-comment-link">
+        Comments
+    </a>
+    
+</footer>
+
+        </div>
+
+        
+<nav id="article-nav">
+    
+    <a href="http://outsourcedbits.org/2012/06/10/cloud-adversarial-models" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">
+          Older
+      </strong>
+      <div class="article-nav-title">Cloud Adversarial Models</div>
+    </a>
+    
+
+    
+    <a href="http://outsourcedbits.org/2012/09/29/applying-fully-homomorphic-encryption-part-2" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">
+          Newer
+      </strong>
+      <div class="article-nav-title">Applying Fully Homomorphic Encryption (Part 2)</div>
+    </a>
+    
+</nav>
+
+
+    </article>
+
+    
+    <section id="comments">
+        <div id="disqus_thread">
+            <div id="disqus_thread"></div>
+<script type="text/javascript">
+    var disqus_shortname = 'outsourcedbits';
+    var disqus_identifier = 'http:\/\/outsourcedbits.org\/2012\/06\/26\/applying-fully-homomorphic-encryption-part-1';
+    var disqus_title = 'Applying Fully Homomorphic Encryption (Part 1)';
+    var disqus_url = 'http:\/\/outsourcedbits.org\/2012\/06\/26\/applying-fully-homomorphic-encryption-part-1';
+
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+        </div>
+    </section>
+    
+</section>
+
+
+	    
+	    <aside id="sidebar">
+    
+
+    
+
+
+<div class="widget-wrap">
+    <h3 class="widget-title">Categories</h3>
+    <div class="widget">
+        <ul class="category-list">
+            
+            <li class="category-list-item">
+                <a class="category-list-link" href="http://outsourcedbits.org/categories/applied-crypto">
+                    applied-crypto
+                </a>
+                <span class="category-list-count">3</span>
+            </li>
+            
+            <li class="category-list-item">
+                <a class="category-list-link" href="http://outsourcedbits.org/categories/applied-cryptography">
+                    applied-cryptography
+                </a>
+                <span class="category-list-count">1</span>
+            </li>
+            
+            <li class="category-list-item">
+                <a class="category-list-link" href="http://outsourcedbits.org/categories/cloud-computing">
+                    cloud-computing
+                </a>
+                <span class="category-list-count">2</span>
+            </li>
+            
+            <li class="category-list-item">
+                <a class="category-list-link" href="http://outsourcedbits.org/categories/encrypted-search">
+                    encrypted-search
+                </a>
+                <span class="category-list-count">11</span>
+            </li>
+            
+            <li class="category-list-item">
+                <a class="category-list-link" href="http://outsourcedbits.org/categories/graph-encryption">
+                    graph-encryption
+                </a>
+                <span class="category-list-count">1</span>
+            </li>
+            
+            <li class="category-list-item">
+                <a class="category-list-link" href="http://outsourcedbits.org/categories/inference-attacks">
+                    inference-attacks
+                </a>
+                <span class="category-list-count">1</span>
+            </li>
+            
+            <li class="category-list-item">
+                <a class="category-list-link" href="http://outsourcedbits.org/categories/learning">
+                    learning
+                </a>
+                <span class="category-list-count">1</span>
+            </li>
+            
+            <li class="category-list-item">
+                <a class="category-list-link" href="http://outsourcedbits.org/categories/misc">
+                    misc
+                </a>
+                <span class="category-list-count">1</span>
+            </li>
+            
+            <li class="category-list-item">
+                <a class="category-list-link" href="http://outsourcedbits.org/categories/policy">
+                    policy
+                </a>
+                <span class="category-list-count">2</span>
+            </li>
+            
+            <li class="category-list-item">
+                <a class="category-list-link" href="http://outsourcedbits.org/categories/surveillance">
+                    surveillance
+                </a>
+                <span class="category-list-count">2</span>
+            </li>
+            
+        </ul>
+    </div>
+</div>
+
+
+
+    
+
+
+<div class="widget-wrap">
+    <h3 class="widget-title">
+        Tags
+    </h3>
+    <div class="widget">
+        <ul class="category-list">
+            
+            <li class="category-list-item">
+                <a class="category-list-link" href="http://outsourcedbits.org/tags/cryptdb">
+                    cryptdb
+                </a>
+                <span class="category-list-count">1</span>
+            </li>
+            
+            <li class="category-list-item">
+                <a class="category-list-link" href="http://outsourcedbits.org/tags/deterministic-encryption">
+                    deterministic-encryption
+                </a>
+                <span class="category-list-count">1</span>
+            </li>
+            
+            <li class="category-list-item">
+                <a class="category-list-link" href="http://outsourcedbits.org/tags/dte">
+                    dte
+                </a>
+                <span class="category-list-count">1</span>
+            </li>
+            
+            <li class="category-list-item">
+                <a class="category-list-link" href="http://outsourcedbits.org/tags/fhe">
+                    fhe
+                </a>
+                <span class="category-list-count">2</span>
+            </li>
+            
+            <li class="category-list-item">
+                <a class="category-list-link" href="http://outsourcedbits.org/tags/fisa">
+                    fisa
+                </a>
+                <span class="category-list-count">1</span>
+            </li>
+            
+            <li class="category-list-item">
+                <a class="category-list-link" href="http://outsourcedbits.org/tags/functional-encryption">
+                    functional-encryption
+                </a>
+                <span class="category-list-count">1</span>
+            </li>
+            
+            <li class="category-list-item">
+                <a class="category-list-link" href="http://outsourcedbits.org/tags/learning">
+                    learning
+                </a>
+                <span class="category-list-count">1</span>
+            </li>
+            
+            <li class="category-list-item">
+                <a class="category-list-link" href="http://outsourcedbits.org/tags/machine-learning">
+                    machine-learning
+                </a>
+                <span class="category-list-count">1</span>
+            </li>
+            
+            <li class="category-list-item">
+                <a class="category-list-link" href="http://outsourcedbits.org/tags/metadata">
+                    metadata
+                </a>
+                <span class="category-list-count">2</span>
+            </li>
+            
+            <li class="category-list-item">
+                <a class="category-list-link" href="http://outsourcedbits.org/tags/mpc">
+                    mpc
+                </a>
+                <span class="category-list-count">3</span>
+            </li>
+            
+            <li class="category-list-item">
+                <a class="category-list-link" href="http://outsourcedbits.org/tags/msr">
+                    msr
+                </a>
+                <span class="category-list-count">1</span>
+            </li>
+            
+            <li class="category-list-item">
+                <a class="category-list-link" href="http://outsourcedbits.org/tags/nsa">
+                    nsa
+                </a>
+                <span class="category-list-count">2</span>
+            </li>
+            
+            <li class="category-list-item">
+                <a class="category-list-link" href="http://outsourcedbits.org/tags/ope">
+                    ope
+                </a>
+                <span class="category-list-count">1</span>
+            </li>
+            
+            <li class="category-list-item">
+                <a class="category-list-link" href="http://outsourcedbits.org/tags/oram">
+                    oram
+                </a>
+                <span class="category-list-count">1</span>
+            </li>
+            
+            <li class="category-list-item">
+                <a class="category-list-link" href="http://outsourcedbits.org/tags/ot">
+                    ot
+                </a>
+                <span class="category-list-count">1</span>
+            </li>
+            
+            <li class="category-list-item">
+                <a class="category-list-link" href="http://outsourcedbits.org/tags/pets">
+                    pets
+                </a>
+                <span class="category-list-count">1</span>
+            </li>
+            
+            <li class="category-list-item">
+                <a class="category-list-link" href="http://outsourcedbits.org/tags/pir">
+                    pir
+                </a>
+                <span class="category-list-count">1</span>
+            </li>
+            
+            <li class="category-list-item">
+                <a class="category-list-link" href="http://outsourcedbits.org/tags/ppe">
+                    ppe
+                </a>
+                <span class="category-list-count">2</span>
+            </li>
+            
+            <li class="category-list-item">
+                <a class="category-list-link" href="http://outsourcedbits.org/tags/sat">
+                    sat
+                </a>
+                <span class="category-list-count">1</span>
+            </li>
+            
+            <li class="category-list-item">
+                <a class="category-list-link" href="http://outsourcedbits.org/tags/searchable-encryption">
+                    searchable-encryption
+                </a>
+                <span class="category-list-count">1</span>
+            </li>
+            
+            <li class="category-list-item">
+                <a class="category-list-link" href="http://outsourcedbits.org/tags/section-215">
+                    section-215
+                </a>
+                <span class="category-list-count">2</span>
+            </li>
+            
+            <li class="category-list-item">
+                <a class="category-list-link" href="http://outsourcedbits.org/tags/sse">
+                    sse
+                </a>
+                <span class="category-list-count">4</span>
+            </li>
+            
+            <li class="category-list-item">
+                <a class="category-list-link" href="http://outsourcedbits.org/tags/ste">
+                    ste
+                </a>
+                <span class="category-list-count">2</span>
+            </li>
+            
+        </ul>
+    </div>
+</div>
+
+
+
+    
+
+
+<div class="widget-wrap">
+    <h3 class="widget-title">
+        Tag cloud
+    </h3>
+    <div class="widget tagcloud">
+        
+        <a href="http://outsourcedbits.org/tags/cryptdb" style="font-size: 12px;">cryptdb</a>
+        
+        <a href="http://outsourcedbits.org/tags/deterministic-encryption" style="font-size: 12px;">deterministic-encryption</a>
+        
+        <a href="http://outsourcedbits.org/tags/dte" style="font-size: 12px;">dte</a>
+        
+        <a href="http://outsourcedbits.org/tags/fhe" style="font-size: 12px;">fhe</a>
+        
+        <a href="http://outsourcedbits.org/tags/fisa" style="font-size: 12px;">fisa</a>
+        
+        <a href="http://outsourcedbits.org/tags/functional-encryption" style="font-size: 12px;">functional-encryption</a>
+        
+        <a href="http://outsourcedbits.org/tags/learning" style="font-size: 12px;">learning</a>
+        
+        <a href="http://outsourcedbits.org/tags/machine-learning" style="font-size: 12px;">machine-learning</a>
+        
+        <a href="http://outsourcedbits.org/tags/metadata" style="font-size: 12px;">metadata</a>
+        
+        <a href="http://outsourcedbits.org/tags/mpc" style="font-size: 12px;">mpc</a>
+        
+        <a href="http://outsourcedbits.org/tags/msr" style="font-size: 12px;">msr</a>
+        
+        <a href="http://outsourcedbits.org/tags/nsa" style="font-size: 12px;">nsa</a>
+        
+        <a href="http://outsourcedbits.org/tags/ope" style="font-size: 12px;">ope</a>
+        
+        <a href="http://outsourcedbits.org/tags/oram" style="font-size: 12px;">oram</a>
+        
+        <a href="http://outsourcedbits.org/tags/ot" style="font-size: 12px;">ot</a>
+        
+        <a href="http://outsourcedbits.org/tags/pets" style="font-size: 12px;">pets</a>
+        
+        <a href="http://outsourcedbits.org/tags/pir" style="font-size: 12px;">pir</a>
+        
+        <a href="http://outsourcedbits.org/tags/ppe" style="font-size: 12px;">ppe</a>
+        
+        <a href="http://outsourcedbits.org/tags/sat" style="font-size: 12px;">sat</a>
+        
+        <a href="http://outsourcedbits.org/tags/searchable-encryption" style="font-size: 12px;">searchable-encryption</a>
+        
+        <a href="http://outsourcedbits.org/tags/section-215" style="font-size: 12px;">section-215</a>
+        
+        <a href="http://outsourcedbits.org/tags/sse" style="font-size: 12px;">sse</a>
+        
+        <a href="http://outsourcedbits.org/tags/ste" style="font-size: 12px;">ste</a>
+        
+    </div>
+</div>
+
+
+
+
+    <div id="toTop" class="fa fa-chevron-up"></div>
+</aside>
+
+	    
+	</div>
+</div>
+
+<footer id="footer">
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2016
+      Powered by <a href="//gohugo.io">Hugo</a>. Theme by <a href="http://github.com/ppoffice">PPOffice</a>.
+    </div>
+  </div>
+</footer>
+
+
+<script>
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-79501268-1', 'auto');
+ga('send', 'pageview');
+</script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+<script src="http://outsourcedbits.org/fancybox/jquery.fancybox.pack.js"></script>
+<script src="http://outsourcedbits.org/js/script.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.8.0/highlight.min.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+
+
+
+ 
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+  extensions: ["tex2jax.js"],
+  jax: ["input/TeX", "output/HTML-CSS"],
+  tex2jax: {
+    inlineMath: [['$','$'], ['\\(','\\)']],
+    displayMath: [['$$','$$'], ['\\[','\\]']],
+    processEscapes: true,
+    processEnvironments: true,
+    skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
+    TeX: { equationNumbers: { autoNumber: "AMS" },
+         extensions: ["AMSmath.js", "AMSsymbols.js"] }
+  },
+  "HTML-CSS": {availableFonts: ["TeX"]}, 
+  scale: [200]
+});
+</script>
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    
+    
+    
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i = 0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+});
+</script>
+<script type="text/javascript"
+  src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+</body>
+</html>

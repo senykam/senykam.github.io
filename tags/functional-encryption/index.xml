@@ -1,0 +1,209 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Functional Encryption on Outsourced Bits</title>
+    <link>http://outsourcedbits.org/tags/functional-encryption/</link>
+    <description>Recent content in Functional Encryption on Outsourced Bits</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Wed, 30 Oct 2013 11:02:40 -0300</lastBuildDate>
+    <atom:link href="http://outsourcedbits.org/tags/functional-encryption/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>How to Search on Encrypted Data: Functional Encryption (Part 3)</title>
+      <link>http://outsourcedbits.org/2013/10/30/how-to-search-on-encrypted-data-functional-encryption-part-3</link>
+      <pubDate>Wed, 30 Oct 2013 11:02:40 -0300</pubDate>
+      
+      <guid>http://outsourcedbits.org/2013/10/30/how-to-search-on-encrypted-data-functional-encryption-part-3</guid>
+      <description>&lt;p&gt;&lt;em&gt;This is the third part of a series on searching on encrypted data. See parts &lt;a href=&#34;http://outsourcedbits.org/2013/10/06/how-to-search-on-encrypted-data-part-1/&#34;&gt;1&lt;/a&gt;, &lt;a href=&#34;https://outsourcedbits.org/2013/10/30/how-to-search-on-encrypted-data-part-2/&#34;&gt;2&lt;/a&gt;, &lt;a href=&#34;https://outsourcedbits.org/2013/12/20/how-to-search-on-encrypted-data-part-4-oblivious-rams/&#34;&gt;4&lt;/a&gt; and &lt;a href=&#34;https://outsourcedbits.org/2014/08/21/how-to-search-on-encrypted-data-searchable-symmetric-encryption-part-5/&#34;&gt;5&lt;/a&gt;.&lt;/em&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;http://outsourcedbits.org/img/search.jpg&#34; class=&#34;alignright&#34; width=&#34;250&#34;&gt;
+Previously, we covered the simplest solution for encrypted search  which
+consisted of using a deterministic encryption scheme (more generally, using a
+property-preserving encryption scheme) to encrypt keywords. This resulted in an
+encrypted search solution with sub-linear (in &lt;span  class=&#34;math&#34;&gt;\(n\)&lt;/span&gt;) search time but that leaked
+quite a bit of information to the server.&lt;/p&gt;
+
+&lt;p&gt;We&#39; ll now describe a different approach that provides the opposite properties:
+slow search but better security.  At a high-level, one can view this approach
+as simply replacing  the PPE scheme in the previous solution with a &lt;em&gt;functional
+encryption&lt;/em&gt; (FE) scheme.&lt;/p&gt;
+
+&lt;h2 id=&#34;functional-and-identitybased-encryption&#34;&gt;Functional and Identity-Based Encryption&lt;/h2&gt;
+
+&lt;p&gt;The notion of FE was first described by Sahai and Waters in a  talk
+[&lt;a href=&#34;http://www.cs.utexas.edu/~bwaters/presentations/files/functional.ppt&#34;&gt;SW09&lt;/a&gt;]
+and later formalized by Boneh, Sahai and Waters
+[&lt;a href=&#34;http://eprint.iacr.org/2010/543.pdf&#34;&gt;BSW10&lt;/a&gt;] and by O&#39;Neill
+[&lt;a href=&#34;http://eprint.iacr.org/2010/556&#34;&gt;O10&lt;/a&gt;].  Starting with the work of Boneh
+and Franklin on &lt;a href=&#34;http://en.wikipedia.org/wiki/ID-based_encryption&#34;&gt;identity-based
+encryption&lt;/a&gt;, there was a slew
+of new encryption schemes achieving various properties (e.g., attribute-based
+encryption, hidden vector encryption, predicate encryption).   Many of these
+constructions felt loosely related so the idea behind FE was to capture all
+these schemes under a single framework.&lt;/p&gt;
+
+&lt;p&gt;Though everything we&#39;ll cover can be done with FE, for concreteness, we&#39;ll
+consider the special case of IBE, which was first suggested by Shamir
+[&lt;a href=&#34;http://discovery.csc.ncsu.edu/Courses/csc774-S07/shamir84.pdf&#34;&gt;Shamir84&lt;/a&gt;]
+and realized by Boneh and Franklin
+[&lt;a href=&#34;http://crypto.stanford.edu/~dabo/pubs/papers/bfibe.pdf&#34;&gt;BF01&lt;/a&gt;].&lt;/p&gt;
+
+&lt;p&gt;A public-key IBE scheme consists of four algorithms:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;A setup algorithm &lt;span  class=&#34;math&#34;&gt;\({\sf Setup}\)&lt;/span&gt; used to generate a master secret and public key
+pair &lt;span  class=&#34;math&#34;&gt;\((msk, mpk)\)&lt;/span&gt;.&lt;/li&gt;
+&lt;li&gt;An encryption algorithm &lt;span  class=&#34;math&#34;&gt;\({\sf Enc}\)&lt;/span&gt; that takes as input the master public-key
+&lt;span  class=&#34;math&#34;&gt;\(mpk\)&lt;/span&gt;, an identity &lt;span  class=&#34;math&#34;&gt;\(id\)&lt;/span&gt; and a message &lt;span  class=&#34;math&#34;&gt;\(m\)&lt;/span&gt; as input and returns a ciphertext &lt;span  class=&#34;math&#34;&gt;\(c\)&lt;/span&gt;.&lt;/li&gt;
+&lt;li&gt;A key generation algorithm &lt;span  class=&#34;math&#34;&gt;\({\sf Keygen}\)&lt;/span&gt; that takes as input the master secret
+key &lt;span  class=&#34;math&#34;&gt;\(msk\)&lt;/span&gt; and an identity &lt;span  class=&#34;math&#34;&gt;\(id\)&lt;/span&gt; and returns a secret key &lt;span  class=&#34;math&#34;&gt;\(sk_{id}\)&lt;/span&gt;.&lt;/li&gt;
+&lt;li&gt;And finally a decryption algorithm &lt;span  class=&#34;math&#34;&gt;\({\sf Dec}\)&lt;/span&gt; that takes as input a secret key
+&lt;span  class=&#34;math&#34;&gt;\(sk_{id}\)&lt;/span&gt; and a ciphertext &lt;span  class=&#34;math&#34;&gt;\(c\)&lt;/span&gt; and returns a message &lt;span  class=&#34;math&#34;&gt;\(m\)&lt;/span&gt; or a failure symbol &lt;span  class=&#34;math&#34;&gt;\(\bot\)&lt;/span&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;The motivation behind IBE is key distribution. In particular, using an IBE
+scheme should be easier than using a standard (public-key) encryption scheme
+where public keys have to be certified, revoked and verified.&lt;/p&gt;
+
+&lt;p&gt;Let&#39;s consider a concrete example.  Suppose Alice wants to send an encrypted
+message to Bob who works at Microsoft.  The idea is that Microsoft would first
+generate a pair of master keys &lt;span  class=&#34;math&#34;&gt;\((msk, mpk)\)&lt;/span&gt; and distribute &lt;span  class=&#34;math&#34;&gt;\(mpk\)&lt;/span&gt; together with a
+certificate. To send her message &lt;span  class=&#34;math&#34;&gt;\(m\)&lt;/span&gt;, Alice would retrieve Microsoft&#39;s master
+public key &lt;span  class=&#34;math&#34;&gt;\(mpk\)&lt;/span&gt;, verify its certificate and then encrypt &lt;span  class=&#34;math&#34;&gt;\(m\)&lt;/span&gt; under Bob&#39;s
+identity by computing:&lt;/p&gt;
+
+&lt;p&gt;&lt;span  class=&#34;math&#34;&gt;\[
+c = {\sf Enc}(mpk, &#34;\texttt{bob@microsoft.com}&#34;, m).
+\]&lt;/span&gt;&lt;/p&gt;
+
+&lt;p&gt;To decrypt the ciphertext &lt;span  class=&#34;math&#34;&gt;\(c\)&lt;/span&gt;, Bob needs to hold a secret key for his identity
+under Microsoft&#39;s master key:&lt;/p&gt;
+
+&lt;p&gt;&lt;span  class=&#34;math&#34;&gt;\[
+sk = {\sf Keygen}(msk, &#34;\texttt{bob@microsoft.com}&#34;).
+\]&lt;/span&gt;&lt;/p&gt;
+
+&lt;p&gt;Given this key, he can then recover the message by computing &lt;span  class=&#34;math&#34;&gt;\(m = {\sf Dec}(sk, c)\)&lt;/span&gt;.&lt;/p&gt;
+
+&lt;p&gt;Notice that Alice never needed to know what Bob&#39;s public key was or to verify
+any certificate for his key. The only certificate she had to verify was for
+Microsoft&#39;s master public key but once that key is authenticated she can send
+email to anyone at Microsoft without any additional work.&lt;/p&gt;
+
+&lt;h2 id=&#34;publickey-encrypted-search&#34;&gt;Public-Key Encrypted Search&lt;/h2&gt;
+
+&lt;p&gt;We are now ready to see how (anonymous) IBE can be used to search over
+encrypted data.  This idea was first proposed by Boneh, Di Crescenzo, Ostrovsky
+and Persiano
+[&lt;a href=&#34;http://crypto.stanford.edu/~dabo/pubs/papers/encsearch.pdf&#34;&gt;BCOP04&lt;/a&gt;] and is
+best explained by considering the following email scenario where Alice wants to
+send an encrypted email to Bob.&lt;/p&gt;
+
+&lt;p&gt;Bob first generates a master secret and public key pair for the IBE scheme
+&lt;span  class=&#34;math&#34;&gt;\((msk, mpk)\)&lt;/span&gt; and a secret and public key pair for a standard public-key
+encryption scheme &lt;span  class=&#34;math&#34;&gt;\((sk, pk)\)&lt;/span&gt;. He then makes the public keys &lt;span  class=&#34;math&#34;&gt;\((mpk, pk)\)&lt;/span&gt; public
+and keeps the secret keys &lt;span  class=&#34;math&#34;&gt;\((msk, sk)\)&lt;/span&gt; private.  Alice encrypts her message under
+&lt;span  class=&#34;math&#34;&gt;\(pk\)&lt;/span&gt; using the standard public-key encryption scheme, resulting in a ciphertext
+&lt;span  class=&#34;math&#34;&gt;\(c\)&lt;/span&gt;. She then attaches IBE encryptions of &amp;quot;1&amp;quot; under Bob&#39;s master public key
+&lt;span  class=&#34;math&#34;&gt;\(mpk\)&lt;/span&gt; with the keywords as the identity. This results in a set of IBE encryptions
+&lt;span  class=&#34;math&#34;&gt;\((e_1, \dots, e_m)\)&lt;/span&gt; where each &lt;span  class=&#34;math&#34;&gt;\(e_j\)&lt;/span&gt; (for &lt;span  class=&#34;math&#34;&gt;\(1 \leq j \leq m\)&lt;/span&gt;) is defined as&lt;/p&gt;
+
+&lt;p&gt;&lt;span  class=&#34;math&#34;&gt;\[
+e_j = {\sf Enc}(mpk, w_j), 
+\]&lt;/span&gt;&lt;/p&gt;
+
+&lt;p&gt;where &lt;span  class=&#34;math&#34;&gt;\((w_1, \dots, w_m)\)&lt;/span&gt; are the keywords.&lt;/p&gt;
+
+&lt;p&gt;Let&#39;s suppose Bob&#39;s email server has received &lt;span  class=&#34;math&#34;&gt;\(n\)&lt;/span&gt; emails of this form, so that
+it now  holds a set of encrypted emails &lt;span  class=&#34;math&#34;&gt;\((c_1, \dots, c_n)\)&lt;/span&gt; and an encrypted
+database&lt;/p&gt;
+
+&lt;p&gt;&lt;span  class=&#34;math&#34;&gt;\[
+{\sf EDB} = \bigg(\big(e_{1, 1}, \dots, e_{1, m}, {\sf ptr}(c_1)\big), \dots,
+\big(e_{n,1}, \dots, e_{n,m}, {\sf ptr}(c_n)\big)\bigg).
+\]&lt;/span&gt;&lt;/p&gt;
+
+&lt;p&gt;Now, if Bob wants to retrieve the emails with keyword &lt;span  class=&#34;math&#34;&gt;\(w\)&lt;/span&gt;, he just needs to
+generate a secret IBE key as &lt;span  class=&#34;math&#34;&gt;\(sk_w = {\sf Keygen}(msk, w)\)&lt;/span&gt; and send it as the token
+to the server. The server then tries to decrypt each IBE ciphertext in
+&lt;span  class=&#34;math&#34;&gt;\({\sf EDB}\)&lt;/span&gt; and if successful follows the associated pointer to return the
+appropriate encrypted email.&lt;/p&gt;
+
+&lt;p&gt;An important observation is that a standard IBE scheme here will not be enough.
+The problem is that the notion of IBE does not necessarily guarantee that a
+ciphertext  hides information about the identity used to create it.
+This means that if we were to use a standard IBE scheme, &lt;span  class=&#34;math&#34;&gt;\({\sf EDB}\)&lt;/span&gt; could leak the
+keywords to the server. To address this, Boneh et al. observe that what you
+actually need is an &lt;em&gt;anonymous&lt;/em&gt; IBE scheme which essentially means that the
+ciphertexts  do not reveal information about the identities. Fortunately, we
+know how to construct such schemes efficiently so this is not a major concern
+from a practical point of view (e.g., the Boneh-Franklin IBE scheme is
+anonymous).&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Efficiency.&lt;/strong&gt;
+Search time for the server is &lt;span  class=&#34;math&#34;&gt;\(O(nm)\)&lt;/span&gt; since it has to try to decrypt each
+ciphertext in the &lt;span  class=&#34;math&#34;&gt;\({\sf EDB}\)&lt;/span&gt;.  Assuming &lt;span  class=&#34;math&#34;&gt;\(m \ll n\)&lt;/span&gt;, this is &lt;span  class=&#34;math&#34;&gt;\(O(n)\)&lt;/span&gt; which is a &lt;em&gt;a
+lot&lt;/em&gt; slower than the solution based on deterministic encryption described in the
+&lt;a href=&#34;http://outsourcedbits.org/2013/10/14/how-to-search-on-encrypted-data-part-2/&#34;&gt;previous post&lt;/a&gt;
+which required time &lt;span  class=&#34;math&#34;&gt;\(o(n)\)&lt;/span&gt; (i.e., sub-linear in &lt;span  class=&#34;math&#34;&gt;\(n\)&lt;/span&gt;).&lt;/p&gt;
+
+&lt;h2 id=&#34;is-this-secure&#34;&gt;Is this Secure?&lt;/h2&gt;
+
+&lt;p&gt;While this approach is slower than the PPE-based approach, it has better security
+properties.  First, the encrypted database by itself does not reveal much useful
+information to the server since---unlike the deterministic approach---keywords
+are encrypted using a &lt;em&gt;randomized&lt;/em&gt; (identity-based) encryption scheme. So
+even if two documents have keywords in common, the encrypted keywords in &lt;span  class=&#34;math&#34;&gt;\({\sf EDB}\)&lt;/span&gt;
+will be different. This means that we don&#39;t have to make unnatural assumptions
+about the data (e.g., that it has high entropy) to use it safely.&lt;/p&gt;
+
+&lt;p&gt;There is an issue, however, with this approach: &lt;em&gt;it
+does not protect the search terms&lt;/em&gt;.  In particular, the server could mount the
+following attack to figure out which keyword the client is searching for.&lt;/p&gt;
+
+&lt;p&gt;Suppose the server has some dictionary &lt;span  class=&#34;math&#34;&gt;\(W\)&lt;/span&gt; of &lt;span  class=&#34;math&#34;&gt;\(d\)&lt;/span&gt; words. For each keyword &lt;span  class=&#34;math&#34;&gt;\(w \in
+W\)&lt;/span&gt; it encrypts &amp;quot;1&amp;quot; with key &lt;span  class=&#34;math&#34;&gt;\(mpk\)&lt;/span&gt; and identity &lt;span  class=&#34;math&#34;&gt;\(w\)&lt;/span&gt;.
+This results in a set of &lt;span  class=&#34;math&#34;&gt;\(d\)&lt;/span&gt; (identity-based) encryptions &lt;span  class=&#34;math&#34;&gt;\((e&#39;_1, \dots, e&#39;_d)\)&lt;/span&gt;.
+Now, given some token &lt;span  class=&#34;math&#34;&gt;\(sk_w\)&lt;/span&gt;, the server can learn &lt;span  class=&#34;math&#34;&gt;\(w\)&lt;/span&gt; by simply trying to
+decrypt each of the ciphertext &lt;span  class=&#34;math&#34;&gt;\(e&#39;_i\)&lt;/span&gt; with &lt;span  class=&#34;math&#34;&gt;\(sk_w\)&lt;/span&gt;. If the decryption works for
+some &lt;span  class=&#34;math&#34;&gt;\(e&#39;_i\)&lt;/span&gt;, then the server knows that &lt;span  class=&#34;math&#34;&gt;\(sk_w\)&lt;/span&gt; is for the identity used to
+generate &lt;span  class=&#34;math&#34;&gt;\(e&#39;_i\)&lt;/span&gt;.&lt;/p&gt;
+
+&lt;p&gt;Notice that the attack does not result from a deficiency of any particular IBE
+scheme but that it applies to &lt;em&gt;any&lt;/em&gt; public-key encrypted search solution.
+The fundamental problem is that the server has both the ability to create EDBs
+(since it has the public-key) and to search over them. So what this tells us is
+that, as defined, the notion of search on publicly-encrypted data cannot
+protect search terms.&lt;/p&gt;
+
+&lt;p&gt;So what can we do about this? Recently, Boneh, Raghunathan and Segev
+[&lt;a href=&#34;http://eprint.iacr.org/2013/283.pdf&#34;&gt;BRS13&lt;/a&gt;] and Ariaga and Tang
+[&lt;a href=&#34;http://eprint.iacr.org/2013/330.pdf&#34;&gt;AT13&lt;/a&gt;] set out to design
+public-key encrypted search solutions that achieved the best possible level of
+confidentiality for search terms. Roughly speaking, what this means is that if
+the search terms are hard enough to guess, then the schemes proposed  will
+protect them.&lt;/p&gt;
+
+&lt;p&gt;But what do we do if (as in most cases) our search terms are not hard to guess?
+Well, we don&#39;t really have a good answer except that this problem does not occur
+in the symmetric setting since only the client can generate EDBs so,
+depending on the application, a symmetric solution might be preferable.&lt;/p&gt;
+
+&lt;h2 id=&#34;conclusions&#34;&gt;Conclusions&lt;/h2&gt;
+
+&lt;p&gt;So far, we&#39; ve seen two approaches to searching on encrypted data. The first,
+the
+&lt;a href=&#34;http://outsourcedbits.org/2013/10/14/how-to-search-on-encrypted-data-part-2/&#34;&gt;PPE-based
+approach&lt;/a&gt;,
+resulted in schemes with fast search (sub-linear in &lt;span  class=&#34;math&#34;&gt;\(n\)&lt;/span&gt;) but with relatively
+weak security guarantees. The second, the FE-based approach, resulted in
+schemes with slow search (linear in &lt;span  class=&#34;math&#34;&gt;\(n\)&lt;/span&gt;) but with better security guarantees.&lt;/p&gt;
+
+&lt;p&gt;In the next post, we&#39;ll go over solutions that are even slower, but that achieve
+the strongest possible levels of security!&lt;/p&gt;
+</description>
+    </item>
+    
+  </channel>
+</rss>

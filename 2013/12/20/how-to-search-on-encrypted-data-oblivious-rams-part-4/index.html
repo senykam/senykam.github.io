@@ -1,0 +1,1318 @@
+<!DOCTYPE html>
+<html lang="en-us">
+<head>
+    <title>How to Search on Encrypted Data: Oblivious RAMs (Part 4) &middot; Outsourced Bits</title>
+    <meta name="generator" content="Hugo 0.16" />
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="author" content="Seny Kamara">
+    
+      <meta name="description" content="">
+    
+    
+    <link rel="icon" href="http://outsourcedbits.org/favicon.ico">
+    <link rel="apple-touch-icon" href="http://outsourcedbits.org/apple-touch-icon.png" />
+    <link rel="stylesheet" href="http://outsourcedbits.org/css/style.css">
+    <link rel="stylesheet" href="http://outsourcedbits.org/css/font-awesome.min.css">
+    <link rel="stylesheet" href="http://outsourcedbits.org/css/monokai.css">
+    <link rel="stylesheet" href="http://outsourcedbits.org/fancybox/jquery.fancybox.css">
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400italic,400,600' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Source+Code+Pro' rel='stylesheet' type='text/css'>
+    <meta property="og:title" content="How to Search on Encrypted Data: Oblivious RAMs (Part 4)" />
+<meta property="og:description" content="This is the fourth part of a series on searching on encrypted data. See parts 1, 2, 3 and 5. In the previous posts we covered two different ways to search on encrypted data. The first was based on property-preserving encryption (in particular, on deterministic encryption), achieved sub-linear search time but had weak security properties. The second was based on functional encryption, achieved linear search time but provided stronger security guarantees." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://outsourcedbits.org/2013/12/20/how-to-search-on-encrypted-data-oblivious-rams-part-4" />
+
+
+<meta property="og:updated_time" content="2013-12-20T11:23:34-03:00"/>
+
+
+
+
+
+
+
+
+
+
+    
+    
+<meta itemprop="name" content="How to Search on Encrypted Data: Oblivious RAMs (Part 4)">
+<meta itemprop="description" content="This is the fourth part of a series on searching on encrypted data. See parts 1, 2, 3 and 5. In the previous posts we covered two different ways to search on encrypted data. The first was based on property-preserving encryption (in particular, on deterministic encryption), achieved sub-linear search time but had weak security properties. The second was based on functional encryption, achieved linear search time but provided stronger security guarantees.">
+
+
+<meta itemprop="dateModified" content="2013-12-20T11:23:34-03:00" />
+<meta itemprop="wordCount" content="4994">
+
+
+
+<meta itemprop="keywords" content="applied-crypto,applied-cryptography,cloud-computing,encrypted-search,graph-encryption,inference-attacks,learning,misc,policy,surveillance,cryptdb,deterministic-encryption,dte,fhe,fisa,functional-encryption,learning,machine-learning,metadata,mpc,msr,nsa,ope,oram,ot,pets,pir,ppe,sat,searchable-encryption,section-215,sse,ste," />
+
+    
+
+  <meta name="twitter:card" content="summary"/>
+
+
+
+<meta name="twitter:title" content="How to Search on Encrypted Data: Oblivious RAMs (Part 4)"/>
+<meta name="twitter:description" content="This is the fourth part of a series on searching on encrypted data. See parts 1, 2, 3 and 5. In the previous posts we covered two different ways to search on encrypted data. The first was based on property-preserving encryption (in particular, on deterministic encryption), achieved sub-linear search time but had weak security properties. The second was based on functional encryption, achieved linear search time but provided stronger security guarantees."/>
+<meta name="twitter:site" content="@senykam"/>
+
+
+    
+
+    
+</head>
+<body>
+<div class="container">
+
+
+<div id="container">
+	<header id="header">
+  <div id="header-main" class="header-inner">
+    <div class="outer">
+      <a href="http://outsourcedbits.org/" id="logo"><span class="site-title">Outsourced Bits</span></a>
+      <nav id="main-nav">
+          
+
+          
+
+          
+      </nav>
+        <nav id="sub-nav">
+          <div class="profile" id="profile-nav">
+            <a id="profile-anchor" href="javascript:;"><img class="avatar" src="http://outsourcedbits.org//img/sk.jpg"><i class="fa fa-caret-down"></i></a>
+          </div>
+        </nav>
+        <div id="search-form-wrap">
+          <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form">
+              <input type="search" name="q" results="0" class="search-form-input" placeholder="Search">
+              <button type="submit" class="search-form-submit">
+              </button>
+              <input type="hidden" name="q" value="site:http://outsourcedbits.org/">
+         </form>
+        </div>
+    </div>
+  </div>
+  <div id="main-nav-mobile" class="header-sub header-inner">
+    <table class="menu outer">
+      <tbody>
+          <tr>
+          
+
+          
+
+          
+          <td>
+          <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form">
+          <input type="search" name="q" results="0" class="search-form-input" placeholder="Search">
+          <input type="hidden" name="q" value="site:http://outsourcedbits.org/">
+          </form>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+</header>
+
+   	
+   	<div class="outer">
+   		
+	    <aside id="profile">
+  <div class="inner profile-inner">
+    <div class="base-info profile-block">
+      <img id="avatar" src="http://outsourcedbits.org/img/sk.jpg" width="200" class="avatar">
+      
+      
+      <p class="mybio">My name is Seny Kamara. I am an Associate Professor of <a href="http://cs.brown.edu">Computer Science</a> at <a href="http://brown.edu">Brown</a>. Prior to that, I was a researcher at Microsoft Research. <br><br> My work is focused on designing and studying cryptographic algorithms,
+protocols and systems; often motivated by privacy issues in cloud computing,
+surveillance and databases. <br><br> This is a blog about my research and interests. For more about my work see my
+<a href="http://cs.brown.edu/~seny">homepage</a>.</p>
+      <span id="location"><i class="fa fa-map-marker"></i>Rio</span>
+      
+    </div>
+    
+    <div class="contact-info profile-block">
+      <table class="contact-list">
+        <tr>
+          
+<td><a href="//github.com/senykam" target="_blank" title="GitHub"><i class="fa fa-github"></i></a></td>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<td><a href="//twitter.com/senykam" target="_blank" title="Twitter"><i class="fa fa-twitter"></i></a></td>
+
+
+          <td><a href="" target="_blank" title="RSS"><i class="fa fa-rss"></i></a></td>
+        </tr>
+      </table>
+    </div>
+  </div>
+</aside>
+
+	    
+
+	    
+<section id="main">
+
+    <article id="page-undefined" class="article article-type-page" itemscope="" itemprop="blogPost">
+        <div class="article-inner">
+            
+
+            <header class="article-header">
+    <a href="http://outsourcedbits.org/2013/12/20/how-to-search-on-encrypted-data-oblivious-rams-part-4">
+    <h1 class="article-title" itemprop="name">
+        How to Search on Encrypted Data: Oblivious RAMs (Part 4)
+    </h1>
+    </a>
+    <div class="article-meta">
+        <div class="article-date">
+            <i class="fa fa-calendar"></i>
+            <time datetime="2013-12-20 11:23:34 -0300 -0300" itemprop="datePublished">2013-12-20</time>
+            &middot;
+            4994
+            words
+            &middot;
+            24
+            minute read
+        </div>
+
+        
+        
+            
+            
+            <div class="article-category">
+                <i class="fa fa-folder"></i>
+                
+                <a class="article-category-link" href="http://outsourcedbits.org/categories/encrypted-search">Encrypted search</a>
+                
+                
+            </div>
+            
+        
+
+        
+            
+            
+            <div class="article-category">
+                <i class="fa fa-tags"></i>
+                
+                <a class="article-category-link" href="http://outsourcedbits.org/tags/oram">ORAM</a>
+                
+                
+            </div>
+            
+        
+    </div>
+</header>
+
+            <div class="article-entry" itemprop="articleBody">
+                <p><em>This is the fourth part of a series on searching on encrypted data. See parts <a href="http://outsourcedbits.org/2013/10/06/how-to-search-on-encrypted-data-part-1/">1</a>, <a href="https://outsourcedbits.org/2013/10/30/how-to-search-on-encrypted-data-part-2/">2</a>, <a href="https://outsourcedbits.org/2013/12/20/how-to-search-on-encrypted-data-part-3-oblivious-rams/">3</a> and <a href="https://outsourcedbits.org/2014/08/21/how-to-search-on-encrypted-data-searchable-symmetric-encryption-part-5/">5</a>.</em></p>
+
+<p><img src="/img/search.jpg" class="alignright" width="250">
+In the previous posts we covered two different ways to search on encrypted data.
+The first was based on property-preserving encryption (in particular, on
+deterministic encryption), achieved <em>sub-linear</em> search time but had weak
+security properties. The second was based on functional encryption, achieved
+<em>linear</em> search time but provided stronger security guarantees.</p>
+
+<p>We'll now see another approach that achieves the strongest possible levels of
+security!  But first, we need to discuss what we mean by security.</p>
+
+<h2 id="security">Security</h2>
+
+<p>So far, I have discussed the security of the encrypted search solutions
+informally---mostly providing intuition and describing possible
+attacks. This is partly because I'd like this blog to remain comprehensible to
+readers who are not cryptographers but also because formally defining the
+security properties of encrypted search is a bit messy.</p>
+
+<p>So, which security properties should we expect from an encrypted search solution? What about the following:</p>
+
+<ol>
+<li>the encrypted database <span  class="math">\({\sf EDB}\)</span> generated by the scheme should not leak any
+information about the database <span  class="math">\({\sf DB}\)</span> of the user;<br></li>
+<li>the tokens <span  class="math">\({\sf tk}_w\)</span> generated by the user should not leak any information
+about the underlying search term <span  class="math">\(w\)</span> to the server.</li>
+</ol>
+
+<p>This sounds reasonable but there are several issues. First, this intuition is
+not precise enough to be meaningful. What I mean is that there are many details
+that impact security that are not taken into account in this high-level
+intuition (e.g., what does it mean not to leak, how are the search terms chosen
+exactly). This is why cryptographers are so pedantic about security
+definitions---the details really do matter.</p>
+
+<p>Putting aside the issue of formality, another problem with this intuition
+is that  it says nothing about the search results. More precisely, it does not
+specify whether it is appropriate or not for an encrypted search solution to
+reveal to the server which encrypted documents match the search term. We
+usually refer to this information as the client's <em>access pattern</em> and for
+concreteness you can think of it as the (matching) encrypted documents'
+identifiers or their locations in memory. All we really need as an
+identifier is some per-document unique string that is independent of the
+contents of the document and of the keywords associated with it.</p>
+
+<p>So the question is:</p>
+
+<blockquote>
+<p>Is it appropriate to reveal the access pattern?</p>
+</blockquote>
+
+<p>There are two possible answers to this question.  On one hand, we could argue
+that it is fine to reveal the access pattern since the whole point of using
+encrypted search is so that the server can return the encrypted documents that
+match the query. And if we expect the server to return those encrypted
+documents then it clearly has to know which ones to return (though it does not
+necessarily need to know the contents).</p>
+
+<p>On the other hand, one could argue that, in theory, the access pattern reveals
+some information to the server. In fact, by observing enough search results the
+server could use some sophisticated statistical attack to infer something about
+the client's queries and data. Note that such attacks are not completely
+theoretical and in a future post we'll discuss work that tries to make them
+practical. Furthermore, the argument that the server needs to know which
+encrypted documents match the query in order to return the desired documents is
+not technically true. In fact, we know how to design cryptographic protocols
+that allow one party to send items to another without knowing which item it is
+sending (see, e.g., private information retrieval and oblivious transfer).</p>
+
+<p>Similarly, we know how to design systems that allow us to read and write to
+memory without the memory device knowing which locations are being accessed.
+The latter are called <em>oblivious RAMs</em> (ORAM) and we could use them to
+search on encrypted data <em>without  revealing the access pattern to the
+server</em>.  The issue, of course, is that using ORAM will slow things down.</p>
+
+<p>So really the answer to our question depends on what kind of tradeoff we are
+willing to make between efficiency and security. If efficiency is the priority,
+then revealing the access pattern might not be too much to give up in terms of
+security for certain applications.  On the other hand, if we can tolerate some
+inefficiency, then it's always best to be conservative and not reveal anything
+if possible.</p>
+
+<p>In the rest of this post we'll explore ORAMs, see how to construct one and how
+to use it to search on encrypted data.</p>
+
+<h2 id="oblivious-ram">Oblivious RAM</h2>
+
+<p>ORAM was first proposed in a paper by Goldreich and Ostrovsky
+[<a href="http://www.cs.ucla.edu/~rafail/PUBLIC/09.pdf">GO96</a>] (the link is
+actually Ostrovsky's thesis which has the same content as the journal paper) on
+software protection. That work turned out to be really ahead of its time as
+several ideas explored in it turned out to be related to more modern topics like
+cloud storage.</p>
+
+<p>An ORAM scheme <span  class="math">\(({\sf Setup}, {\sf Read}, {\sf Write})\)</span> consists of:</p>
+
+<ul>
+<li><p>A setup algorithm <span  class="math">\({\sf Setup}\)</span> that takes as input a security parameter
+<span  class="math">\(1^k\)</span> and a memory (array) <span  class="math">\({\sf RAM}\)</span> of <span  class="math">\(N\)</span> items; it outputs a secret key
+<span  class="math">\(K\)</span> and an oblivious memory <span  class="math">\({\sf ORAM}\)</span>.</p></li>
+
+<li><p>A two-party protocol <span  class="math">\({\sf Read}\)</span> executed between a client and a server
+that works as follows. The client runs the protocol with a secret key <span  class="math">\(K\)</span> and
+an index <span  class="math">\(i\)</span> as input while the server runs the protocol with an oblivious
+memory <span  class="math">\({\sf ORAM}\)</span> as input. At the end of the protocol, the client receives
+<span  class="math">\({\sf RAM}[i]\)</span> while the server receives <span  class="math">\(\bot\)</span>, i.e., nothing. We'll write this
+sometimes as <span  class="math">\({\sf Read}((K, i), {\sf ORAM}) = ({\sf RAM}[i], \bot)\)</span>.</p></li>
+
+<li><p>A two-party protocol <span  class="math">\({\sf Write}\)</span> executed between a client and a server
+that works as follows. The client runs the protocol with a key <span  class="math">\(K\)</span>, an index
+<span  class="math">\(i\)</span> and a value <span  class="math">\(v\)</span> as input and the server runs the protocol with an oblivious
+memory <span  class="math">\({\sf ORAM}\)</span> as input. At the end of the protocol, the client receives nothing
+(again denoted as <span  class="math">\(\bot\)</span>) and the server receives an updated oblivious memory
+<span  class="math">\({\sf ORAM}'\)</span> such that the <span  class="math">\(i\)</span>th location now holds the value <span  class="math">\(v\)</span>. We write this as
+<span  class="math">\({\sf Write}((K, i, v), {\sf ORAM}) = (\bot, {\sf ORAM}')\)</span>.</p></li>
+</ul>
+
+<h2 id="oblivious-ram-via-fhe">Oblivious RAM via FHE</h2>
+
+<p>The simplest way to design an ORAM is to use fully-homomorphic encryption
+(FHE). For an overview of FHE see my
+previous posts
+<a href="http://outsourcedbits.org/2012/06/26/applying-fully-homomorphic-encryption-part-1/">here</a>
+and
+<a href="http://outsourcedbits.org/2012/09/29/applying-fully-homomorphic-encryption-part-2/">here</a>.</p>
+
+<p>Suppose we have an FHE scheme <span  class="math">\({\sf FHE} = ({\sf Gen}, {\sf Enc}, {\sf Eval},
+{\sf Dec})\)</span>. Then we can easily construct an ORAM as follows <sup class="footnote-ref" id="fnref:1"><a class="footnote" href="#fn:1">1</a></sup>:</p>
+
+<ul>
+<li><p><span  class="math">\({\sf Setup}(1^k, {\sf RAM})\)</span>: generate a key for the FHE scheme by
+computing <span  class="math">\(K = {\sf FHE}.{\sf Gen}(1^k)\)</span> and encrypt <span  class="math">\({\sf RAM}\)</span> as <span  class="math">\(c =
+{\sf FHE}.{\sf Enc}_K({\sf RAM})\)</span>.  Output <span  class="math">\(c\)</span> as the oblivious memory
+<span  class="math">\({\sf ORAM}\)</span>.</p></li>
+
+<li><p><span  class="math">\({\sf Read}\big((K, i), {\sf ORAM}\big)\)</span>: the client encrypts its index <span  class="math">\(i\)</span> as
+<span  class="math">\(c_i = {\sf FHE}.{\sf Enc}_K(i)\)</span> and sends <span  class="math">\(c_i\)</span> to the server. The server computes</p></li>
+</ul>
+
+<p><span  class="math">\[
+c' = {\sf FHE}.{\sf Eval}(f, {\sf ORAM}, c_i),
+\]</span></p>
+
+<p>where <span  class="math">\(f\)</span> is a function that takes as input an array
+and an index <span  class="math">\(i\)</span> and returns the <span  class="math">\(i\)</span>th element of the array. The server returns
+<span  class="math">\(c'\)</span> to the client who decrypts it to recover <span  class="math">\({\sf RAM}[i]\)</span>.</p>
+
+<ul>
+<li><span  class="math">\({\sf Write}\big((K, i, v), {\sf ORAM}\big)\)</span>: the client encrypts its index
+<span  class="math">\(i\)</span> as <span  class="math">\(c_i = {\sf FHE}.{\sf Enc}_K(i)\)</span> and its value as <span  class="math">\(c_v = {\sf FHE}.{\sf Enc}_K(v)\)</span> and
+sends them both to the server. The server computes</li>
+</ul>
+
+<p><span  class="math">\[
+c' = {\sf FHE}.{\sf Eval}(g, {\sf ORAM}, c_i, c_v), 
+\]</span></p>
+
+<p>where <span  class="math">\(g\)</span> is a function that takes as input an array, an<br>
+index <span  class="math">\(i\)</span> and a value <span  class="math">\(v\)</span> and returns the same array with the <span  class="math">\(i\)</span>th element
+updated to <span  class="math">\(v\)</span>.</p>
+
+<p>The security properties of FHE will guarantee that <span  class="math">\({\sf ORAM}\)</span> leaks no information
+about <span  class="math">\({\sf RAM}\)</span> to the server and that the <span  class="math">\({\sf Read}\)</span> and <span  class="math">\({\sf Write}\)</span> protocols reveal
+no information about the index and values either.</p>
+
+<p>The obvious downside of this FHE-based ORAM is efficiency. Let's forget for a second
+that FHE is not practical yet and let's suppose we had a very fast FHE scheme.
+This ORAM would still be too slow simply because the homomorphic evaluation
+steps in the <span  class="math">\({\sf Read}\)</span> and <span  class="math">\({\sf Write}\)</span> protocols require <span  class="math">\(O(N)\)</span> time, i.e.,
+<em>time linear in the size of the memory</em>. Again, assuming we had a
+super-fast FHE scheme, this would only be usable for small memories.</p>
+
+<h2 id="oblivious-ram-via-symmetric-encryption">Oblivious RAM via Symmetric Encryption</h2>
+
+<p>Fortunately, we also know how to design ORAMs using standard encryption schemes
+and, in particular, using symmetric encryption like AES.  ORAM is a
+very active area of research and we now have many constructions, optimizations
+and even implementations (e.g., see Emil Stefanov's
+<a href="http://www.emilstefanov.net/Research/ObliviousRam/">implementation</a>.
+Because research is moving so fast, however, there really isn't a good overview of
+the state-of-the-art.</p>
+
+<p>Since ORAMs are fairly complicated, I'll describe here the simplest
+(non-FHE-based) construction which is due to Goldreich and Ostrovsky
+[<a href="http://www.cs.ucla.edu/~rafail/PUBLIC/09.pdf">GO96</a>]. This
+particular ORAM construction is known as the Square-Root solution and it
+requires just a symmetric encryption scheme <span  class="math">\({\sf SKE} = ({\sf Gen}, {\sf Enc}, {\sf Dec})\)</span>, and a
+pseudo-random function <span  class="math">\(F\)</span> that maps <span  class="math">\(\log N\)</span> bits to <span  class="math">\(2\log N\)</span> bits.</p>
+
+<p><strong>Setup.</strong>
+To setup the ORAM, the client generates two secret keys <span  class="math">\(K_1\)</span>  and <span  class="math">\(K_2\)</span> for
+the symmetric encryption scheme and for the pseudo-random function <span  class="math">\(F\)</span>,
+respectively.  It then augments each item in <span  class="math">\({\sf RAM}\)</span> by appending its address and
+a random tag to it.  We'll refer to the address embedded with the item as its
+<em>virtual</em> address. More precisely, it creates a new memory <span  class="math">\({\sf RAM}_2\)</span> such that
+for all <span  class="math">\(1 \leq i \leq N\)</span>,</p>
+
+<p><span  class="math">\[
+{\sf RAM}_2[i] = \big\langle{\sf RAM}[i], i, {\sf tag}_i \big\rangle, 
+\]</span></p>
+
+<p>where <span  class="math">\(\langle , , \rangle\)</span> denotes concatenation and <span  class="math">\({\sf tag}_i =
+F_{K_2}(i)\)</span>. It then adds <span  class="math">\(\sqrt{N}\)</span> <em>dummy</em> items to <span  class="math">\({\sf RAM}_2\)</span>, i.e.,
+it creates a new memory <span  class="math">\({\sf RAM}_3\)</span> such that for all <span  class="math">\(1 \leq i \leq N\)</span>,
+<span  class="math">\({\sf RAM}_3[i] = {\sf RAM}_2[i]\)</span> and such that for all <span  class="math">\(N+1 \leq i \leq
+N+\sqrt{N}\)</span>,</p>
+
+<p><span  class="math">\[
+{\sf RAM}_3[i] = \big\langle 0, \infty_1, {\sf tag}_i \big\rangle, 
+\]</span></p>
+
+<p>where <span  class="math">\(\infty_1\)</span> is some number larger than <span  class="math">\(N + 2\sqrt{N}\)</span>.
+It then sorts <span  class="math">\({\sf RAM}_3\)</span> around according to the tags. Notice that the effect of
+this sorting will be to permute <span  class="math">\({\sf RAM}_3\)</span> since the tags are (pseudo-)random.  It
+then encrypts each item in <span  class="math">\({\sf RAM}_3\)</span> using <span  class="math">\({\sf SKE}\)</span>. In other words, it generates a
+new memory <span  class="math">\({\sf RAM}_4\)</span> such that, for all <span  class="math">\(1 \leq i \leq N + \sqrt{N}\)</span>,</p>
+
+<p><span  class="math">\[
+{\sf RAM}_4[i] = {\sf Enc}_{K_1}({\sf RAM}_3[i]).
+\]</span></p>
+
+<p>Finally, it appends <span  class="math">\(\sqrt{N}\)</span> elements to <span  class="math">\({\sf RAM}_4\)</span> each of which contains an
+<span  class="math">\({\sf SKE}\)</span>  encryption of <span  class="math">\(0\)</span> under key <span  class="math">\(K_1\)</span>. Needless to say, all the ciphertexts
+generated in this process need to be of the same size so the items need to be
+padded appropriately. The result of this, i.e., the combination of <span  class="math">\({\sf RAM}_4\)</span> and
+the encryptions of <span  class="math">\(0\)</span>, is the oblivious memory <span  class="math">\({\sf ORAM}\)</span> which is sent to the
+server.</p>
+
+<p>It will be useful for us to distinguish between the two parts of <span  class="math">\({\sf ORAM}\)</span> so
+we'll refer to the second part (i.e., the encryptions of <span  class="math">\(0\)</span>) as the <em>cache</em>.</p>
+
+<p><strong>Read &amp; write.</strong>
+Now we'll see how to read and write to <span  class="math">\({\sf ORAM}\)</span> <em>obliviously</em>, i.e., without
+the server knowing which memory locations we're accessing. First we have to
+define two basic operations: <span  class="math">\({\sf Get}\)</span> and <span  class="math">\({\sf Put}\)</span>.</p>
+
+<p>The <span  class="math">\({\sf Get}\)</span> operation takes an index <span  class="math">\(1 \leq i \leq N\)</span> as input and works as
+follows:</p>
+
+<ol>
+<li><p>the client requests from the server the item at virtual addres <span  class="math">\(i\)</span> in
+<span  class="math">\({\sf ORAM}\)</span>. To do this it first re-generates  the item's tag <span  class="math">\({\sf tag}_i =
+F_{K_2}(i)\)</span>. It then does an (interactive) binary search to find the item  with
+virtual address <span  class="math">\(i\)</span>. In other words, it asks the server for the item stored at
+location <span  class="math">\(N/2\)</span> (let 's assume <span  class="math">\(N\)</span> is even) decrypts it and compares its
+tag with <span  class="math">\({\sf tag}_i\)</span>. If <span  class="math">\({\sf tag}_i\)</span> is less than the tag of item  <span  class="math">\({\sf ORAM}[N/2]\)</span>,
+then it asks for the item at location <span  class="math">\(N/4\)</span>; else it asks for the item at
+location <span  class="math">\(3N/4\)</span>; and so on.</p></li>
+
+<li><p>it decrypts the item with <span  class="math">\({\sf tag}_i\)</span> to recover <span  class="math">\({\sf RAM}[i]\)</span>,</p></li>
+
+<li><p>it then re-encrypts <span  class="math">\({\sf RAM}[i]\)</span> (using new randomness) and asks the server to
+store it back where it was found.</p></li>
+</ol>
+
+<p>The <span  class="math">\({\sf Put}\)</span> operation takes an index <span  class="math">\(1 \leq i \leq N\)</span> and a value <span  class="math">\(v\)</span> as inputs
+and works as follows:</p>
+
+<ol>
+<li><p>the client requests from the server the item with <span  class="math">\({\sf tag}_i\)</span> (as above);</p></li>
+
+<li><p>it then encrypts <span  class="math">\(v\)</span> and asks the server to store it back at the
+location where the previous item (i.e., the one with <span  class="math">\({\sf tag}_i\)</span>) was found.</p></li>
+</ol>
+
+<p>Notice that from the server's point of view the two operations look the same.
+In other words, the server cannot tell whether the client is executing a <span  class="math">\({\sf Get}\)</span>
+or a <span  class="math">\({\sf Put}\)</span> operation since in either case all it sees is a binary search
+followed by a request to store a new ciphertext at the same location.</p>
+
+<p>Now suppose for a second that <span  class="math">\({\sf ORAM}\)</span> only consisted of <span  class="math">\({\sf RAM}_4\)</span>.
+If that were the case then <span  class="math">\({\sf ORAM}\)</span> would be one-time
+oblivious in the sense that we could use it to read or write only once by executing
+either a <span  class="math">\({\sf Get}\)</span> or a <span  class="math">\({\sf Put}\)</span> operation. Why is this the case? Remember that we
+randomly permuted and encrypted our memory before sending it to the
+server. This means that asking the server for the item at location <span  class="math">\(j\)</span> reveals
+nothing about that item's real/virtual address <span  class="math">\(i\)</span>. Furthermore, the binary
+search we do when looking for the item with virtual address <span  class="math">\(i\)</span> depends only
+<span  class="math">\({\sf tag}_i\)</span> which is random and therefore reveals nothing about <span  class="math">\(i\)</span>.</p>
+
+<p>Of course, this only works once because if we want to access <span  class="math">\(i\)</span> again then
+we'll ask the server for the same location which immediately tells it<br>
+something: namely, that we asked for the same thing twice.</p>
+
+<p>So how do we hide the fact that we're asking for the same thing twice?<br>
+This is really the core difficulty in designing ORAMs and this is where the
+cache will come in.</p>
+
+<p>We start by initializing a counter <span  class="math">\({\sf ctr} = 1\)</span>. To read location <span  class="math">\(i\)</span> we
+execute the following
+<span  class="math">\({\sf Read}\)</span> protocol:</p>
+
+<ol>
+<li><p>We <span  class="math">\({\sf Get}\)</span> the entire cache. In other
+words, we execute <span  class="math">\({\sf Get}(j)\)</span> for all<br>
+<span  class="math">\(
+N + \sqrt{N} + 1 \leq j \leq N+ 2\cdot\sqrt{N};
+\)</span></p></li>
+
+<li><p>If any of the <span  class="math">\({\sf Get}\)</span> operations above result in the <span  class="math">\(i\)</span>th item (i.e.,
+if we get an item with virtual address <span  class="math">\(i\)</span>) then we <span  class="math">\({\sf Get}\)</span> a dummy item by executing
+<span  class="math">\({\sf Get}(N+{\sf ctr})\)</span>.  Also, we set <span  class="math">\(z\)</span> to be the item we found in the cache
+and <span  class="math">\(\ell\)</span> to be the cache location where we found it.</p></li>
+
+<li><p>If none of the <span  class="math">\({\sf Get}\)</span> operations above resulted in the <span  class="math">\(i\)</span>th item, we
+execute a <em>modified</em> <span  class="math">\({\sf Get}(i)\)</span> and set <span  class="math">\(z\)</span> to be the result and <span  class="math">\(\ell = N +
+\sqrt{N} + {\sf ctr}\)</span>. The modified version of <span  class="math">\({\sf Get}(i)\)</span> works like a regular
+<span  class="math">\({\sf Get}(i)\)</span> operation, except that we update the item's virtual address to
+<span  class="math">\(\infty_2\)</span>, where <span  class="math">\(\infty_2 > \infty_1\)</span>. In other words, we store an encryption
+of <span  class="math">\(\langle {\sf RAM}[i], \infty_2, {\sf tag}_i\rangle\)</span> back where we found it. This
+will be useful for us later when we'll need to re-structure <span  class="math">\({\sf ORAM}\)</span>.</p></li>
+
+<li><p>We then process the entire cache again but slightly differently than
+before (we do this so that we can store the item in the cache for future
+accesses). In particular, for all <span  class="math">\(N + \sqrt{N} + 1 \leq j \leq N +
+2\cdot\sqrt{N}\)</span>,</p>
+
+<ul>
+<li>if <span  class="math">\(j \neq \ell\)</span> we execute a <span  class="math">\({\sf Get}(j)\)</span> operation</li>
+<li>if <span  class="math">\(j = \ell\)</span> we execute a <span  class="math">\({\sf Put}(j, z)\)</span>.</li>
+</ul></li>
+
+<li><p>We increase <span  class="math">\({\sf ctr}\)</span> by <span  class="math">\(1\)</span>.</p></li>
+</ol>
+
+<p>The first thing to notice is that this is correct in the sense that by executing
+this operation the client will indeed receive <span  class="math">\({\sf RAM}[i]\)</span>.</p>
+
+<p>The more interesting question, however, is why is this oblivious and, in
+particular, why is this more than one-time oblivious? To see why this is
+oblivious it helps to think of things from the server's perspective and see
+why its view of the execution is independent of (i.e., not affected by) <span  class="math">\(i\)</span>.</p>
+
+<p>First, no matter what <span  class="math">\(i\)</span> the client is looking for, it always <span  class="math">\({\sf Get}\)</span>s the
+entire cache so Step <span  class="math">\(1\)</span> reveals no information about <span  class="math">\(i\)</span> to the server. We then
+have two possible cases:</p>
+
+<ol>
+<li><p>If the <span  class="math">\(i\)</span>th item is in the cache (at location <span  class="math">\(\ell\)</span>), we <span  class="math">\({\sf Get}\)</span> a
+dummy item; and <span  class="math">\({\sf Put}\)</span> the <span  class="math">\(i\)</span>th item at location <span  class="math">\(\ell\)</span> while we re-process the
+entire cache (in Step <span  class="math">\(4\)</span>).</p></li>
+
+<li><p>If the <span  class="math">\(i\)</span>th item is not in the cache, we <span  class="math">\({\sf Get}\)</span> the
+<span  class="math">\(i\)</span>th item and <span  class="math">\({\sf Put}\)</span> it in the next open location in the cache while we re-process
+the entire cache.</p></li>
+</ol>
+
+<p>In either case, the server sees the same thing: a <span  class="math">\({\sf Get}\)</span> for an item at some
+location between <span  class="math">\(1\)</span> and <span  class="math">\(N+\sqrt{N}\)</span> and a sequence of <span  class="math">\({\sf Get}/{\sf Put}\)</span> operations for
+all addresses in the cache, i.e., between <span  class="math">\(N+\sqrt{N}\)</span> and <span  class="math">\(N+2\cdot\sqrt{N}\)</span>.<br>
+Recall that the server cannot distinguish between <span  class="math">\({\sf Get}\)</span> and <span  class="math">\({\sf Put}\)</span> operations.</p>
+
+<p>The <span  class="math">\({\sf Write}\)</span> protocol is similar to the <span  class="math">\({\sf Read}\)</span> protocol. The only difference
+is that in Step <span  class="math">\(2\)</span>, we set <span  class="math">\(z = v\)</span> if the <span  class="math">\(i\)</span>th item is in the cache and in
+Step <span  class="math">\(3\)</span> we execute <span  class="math">\({\sf Put}(i, v)\)</span> and set <span  class="math">\(z = v\)</span>. Notice, however,  that the
+<span  class="math">\({\sf Write}\)</span> protocol can introduce inconsistencies between the cache and
+<span  class="math">\({\sf RAM}_4\)</span>. More precisely, if the item has been accessed before (say, due to a
+<span  class="math">\({\sf Read}\)</span> operation), then a <span  class="math">\({\sf Write}\)</span> operation will update the cache but not
+the item in <span  class="math">\({\sf RAM}_4\)</span>. This is OK, however, as it will be taken care of
+in the re-structuring step, which we'll  describe below.</p>
+
+<p>So we can now read and write to memory without revealing which location we're
+accessing and we can do this more than once! The problem, however, is that we
+can do it at most <span  class="math">\(\sqrt{N}\)</span> times because after that the cache is full so we
+have to stop.</p>
+
+<p><strong>Re-structuring.</strong>
+So what if we want to do more than <span  class="math">\(\sqrt{N}\)</span> reads? In that case we need to
+<em>re-structure</em> our ORAM. By this, I mean that we have to re-encrypt
+and re-permute all the items in <span  class="math">\({\sf ORAM}\)</span> and reset our counter <span  class="math">\({\sf ctr}\)</span> to <span  class="math">\(1\)</span>.</p>
+
+<p>If the client has enough space to store <span  class="math">\({\sf ORAM}\)</span> locally then the easiest thing
+to do is just to download <span  class="math">\({\sf ORAM}\)</span>, decrypt it locally to recover <span  class="math">\({\sf RAM}\)</span>, update
+it (in case there were any inconsistencies) and setup a new ORAM from scratch.</p>
+
+<p>If, on the other hand, the client does not have enough local storage then the
+problem becomes harder. Here we'll assume the client only has <span  class="math">\(O(1)\)</span> storage so
+it can store, e.g.,  only two items.</p>
+
+<p>Recall that in order to re-structure <span  class="math">\({\sf ORAM}\)</span>, the client needs to re-permute
+<span  class="math">\({\sf RAM}_4\)</span> and re-encrypt everything obliviously while using only <span  class="math">\(O(1)\)</span> space.
+Also, the client needs to do this in a way that updates the elements that are in
+an inconsistent state due to <span  class="math">\({\sf Write}\)</span> operations.  The key to doing all this
+will be to figure out a way for the client to sort elements obliviously while
+using <span  class="math">\(O(1)\)</span> space. Once we can obliviously sort, the rest will follow
+relatively easily.</p>
+
+<p>To do this, Goldreich and Ostrovsky proposed to use a <a href="http://en.wikipedia.org/wiki/Sorting_network">sorting
+network</a> like Batcher's <a href="http://en.wikipedia.org/wiki/Batcher's_sort">Bitonic
+network</a>.  Think of a sorting
+network as a circuit composed of comparison gates.  The gates take two inputs
+<span  class="math">\(x\)</span> and <span  class="math">\(y\)</span> and output the pair <span  class="math">\((x, y)\)</span> if <span  class="math">\(x \lt  y\)</span> and the pair <span  class="math">\((y, x)\)</span> if <span  class="math">\(x
+\geq y\)</span>. Given a set of input values, the sorting network outputs the items in
+sorted order.  Sorting networks have two interesting properties: <span  class="math">\((1)\)</span> the
+comparisons they perform are independent of the input sequence; and <span  class="math">\((2)\)</span> each
+gate in the network is a binary operation (i.e., takes only two inputs).  Of
+course, there is an overhead to sorting obviously so Batcher's network requires
+<span  class="math">\(O(N\log^2 N)\)</span> work as opposed to the traditional <span  class="math">\(O(N\log N)\)</span> for sorting.</p>
+
+<p>So to obliviously sort a set of ciphertexts <span  class="math">\((c_1, \dots, c_{N+2\sqrt{N}})\)</span>
+stored at the server, the client  will start executing the sorting network and
+whenever it reaches a comparison gate between the <span  class="math">\(i\)</span>th and <span  class="math">\(j\)</span>th item, it will
+just request the <span  class="math">\(i\)</span>th and <span  class="math">\(j\)</span>th ciphertexts, decrypt them, compare them, and
+store them back re-encrypted in the appropriate order. Note that by the first
+property above, the client's access pattern reveals nothing to the server; and
+by the second property  the client will never need to store more than two items
+at the same time.</p>
+
+<p>Now that we can sort obliviously, let's see how to re-structure the ORAM. We
+will  do it in two phases. In the first phase, we sort all the items in <span  class="math">\({\sf ORAM}\)</span>
+according to their virtual addresses. This is how we will get rid of
+inconsistencies. Remember that the items in <span  class="math">\({\sf RAM}_3\)</span> are augmented to have the
+form <span  class="math">\(\langle {\sf RAM}[i], i, {\sf tag}_i\rangle\)</span> for real items and <span  class="math">\(\langle 0,
+\infty_1, {\sf tag}_i\rangle\)</span> for dummy items.  It follows that all items in the cache
+have the first form since they are either copies or updates of real items
+put there during <span  class="math">\({\sf Read}\)</span> and <span  class="math">\({\sf Write}\)</span> operations.</p>
+
+<p>So we just execute the sorting network and, for each comparison gate,
+retrieve the appropriate items, decrypt them, compare their virtual addresses and
+return them re-encrypted in the appropriate order.  The result of this process
+is that <span  class="math">\({\sf ORAM}\)</span> will now have the following form:</p>
+
+<ol>
+<li>the first <span  class="math">\(N\)</span> items will consist of the most recent versions of the
+real items, i.e., all the items with virtual addresses <em>other</em> than
+<span  class="math">\(\infty_1\)</span> and <span  class="math">\(\infty_2\)</span>;</li>
+<li>the next <span  class="math">\(\sqrt{N}\)</span> items will consist of dummy items, i.e., all items
+with virtual address <span  class="math">\(\infty_1\)</span>.<br></li>
+<li>the final <span  class="math">\(\sqrt{N}\)</span> items will consist of the old/inconsistent
+versions of the real items, i.e., all items with virtual address <span  class="math">\(\infty_2\)</span>
+(remember that in Step <span  class="math">\(3\)</span> of <span  class="math">\({\sf Read}\)</span> and <span  class="math">\({\sf Write}\)</span> we executed a modified
+<span  class="math">\({\sf Get}(i)\)</span> that updated the item's virtual address to <span  class="math">\(\infty_2\)</span>).</li>
+</ol>
+
+<p>In the second phase, we randomly permute and re-encrypt the first <span  class="math">\(N+\sqrt{N}\)</span>
+items of <span  class="math">\({\sf ORAM}\)</span>. We first choose a new key <span  class="math">\(K_3\)</span> for <span  class="math">\(F\)</span>. We then access each
+item from location <span  class="math">\(1\)</span> to <span  class="math">\(N+\sqrt{N}\)</span> and update their tags to <span  class="math">\(F_{K_3}(i)\)</span>.<br>
+Once we've updated the tags, we sort all the items according to their tags.
+The result will be a new random permutation of items. Note that we don't
+technically have to do this in two passes; but it's easier to explain this way.</p>
+
+<p>At this point, we're done! <span  class="math">\({\sf ORAM}\)</span> is as good as new and we can start accessing
+it again safely.</p>
+
+<p><strong>Efficiency.</strong>
+So what is the efficiency of the Square-Root solution?  Setup is  <span  class="math">\(O(N\log^2N)\)</span>:
+<span  class="math">\(O(N)\)</span> to construct the real, dummy and cache items and <span  class="math">\(O(N\log^2 N)\)</span> to
+permute everything through sorting.</p>
+
+<p>Each access operation (i.e., <span  class="math">\({\sf Read}\)</span> or <span  class="math">\({\sf Write}\)</span>) is  <span  class="math">\(O(\sqrt{N})\)</span>:
+<span  class="math">\(O(\sqrt{N})\)</span> total get/put operations to get the cache twice and <span  class="math">\(O(\log N)\)</span>
+for each get/put operation due to binary search.</p>
+
+<p>Restructuring is <span  class="math">\(O(N\log^2 N)\)</span>: <span  class="math">\(O(N\log^2 N)\)</span> to sort by virtual address and
+<span  class="math">\(O(N\log^2N)\)</span> to sort by tag.  Restructuring, however, only occurs once every
+<span  class="math">\(\sqrt{N}\)</span> accesses. Because of this, we usually average the cost of
+re-structuring over the number  read/write operations  supported to give an
+amortized access cost. In our case, the amortized access cost is then</p>
+
+<p><span  class="math">\[
+O\left(\sqrt{N} + \frac{N\log^2 N}{\sqrt{N}}\right)
+\]</span></p>
+
+<p>which is <span  class="math">\(O(\sqrt{N}\cdot\log^2 N)\)</span>.</p>
+
+<h2 id="orambased-encrypted-search">ORAM-Based Encrypted Search</h2>
+
+<p>So now that we know how to build an ORAM, we'll see how to use it for encrypted
+search.  There are two possible ways to do this.</p>
+
+<p><strong>A naive approach.</strong>
+The first is for the client to just dump all the <span  class="math">\(n\)</span> documents <span  class="math">\(\textbf{D} =
+(D_1, \dots, D_n)\)</span> in an array <span  class="math">\({\sf RAM}\)</span>, setup an ORAM <span  class="math">\((K, {\sf ORAM}) = {\sf Setup}(1^k,
+{\sf RAM})\)</span> and send <span  class="math">\({\sf ORAM}\)</span> to the server. To search, the client can just simulate a
+sequential search algorithm via the <span  class="math">\({\sf Read}\)</span> protocol; that is, replace every
+read operation of the search algorithm with an execution of the <span  class="math">\({\sf Read}\)</span>
+protocol. To update the documents the client can similarly simulate an update
+algorithm using the <span  class="math">\({\sf Write}\)</span> protocol.</p>
+
+<p>This will obviously be slow. Let' s assume all the documents have bit-length <span  class="math">\(d\)</span>
+and that <span  class="math">\({\sf RAM}\)</span> has a block size of <span  class="math">\(B\)</span> bits. The document collection will then
+fit in (approximately)  <span  class="math">\(N = n\cdot d\cdot B^{-1}\)</span> blocks. The sequential scan
+algorithm is itself <span  class="math">\(O(N)\)</span>, but on top of that we'll have to execute an entire
+<span  class="math">\({\sf Read}\)</span> protocol for every address  of memory read.</p>
+
+<p>Remember that if we're using the Square-Root solution as our ORAM then the
+<span  class="math">\({\sf Read}\)</span> protocol requires <span  class="math">\(O(\sqrt{N}\cdot\log^2 N)\)</span> <em>amortized</em> work. So
+in total, search would be <span  class="math">\(O(N^{3/2}\cdot\log^2 N)\)</span> which would not scale.  Now
+imagine for a second if we were using the FHE-based ORAM described above which
+requires <span  class="math">\(O(N)\)</span> work for each <span  class="math">\({\sf Read}\)</span> and <span  class="math">\({\sf Write}\)</span>. In this scenario, a single
+search would take <span  class="math">\(O(N^2)\)</span> time!</p>
+
+<p><strong>A better approach.</strong><sup class="footnote-ref" id="fnref:2"><a class="footnote" href="#fn:2">2</a></sup>
+A better idea is for the client to build two arrays <span  class="math">\({\sf RAM}_1\)</span> and <span  class="math">\({\sf RAM}_2\)</span>. <sup class="footnote-ref" id="fnref:3"><a class="footnote" href="#fn:3">3</a></sup>
+In <span  class="math">\({\sf RAM}_1\)</span> it will store a data structure that supports fast searches on the
+document collection (e.g., an
+<a href="http://en.wikipedia.org/wiki/Inverted_index">inverted index</a> and in
+<span  class="math">\({\sf RAM}_2\)</span> it will store the documents <span  class="math">\(\textbf{D}\)</span> themselves. It then builds and
+sends <span  class="math">\({\sf ORAM}_1 = {\sf Setup}(1^k, {\sf RAM}_1)\)</span> and <span  class="math">\({\sf ORAM}_2 = {\sf Setup}(1^k, {\sf RAM}_2)\)</span> to the
+server.  To search, the client simulates a query to the data structure in
+<span  class="math">\({\sf ORAM}_1\)</span> via the <span  class="math">\({\sf Read}\)</span> protocol (i.e., it replaces each read operation in
+the data structure's query algorithm with an execution of <span  class="math">\({\sf Read}\)</span>).  From this,
+the client will recover the identifiers of the documents that contain the
+keyword and with this information it can just read those documents from
+<span  class="math">\({\sf ORAM}_2\)</span>.</p>
+
+<p>Now suppose there are <span  class="math">\(m\)</span> documents that contain the keyword and that we're
+using an optimal-time data structure (i.e., a structure with a query algorithm
+that runs in <span  class="math">\(O(m)\)</span> time like an inverted index). Also, assume  that the data
+structure fits in <span  class="math">\(N_1\)</span> blocks of <span  class="math">\(B\)</span> bits and that the data collection
+fits in <span  class="math">\(N_2 = n\cdot d/B\)</span> blocks.</p>
+
+<p>Again, if we were using the Square-Root solution for our ORAMs, then the first
+step would take <span  class="math">\(O(m\cdot\sqrt{N_1}\cdot\log^2 N_1)\)</span> time and the second step will take</p>
+
+<p><span  class="math">\[
+O\left( \frac{m\cdot d}{B}\cdot\sqrt{N_2}\cdot\log^2 N_2 \right).
+\]</span></p>
+
+<p>In practice, the size of a fast data structure for keyword search can be large.
+A very conservative estimate for an inverted index, for example, would be that
+it is roughly the size of the data collection. <sup class="footnote-ref" id="fnref:4"><a class="footnote" href="#fn:4">4</a></sup> Setting <span  class="math">\(N = N_1 = N_2\)</span>, the
+total search time would be</p>
+
+<p><span  class="math">\[
+O\left( (1+d/B)\cdot m \cdot\sqrt{N}\cdot\log^2 N\right)
+\]</span></p>
+
+<p>which is <span  class="math">\(O(m\cdot d\cdot B^{-1} \cdot \sqrt{N}\cdot \log^2 N)\)</span> (since <span  class="math">\(d \gg
+B\)</span>) compared to the previous approach' s <span  class="math">\(O(n\cdot d
+\cdot B^{-1} \cdot \sqrt{N}\cdot\log^2N)\)</span>.</p>
+
+<p>In cases where the search term appears in <span  class="math">\(m \ll n\)</span> documents, this can be a
+substantial improvement.</p>
+
+<h2 id="is-this-practical">Is This Practical?</h2>
+
+<p>If one were to only look at the asymptotics, one might conclude that the
+two-RAM solution described above might be reasonably efficient. After all it
+would take at least <span  class="math">\(O(m\cdot d \cdot B^{-1})\)</span> time just to retrieve the
+matching files from (unencrypted) memory so the two-RAM solution adds just a
+<span  class="math">\(\sqrt{N}\)</span> multiplicative factor over the minimum retrieval time.</p>
+
+<p>Also there are much more efficient ORAM constructions than the Square-Root
+solution. In fact, in their paper, Goldreich and Ostrovsky also proposed the
+Hierarchichal solution which achieves <span  class="math">\(O(\log^3 N)\)</span> amortized access cost.
+Goodrich and Mitzenmacher
+[<a href="http://arxiv.org/pdf/1007.1259v2.pdf">GM11</a>] gave a solution with
+<span  class="math">\(O(\log^2 N)\)</span> amortized access cost and, recently,  Kushilevitz, Lu and
+Ostrovsky [<a href="http://eprint.iacr.org/2011/327.pdf">KLO12</a>] a solution
+with <span  class="math">\(O(\log^2N/\log\log N)\)</span> amortized cost (and there are even more recent
+papers that improve on this under certain conditions).  There are also works
+that tradeoff client storage for access efficiency. For example, Williams, Sion
+and Carbunar
+[<a href="http://digitalpiglet.org/research/sion2008pir-ccs.pdf">WSC08</a>]
+propose a solution with  <span  class="math">\(O(\log N\cdot\log\log N)\)</span> amortized access cost and
+<span  class="math">\(O(\sqrt{N})\)</span> client storage while Stefanov, Shi and Song
+[<a href="http://arxiv.org/pdf/1106.3652.pdf">SSS12</a>] propose a solution with
+<span  class="math">\(O(\log N)\)</span> amortized overhead for clients that have <span  class="math">\(O(N)\)</span> local storage, where
+the underlying constant is very small.  There is also a line of work that tries
+to de-amortize ORAM in the sense that it splits the re-structuring operation so
+that it happens progressively over each access. This was first considered by
+Ostrovsky and Shoup in
+[<a href="http://www.cs.ucla.edu/~rafail/PUBLIC/28.pdf">OS97</a>] and was
+further studied by Goodrich, Mitzenmacher, Ohrimenko, Tamassia
+[<a href="http://arxiv.org/pdf/1107.5093.pdf}">GMOT11</a>] and by Shi, Chan,
+Stefanov and Li [<a href="http://eprint.iacr.org/2011/407.pdf">SSSL11</a>].</p>
+
+<p>All in all this may not seem that bad and, intuitively, the two-RAM solution might
+actually be reasonably practical for small to moderate-scale data
+collections---especially considering all the recent improvements in efficiency
+that have been proposed.  For large- or massive-scale collections, however, I'd
+be surprised <sup class="footnote-ref" id="fnref:5"><a class="footnote" href="#fn:5">5</a></sup>.</p>
+
+<h2 id="conclusions">Conclusions</h2>
+
+<p>In this post we went over the ORAM-based solution to encrypted search which
+provides the most secure solution to our problem since it hides
+everything---even the access pattern!</p>
+
+<p>In the next post we'll cover an approach that tries to strike a balance between
+efficiency and security. In particular, this solution is as efficient as the
+deterministic-encryption-based solution while being only slightly less secure
+than the ORAM-based solution.</p>
+<div class="footnotes">
+
+<hr>
+
+<ol>
+<li id="fn:1">I haven't seen this construction written down anywhere. It's fairly obvious, however, so I suspect it's been mentioned somewhere. If anyone knows of a reference, please let me know.
+ <a class="footnote-return" href="#fnref:1">↩</a></li>
+<li id="fn:2">Like the FHE-based ORAM, I have not seen this construction written down anywhere so if anyone knows of a reference, please let me know.
+ <a class="footnote-return" href="#fnref:2">↩</a></li>
+<li id="fn:3">Of course, the following could be done using a single RAM, but splitting into two makes things easier to explain.<br>
+ <a class="footnote-return" href="#fnref:3">↩</a></li>
+<li id="fn:4">In practice, this would <em>not</em> be the case and, in addition, we could make use of index compression techniques.
+ <a class="footnote-return" href="#fnref:4">↩</a></li>
+<li id="fn:5">I won't attempt to draw exact lines between what's small-, moderate- and large-scale since I think that's a question best answered by experimental results.<br>
+ <a class="footnote-return" href="#fnref:5">↩</a></li>
+</ol>
+</div>
+
+            </div>
+            <footer class="article-footer">
+    <a data-url="http://outsourcedbits.org/2013/12/20/how-to-search-on-encrypted-data-oblivious-rams-part-4" data-id="88d5383c6e08e549a22906e5349fe4cf" class="article-share-link">
+        Share
+    </a>
+    
+    <a href="http://outsourcedbits.org/2013/12/20/how-to-search-on-encrypted-data-oblivious-rams-part-4/#disqus_thread" class="article-comment-link">
+        Comments
+    </a>
+    
+</footer>
+
+        </div>
+
+        
+<nav id="article-nav">
+    
+    <a href="http://outsourcedbits.org/2013/10/30/how-to-search-on-encrypted-data-functional-encryption-part-3" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">
+          Older
+      </strong>
+      <div class="article-nav-title">How to Search on Encrypted Data: Functional Encryption (Part 3)</div>
+    </a>
+    
+
+    
+    <a href="http://outsourcedbits.org/2014/03/10/restructuring-the-nsa-metadata-program" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">
+          Newer
+      </strong>
+      <div class="article-nav-title">Restructuring the NSA Metadata Program</div>
+    </a>
+    
+</nav>
+
+
+    </article>
+
+    
+    <section id="comments">
+        <div id="disqus_thread">
+            <div id="disqus_thread"></div>
+<script type="text/javascript">
+    var disqus_shortname = 'outsourcedbits';
+    var disqus_identifier = 'http:\/\/outsourcedbits.org\/2013\/12\/20\/how-to-search-on-encrypted-data-oblivious-rams-part-4';
+    var disqus_title = 'How to Search on Encrypted Data: Oblivious RAMs (Part 4)';
+    var disqus_url = 'http:\/\/outsourcedbits.org\/2013\/12\/20\/how-to-search-on-encrypted-data-oblivious-rams-part-4';
+
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+        </div>
+    </section>
+    
+</section>
+
+
+	    
+	    <aside id="sidebar">
+    
+
+    
+
+
+<div class="widget-wrap">
+    <h3 class="widget-title">Categories</h3>
+    <div class="widget">
+        <ul class="category-list">
+            
+            <li class="category-list-item">
+                <a class="category-list-link" href="http://outsourcedbits.org/categories/applied-crypto">
+                    applied-crypto
+                </a>
+                <span class="category-list-count">3</span>
+            </li>
+            
+            <li class="category-list-item">
+                <a class="category-list-link" href="http://outsourcedbits.org/categories/applied-cryptography">
+                    applied-cryptography
+                </a>
+                <span class="category-list-count">1</span>
+            </li>
+            
+            <li class="category-list-item">
+                <a class="category-list-link" href="http://outsourcedbits.org/categories/cloud-computing">
+                    cloud-computing
+                </a>
+                <span class="category-list-count">2</span>
+            </li>
+            
+            <li class="category-list-item">
+                <a class="category-list-link" href="http://outsourcedbits.org/categories/encrypted-search">
+                    encrypted-search
+                </a>
+                <span class="category-list-count">11</span>
+            </li>
+            
+            <li class="category-list-item">
+                <a class="category-list-link" href="http://outsourcedbits.org/categories/graph-encryption">
+                    graph-encryption
+                </a>
+                <span class="category-list-count">1</span>
+            </li>
+            
+            <li class="category-list-item">
+                <a class="category-list-link" href="http://outsourcedbits.org/categories/inference-attacks">
+                    inference-attacks
+                </a>
+                <span class="category-list-count">1</span>
+            </li>
+            
+            <li class="category-list-item">
+                <a class="category-list-link" href="http://outsourcedbits.org/categories/learning">
+                    learning
+                </a>
+                <span class="category-list-count">1</span>
+            </li>
+            
+            <li class="category-list-item">
+                <a class="category-list-link" href="http://outsourcedbits.org/categories/misc">
+                    misc
+                </a>
+                <span class="category-list-count">1</span>
+            </li>
+            
+            <li class="category-list-item">
+                <a class="category-list-link" href="http://outsourcedbits.org/categories/policy">
+                    policy
+                </a>
+                <span class="category-list-count">2</span>
+            </li>
+            
+            <li class="category-list-item">
+                <a class="category-list-link" href="http://outsourcedbits.org/categories/surveillance">
+                    surveillance
+                </a>
+                <span class="category-list-count">2</span>
+            </li>
+            
+        </ul>
+    </div>
+</div>
+
+
+
+    
+
+
+<div class="widget-wrap">
+    <h3 class="widget-title">
+        Tags
+    </h3>
+    <div class="widget">
+        <ul class="category-list">
+            
+            <li class="category-list-item">
+                <a class="category-list-link" href="http://outsourcedbits.org/tags/cryptdb">
+                    cryptdb
+                </a>
+                <span class="category-list-count">1</span>
+            </li>
+            
+            <li class="category-list-item">
+                <a class="category-list-link" href="http://outsourcedbits.org/tags/deterministic-encryption">
+                    deterministic-encryption
+                </a>
+                <span class="category-list-count">1</span>
+            </li>
+            
+            <li class="category-list-item">
+                <a class="category-list-link" href="http://outsourcedbits.org/tags/dte">
+                    dte
+                </a>
+                <span class="category-list-count">1</span>
+            </li>
+            
+            <li class="category-list-item">
+                <a class="category-list-link" href="http://outsourcedbits.org/tags/fhe">
+                    fhe
+                </a>
+                <span class="category-list-count">2</span>
+            </li>
+            
+            <li class="category-list-item">
+                <a class="category-list-link" href="http://outsourcedbits.org/tags/fisa">
+                    fisa
+                </a>
+                <span class="category-list-count">1</span>
+            </li>
+            
+            <li class="category-list-item">
+                <a class="category-list-link" href="http://outsourcedbits.org/tags/functional-encryption">
+                    functional-encryption
+                </a>
+                <span class="category-list-count">1</span>
+            </li>
+            
+            <li class="category-list-item">
+                <a class="category-list-link" href="http://outsourcedbits.org/tags/learning">
+                    learning
+                </a>
+                <span class="category-list-count">1</span>
+            </li>
+            
+            <li class="category-list-item">
+                <a class="category-list-link" href="http://outsourcedbits.org/tags/machine-learning">
+                    machine-learning
+                </a>
+                <span class="category-list-count">1</span>
+            </li>
+            
+            <li class="category-list-item">
+                <a class="category-list-link" href="http://outsourcedbits.org/tags/metadata">
+                    metadata
+                </a>
+                <span class="category-list-count">2</span>
+            </li>
+            
+            <li class="category-list-item">
+                <a class="category-list-link" href="http://outsourcedbits.org/tags/mpc">
+                    mpc
+                </a>
+                <span class="category-list-count">3</span>
+            </li>
+            
+            <li class="category-list-item">
+                <a class="category-list-link" href="http://outsourcedbits.org/tags/msr">
+                    msr
+                </a>
+                <span class="category-list-count">1</span>
+            </li>
+            
+            <li class="category-list-item">
+                <a class="category-list-link" href="http://outsourcedbits.org/tags/nsa">
+                    nsa
+                </a>
+                <span class="category-list-count">2</span>
+            </li>
+            
+            <li class="category-list-item">
+                <a class="category-list-link" href="http://outsourcedbits.org/tags/ope">
+                    ope
+                </a>
+                <span class="category-list-count">1</span>
+            </li>
+            
+            <li class="category-list-item">
+                <a class="category-list-link" href="http://outsourcedbits.org/tags/oram">
+                    oram
+                </a>
+                <span class="category-list-count">1</span>
+            </li>
+            
+            <li class="category-list-item">
+                <a class="category-list-link" href="http://outsourcedbits.org/tags/ot">
+                    ot
+                </a>
+                <span class="category-list-count">1</span>
+            </li>
+            
+            <li class="category-list-item">
+                <a class="category-list-link" href="http://outsourcedbits.org/tags/pets">
+                    pets
+                </a>
+                <span class="category-list-count">1</span>
+            </li>
+            
+            <li class="category-list-item">
+                <a class="category-list-link" href="http://outsourcedbits.org/tags/pir">
+                    pir
+                </a>
+                <span class="category-list-count">1</span>
+            </li>
+            
+            <li class="category-list-item">
+                <a class="category-list-link" href="http://outsourcedbits.org/tags/ppe">
+                    ppe
+                </a>
+                <span class="category-list-count">2</span>
+            </li>
+            
+            <li class="category-list-item">
+                <a class="category-list-link" href="http://outsourcedbits.org/tags/sat">
+                    sat
+                </a>
+                <span class="category-list-count">1</span>
+            </li>
+            
+            <li class="category-list-item">
+                <a class="category-list-link" href="http://outsourcedbits.org/tags/searchable-encryption">
+                    searchable-encryption
+                </a>
+                <span class="category-list-count">1</span>
+            </li>
+            
+            <li class="category-list-item">
+                <a class="category-list-link" href="http://outsourcedbits.org/tags/section-215">
+                    section-215
+                </a>
+                <span class="category-list-count">2</span>
+            </li>
+            
+            <li class="category-list-item">
+                <a class="category-list-link" href="http://outsourcedbits.org/tags/sse">
+                    sse
+                </a>
+                <span class="category-list-count">4</span>
+            </li>
+            
+            <li class="category-list-item">
+                <a class="category-list-link" href="http://outsourcedbits.org/tags/ste">
+                    ste
+                </a>
+                <span class="category-list-count">2</span>
+            </li>
+            
+        </ul>
+    </div>
+</div>
+
+
+
+    
+
+
+<div class="widget-wrap">
+    <h3 class="widget-title">
+        Tag cloud
+    </h3>
+    <div class="widget tagcloud">
+        
+        <a href="http://outsourcedbits.org/tags/cryptdb" style="font-size: 12px;">cryptdb</a>
+        
+        <a href="http://outsourcedbits.org/tags/deterministic-encryption" style="font-size: 12px;">deterministic-encryption</a>
+        
+        <a href="http://outsourcedbits.org/tags/dte" style="font-size: 12px;">dte</a>
+        
+        <a href="http://outsourcedbits.org/tags/fhe" style="font-size: 12px;">fhe</a>
+        
+        <a href="http://outsourcedbits.org/tags/fisa" style="font-size: 12px;">fisa</a>
+        
+        <a href="http://outsourcedbits.org/tags/functional-encryption" style="font-size: 12px;">functional-encryption</a>
+        
+        <a href="http://outsourcedbits.org/tags/learning" style="font-size: 12px;">learning</a>
+        
+        <a href="http://outsourcedbits.org/tags/machine-learning" style="font-size: 12px;">machine-learning</a>
+        
+        <a href="http://outsourcedbits.org/tags/metadata" style="font-size: 12px;">metadata</a>
+        
+        <a href="http://outsourcedbits.org/tags/mpc" style="font-size: 12px;">mpc</a>
+        
+        <a href="http://outsourcedbits.org/tags/msr" style="font-size: 12px;">msr</a>
+        
+        <a href="http://outsourcedbits.org/tags/nsa" style="font-size: 12px;">nsa</a>
+        
+        <a href="http://outsourcedbits.org/tags/ope" style="font-size: 12px;">ope</a>
+        
+        <a href="http://outsourcedbits.org/tags/oram" style="font-size: 12px;">oram</a>
+        
+        <a href="http://outsourcedbits.org/tags/ot" style="font-size: 12px;">ot</a>
+        
+        <a href="http://outsourcedbits.org/tags/pets" style="font-size: 12px;">pets</a>
+        
+        <a href="http://outsourcedbits.org/tags/pir" style="font-size: 12px;">pir</a>
+        
+        <a href="http://outsourcedbits.org/tags/ppe" style="font-size: 12px;">ppe</a>
+        
+        <a href="http://outsourcedbits.org/tags/sat" style="font-size: 12px;">sat</a>
+        
+        <a href="http://outsourcedbits.org/tags/searchable-encryption" style="font-size: 12px;">searchable-encryption</a>
+        
+        <a href="http://outsourcedbits.org/tags/section-215" style="font-size: 12px;">section-215</a>
+        
+        <a href="http://outsourcedbits.org/tags/sse" style="font-size: 12px;">sse</a>
+        
+        <a href="http://outsourcedbits.org/tags/ste" style="font-size: 12px;">ste</a>
+        
+    </div>
+</div>
+
+
+
+
+    <div id="toTop" class="fa fa-chevron-up"></div>
+</aside>
+
+	    
+	</div>
+</div>
+
+<footer id="footer">
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2016
+      Powered by <a href="//gohugo.io">Hugo</a>. Theme by <a href="http://github.com/ppoffice">PPOffice</a>.
+    </div>
+  </div>
+</footer>
+
+
+<script>
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-79501268-1', 'auto');
+ga('send', 'pageview');
+</script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+<script src="http://outsourcedbits.org/fancybox/jquery.fancybox.pack.js"></script>
+<script src="http://outsourcedbits.org/js/script.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.8.0/highlight.min.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+
+
+
+ 
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+  extensions: ["tex2jax.js"],
+  jax: ["input/TeX", "output/HTML-CSS"],
+  tex2jax: {
+    inlineMath: [['$','$'], ['\\(','\\)']],
+    displayMath: [['$$','$$'], ['\\[','\\]']],
+    processEscapes: true,
+    processEnvironments: true,
+    skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
+    TeX: { equationNumbers: { autoNumber: "AMS" },
+         extensions: ["AMSmath.js", "AMSsymbols.js"] }
+  },
+  "HTML-CSS": {availableFonts: ["TeX"]}, 
+  scale: [200]
+});
+</script>
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    
+    
+    
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i = 0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+});
+</script>
+<script type="text/javascript"
+  src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+</body>
+</html>

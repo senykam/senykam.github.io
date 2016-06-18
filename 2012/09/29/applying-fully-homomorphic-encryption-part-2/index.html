@@ -1,0 +1,963 @@
+<!DOCTYPE html>
+<html lang="en-us">
+<head>
+    <title>Applying Fully Homomorphic Encryption (Part 2) &middot; Outsourced Bits</title>
+    <meta name="generator" content="Hugo 0.16" />
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="author" content="Seny Kamara">
+    
+      <meta name="description" content="">
+    
+    
+    <link rel="icon" href="http://outsourcedbits.org/favicon.ico">
+    <link rel="apple-touch-icon" href="http://outsourcedbits.org/apple-touch-icon.png" />
+    <link rel="stylesheet" href="http://outsourcedbits.org/css/style.css">
+    <link rel="stylesheet" href="http://outsourcedbits.org/css/font-awesome.min.css">
+    <link rel="stylesheet" href="http://outsourcedbits.org/css/monokai.css">
+    <link rel="stylesheet" href="http://outsourcedbits.org/fancybox/jquery.fancybox.css">
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400italic,400,600' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Source+Code+Pro' rel='stylesheet' type='text/css'>
+    <meta property="og:title" content="Applying Fully Homomorphic Encryption (Part 2)" />
+<meta property="og:description" content="This is the second part of a series on applying fully-homomorphic encryption. In the first post we went over what fully-homomorphic encryption (FHE) and shomewhat-homomorphic encryption (SHE) were and how they relate. In this post we&#39; ll discuss actual applications. To structure the discussion, I&#39; ll refer to some applications as direct and others as indirect. Indirect applications will refer to applications where FHE is used as a building block---usually with other components---to construct something else of interest." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://outsourcedbits.org/2012/09/29/applying-fully-homomorphic-encryption-part-2" />
+
+
+<meta property="og:updated_time" content="2012-09-29T16:59:14-03:00"/>
+
+
+
+
+
+
+
+
+
+
+    
+    
+<meta itemprop="name" content="Applying Fully Homomorphic Encryption (Part 2)">
+<meta itemprop="description" content="This is the second part of a series on applying fully-homomorphic encryption. In the first post we went over what fully-homomorphic encryption (FHE) and shomewhat-homomorphic encryption (SHE) were and how they relate. In this post we&#39; ll discuss actual applications. To structure the discussion, I&#39; ll refer to some applications as direct and others as indirect. Indirect applications will refer to applications where FHE is used as a building block---usually with other components---to construct something else of interest.">
+
+
+<meta itemprop="dateModified" content="2012-09-29T16:59:14-03:00" />
+<meta itemprop="wordCount" content="2558">
+
+
+
+<meta itemprop="keywords" content="applied-crypto,applied-cryptography,cloud-computing,encrypted-search,graph-encryption,inference-attacks,learning,misc,policy,surveillance,cryptdb,deterministic-encryption,dte,fhe,fisa,functional-encryption,learning,machine-learning,metadata,mpc,msr,nsa,ope,oram,ot,pets,pir,ppe,sat,searchable-encryption,section-215,sse,ste," />
+
+    
+
+  <meta name="twitter:card" content="summary"/>
+
+
+
+<meta name="twitter:title" content="Applying Fully Homomorphic Encryption (Part 2)"/>
+<meta name="twitter:description" content="This is the second part of a series on applying fully-homomorphic encryption. In the first post we went over what fully-homomorphic encryption (FHE) and shomewhat-homomorphic encryption (SHE) were and how they relate. In this post we&#39; ll discuss actual applications. To structure the discussion, I&#39; ll refer to some applications as direct and others as indirect. Indirect applications will refer to applications where FHE is used as a building block---usually with other components---to construct something else of interest."/>
+<meta name="twitter:site" content="@senykam"/>
+
+
+    
+
+    
+</head>
+<body>
+<div class="container">
+
+
+<div id="container">
+	<header id="header">
+  <div id="header-main" class="header-inner">
+    <div class="outer">
+      <a href="http://outsourcedbits.org/" id="logo"><span class="site-title">Outsourced Bits</span></a>
+      <nav id="main-nav">
+          
+
+          
+
+          
+      </nav>
+        <nav id="sub-nav">
+          <div class="profile" id="profile-nav">
+            <a id="profile-anchor" href="javascript:;"><img class="avatar" src="http://outsourcedbits.org//img/sk.jpg"><i class="fa fa-caret-down"></i></a>
+          </div>
+        </nav>
+        <div id="search-form-wrap">
+          <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form">
+              <input type="search" name="q" results="0" class="search-form-input" placeholder="Search">
+              <button type="submit" class="search-form-submit">
+              </button>
+              <input type="hidden" name="q" value="site:http://outsourcedbits.org/">
+         </form>
+        </div>
+    </div>
+  </div>
+  <div id="main-nav-mobile" class="header-sub header-inner">
+    <table class="menu outer">
+      <tbody>
+          <tr>
+          
+
+          
+
+          
+          <td>
+          <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form">
+          <input type="search" name="q" results="0" class="search-form-input" placeholder="Search">
+          <input type="hidden" name="q" value="site:http://outsourcedbits.org/">
+          </form>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+</header>
+
+   	
+   	<div class="outer">
+   		
+	    <aside id="profile">
+  <div class="inner profile-inner">
+    <div class="base-info profile-block">
+      <img id="avatar" src="http://outsourcedbits.org/img/sk.jpg" width="200" class="avatar">
+      
+      
+      <p class="mybio">My name is Seny Kamara. I am an Associate Professor of <a href="http://cs.brown.edu">Computer Science</a> at <a href="http://brown.edu">Brown</a>. Prior to that, I was a researcher at Microsoft Research. <br><br> My work is focused on designing and studying cryptographic algorithms,
+protocols and systems; often motivated by privacy issues in cloud computing,
+surveillance and databases. <br><br> This is a blog about my research and interests. For more about my work see my
+<a href="http://cs.brown.edu/~seny">homepage</a>.</p>
+      <span id="location"><i class="fa fa-map-marker"></i>Rio</span>
+      
+    </div>
+    
+    <div class="contact-info profile-block">
+      <table class="contact-list">
+        <tr>
+          
+<td><a href="//github.com/senykam" target="_blank" title="GitHub"><i class="fa fa-github"></i></a></td>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<td><a href="//twitter.com/senykam" target="_blank" title="Twitter"><i class="fa fa-twitter"></i></a></td>
+
+
+          <td><a href="" target="_blank" title="RSS"><i class="fa fa-rss"></i></a></td>
+        </tr>
+      </table>
+    </div>
+  </div>
+</aside>
+
+	    
+
+	    
+<section id="main">
+
+    <article id="page-undefined" class="article article-type-page" itemscope="" itemprop="blogPost">
+        <div class="article-inner">
+            
+
+            <header class="article-header">
+    <a href="http://outsourcedbits.org/2012/09/29/applying-fully-homomorphic-encryption-part-2">
+    <h1 class="article-title" itemprop="name">
+        Applying Fully Homomorphic Encryption (Part 2)
+    </h1>
+    </a>
+    <div class="article-meta">
+        <div class="article-date">
+            <i class="fa fa-calendar"></i>
+            <time datetime="2012-09-29 16:59:14 -0300 STD" itemprop="datePublished">2012-09-29</time>
+            &middot;
+            2558
+            words
+            &middot;
+            13
+            minute read
+        </div>
+
+        
+        
+
+        
+            
+            
+            <div class="article-category">
+                <i class="fa fa-tags"></i>
+                
+                <a class="article-category-link" href="http://outsourcedbits.org/tags/fhe">FHE</a>
+                &middot;
+                
+                <a class="article-category-link" href="http://outsourcedbits.org/tags/machine-learning">Machine learning</a>
+                &middot;
+                
+                <a class="article-category-link" href="http://outsourcedbits.org/tags/mpc">MPC</a>
+                
+                
+            </div>
+            
+        
+    </div>
+</header>
+
+            <div class="article-entry" itemprop="articleBody">
+                <p><em>This is the second part of a series on applying fully-homomorphic encryption.
+In the
+<a href="http://outsourcedbits.org/2012/06/26/applying-fully-homomorphic-encryption-part-1/">first</a>
+post we went over what fully-homomorphic encryption (FHE) and
+shomewhat-homomorphic encryption (SHE) were and how they relate. In this post
+we' ll discuss actual applications.</em></p>
+
+<p><img src="/img/grail.jpg" class="alignright" width="250">
+To structure the discussion, I' ll refer to some applications as direct and
+others as indirect. Indirect applications will refer to applications where FHE
+is used as a building block---usually with other components---to construct
+something else of interest. Direct applications, on the other hand, will refer
+to applications where FHE is used (almost) &quot;as-is&quot;.  These are coarse and
+imprecise distinctions and are not particularly meaningful but they will be
+useful for organizational purposes. Roughly speaking, you can think about an
+indirect application as something mostly cryptographers would be excited about
+and a direct application as something everyone else might be excited about.</p>
+
+<p>Quoting
+<a href="http://windowsontheory.org/2012/05/02/building-the-swiss-army-knife/">Barak and Brakerski</a>, FHE is viewed by cryptographers as a swiss-army knife. This is
+because FHE has all kinds of indirect applications and can be used to construct and
+improve many cryptographic systems ranging from relatively simple
+things like encryption schemes to more complex things like
+<a href="http://en.wikipedia.org/wiki/Secure_multi-party_computation">secure multi-party computation</a>
+(MPC) protocols <sup class="footnote-ref" id="fnref:1"><a class="footnote" href="#fn:1">1</a></sup>. Gentry's thesis provides a good
+overview of the indirect applications of FHE, including to the design of
+<a href="http://www.mit.edu/~rothblum/papers/otp.pdf">one-time programs</a>,
+<a href="http://www.cs.ucla.edu/~rafail/PUBLIC/Ostrovsky-Skeith.html">public-key obfuscation</a>,
+<a href="http://en.wikipedia.org/wiki/Proxy_re-encryption">proxy re-encryption</a>,
+<a href="http://www.cs.ucla.edu/~rafail/PUBLIC/09.pdf">software protection</a>
+and secure multi-party computation.</p>
+
+<p>Here I' ll only cover a few possible applications of FHE. The first one is an
+indirect application of FHE to MPC while the rest will be direct applications.</p>
+
+<h2 id="secure-multiparty-computation">Secure Multi-Party Computation</h2>
+
+<p>An MPC protocol allows mutually distrustful parties to  cooperate securely. By
+this I mean that the parties---each with private data---can use a MPC protocol
+to evaluate any function <span  class="math">\(f\)</span> over their <em>joint</em> data without having to share
+the data with each other. Note that MPC can achieve this without hardware and
+without trusted third parties.  MPC is a very general cryptographic technology
+and you can frame a huge number of security and privacy problems as instances
+of MPC.  When trying to convey how general and useful it is I usually say that,
+roughly speaking, MPC is useful in any situation where you might think of using
+an NDA.  Of course it is <em>much</em> more useful than NDAs because the parties will
+never see any of the data!</p>
+
+<p>MPC is a very active area of research that started in the 80's and it is still
+going strong. In fact, recent work suggests that it could soon be practical.
+I would even venture to say that over the last few years, MPC has steadily
+moved from an area of theoretical cryptography research to an area of
+<em>applied</em> cryptography research.</p>
+
+<p>So what does this have to do with FHE? It turns out that using FHE one can
+design very efficient MPC protocols (asymptotically). The protocols require
+little communication and interaction (the number of communication rounds between
+parties). But to see why this is the case, we first have to understand a little
+bit of how MPC protocols are typically designed.</p>
+
+<p>Most protocols are based on (abstract)
+<a href="http://en.wikipedia.org/wiki/Circuit_(computer_theory)">circuits</a> as opposed
+to the more familiar  computational models like <a href="http://en.wikipedia.org/wiki/Random-access_machine">random-access
+machines</a> (this is similar
+to how FHE works as discussed in the previous post). To use these protocols,
+the parties first construct a circuit that evaluates the function they wish to
+compute. They then use various techniques to jointly evaluate this circuit on
+their joint inputs.  So, for example, if we consider the case of two-party
+computation where Alice and Bob wish to compute a function <span  class="math">\(f\)</span> on their
+respective inputs <span  class="math">\(x\)</span> and <span  class="math">\(y\)</span>, they first construct a circuit <span  class="math">\(C\)</span> that
+evaluates <span  class="math">\(f\)</span> on two inputs and then run the MPC protocol in order to securely
+compute <span  class="math">\(f(x, y)\)</span>.</p>
+
+<p>By secure here what I mean is that Alice will not learn any information about
+<span  class="math">\(y\)</span> and Bob will not learn any information about <span  class="math">\(x\)</span> <sup class="footnote-ref" id="fnref:2"><a class="footnote" href="#fn:2">2</a></sup>. Now, there are many
+ways of performing this secure computation but they all have the following
+characteristics: either (1) they require Alice and Bob to send <span  class="math">\(\Omega(|C|)\)</span>
+bits to each other, where <span  class="math">\(|C|\)</span> denotes the size of <span  class="math">\(C\)</span>, i.e., its total number
+of gates; or Alice and Bob will need <span  class="math">\(\Omega(|C|)\)</span> rounds of communication.
+This matters because when we' re working with circuits, the size of a circuit
+reflects the complexity of the function it computes. In other words, for
+&quot;complicated&quot; functions, Alice and Bob will have to exchange <em>a lot</em> of
+data and/or interact a large number of times.</p>
+
+<p>With FHE, on the other hand, it is very easy to construct a MPC protocol without
+these limitations. To do this,  Alice just needs to generate a public/private
+key pair for the FHE scheme. She then encrypts her input <span  class="math">\(x\)</span> and sends the
+resulting ciphertext <span  class="math">\(\)</span>c<em>x = E</em>{pk}(x)<span  class="math">\(\)</span> to Bob. Bob encrypts his input <span  class="math">\(y\)</span>,
+resulting in a ciphertext
+<span  class="math">\(
+c_y = E_{pk}(y)
+\)</span>
+and evaluates the circuit <span  class="math">\(C\)</span> on
+the encryptions on <span  class="math">\(c_x\)</span> and <span  class="math">\(c_y\)</span>, resulting in an encryption <span  class="math">\(c^\star\)</span> of
+<span  class="math">\(f(x, y)\)</span>. Bob then sends <span  class="math">\(c^\star\)</span> back to Alice who decrypts it and sends the
+result back to Bob <sup class="footnote-ref" id="fnref:3"><a class="footnote" href="#fn:3">3</a></sup>.</p>
+
+<p>The total amount of data exchanged between Alice and Bob in this protocol is
+<span  class="math">\(
+|c_x| + |c^\star| + |f(x,y)|,
+\)</span>
+where <span  class="math">\(|c_x|\)</span>, <span  class="math">\(|c^\star|\)</span> and <span  class="math">\(|f(x,y)|\)</span> refer to the bit length of <span  class="math">\(c_x\)</span>,
+<span  class="math">\(c^\star\)</span> and <span  class="math">\(f(x,y)\)</span>, respectively.  What's important to note here is that
+this is <em>independent</em> of the size/complexity of the circuit <span  class="math">\(C\)</span>!  Also,
+the total number of rounds needed is <span  class="math">\(1.5\)</span>, i.e., one round of communication
+plus one message. So, in other words, the FHE-based MPC protocol will have the
+same efficiency in terms of data exchanged and rounds, no matter how
+complicated the function is.</p>
+
+<p>Another nice application of FHE in the context of MPC is that one can use it to
+design server-aided (or cloud-assisted) MPC protocols. A server-aided MPC
+protocol is like a regular MPC protocol except that the parties can make use of
+an untrusted party to outsource some of their computations. The point here is to
+decrease the computational burden of the parties at the expense of the server
+but, of course, without having to trust it.</p>
+
+<p>This can greatly improve the efficiency of MPC as explored recently in a
+<a href="http://eprint.iacr.org/2012/542">paper</a> I co-authored with Mohassel and Riva.
+But as shown by Asharov et al in this
+<a href="http://delta-apache-vm.cs.tau.ac.il/~tromer/papers/tfhe-mpc.pdf">paper</a>,  if
+one uses FHE (plus some additional machinery) it is possible to design
+server-aided MPC protocols that are even more efficient from an asymptotic
+point of view (but unfortunately not from a concrete/practical point of view).</p>
+
+<h2 id="delegated-computation">Delegated Computation</h2>
+
+<p>Of course, the most direct application of FHE is to the problem of outsourced
+computation. Here, Alice wants to evaluate a function <span  class="math">\(f\)</span> over her input <span  class="math">\(x\)</span> but
+she doesn't have enough resources to do the evaluation herself. Because of this
+she wishes to outsource the computation to another party but she doesn't trust
+that party with her data.</p>
+
+<p>FHE provides a perfect solution to this problem.  Alice encrypts <span  class="math">\(x\)</span> and sends
+the ciphertext to the server who evaluates <span  class="math">\(f\)</span> on it and returns an encryption
+of <span  class="math">\(f(x)\)</span>. Alice can then decrypt it to recover <span  class="math">\(f(x)\)</span>. Note that similarly to
+the case of MPC this approach is only secure in the semi-honest model, where we
+assume the server will indeed evaluate the function <span  class="math">\(f\)</span>. What happens if the
+server evaluates some other function <span  class="math">\(f' \neq f\)</span>? Fortunately, there are ways of
+handling this problem.</p>
+
+<h2 id="search-on-encrypted-data">Search on Encrypted Data</h2>
+
+<p>Another application of FHE that is often cited is to the problem of searching on
+encrypted data. This is a special case of the delegated computation problem
+mentioned above where the client just wants to search through an encrypted file
+collection stored at the server. The idea is that Alice stores an encryption of
+her dataset (e.g., a collection of emails) on the server. Whenever she wants to
+search over her data, she sends an encryption of her keyword and the server
+homomorphically evaluates a search algorithm on the encrypted data and keyword.</p>
+
+<p>While this obviously works, as far as I know, all the ways of using FHE to
+search on encrypted data require linear time in the length of the data. In other
+words, the keyword will have to be checked (homomorphically) against every word
+in the dataset. In practice, of course, linear-time search is inconceivable for
+many practical scenarios since more often than not search is a latency-sensitive
+operation. Just imagine if a search engine or a desktop search application used
+linear time search.
+In future posts, we' ll see how one can achieve <em>sub-linear</em> and even
+<a href="http://en.wikipedia.org/wiki/Output-sensitive_algorithm">output sensitive</a>
+time search over encrypted data (albeit with a weaker security guarantee).</p>
+
+<p>Since Gentry proposed his construction and blueprint in 2009, there has been a
+huge effort to make FHE more practical. While a lot of progress has been made,
+unfortunately, we' re still some way from truly practical FHE. So the natural
+question is: &quot;where are the bottlenecks?&quot;.</p>
+
+<p>As we discussed in the last post, most FHE schemes are based on Gentry's
+blueprint which consists of first constructing a SHE and then using Gentry's
+bootstrapping technique to turn it into a FHE scheme. It turns out that
+bootstrapping is a major bottleneck and that SHE is actually reasonably
+efficient. So if we care about practical applications, then it may be worthwhile
+to explore what exactly we can do with SHE instead.</p>
+
+<h2 id="private-healthcare-and-online-ads">Private Healthcare and Online Ads</h2>
+
+<p>This question was explored recently by Lauter, Naehrig and Vaikuntanathan in a
+<a href="http://eprint.iacr.org/2011/405">paper</a> where they consider various
+classes of applications and argue that SHE is enough for many of them. The first
+class is a multi-source and single-reader scenario where: (1) encrypted data is
+uploaded to the cloud by many different entities; (2) the cloud does some
+computation over the data; and (3) the encrypted answer is returned to the data
+owner/reader. One example of such a scenario is in healthcare where medical data
+pertaining to a given patient is sent to the cloud by many sources. These
+sources could be, for example, doctors or medical devices owned by the patient.
+All the data is sent encrypted and the cloud processes it homomrphically (e.g.,
+it could run some statistical algorithm or classifier) and return the encrypted
+answer to the patient.</p>
+
+<p>Another example explored in the paper is online ads. The idea here is that your
+mobile device could use SHE to encrypt and send private information to the cloud
+about your location, browsing history, emails etc. The cloud would store a set
+of ads encrypted under your key and then homomorphically run targeting ad
+algorithm on your data and the ads to figure out which ads to display to you.
+The result would be an encrypted ad that it could then return to you. Because
+your data is encrypted, the cloud will obviously never see your emails, location
+etc.</p>
+
+<h2 id="machine-learning-on-encrypted-data">Machine Learning on Encrypted Data</h2>
+
+<p>In a more recent <a href="http://eprint.iacr.org/2012/323">paper</a>, Graepel, Lauter and
+Naehrig study the more specific problem of machine learning over encrypted data.
+The setting here is the same as the healthcare scenario described above (i.e.,
+the multi-source single-reader one) where we have doctors or perhaps medical
+devices sending encrypted data pertaining to a patient, say Alice, to the
+cloud.  Here, Graepel et al. consider the setting of
+<a href="http://en.wikipedia.org/wiki/Supervised_learning">supervised</a> learning} where,
+given a set of labeled training data, we want to derive a function that will
+accurately label future data, i.e., a classifier. As one can imagine,
+supervised learning has many applications including to bioinformatics, spam
+detection and speech recognition just to name a few.</p>
+
+<p>So in this setting, the data sources (i.e., doctors or medical devices) send
+encrypted labeled data to the cloud under Alice's public key. The cloud then
+runs a machine learning algorithm homomorphically over all the data. This
+results in an encrypted classifier which Alice can now use in the following way.
+Whenever Alice wants to classify some data, she encrypts it under her public key
+and sends it to the cloud which evaluates the classifier on her data
+homomorphically, resulting in an encrypted labeling of her data. The cloud
+returns this to Alice who can then decrypt it using her secret key.</p>
+
+<p>The high level idea is sound, but remember that in this work the authors are
+only interested in using SHE since it is more practical than FHE. Unfortunately,
+this turns out to be a serious limitation as it requires the algorithms to be
+low-degree polynomials and many are not. What is meant here is that if one views
+the learning and classifying algorithms as a single function, then that function
+has to be a low-degree polynomial.</p>
+
+<p>This is pretty restrictive, but Graepel et al. still manage to show how one can
+homomorphically evaluate interesting and useful machine learning algorithms
+under this constraint. One example is <a href="http://en.wikipedia.org/wiki/Linear_discriminant_analysis">Fisher's linear
+discrimant</a>
+classifier <sup class="footnote-ref" id="fnref:4"><a class="footnote" href="#fn:4">4</a></sup>. As suggested in the paper, this this poses an interesting
+challenge for machine learning research: &quot;is it possible to design good machine
+learning algorithms that can be computed using low-degree polynomials&quot;.</p>
+
+<p>That's it for applications. In the next and final post in the series we' ll
+discuss the limitations of FHE and SHE and some alternatives.</p>
+<div class="footnotes">
+
+<hr>
+
+<ol>
+<li id="fn:1">By simple and complex, here I am not referring to the complexity of constructing the objects (e.g., many encryption schemes, FHE included, are very difficult to construct) but to the complexity of the object's functionality or &quot;behavior&quot;
+ <a class="footnote-return" href="#fnref:1">↩</a></li>
+<li id="fn:2">Technically this is not true because the fact that Alice and Bob learn <span  class="math">\(f(x,y)\)</span> means that they learn something about each other's input---namely they learn <span  class="math">\(f(x,y)\)</span>. But for the purposes of MPC this is not a problem because it is the best we can do. Indeed, if the goal is to construct a protocol where Alice and Bob will learn <span  class="math">\(f(x,y)\)</span> then we cannot do so without them learning <span  class="math">\(f(x,y)\)</span>. So when we talk about the security of MPC, we usually say that Alice and Bob do not learn anything about each other's input that they cannot learn from <span  class="math">\(f(x,y)\)</span>
+ <a class="footnote-return" href="#fnref:2">↩</a></li>
+<li id="fn:3">I should stress that, as described, the protocol is only secure in a very restricted adversarial model known as the <em>semi-honest</em> model, where it is assumed that all the parties will follow the protocol but will try to learn whatever they can from the execution. This may seem like a weak and strange adversarial model at first but it is reasonable to consider for the following reasons. First, a protocol that is secure in this model can be safely used in any situation where the adversary is passive, i.e., where it only sees transcripts of the messages sent between parties. One could imagine an adversary that tries to recover information about the parties' inputs after the protocol was executed, for example, from a log of the messages. Second, there are general techniques that can transform any protocol that is secure in this model into a protocol that is secure in stronger and more natural models (e.g., where the adversaries does not have to follow the protocol).
+ <a class="footnote-return" href="#fnref:3">↩</a></li>
+<li id="fn:4">A note that SHE cannot handle division which may seem necessary for the classifiers considered in this work. Graepel et al., however, get around this by observing that technically the classifiers work just as well if the values are multiplied through with the denominator. <strong>Note</strong>: in a previous version of this post I erroneously claimed that the client had to do the division.<br>
+ <a class="footnote-return" href="#fnref:4">↩</a></li>
+</ol>
+</div>
+
+            </div>
+            <footer class="article-footer">
+    <a data-url="http://outsourcedbits.org/2012/09/29/applying-fully-homomorphic-encryption-part-2" data-id="bf8f9bb8fe7493b7dd3de4c321bf62fb" class="article-share-link">
+        Share
+    </a>
+    
+    <a href="http://outsourcedbits.org/2012/09/29/applying-fully-homomorphic-encryption-part-2/#disqus_thread" class="article-comment-link">
+        Comments
+    </a>
+    
+</footer>
+
+        </div>
+
+        
+<nav id="article-nav">
+    
+    <a href="http://outsourcedbits.org/2012/06/26/applying-fully-homomorphic-encryption-part-1" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">
+          Older
+      </strong>
+      <div class="article-nav-title">Applying Fully Homomorphic Encryption (Part 1)</div>
+    </a>
+    
+
+    
+    <a href="http://outsourcedbits.org/2013/07/23/are-compliance-and-privacy-always-at-odds" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">
+          Newer
+      </strong>
+      <div class="article-nav-title">Are Compliance and Privacy Always at Odds?</div>
+    </a>
+    
+</nav>
+
+
+    </article>
+
+    
+    <section id="comments">
+        <div id="disqus_thread">
+            <div id="disqus_thread"></div>
+<script type="text/javascript">
+    var disqus_shortname = 'outsourcedbits';
+    var disqus_identifier = 'http:\/\/outsourcedbits.org\/2012\/09\/29\/applying-fully-homomorphic-encryption-part-2';
+    var disqus_title = 'Applying Fully Homomorphic Encryption (Part 2)';
+    var disqus_url = 'http:\/\/outsourcedbits.org\/2012\/09\/29\/applying-fully-homomorphic-encryption-part-2';
+
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+        </div>
+    </section>
+    
+</section>
+
+
+	    
+	    <aside id="sidebar">
+    
+
+    
+
+
+<div class="widget-wrap">
+    <h3 class="widget-title">Categories</h3>
+    <div class="widget">
+        <ul class="category-list">
+            
+            <li class="category-list-item">
+                <a class="category-list-link" href="http://outsourcedbits.org/categories/applied-crypto">
+                    applied-crypto
+                </a>
+                <span class="category-list-count">3</span>
+            </li>
+            
+            <li class="category-list-item">
+                <a class="category-list-link" href="http://outsourcedbits.org/categories/applied-cryptography">
+                    applied-cryptography
+                </a>
+                <span class="category-list-count">1</span>
+            </li>
+            
+            <li class="category-list-item">
+                <a class="category-list-link" href="http://outsourcedbits.org/categories/cloud-computing">
+                    cloud-computing
+                </a>
+                <span class="category-list-count">2</span>
+            </li>
+            
+            <li class="category-list-item">
+                <a class="category-list-link" href="http://outsourcedbits.org/categories/encrypted-search">
+                    encrypted-search
+                </a>
+                <span class="category-list-count">11</span>
+            </li>
+            
+            <li class="category-list-item">
+                <a class="category-list-link" href="http://outsourcedbits.org/categories/graph-encryption">
+                    graph-encryption
+                </a>
+                <span class="category-list-count">1</span>
+            </li>
+            
+            <li class="category-list-item">
+                <a class="category-list-link" href="http://outsourcedbits.org/categories/inference-attacks">
+                    inference-attacks
+                </a>
+                <span class="category-list-count">1</span>
+            </li>
+            
+            <li class="category-list-item">
+                <a class="category-list-link" href="http://outsourcedbits.org/categories/learning">
+                    learning
+                </a>
+                <span class="category-list-count">1</span>
+            </li>
+            
+            <li class="category-list-item">
+                <a class="category-list-link" href="http://outsourcedbits.org/categories/misc">
+                    misc
+                </a>
+                <span class="category-list-count">1</span>
+            </li>
+            
+            <li class="category-list-item">
+                <a class="category-list-link" href="http://outsourcedbits.org/categories/policy">
+                    policy
+                </a>
+                <span class="category-list-count">2</span>
+            </li>
+            
+            <li class="category-list-item">
+                <a class="category-list-link" href="http://outsourcedbits.org/categories/surveillance">
+                    surveillance
+                </a>
+                <span class="category-list-count">2</span>
+            </li>
+            
+        </ul>
+    </div>
+</div>
+
+
+
+    
+
+
+<div class="widget-wrap">
+    <h3 class="widget-title">
+        Tags
+    </h3>
+    <div class="widget">
+        <ul class="category-list">
+            
+            <li class="category-list-item">
+                <a class="category-list-link" href="http://outsourcedbits.org/tags/cryptdb">
+                    cryptdb
+                </a>
+                <span class="category-list-count">1</span>
+            </li>
+            
+            <li class="category-list-item">
+                <a class="category-list-link" href="http://outsourcedbits.org/tags/deterministic-encryption">
+                    deterministic-encryption
+                </a>
+                <span class="category-list-count">1</span>
+            </li>
+            
+            <li class="category-list-item">
+                <a class="category-list-link" href="http://outsourcedbits.org/tags/dte">
+                    dte
+                </a>
+                <span class="category-list-count">1</span>
+            </li>
+            
+            <li class="category-list-item">
+                <a class="category-list-link" href="http://outsourcedbits.org/tags/fhe">
+                    fhe
+                </a>
+                <span class="category-list-count">2</span>
+            </li>
+            
+            <li class="category-list-item">
+                <a class="category-list-link" href="http://outsourcedbits.org/tags/fisa">
+                    fisa
+                </a>
+                <span class="category-list-count">1</span>
+            </li>
+            
+            <li class="category-list-item">
+                <a class="category-list-link" href="http://outsourcedbits.org/tags/functional-encryption">
+                    functional-encryption
+                </a>
+                <span class="category-list-count">1</span>
+            </li>
+            
+            <li class="category-list-item">
+                <a class="category-list-link" href="http://outsourcedbits.org/tags/learning">
+                    learning
+                </a>
+                <span class="category-list-count">1</span>
+            </li>
+            
+            <li class="category-list-item">
+                <a class="category-list-link" href="http://outsourcedbits.org/tags/machine-learning">
+                    machine-learning
+                </a>
+                <span class="category-list-count">1</span>
+            </li>
+            
+            <li class="category-list-item">
+                <a class="category-list-link" href="http://outsourcedbits.org/tags/metadata">
+                    metadata
+                </a>
+                <span class="category-list-count">2</span>
+            </li>
+            
+            <li class="category-list-item">
+                <a class="category-list-link" href="http://outsourcedbits.org/tags/mpc">
+                    mpc
+                </a>
+                <span class="category-list-count">3</span>
+            </li>
+            
+            <li class="category-list-item">
+                <a class="category-list-link" href="http://outsourcedbits.org/tags/msr">
+                    msr
+                </a>
+                <span class="category-list-count">1</span>
+            </li>
+            
+            <li class="category-list-item">
+                <a class="category-list-link" href="http://outsourcedbits.org/tags/nsa">
+                    nsa
+                </a>
+                <span class="category-list-count">2</span>
+            </li>
+            
+            <li class="category-list-item">
+                <a class="category-list-link" href="http://outsourcedbits.org/tags/ope">
+                    ope
+                </a>
+                <span class="category-list-count">1</span>
+            </li>
+            
+            <li class="category-list-item">
+                <a class="category-list-link" href="http://outsourcedbits.org/tags/oram">
+                    oram
+                </a>
+                <span class="category-list-count">1</span>
+            </li>
+            
+            <li class="category-list-item">
+                <a class="category-list-link" href="http://outsourcedbits.org/tags/ot">
+                    ot
+                </a>
+                <span class="category-list-count">1</span>
+            </li>
+            
+            <li class="category-list-item">
+                <a class="category-list-link" href="http://outsourcedbits.org/tags/pets">
+                    pets
+                </a>
+                <span class="category-list-count">1</span>
+            </li>
+            
+            <li class="category-list-item">
+                <a class="category-list-link" href="http://outsourcedbits.org/tags/pir">
+                    pir
+                </a>
+                <span class="category-list-count">1</span>
+            </li>
+            
+            <li class="category-list-item">
+                <a class="category-list-link" href="http://outsourcedbits.org/tags/ppe">
+                    ppe
+                </a>
+                <span class="category-list-count">2</span>
+            </li>
+            
+            <li class="category-list-item">
+                <a class="category-list-link" href="http://outsourcedbits.org/tags/sat">
+                    sat
+                </a>
+                <span class="category-list-count">1</span>
+            </li>
+            
+            <li class="category-list-item">
+                <a class="category-list-link" href="http://outsourcedbits.org/tags/searchable-encryption">
+                    searchable-encryption
+                </a>
+                <span class="category-list-count">1</span>
+            </li>
+            
+            <li class="category-list-item">
+                <a class="category-list-link" href="http://outsourcedbits.org/tags/section-215">
+                    section-215
+                </a>
+                <span class="category-list-count">2</span>
+            </li>
+            
+            <li class="category-list-item">
+                <a class="category-list-link" href="http://outsourcedbits.org/tags/sse">
+                    sse
+                </a>
+                <span class="category-list-count">4</span>
+            </li>
+            
+            <li class="category-list-item">
+                <a class="category-list-link" href="http://outsourcedbits.org/tags/ste">
+                    ste
+                </a>
+                <span class="category-list-count">2</span>
+            </li>
+            
+        </ul>
+    </div>
+</div>
+
+
+
+    
+
+
+<div class="widget-wrap">
+    <h3 class="widget-title">
+        Tag cloud
+    </h3>
+    <div class="widget tagcloud">
+        
+        <a href="http://outsourcedbits.org/tags/cryptdb" style="font-size: 12px;">cryptdb</a>
+        
+        <a href="http://outsourcedbits.org/tags/deterministic-encryption" style="font-size: 12px;">deterministic-encryption</a>
+        
+        <a href="http://outsourcedbits.org/tags/dte" style="font-size: 12px;">dte</a>
+        
+        <a href="http://outsourcedbits.org/tags/fhe" style="font-size: 12px;">fhe</a>
+        
+        <a href="http://outsourcedbits.org/tags/fisa" style="font-size: 12px;">fisa</a>
+        
+        <a href="http://outsourcedbits.org/tags/functional-encryption" style="font-size: 12px;">functional-encryption</a>
+        
+        <a href="http://outsourcedbits.org/tags/learning" style="font-size: 12px;">learning</a>
+        
+        <a href="http://outsourcedbits.org/tags/machine-learning" style="font-size: 12px;">machine-learning</a>
+        
+        <a href="http://outsourcedbits.org/tags/metadata" style="font-size: 12px;">metadata</a>
+        
+        <a href="http://outsourcedbits.org/tags/mpc" style="font-size: 12px;">mpc</a>
+        
+        <a href="http://outsourcedbits.org/tags/msr" style="font-size: 12px;">msr</a>
+        
+        <a href="http://outsourcedbits.org/tags/nsa" style="font-size: 12px;">nsa</a>
+        
+        <a href="http://outsourcedbits.org/tags/ope" style="font-size: 12px;">ope</a>
+        
+        <a href="http://outsourcedbits.org/tags/oram" style="font-size: 12px;">oram</a>
+        
+        <a href="http://outsourcedbits.org/tags/ot" style="font-size: 12px;">ot</a>
+        
+        <a href="http://outsourcedbits.org/tags/pets" style="font-size: 12px;">pets</a>
+        
+        <a href="http://outsourcedbits.org/tags/pir" style="font-size: 12px;">pir</a>
+        
+        <a href="http://outsourcedbits.org/tags/ppe" style="font-size: 12px;">ppe</a>
+        
+        <a href="http://outsourcedbits.org/tags/sat" style="font-size: 12px;">sat</a>
+        
+        <a href="http://outsourcedbits.org/tags/searchable-encryption" style="font-size: 12px;">searchable-encryption</a>
+        
+        <a href="http://outsourcedbits.org/tags/section-215" style="font-size: 12px;">section-215</a>
+        
+        <a href="http://outsourcedbits.org/tags/sse" style="font-size: 12px;">sse</a>
+        
+        <a href="http://outsourcedbits.org/tags/ste" style="font-size: 12px;">ste</a>
+        
+    </div>
+</div>
+
+
+
+
+    <div id="toTop" class="fa fa-chevron-up"></div>
+</aside>
+
+	    
+	</div>
+</div>
+
+<footer id="footer">
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2016
+      Powered by <a href="//gohugo.io">Hugo</a>. Theme by <a href="http://github.com/ppoffice">PPOffice</a>.
+    </div>
+  </div>
+</footer>
+
+
+<script>
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-79501268-1', 'auto');
+ga('send', 'pageview');
+</script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+<script src="http://outsourcedbits.org/fancybox/jquery.fancybox.pack.js"></script>
+<script src="http://outsourcedbits.org/js/script.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.8.0/highlight.min.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+
+
+
+ 
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+  extensions: ["tex2jax.js"],
+  jax: ["input/TeX", "output/HTML-CSS"],
+  tex2jax: {
+    inlineMath: [['$','$'], ['\\(','\\)']],
+    displayMath: [['$$','$$'], ['\\[','\\]']],
+    processEscapes: true,
+    processEnvironments: true,
+    skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
+    TeX: { equationNumbers: { autoNumber: "AMS" },
+         extensions: ["AMSmath.js", "AMSsymbols.js"] }
+  },
+  "HTML-CSS": {availableFonts: ["TeX"]}, 
+  scale: [200]
+});
+</script>
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    
+    
+    
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i = 0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+});
+</script>
+<script type="text/javascript"
+  src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+</body>
+</html>

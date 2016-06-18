@@ -1,0 +1,525 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Searchable Encryption on Outsourced Bits</title>
+    <link>http://outsourcedbits.org/tags/searchable-encryption/</link>
+    <description>Recent content in Searchable Encryption on Outsourced Bits</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Thu, 21 Aug 2014 17:33:58 -0300</lastBuildDate>
+    <atom:link href="http://outsourcedbits.org/tags/searchable-encryption/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>How to Search on Encrypted Data: Searchable Symmetric Encryption (Part 5)</title>
+      <link>http://outsourcedbits.org/2014/08/21/how-to-search-on-encrypted-data-searchable-symmetric-encryption-part-5</link>
+      <pubDate>Thu, 21 Aug 2014 17:33:58 -0300</pubDate>
+      
+      <guid>http://outsourcedbits.org/2014/08/21/how-to-search-on-encrypted-data-searchable-symmetric-encryption-part-5</guid>
+      <description>&lt;p&gt;&lt;em&gt;This is the fifth part of a series on searching on encrypted data. See parts &lt;a href=&#34;https://outsourcedbits.org/2013/10/14/how-to-search-on-encrypted-data-part-1/&#34;&gt;1&lt;/a&gt;, &lt;a href=&#34;https://outsourcedbits.org/2013/10/30/how-to-search-on-encrypted-data-part-2/&#34;&gt;2&lt;/a&gt;, &lt;a href=&#34;https://outsourcedbits.org/2013/12/20/how-to-search-on-encrypted-data-part-3/&#34;&gt;3&lt;/a&gt; and &lt;a href=&#34;https://outsourcedbits.org/2014/08/21/how-to-search-on-encrypted-data-part-4-oblivious-rams/&#34;&gt;4&lt;/a&gt;.&lt;/em&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;http://outsourcedbits.org/img/search.jpg&#34; class=&#34;alignright&#34; width=&#34;250&#34;&gt;
+In the previous post we covered the most secure way to search on encrypted
+data: oblivious RAMs (ORAM).  I always recommend ORAM-based solutions for
+encrypted search whenever  possible; namely, for small- to moderate-size data
+&lt;sup class=&#34;footnote-ref&#34; id=&#34;fnref:1&#34;&gt;&lt;a class=&#34;footnote&#34; href=&#34;#fn:1&#34;&gt;1&lt;/a&gt;&lt;/sup&gt;.  Of course, the main limitation of ORAM is efficiency so this motivates us
+to keep looking for additional approaches.&lt;/p&gt;
+
+&lt;p&gt;The solution I discuss in this post is &lt;em&gt;searchable symmetric encryption&lt;/em&gt; (SSE).
+For readers who are not familiar with this area, let me stress that this has
+&lt;em&gt;nothing&lt;/em&gt; to do with CipherCloud&#39;s &lt;a href=&#34;http://www.ciphercloud.com/company/about-ciphercloud/press-releases/ciphercloud-delivers-breakthrough-searchable-strong-encryption/&#34;&gt;searchable strong
+encryption&lt;/a&gt;.
+I don&#39;t know why CipherCloud chose to call its &amp;quot;breakthrough&amp;quot; product SSE.  No
+one knows exactly what CipherCloud does at the crypto level but everything
+points to them using some form of tokenization which, as far as I know, is an
+industry term for deterministic encryption. This is neither a breakthrough nor
+really secure for that matter but that&#39;s the last thing I&#39;ll say about
+CipherCloud here so every reference to SSE that follows is about searchable
+symmetric encryption.&lt;/p&gt;
+
+&lt;p&gt;SSE was first introduced by Song, Wagner and Perrig
+[&lt;a href=&#34;http://www.cs.berkeley.edu/~dawnsong/papers/se.pdf&#34;&gt;SWP00&lt;/a&gt;]. SSE tries to
+achieve the best of all worlds. It is as efficient as the most efficient
+encrypted search solutions (e.g., deterministic encryption) but provides a lot
+more security.&lt;/p&gt;
+
+&lt;h2 id=&#34;the-security-of-encrypted-search&#34;&gt;The Security of Encrypted Search&lt;/h2&gt;
+
+&lt;p&gt;One of the most interesting aspects of encrypted search from a research point
+of view has to do with security definitions; that is, what does it mean for an
+encrypted search solution to be secure? This is not an obvious question and I
+talked about this a bit in the previous post on
+&lt;a href=&#34;http://outsourcedbits.org/2013/12/20/how-to-search-on-encrypted-data-part-4-oblivious-rams/}{ORAM&#34;&gt;ORAM&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;The first paper to explicitly address this question was an important paper by
+Eu-Jin Goh [&lt;a href=&#34;https://eprint.iacr.org/2003/216.pdf&#34;&gt;Goh03&lt;/a&gt;] &lt;sup class=&#34;footnote-ref&#34; id=&#34;fnref:2&#34;&gt;&lt;a class=&#34;footnote&#34; href=&#34;#fn:2&#34;&gt;2&lt;/a&gt;&lt;/sup&gt; who was a
+graduate student at Stanford at the time. This paper had many contributions but
+one of the most important ones was simply to point out that  SSE schemes were
+not normal encryption schemes and, therefore, the standard notion of
+CPA-security was not meaningful/relevant for SSE.  The problem is essentially
+that when an adversary interacts with an SSE scheme he has access to more than
+an encryption oracle; he also has access to a search oracle.  Goh&#39;s point was
+that this had to be captured in the security definition otherwise it was
+meaningless.&lt;/p&gt;
+
+&lt;p&gt;To address this, he proposed the first security definition for SSE. Roughly
+speaking, the definition guaranteed that given  an EDB and the encrypted
+documents, the adversary would learn nothing about the underlying documents
+beyond the search results &lt;em&gt;even if it had access to a search oracle&lt;/em&gt;. Let
+me highlight a few things about Goh&#39;s definition: (1) it was a game-based
+definition; and (2) it did not provide query privacy (i.e., no privacy
+guarantees for user queries). &lt;sup class=&#34;footnote-ref&#34; id=&#34;fnref:3&#34;&gt;&lt;a class=&#34;footnote&#34; href=&#34;#fn:3&#34;&gt;3&lt;/a&gt;&lt;/sup&gt;  A follow up paper by Chang and Mitzenmacher
+[&lt;a href=&#34;https://www.eecs.harvard.edu/~michaelm/postscripts/acns2005.pdf&#34;&gt;CM05&lt;/a&gt;]
+proposed a new definition that was simulation-based and that guaranteed query
+privacy in addition to data privacy.&lt;/p&gt;
+
+&lt;p&gt;I won&#39;t go into details, but simulation-based definitions have some
+advantages over  game-based definitions and, generally speaking, are preferable
+and can be easier to work with---especially when composing various primitives to
+build larger protocols.&lt;/p&gt;
+
+&lt;p&gt;So we&#39;re done right? Not exactly.&lt;/p&gt;
+
+&lt;p&gt;During this time, Reza Curtmola, Juan Garay, Rafail Ostrovsky and myself were
+also thinking about SSE and one of the things we noticed while thinking
+about the security of SSE schemes was that the previous security definitions
+didn&#39;t seem to really capture what was going on. There were primarily two
+issues: (1) the definitions were (implicitly) restricting the adversary&#39;s
+power; and (2) they didn&#39;t explicitly capture the fact that the constructions
+were leaking information.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Adaptivity.&lt;/strong&gt;
+The first problem was that in these definitions, the adversary was never  given
+the search tokens, the EDB or the results of its searches. The implication of
+this was that---in the definition---the adversary could not choose its search
+oracle queries  as a function of the EDB, the tokens or previous search
+results. In other words, it&#39;s behavior was being implicitly restricted to
+making &lt;em&gt;non-adaptive&lt;/em&gt; queries to its search oracle. This was clearly an
+issue because in the real-world the adversary we are trying to protect against
+is a server that stores the EDB, that receives tokens from the client and
+that sees the results of the of the search. So if we allow this adversary to
+query a search oracle, then we also have to allow him to query the oracle as a
+function of the EDB, the tokens and previous search results.&lt;br&gt;
+More concretely, this captures a form of attack where  the server crafts some
+clever oracle queries based on the EDB, the tokens or previous search results.&lt;/p&gt;
+
+&lt;p&gt;Now let&#39;s take a step back. At this point---unless you are a
+cryptographer---you are likely thinking something to the effect of: &amp;quot;this
+sounds contrived and honestly I can&#39;t see how one could craft queries of this
+form that would lead to an actual attack of this form.  This is all academic!&amp;quot;.
+I know this because, unfortunately, I&#39;ve heard this many times over the years.&lt;/p&gt;
+
+&lt;p&gt;But this is roughly the reaction people have every time cryptographers point
+out that an adversarial model needs to be strengthened. Usually, what happens
+is the following: (1) non-cryptographers ignore this and build their systems
+using primitives that satisfy the weaker model because they don&#39;t believe the
+stronger attacks are realistic; (2) someone comes along and carries out some
+form of the stronger attack; and (3) the systems need to be re-designed and
+patched. This has happened in the cases of encryption (CPA- vs. CCA2-security)
+and key exchange.&lt;/p&gt;
+
+&lt;p&gt;In any case, having observed this, we wrote about it in the following paper
+[&lt;a href=&#34;http://eprint.iacr.org/2006/210.pdf&#34;&gt;CGKO06&lt;/a&gt;] and proposed a new and
+stronger definition where the adversary was allowed to generate its queries as
+a function of the EDB, the tokens and previous search results. We called this
+&lt;em&gt;adaptive&lt;/em&gt; security and gave two formulations of this definition: one
+game-based and one simulation-based.  This turned out to be quite interesting
+from a theoretical point of view because the simulation-based formulations were
+slightly stronger than the game-based formulations; which is not the case for
+the standard notion of CPA-security &lt;sup class=&#34;footnote-ref&#34; id=&#34;fnref:4&#34;&gt;&lt;a class=&#34;footnote&#34; href=&#34;#fn:4&#34;&gt;4&lt;/a&gt;&lt;/sup&gt;.&lt;/p&gt;
+
+&lt;p&gt;Now, to be honest, I do not know of an explicit attack on a concrete SSE
+construction that takes advantage of adaptivity. But that shouldn&#39;t matter anymore
+because we now know how to construct adaptively-secure SSE schemes that are as
+efficient as non-adaptively-secure ones. So there is no excuse for not using
+an adaptively-secure scheme. Another important reason to consider adaptive
+security is for situations where SSE schemes are used as building blocks in
+larger protocols. In these kinds of situations, the primitive can be used in
+unorthodox ways which open up subtle new oracles that one may not have
+considered when designing the primitive for its more standard uses.&lt;/p&gt;
+
+&lt;p&gt;This exact issue comes up in a paper I wrote recently
+[&lt;a href=&#34;http://research.microsoft.com/en-us/um/people/senyk/pubs/metacrypt.pdf&#34;&gt;K14&lt;/a&gt;]
+that combines structured encryption (which is a form of SSE) with secure
+multi-party computation to design a private alternative to the NSA metadata
+program. In this case, it turns out that the adversary for the larger protocol
+(i.e., the NSA analyst) can easily influence the inputs to the underlying SSE
+scheme and implicitly carry out adaptive attacks on it. So in this case, it is
+crucial that whatever structured encryption scheme is used be adaptively-secure.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Leakage.&lt;/strong&gt; Another important issue that was overlooked in previous work was leakage. As I&#39;ve
+discussed in previous posts, non-ORAM solutions leak some information.
+Everyone was basically aware that SSE revealed the search results
+(i.e., the identifiers of the documents that contained the keyword). This was
+the whole point of SSE and most people believed that this was why it was more
+efficient than ORAM. &lt;sup class=&#34;footnote-ref&#34; id=&#34;fnref:5&#34;&gt;&lt;a class=&#34;footnote&#34; href=&#34;#fn:5&#34;&gt;5&lt;/a&gt;&lt;/sup&gt;  But this was not treated appropriately. In addition,
+we also pointed in [&lt;a href=&#34;http://eprint.iacr.org/2006/210.pdf&#34;&gt;CGKO06&lt;/a&gt;] that all
+the known SSE constructions leaked more that the search results. In particular,
+they also revealed whether a search query was being repeated. This was very
+easy to see by just looking at the constructions: the search tokens were
+usually the output of a PRF applied to the keyword being searched for.&lt;/p&gt;
+
+&lt;p&gt;The main problem was that the definitions did not capture any of this &lt;sup class=&#34;footnote-ref&#34; id=&#34;fnref:6&#34;&gt;&lt;a class=&#34;footnote&#34; href=&#34;#fn:6&#34;&gt;6&lt;/a&gt;&lt;/sup&gt;. To address
+it we decided to treat leakage in SSE more formally and to capture it very
+explicitly in our security definitions. Our thinking was that leakage was an
+integral part of SSE (since it seemed to be one of the reasons why SSE was so
+efficient) and that it deserved to be properly studied and understood. At this
+stage we only really considered two types of leakage:  the access pattern and
+the search pattern. The access pattern is basically the search results (the
+identifiers of the documents that contain the keyword) and the search pattern is
+whether a search query is repeated. At the time these were the only leakages
+that had appeared in the literature.   In a later paper with Melissa Chase
+[&lt;a href=&#34;http://eprint.iacr.org/2011/010.pdf&#34;&gt;CK10&lt;/a&gt;], we generalized the
+definitional approach of [&lt;a href=&#34;http://eprint.iacr.org/2006/210.pdf&#34;&gt;CGKO06&lt;/a&gt;] so
+that the definition could include &lt;em&gt;any&lt;/em&gt; kind of leakage.&lt;/p&gt;
+
+&lt;p&gt;Leakage is of course undesirable from a security point of view, but it is
+fascinating from a research point of view. I hope to discuss this further in later
+posts. For the purposes of this discussion, I&#39;ll just point out that there are
+(mostly) two kinds of leakages: setup leakage, which is revealed just by the
+EDB; and query leakage, which is revealed by a combination of the EDB and a
+token.  One of the main issues with any solution based on deterministic
+encryption or, more generally, on property-preserving encryption is that they
+have a high degree of setup leakage: their EDB&#39;s have non-trivial leakage.  In
+that sense, SSE-based solutions are better because their setup leakage is
+usually minimal/trivial and the non-trivial leakage is only query leakage which
+is controlled by the client since queries can only be executed with knowledge of
+the secret key.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Summing up.&lt;/strong&gt;
+So in the end, what we tried to argue in
+[&lt;a href=&#34;http://eprint.iacr.org/2006/210.pdf&#34;&gt;CGKO06&lt;/a&gt;] was that what we should be
+asking  for from an SSE security definition is a guarantee that:&lt;/p&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;&lt;em&gt;&amp;quot;the adversary cannot learn anything about the data and the queries beyond
+the explicitly allowed leakage; even if the adversary can make adaptive
+queries to a search oracle.&amp;quot;&lt;/em&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;But once we settled on this definition and formalized it, the following natural
+problems came up: (1) how do we distinguish between reasonable and
+unreasonable leakage?; and (2) is it even possible to design SSE schemes that
+are adaptively-secure?  &lt;sup class=&#34;footnote-ref&#34; id=&#34;fnref:5&#34;&gt;&lt;a class=&#34;footnote&#34; href=&#34;#fn:5&#34;&gt;7&lt;/a&gt;&lt;/sup&gt;&lt;/p&gt;
+
+&lt;p&gt;Initially, the answers to these questions weren&#39;t obvious to us. We thought
+about them for a while and eventually answered the second question by finding an
+SSE construction that was adaptively-secure. Unfortunately, while the scheme had
+optimal asymptotic search complexity, it was not really practical. But at least
+we knew adaptive security was achievable---though we did not know whether it was
+achievable efficiently.&lt;/p&gt;
+
+&lt;p&gt;We didn&#39;t really have any answer for the second question. In fact, we still
+don&#39;t. We don&#39;t really have a good way to understand and analyze the leakage of
+SSE schemes. For now, the best we can do is to try and describe it precisely.&lt;/p&gt;
+
+&lt;h2 id=&#34;searchable-symmetric-encryption&#34;&gt;Searchable Symmetric Encryption&lt;/h2&gt;
+
+&lt;p&gt;There are many variants of SSE (see this paper
+[&lt;a href=&#34;http://eprint.iacr.org/2011/010.pdf&#34;&gt;CK10&lt;/a&gt;] for a discussion)
+including interactive schemes, where the search operation is interactive (i.e.,
+a two-party protocol); and response-hiding schemes, where search results are
+not revealed to the server but only to the client. I&#39;ll focus on
+non-interactive and response-revealing schemes here because they were the first
+kind of SSE schemes considered and also because they are very useful as
+building blocks for more complex constructions and protocols. It also happens
+that they are the most difficult to construct.&lt;/p&gt;
+
+&lt;p&gt;In our formulation we will
+ignore the document collection itself and just assume that the individual
+documents are encrypted using some symmetric encryption scheme and that the
+documents each have a unique identifier that is independent of their content (so
+that knowing the identifier reveals nothing about a file&#39;s contents).&lt;/p&gt;
+
+&lt;p&gt;We assume that the client processes the data collection &lt;span  class=&#34;math&#34;&gt;\(\textbf{D} = (D_1,
+\dots, D_n)\)&lt;/span&gt; and sets up a &amp;quot;database&amp;quot;  &lt;span  class=&#34;math&#34;&gt;\({\sf DB}\)&lt;/span&gt; that maps every keyword &lt;span  class=&#34;math&#34;&gt;\(w\)&lt;/span&gt; in the
+collection to the identifiers of the documents that contain it. Recall that in
+our context, we use the term database loosely to refer to a data structure
+optimized for keyword search (i.e., a search structure). For a keyword
+&lt;span  class=&#34;math&#34;&gt;\(w\)&lt;/span&gt;, we&#39;ll write &lt;span  class=&#34;math&#34;&gt;\({\sf DB}[w]\)&lt;/span&gt; to refer to the list of identifiers of documents that
+contain &lt;span  class=&#34;math&#34;&gt;\(w\)&lt;/span&gt;.&lt;/p&gt;
+
+&lt;p&gt;A non-interactive and response-revealing SSE scheme &lt;span  class=&#34;math&#34;&gt;\(({\sf Setup}, {\sf Token}, {\sf Search})\)&lt;/span&gt; consists of&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;a &lt;span  class=&#34;math&#34;&gt;\({\sf Setup}\)&lt;/span&gt; algorithm run by the client that takes as input a security
+parameter &lt;span  class=&#34;math&#34;&gt;\(1^k\)&lt;/span&gt; and a database &lt;span  class=&#34;math&#34;&gt;\({\sf DB}\)&lt;/span&gt;; it returns a secret key &lt;span  class=&#34;math&#34;&gt;\(K\)&lt;/span&gt; and an
+encrypted database &lt;span  class=&#34;math&#34;&gt;\({\sf EDB}\)&lt;/span&gt;;&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;a &lt;span  class=&#34;math&#34;&gt;\({\sf Token}\)&lt;/span&gt; algorithm also run by the client that takes as input a secret key
+&lt;span  class=&#34;math&#34;&gt;\(K\)&lt;/span&gt; and a keyword &lt;span  class=&#34;math&#34;&gt;\(w\)&lt;/span&gt;; it returns a token &lt;span  class=&#34;math&#34;&gt;\({\sf tk}\)&lt;/span&gt;;&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;a &lt;span  class=&#34;math&#34;&gt;\({\sf Search}\)&lt;/span&gt; algorithm run by the server that takes as input an encrypted
+database &lt;span  class=&#34;math&#34;&gt;\({\sf EDB}\)&lt;/span&gt; and a token &lt;span  class=&#34;math&#34;&gt;\({\sf tk}\)&lt;/span&gt;; it returns a set of identifiers &lt;span  class=&#34;math&#34;&gt;\({\sf DB}[w]\)&lt;/span&gt;.&lt;/p&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;In addition to security, of course, the most important thing we want from an SSE
+solution is low search complexity.&lt;br&gt;
+Fast, for our purposes will mean &lt;em&gt;sub-linear&lt;/em&gt; in the number
+of documents and, ideally, linear in the number of documents that contain the
+search term.  Note that the latter is optimal since at a minimum the server
+needs to fetch the relevant documents just to return them.&lt;/p&gt;
+
+&lt;p&gt;Requiring sub-linear search complexity is &lt;em&gt;crucial&lt;/em&gt; for practical purposes.
+Unless you are working with a very small dataset, linear search is just not
+realistic---try to imagine if your desktop search application or email search
+function did sequential search over your hard drive or email collection
+&lt;em&gt;every time you searched&lt;/em&gt;. Or if your favorite search engine sequentially
+scanned the entire Web every time you performed a web search &lt;sup class=&#34;footnote-ref&#34; id=&#34;fnref:7&#34;&gt;&lt;a class=&#34;footnote&#34; href=&#34;#fn:7&#34;&gt;8&lt;/a&gt;&lt;/sup&gt;.&lt;/p&gt;
+
+&lt;p&gt;The sub-linear requirement has consequences, however. In particular it means
+that we must be willing to work in a offline/online setting where we run a
+one-time (linear) pre-processing phase to setup a search structure so that we
+can then execute search queries on the data structure in sub-linear time.
+And this is exactly the approach we&#39;ll take.&lt;/p&gt;
+
+&lt;h2 id=&#34;the-inverted-index-solution&#34;&gt;The Inverted Index Solution&lt;/h2&gt;
+
+&lt;p&gt;The particular solution I describe here is referred to as the &lt;em&gt;inverted
+index solution&lt;/em&gt; and was proposed in the same
+[&lt;a href=&#34;http://eprint.iacr.org/2006/210.pdf&#34;&gt;CGKO06&lt;/a&gt;] paper in which we studied the
+security of encrypted search. This is a good construction to understand for
+several reasons: (1) it is the basis of almost all subsequent SSE
+constructions; and (2) many of the tricks and techniques that are used in
+recent SSE schemes (and the more general setting of structured encryption)
+originated in this construction.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Setup.&lt;/strong&gt;
+The scheme makes use of a symmetric encryption scheme &lt;span  class=&#34;math&#34;&gt;\(({\sf Gen}, {\sf Enc}, {\sf Dec})\)&lt;/span&gt;, of a
+pseudo-random function (PRF) &lt;span  class=&#34;math&#34;&gt;\(F: \{0,1\}^k \times W \rightarrow \{0,1\}^k\)&lt;/span&gt; and
+of a pseudo-random permutation (PRP) &lt;span  class=&#34;math&#34;&gt;\(P: \{0,1\}^k \times W \rightarrow \{1,
+\dots, |W|\}\)&lt;/span&gt;.  To setup the EDB, the client first samples two &lt;span  class=&#34;math&#34;&gt;\(k\)&lt;/span&gt;-bit keys
+&lt;span  class=&#34;math&#34;&gt;\(K_{\sf T}\)&lt;/span&gt; and &lt;span  class=&#34;math&#34;&gt;\(K_{\sf R}\)&lt;/span&gt; for &lt;span  class=&#34;math&#34;&gt;\(F\)&lt;/span&gt; and &lt;span  class=&#34;math&#34;&gt;\(P\)&lt;/span&gt;, respectively.  It then creates two arrays
+&lt;span  class=&#34;math&#34;&gt;\({\sf T}\)&lt;/span&gt; and &lt;span  class=&#34;math&#34;&gt;\({\sf RAM}_1\)&lt;/span&gt;.  For all keywords &lt;span  class=&#34;math&#34;&gt;\(w \in W\)&lt;/span&gt;, the  client builds a list for
+&lt;span  class=&#34;math&#34;&gt;\({\sf DB}[w]\)&lt;/span&gt; and stores the nodes in &lt;span  class=&#34;math&#34;&gt;\({\sf RAM}_1\)&lt;/span&gt;.  More precisely, for every keyword &lt;span  class=&#34;math&#34;&gt;\(w
+\in W\)&lt;/span&gt; and every &lt;span  class=&#34;math&#34;&gt;\(1 \leq i \leq |{\sf DB}[w]|\)&lt;/span&gt;, it stores&lt;/p&gt;
+
+&lt;p&gt;&lt;span  class=&#34;math&#34;&gt;\[
+{\sf N}_{w,i} = \bigg\langle {\sf id}_{w,i}, {\sf ptr}_1(w, i+1) \bigg\rangle
+\]&lt;/span&gt;&lt;/p&gt;
+
+&lt;p&gt;in &lt;span  class=&#34;math&#34;&gt;\({\sf RAM}_1\)&lt;/span&gt;, where &lt;span  class=&#34;math&#34;&gt;\({\sf id}_{w,i}\)&lt;/span&gt; is the &lt;span  class=&#34;math&#34;&gt;\(i\)&lt;/span&gt;th identifier in &lt;span  class=&#34;math&#34;&gt;\({\sf DB}[w]\)&lt;/span&gt; and
+&lt;span  class=&#34;math&#34;&gt;\({\sf ptr}_1(w, i+1)\)&lt;/span&gt; is the address (in &lt;span  class=&#34;math&#34;&gt;\({\sf RAM}_1\)&lt;/span&gt;) of the &lt;span  class=&#34;math&#34;&gt;\((i+1)\)&lt;/span&gt;th identifier in
+&lt;span  class=&#34;math&#34;&gt;\({\sf DB}[w]\)&lt;/span&gt;. Of course, &lt;span  class=&#34;math&#34;&gt;\({\sf ptr}_1(w, |{\sf DB}[w]| + 1) = \bot\)&lt;/span&gt;.&lt;/p&gt;
+
+&lt;p&gt;It then randomly permutes the locations of the nodes; that is, it creates
+a new array &lt;span  class=&#34;math&#34;&gt;\({\sf RAM}_2\)&lt;/span&gt; stores all the nodes in &lt;span  class=&#34;math&#34;&gt;\({\sf RAM}_1\)&lt;/span&gt; but at locations
+chosen uniformly at random and with appropriately updated pointers.&lt;/p&gt;
+
+&lt;p&gt;After this shuffling step, the client encrypts each node in &lt;span  class=&#34;math&#34;&gt;\({\sf RAM}_2\)&lt;/span&gt;; that is,
+it creates a new array &lt;span  class=&#34;math&#34;&gt;\({\sf RAM}_3\)&lt;/span&gt; such that for all &lt;span  class=&#34;math&#34;&gt;\(w \in W\)&lt;/span&gt; and all &lt;span  class=&#34;math&#34;&gt;\(1 \leq i
+\leq |{\sf DB}[w]|\)&lt;/span&gt;,&lt;/p&gt;
+
+&lt;p&gt;&lt;span  class=&#34;math&#34;&gt;\[
+{\sf RAM}_3\big[{\sf addr}_2({\sf N}_{w,i})\big] =
+{\sf Enc}_{K_w}\bigg({\sf RAM}_2\big[{\sf addr}_2({\sf N}_{w,i})\big]\bigg)
+\]&lt;/span&gt;&lt;/p&gt;
+
+&lt;p&gt;where &lt;span  class=&#34;math&#34;&gt;\(K_w = F_{K_{\sf R}}(w)\)&lt;/span&gt; and &lt;span  class=&#34;math&#34;&gt;\({\sf addr}_2\)&lt;/span&gt; is  just a function  that maps nodes to
+their location in &lt;span  class=&#34;math&#34;&gt;\({\sf RAM}_2\)&lt;/span&gt; (this just makes notation easier).&lt;/p&gt;
+
+&lt;p&gt;Now, for all keywords &lt;span  class=&#34;math&#34;&gt;\(w \in W\)&lt;/span&gt;, the client sets&lt;br&gt;
+&lt;span  class=&#34;math&#34;&gt;\(
+{\sf T}\big[P_{K_{\sf T}}(w) \big] = {\sf Enc}_{K_w}\big({\sf addr}_3({\sf N}_{w, 1})\big),  
+\)&lt;/span&gt;&lt;/p&gt;
+
+&lt;p&gt;where &lt;span  class=&#34;math&#34;&gt;\({\sf addr}_3\)&lt;/span&gt; is a function that maps nodes to their locations in &lt;span  class=&#34;math&#34;&gt;\({\sf RAM}_3\)&lt;/span&gt;.
+Finally, the client sets &lt;span  class=&#34;math&#34;&gt;\({\sf EDB} = ({\sf T}, {\sf RAM}_3)\)&lt;/span&gt;.&lt;/p&gt;
+
+&lt;p&gt;Now the version I just described is simpler than the one presented in
+[&lt;a href=&#34;http://eprint.iacr.org/2006/210.pdf&#34;&gt;CGKO06&lt;/a&gt;].  There are two main
+differences. The first has to do with the domain of the pseudo-random
+permutation &lt;span  class=&#34;math&#34;&gt;\(P\)&lt;/span&gt;.  In practice, PRPs have a fixed domain size. For example, if
+we view AES as a PRP then it is a PRP that maps 128-bit strings to 128-bit
+strings. But in our case we need a PRP that maps keywords in &lt;span  class=&#34;math&#34;&gt;\(W\)&lt;/span&gt; to the numbers
+&lt;span  class=&#34;math&#34;&gt;\(1\)&lt;/span&gt; through &lt;span  class=&#34;math&#34;&gt;\(|W|\)&lt;/span&gt;. The problem here is that in practice the size of &lt;span  class=&#34;math&#34;&gt;\(W\)&lt;/span&gt; will be
+&lt;em&gt;much&lt;/em&gt; smaller than &lt;span  class=&#34;math&#34;&gt;\(2^{128}\)&lt;/span&gt;. So the question becomes how we can use a
+PRP built for a large domain to build a PRP for  a small domain? There are ways
+of doing this but at the time the known solutions had several important
+limitations.  So we solved the problem using the following approach.&lt;/p&gt;
+
+&lt;p&gt;Suppose we used a large-domain PRP. The problem would be that the table &lt;span  class=&#34;math&#34;&gt;\({\sf T}\)&lt;/span&gt;
+would be large as well, i.e., it would have to hold &lt;span  class=&#34;math&#34;&gt;\(2^{128}\)&lt;/span&gt; elements if we
+were using a PRP over &lt;span  class=&#34;math&#34;&gt;\(128\)&lt;/span&gt;-bit strings (e.g., AES). Obviously this is too large
+to be practical. So the idea was to &amp;quot;shrink&amp;quot; &lt;span  class=&#34;math&#34;&gt;\({\sf T}\)&lt;/span&gt; by using something called a
+Fredman-Komlos-Szemeredi (FKS) table. I won&#39;t go into the details, but the
+point is that by using FKS tables, we could use a large-domain PRP and
+still have a compact table &lt;span  class=&#34;math&#34;&gt;\({\sf T}\)&lt;/span&gt;.&lt;/p&gt;
+
+&lt;p&gt;The other difference has to do with the symmetric encryption scheme &lt;span  class=&#34;math&#34;&gt;\(({\sf Gen},
+{\sf Enc}, {\sf Dec})\)&lt;/span&gt; that we use. In the version described here, it is
+important for security that the encryption scheme be &lt;em&gt;anonymous&lt;/em&gt; which
+means that, given two ciphertexts, one cannot tell whether they
+were encrypted under the same key or not. Why is this important? Because each
+list of nodes &lt;span  class=&#34;math&#34;&gt;\(\{{\sf N}_{w, i}\}_{i \leq |{\sf DB}[w]|}\)&lt;/span&gt; is encrypted under the same
+key &lt;span  class=&#34;math&#34;&gt;\(K_w\)&lt;/span&gt;. And if, given &lt;span  class=&#34;math&#34;&gt;\({\sf RAM}_3\)&lt;/span&gt;, the adversary can tell which ciphertexts are
+encrypted under the same key, then it can learn the frequency &lt;span  class=&#34;math&#34;&gt;\(|{\sf DB}[w]|\)&lt;/span&gt; of each
+keyword. Note that this would be revealed by the EDB; without the client ever
+having made any queries.&lt;/p&gt;
+
+&lt;p&gt;The problem with anonymity is that it is not implied
+by the standard notion of CPA-security.  In practice, it seems that most block
+ciphers (including AES) would be anonymous but again maybe not.  In [&lt;a href=&#34;http://eprint.iacr.org/2006/210.pdf&#34;&gt;CGKO06&lt;/a&gt;] we
+didn&#39;t assume that the underlying symmetric encryption scheme was anonymous so
+we had to use a different approach. At a high-level, what we did is to encrypt
+each node under a different key and store that key in its predecessor in the
+list. The fact that every node is encrypted under a different key solves our
+problem.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Token and search.&lt;/strong&gt;
+If the client wants to search for keyword &lt;span  class=&#34;math&#34;&gt;\(w\)&lt;/span&gt;, he simply generates a token&lt;/p&gt;
+
+&lt;p&gt;&lt;span  class=&#34;math&#34;&gt;\[
+{\sf tk} = ({\sf tk}_1, {\sf tk}_2) = (P_{K_{\sf T}}(w), F_{K_{\sf R}}(w)), 
+\]&lt;/span&gt;&lt;/p&gt;
+
+&lt;p&gt;which he sends to the server. To query &lt;span  class=&#34;math&#34;&gt;\({\sf EDB} = ({\sf T}, {\sf RAM}_3)\)&lt;/span&gt;, the server first
+recovers the ciphertext &lt;span  class=&#34;math&#34;&gt;\(c = {\sf T}[{\sf tk}_1]\)&lt;/span&gt; which it decrypts to recover address
+&lt;span  class=&#34;math&#34;&gt;\(a_1 = {\sf Dec}_{{\sf tk}_2}(c)\)&lt;/span&gt;. Then, for all &lt;span  class=&#34;math&#34;&gt;\(i\)&lt;/span&gt; until &lt;span  class=&#34;math&#34;&gt;\(a_i = \bot\)&lt;/span&gt;, it decrypts the
+nodes &lt;span  class=&#34;math&#34;&gt;\(({\sf N}_{w, 1}, \dots, {\sf N}_{w, |{\sf DB}[w]|})\)&lt;/span&gt; by computing&lt;/p&gt;
+
+&lt;p&gt;&lt;span  class=&#34;math&#34;&gt;\[
+({\sf id}_i, a_{i+1}) \leftarrow {\sf Dec}_{K_{\sf R}}\big({\sf RAM}_3[a_i]\big). 
+\]&lt;/span&gt;&lt;/p&gt;
+
+&lt;p&gt;It then finds and returns the encrypted documents with identifiers &lt;span  class=&#34;math&#34;&gt;\(({\sf id}_1,
+\dots, {\sf id}_{|{\sf DB}[w]|})\)&lt;/span&gt;.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Efficiency and security.&lt;/strong&gt;
+To search, the server needs to do one lookup in &lt;span  class=&#34;math&#34;&gt;\(T\)&lt;/span&gt;, which is &lt;span  class=&#34;math&#34;&gt;\(O(1)\)&lt;/span&gt; and then
+one decryption for each node  &lt;span  class=&#34;math&#34;&gt;\(({\sf N}_{w, 1}, \dots, {\sf N}_{w, |{\sf DB}[w]|})\)&lt;/span&gt;,
+which is &lt;span  class=&#34;math&#34;&gt;\(O(|{\sf DB}[w]|)\)&lt;/span&gt;. So the search complexity of this approach is
+&lt;span  class=&#34;math&#34;&gt;\(O(|{\sf DB}[w]|)\)&lt;/span&gt;, which is optimal since it would take at least that much time just
+for the server to send back the relevant documents.&lt;/p&gt;
+
+&lt;p&gt;The construction is clearly efficient (asymptotically speaking, as efficient as
+possible) but is it secure? Yes and no.  The security of the solution (at least
+the more complex version) is proved secure in
+[&lt;a href=&#34;http://eprint.iacr.org/2006/210.pdf&#34;&gt;CGKO06&lt;/a&gt;] but it is only shown to be
+&lt;em&gt;non-adaptively-secure&lt;/em&gt; with trivial setup leakage and query leakage that
+includes the access pattern (the search results) and the search pattern
+(whether a query is repeated).&lt;/p&gt;
+
+&lt;p&gt;Intuitively,  given &lt;span  class=&#34;math&#34;&gt;\({\sf EDB} = ({\sf T}, {\sf RAM}_3)\)&lt;/span&gt; the adversary learns at most the
+number of keywords (by the size of &lt;span  class=&#34;math&#34;&gt;\({\sf T}\)&lt;/span&gt;) and &lt;span  class=&#34;math&#34;&gt;\(\sum_{w \in W} |{\sf DB}[w]|\)&lt;/span&gt; by the
+size of &lt;span  class=&#34;math&#34;&gt;\({\sf RAM}_3\)&lt;/span&gt;. So that is the setup leakage.  Notice that unlike solutions
+based on deterministic encryption, the &lt;span  class=&#34;math&#34;&gt;\({\sf EDB}\)&lt;/span&gt; by itself does not leak any
+non-trivial information like the frequency of a keyword.  At query time, the
+server obviously learns the search results &lt;span  class=&#34;math&#34;&gt;\({\sf DB}[w]\)&lt;/span&gt; but it also learns whether
+the client is repeating a keyword search since in that case the tokens &lt;span  class=&#34;math&#34;&gt;\({\sf tk} =
+(P_{K_{\sf T}}(w), F_{K_{\sf R}}(w))\)&lt;/span&gt; will be the same.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Improvements.&lt;/strong&gt;
+The inverted index solution has been improved over several works.  Its main
+limitations were that: (1) it was only non-adaptively secure; (2) the use of
+FKS dictionaries made the solution hard to understand and implement; and (3)
+it was a static scheme, in the sense that one could not modify the &lt;span  class=&#34;math&#34;&gt;\({\sf EDB}\)&lt;/span&gt; to add
+or remove keywords and/or document identifiers &lt;sup class=&#34;footnote-ref&#34; id=&#34;fnref:8&#34;&gt;&lt;a class=&#34;footnote&#34; href=&#34;#fn:8&#34;&gt;9&lt;/a&gt;&lt;/sup&gt;.&lt;/p&gt;
+
+&lt;p&gt;The first problem was addressed in a joint paper with my MSR colleague Melissa
+Chase [&lt;a href=&#34;http://eprint.iacr.org/2011/010.pdf&#34;&gt;CK10&lt;/a&gt;]. One of the observations
+in that work was that the inverted index solution could be made
+adaptively-secure by replacing the    symmetric encryption scheme by a
+non-committing encryption scheme. Non-committing encryption schemes are usually
+either very expensive or require very strong assumptions (i.e., random
+oracles). Fortunately, in our setting we only need a &lt;em&gt;symmetric&lt;/em&gt;
+non-committing encryption scheme and such a scheme can be instantiated very
+efficiently. In fact, it turns out that the simplest possible symmetric
+encryption scheme is non-committing!  In retrospect this is a very simple
+observation, but it&#39;s been a very useful one since it allows us to design
+adaptively-secure schemes very efficiently (and under standard assumptions). In
+fact, this has been used in most subsequent SSE constructions.&lt;/p&gt;
+
+&lt;p&gt;The second issue was also addressed in
+[&lt;a href=&#34;http://eprint.iacr.org/2011/010.pdf&#34;&gt;CK10&lt;/a&gt;]. Obviously one could just
+replace the PRP with a small-domain PRP but the approach taken in
+[&lt;a href=&#34;http://eprint.iacr.org/2011/010.pdf&#34;&gt;CK10&lt;/a&gt;] was different.  The idea is to
+replace the array &lt;span  class=&#34;math&#34;&gt;\({\sf T}\)&lt;/span&gt; with a dictionary &lt;span  class=&#34;math&#34;&gt;\({\sf DX}\)&lt;/span&gt;. A dictionary is a data
+structure that stores label/value pairs and that supports lookup operations
+that map labels to their values. Dictionaries can be instantiated as hash
+tables, binary search trees etc. So instead of populating &lt;span  class=&#34;math&#34;&gt;\({\sf T}\)&lt;/span&gt; with&lt;/p&gt;
+
+&lt;p&gt;&lt;span  class=&#34;math&#34;&gt;\[
+{\sf T}\big[P_{K_{\sf T}}(w) \big] = {\sf Enc}_{K_w}\big({\sf addr}_3({\sf N}_{w, 1})\big) 
+\]&lt;/span&gt;&lt;/p&gt;
+
+&lt;p&gt;for all &lt;span  class=&#34;math&#34;&gt;\(w \in W\)&lt;/span&gt;, we instead use a PRF &lt;span  class=&#34;math&#34;&gt;\(G\)&lt;/span&gt; and store the pair&lt;/p&gt;
+
+&lt;p&gt;&lt;span  class=&#34;math&#34;&gt;\[
+\bigg(G_{K_{\sf T}}(w), {\sf Enc}_{K_w}\big({\sf addr}_3({\sf N}_{w, 1})\big)\bigg)
+\]&lt;/span&gt;&lt;/p&gt;
+
+&lt;p&gt;in &lt;span  class=&#34;math&#34;&gt;\({\sf DX}\)&lt;/span&gt; for all &lt;span  class=&#34;math&#34;&gt;\(w \in W\)&lt;/span&gt;. With this approach we remove the need for a PRP
+altogether and, in turn, the need for either small-domain PRPs or FKS dictionaries.&lt;/p&gt;
+
+&lt;p&gt;The third issue was addressed in a joint paper with Charalampos (Babis)
+Papamanthou who was an MSR intern at the time and Tom Roeder who was an MSR
+colleague at the time. In this paper
+[&lt;a href=&#34;http://eprint.iacr.org/2012/530.pdf&#34;&gt;KPR12&lt;/a&gt;], we show how to make
+the inverted index solution dynamic while maintaining its efficiency. The
+solution is complex so I won&#39;t discuss it here.&lt;/p&gt;
+
+&lt;p&gt;In another paper with Babis
+[&lt;a href=&#34;https://research.microsoft.com/en-us/um/people/senyk/pubs/psse.pdf&#34;&gt;KP13&lt;/a&gt;]
+we propose a much simpler dynamic solution. Our approach here is tree-based and
+not based on the inverted index solution at all. It&#39;s search complexity,
+however, is not optimal but sub-linear; in particular, logarithmic in the number
+of documents.  It has other good properties, however, like parallizable search
+and good I/O complexity.&lt;/p&gt;
+
+&lt;p&gt;In a more recent paper
+[&lt;a href=&#34;http://www.internetsociety.org/sites/default/files/07_4_1.pdf&#34;&gt;CJJJKRS14&lt;/a&gt;],
+Cash, Jarecki, Jaeger, Jutla, Krawczyk, Steiner and Rosu describe a dynamic
+solution that is very simple, has optimal and parallelizable search and has
+good I/O complexity.&lt;/p&gt;
+
+&lt;p&gt;In another recent paper
+[&lt;a href=&#34;http://web.engr.illinois.edu/~naveed2/pub/Oakland2014BlindStorage.pdf&#34;&gt;NPG14&lt;/a&gt;]
+Naveed, Prabakharan and Gunther propose a very interesting dynamic solution
+based on the notion of blind storage. In a way, their notion of blind storage
+can be viewed as an abstraction of the &lt;span  class=&#34;math&#34;&gt;\({\sf RAM}_3\)&lt;/span&gt; structure in the inverted index
+solution. What
+[&lt;a href=&#34;http://web.engr.illinois.edu/~naveed2/pub/Oakland2014BlindStorage.pdf&#34;&gt;NPG14&lt;/a&gt;]
+shows, however, is that there is an alternative---and much better---way of
+achieving the properties needed from &lt;span  class=&#34;math&#34;&gt;\({\sf RAM}_3\)&lt;/span&gt; than how it is done in
+[&lt;a href=&#34;http://eprint.iacr.org/2006/210.pdf&#34;&gt;CGKO06&lt;/a&gt;]. I won&#39;t say much else
+because this really gets into the weeds of SSE techniques but I recommend the
+paper if you&#39;re interested in this area.&lt;/p&gt;
+
+&lt;p&gt;Finally, the last paper I&#39;ll mention is a work by Cash, Jarecki, Jutla,
+Krawczyk, Rosu and Steiner [&lt;a href=&#34;http://eprint.iacr.org/2013/169&#34;&gt;CJJKRS13&lt;/a&gt;] that
+shows how to extend  the inverted index solution to handle &lt;em&gt;boolean&lt;/em&gt;
+queries while keeping its optimal search complexity. Prior to this work we knew
+how to handle conjunctive search queries (i.e., &lt;span  class=&#34;math&#34;&gt;\(w_1 \wedge w_2\)&lt;/span&gt;) in linear
+time. This paper showed not only how to do it in optimal time but also showed
+how to handle disjunctive queries (i.e., &lt;span  class=&#34;math&#34;&gt;\(w_1 \vee w_2\)&lt;/span&gt;) and combinations of
+conjunctions and disjunctions!&lt;/p&gt;
+&lt;div class=&#34;footnotes&#34;&gt;
+
+&lt;hr&gt;
+
+&lt;ol&gt;
+&lt;li id=&#34;fn:1&#34;&gt;I discuss how to use ORAM for encrypted search towards the end of the previous post of this series.
+ &lt;a class=&#34;footnote-return&#34; href=&#34;#fnref:1&#34;&gt;↩&lt;/a&gt;&lt;/li&gt;
+&lt;li id=&#34;fn:2&#34;&gt;Amazingly, this paper was never accepted for publication; which tells you something about the current state of our publication process.
+ &lt;a class=&#34;footnote-return&#34; href=&#34;#fnref:2&#34;&gt;↩&lt;/a&gt;&lt;/li&gt;
+&lt;li id=&#34;fn:3&#34;&gt;This wasn&#39;t an omission on Goh&#39;s part; he defined it this way on purpose. His reasoning was that SSE schemes could have a variety of applications where token privacy was not needed. This made sense but it still left open the question of how one should define security with token privacy.&lt;br&gt;
+ &lt;a class=&#34;footnote-return&#34; href=&#34;#fnref:3&#34;&gt;↩&lt;/a&gt;&lt;/li&gt;
+&lt;li id=&#34;fn:4&#34;&gt;A similar situation was later observed by Boneh, Sahai and Waters and O&#39; Neill in the setting of functional encryption.
+ &lt;a class=&#34;footnote-return&#34; href=&#34;#fnref:4&#34;&gt;↩&lt;/a&gt;&lt;/li&gt;
+&lt;li id=&#34;fn:5&#34;&gt;Technically, this is &lt;em&gt;not&lt;/em&gt; true! The reason SSE schemes tend to be more efficient than ORAM is not because they reveal the search results (access pattern) but because they reveal whether searches were repeated (search pattern).&lt;br&gt;
+ &lt;a class=&#34;footnote-return&#34; href=&#34;#fnref:5&#34;&gt;↩&lt;/a&gt;&lt;/li&gt;
+&lt;li id=&#34;fn:6&#34;&gt;At this point you might be wondering how the proofs went through. In the definition of [Goh03], the tokens did not appear at all since he was not considering query privacy. In the case of [CM05], the adversary in the proof is restricted to never repeating queries.
+ &lt;a class=&#34;footnote-return&#34; href=&#34;#fnref:6&#34;&gt;↩&lt;/a&gt;&lt;/li&gt;
+&lt;li id=&#34;fn:5&#34;&gt;Technically, this is &lt;em&gt;not&lt;/em&gt; true! The reason SSE schemes tend to be more efficient than ORAM is not because they reveal the search results (access pattern) but because they reveal whether searches were repeated (search pattern).&lt;br&gt;
+ &lt;a class=&#34;footnote-return&#34; href=&#34;#fnref:5&#34;&gt;↩&lt;/a&gt;&lt;/li&gt;
+&lt;li id=&#34;fn:7&#34;&gt;A criticism I often hear from colleagues and reviewers is that SSE constructions are not really &lt;em&gt;searching&lt;/em&gt; over data. The underlying issue is that no computation is being performed. In my opinion, this reflects a very uninformed understanding of the real world. Given the amounts of data we currently produce and have to search over, search has become analogous to &lt;em&gt;sub-linear-time search&lt;/em&gt; and therefore to some form of indexed-based search. In other words, the kind of scale we now have to deal with has fundamentally changed what we mean by the term search.&lt;br&gt;
+ &lt;a class=&#34;footnote-return&#34; href=&#34;#fnref:7&#34;&gt;↩&lt;/a&gt;&lt;/li&gt;
+&lt;li id=&#34;fn:8&#34;&gt;Actually, in [&lt;a href=&#34;http://eprint.iacr.org/2006/210.pdf&#34;&gt;CGKO06&lt;/a&gt;] we describe a way to make our constructions (and any other) dynamic. There are limitations to this approach, however, including the tokens growing in length with the number of updates and interaction.  So when we ask for a dynamic SSE scheme we typically want the update process not to affect the token size and, preferably, the update mechanism to be non-interactive---though the latter doesn&#39;t matter much from a practical point of view.&lt;br&gt;
+ &lt;a class=&#34;footnote-return&#34; href=&#34;#fnref:8&#34;&gt;↩&lt;/a&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/div&gt;
+</description>
+    </item>
+    
+  </channel>
+</rss>

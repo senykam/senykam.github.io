@@ -1,0 +1,886 @@
+<!DOCTYPE html>
+<html lang="en-us">
+<head>
+    <title>A Note on Crypto Design vs Crypto Engineering &middot; Outsourced Bits</title>
+    <meta name="generator" content="Hugo 0.16" />
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="author" content="Seny Kamara">
+    
+      <meta name="description" content="">
+    
+    
+    <link rel="icon" href="http://outsourcedbits.org/favicon.ico">
+    <link rel="apple-touch-icon" href="http://outsourcedbits.org/apple-touch-icon.png" />
+    <link rel="stylesheet" href="http://outsourcedbits.org/css/style.css">
+    <link rel="stylesheet" href="http://outsourcedbits.org/css/font-awesome.min.css">
+    <link rel="stylesheet" href="http://outsourcedbits.org/css/monokai.css">
+    <link rel="stylesheet" href="http://outsourcedbits.org/fancybox/jquery.fancybox.css">
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400italic,400,600' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Source+Code+Pro' rel='stylesheet' type='text/css'>
+    <meta property="og:title" content="A Note on Crypto Design vs Crypto Engineering" />
+<meta property="og:description" content="In my previous post, I described a cryptographic protocol that could allow a telecommunications company to keep its data, and the NSA to legally access it (i.e., with authorization from a FISA court) without revealing its queries. In response to the post, a few people have asked me whether the protocol was implemented and, if not, where they could get implementations of the underlying components. My response is that I did not implement it but, for what it&#39;s worth, I added a section to the blog with links to implementations of various cryptographic primitives and protocols (here)." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://outsourcedbits.org/2013/07/28/a-note-on-crypto-design-vs-crypto-engineering" />
+
+
+<meta property="og:updated_time" content="2013-07-28T23:03:34-03:00"/>
+
+
+
+
+
+
+
+
+
+
+    
+    
+<meta itemprop="name" content="A Note on Crypto Design vs Crypto Engineering">
+<meta itemprop="description" content="In my previous post, I described a cryptographic protocol that could allow a telecommunications company to keep its data, and the NSA to legally access it (i.e., with authorization from a FISA court) without revealing its queries. In response to the post, a few people have asked me whether the protocol was implemented and, if not, where they could get implementations of the underlying components. My response is that I did not implement it but, for what it&#39;s worth, I added a section to the blog with links to implementations of various cryptographic primitives and protocols (here).">
+
+
+<meta itemprop="dateModified" content="2013-07-28T23:03:34-03:00" />
+<meta itemprop="wordCount" content="1341">
+
+
+
+<meta itemprop="keywords" content="applied-crypto,applied-cryptography,cloud-computing,encrypted-search,graph-encryption,inference-attacks,learning,misc,policy,surveillance,cryptdb,deterministic-encryption,dte,fhe,fisa,functional-encryption,learning,machine-learning,metadata,mpc,msr,nsa,ope,oram,ot,pets,pir,ppe,sat,searchable-encryption,section-215,sse,ste," />
+
+    
+
+  <meta name="twitter:card" content="summary"/>
+
+
+
+<meta name="twitter:title" content="A Note on Crypto Design vs Crypto Engineering"/>
+<meta name="twitter:description" content="In my previous post, I described a cryptographic protocol that could allow a telecommunications company to keep its data, and the NSA to legally access it (i.e., with authorization from a FISA court) without revealing its queries. In response to the post, a few people have asked me whether the protocol was implemented and, if not, where they could get implementations of the underlying components. My response is that I did not implement it but, for what it&#39;s worth, I added a section to the blog with links to implementations of various cryptographic primitives and protocols (here)."/>
+<meta name="twitter:site" content="@senykam"/>
+
+
+    
+
+    
+</head>
+<body>
+<div class="container">
+
+
+<div id="container">
+	<header id="header">
+  <div id="header-main" class="header-inner">
+    <div class="outer">
+      <a href="http://outsourcedbits.org/" id="logo"><span class="site-title">Outsourced Bits</span></a>
+      <nav id="main-nav">
+          
+
+          
+
+          
+      </nav>
+        <nav id="sub-nav">
+          <div class="profile" id="profile-nav">
+            <a id="profile-anchor" href="javascript:;"><img class="avatar" src="http://outsourcedbits.org//img/sk.jpg"><i class="fa fa-caret-down"></i></a>
+          </div>
+        </nav>
+        <div id="search-form-wrap">
+          <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form">
+              <input type="search" name="q" results="0" class="search-form-input" placeholder="Search">
+              <button type="submit" class="search-form-submit">
+              </button>
+              <input type="hidden" name="q" value="site:http://outsourcedbits.org/">
+         </form>
+        </div>
+    </div>
+  </div>
+  <div id="main-nav-mobile" class="header-sub header-inner">
+    <table class="menu outer">
+      <tbody>
+          <tr>
+          
+
+          
+
+          
+          <td>
+          <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form">
+          <input type="search" name="q" results="0" class="search-form-input" placeholder="Search">
+          <input type="hidden" name="q" value="site:http://outsourcedbits.org/">
+          </form>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+</header>
+
+   	
+   	<div class="outer">
+   		
+	    <aside id="profile">
+  <div class="inner profile-inner">
+    <div class="base-info profile-block">
+      <img id="avatar" src="http://outsourcedbits.org/img/sk.jpg" width="200" class="avatar">
+      
+      
+      <p class="mybio">My name is Seny Kamara. I am an Associate Professor of <a href="http://cs.brown.edu">Computer Science</a> at <a href="http://brown.edu">Brown</a>. Prior to that, I was a researcher at Microsoft Research. <br><br> My work is focused on designing and studying cryptographic algorithms,
+protocols and systems; often motivated by privacy issues in cloud computing,
+surveillance and databases. <br><br> This is a blog about my research and interests. For more about my work see my
+<a href="http://cs.brown.edu/~seny">homepage</a>.</p>
+      <span id="location"><i class="fa fa-map-marker"></i>Rio</span>
+      
+    </div>
+    
+    <div class="contact-info profile-block">
+      <table class="contact-list">
+        <tr>
+          
+<td><a href="//github.com/senykam" target="_blank" title="GitHub"><i class="fa fa-github"></i></a></td>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<td><a href="//twitter.com/senykam" target="_blank" title="Twitter"><i class="fa fa-twitter"></i></a></td>
+
+
+          <td><a href="" target="_blank" title="RSS"><i class="fa fa-rss"></i></a></td>
+        </tr>
+      </table>
+    </div>
+  </div>
+</aside>
+
+	    
+
+	    
+<section id="main">
+
+    <article id="page-undefined" class="article article-type-page" itemscope="" itemprop="blogPost">
+        <div class="article-inner">
+            
+
+            <header class="article-header">
+    <a href="http://outsourcedbits.org/2013/07/28/a-note-on-crypto-design-vs-crypto-engineering">
+    <h1 class="article-title" itemprop="name">
+        A Note on Crypto Design vs Crypto Engineering
+    </h1>
+    </a>
+    <div class="article-meta">
+        <div class="article-date">
+            <i class="fa fa-calendar"></i>
+            <time datetime="2013-07-28 23:03:34 -0300 STD" itemprop="datePublished">2013-07-28</time>
+            &middot;
+            1341
+            words
+            &middot;
+            7
+            minute read
+        </div>
+
+        
+        
+            
+            
+            <div class="article-category">
+                <i class="fa fa-folder"></i>
+                
+                <a class="article-category-link" href="http://outsourcedbits.org/categories/applied-crypto">Applied Crypto</a>
+                
+                
+            </div>
+            
+        
+
+        
+    </div>
+</header>
+
+            <div class="article-entry" itemprop="articleBody">
+                <p><img src="/img/hand.jpg" class="alignright" width="150">
+In my
+<a href="http://outsourcedbits.org/2013/07/23/are-compliance-and-privacy-always-at-odds/">previous
+post</a>,
+I described a cryptographic protocol that could  allow a telecommunications
+company to keep its data, and the NSA to legally access it (i.e., with
+authorization from a FISA court) without revealing its queries.</p>
+
+<p>In response to the post, a few people have asked me whether the protocol was
+implemented and, if not, where they could get implementations of the underlying
+components.</p>
+
+<p>My response is that <em>I did not implement it</em> but, for what it's worth, I
+added a section to the blog with links to implementations of various
+cryptographic primitives and protocols
+(<a href="http://outsourcedbits.org/coding-list/">here</a>).</p>
+
+<p>These questions about implementations, however, made me realize that I
+should provide some context since I'm afraid the way I described the
+protocol might have made it looked easy to implement---which is definitely not
+the case!</p>
+
+<p>So in this post, I'd like to discuss the differences (as I see them) between
+the various aspects of cryptography.</p>
+
+<h2 id="theory-vs-design-vs-engineering">Theory vs. Design vs. Engineering</h2>
+
+<p>When one is doing cryptography, there are roughly three different types of work
+that are of interest: studying cryptography (theory), constructing cryptography
+(design) and implementing cryptography (engineering). The problem is that each
+task requires a lot of experience to master and each one requires a different
+combination of skillsets.  For this reason, most people specialize in just one
+or at most two of these tasks.</p>
+
+<p><em>Theory</em> is mostly about understanding the limits of cryptography---what can and
+can't be done and why. This includes trying to understand what it means for
+cryptosystems to be secure and understanding the relationships between various
+cryptographic objects. Often this requires understanding of theoretical computer
+science (i.e., complexity theory and algorithms) and math (i.e., probability
+theory, combinatorics and algebra).</p>
+
+<p><em>Design</em> is mostly about constructing (relatively) efficient primitives
+and protocols. This usually requires understanding of crypto theory and math
+(especially number theory and algebra).</p>
+
+<p><em>Engineering</em> is mostly about implementing the primitives and protocols securely
+and efficiently and about integrating them in larger useful systems. This
+usually requires an understanding of crypto design, algorithms and data
+structures, software engineering and system design/engineering.</p>
+
+<p>Of course this is a very coarse description, but I think it captures the
+differences at a high-level and explains why there is such  little overlap and
+so many disputes between the communities: there are just too few people who
+possess the skills needed to work in more than a single area.</p>
+
+<h2 id="crypto-abstractions">Crypto Abstractions</h2>
+
+<p>My
+<a href="http://outsourcedbits.org/2013/07/23/are-compliance-and-privacy-always-at-odds/">previous</a>
+was an exercise in <em>design</em> and for the purpose of design it is
+useful to abstract/hide away many details that are crucial for engineering.  As
+a concrete example, consider the part of the post where I casually say:</p>
+
+<blockquote>
+<p>More formally, we would write that for all $i$,
+$F_K(w_i) = (\ell_i, p_i),$
+where $F$ is a pseudo-random function (PRF).  A PRF is sort of like a keyed hash.</p>
+</blockquote>
+
+<p>A statement like this is hard to work with form an engineering perspective.
+First of all what the hell is a PRF? Are there any implementations of it in
+crypto library $X$? If not, how do I implement one? Is there a limit to how
+long PRF inputs can be? If so, what happens if $w_i$ is longer than that limit?
+What does &quot;sort of&quot; mean?</p>
+
+<p>The answers to all these questions are non-trivial and it takes quite a
+bit of expertise to ask these types of questions properly and to solve them. This is
+partly why crypto engineering is so difficult and why it's usually advised to let
+experts do it.</p>
+
+<p>But understanding cryptography through these abstractions is very useful for the
+task of design.  The process of designing a protocol (or primitive) for a given
+problem mostly requires one to isolate and understand the security challenges
+imposed by the problem and then to use, invent or combine, crypto building
+blocks to overcome these challenges. To do this properly, one is not interested
+in how the building blocks are implemented (though as I'll discuss below, this
+can have severe consequences). What one cares about is what <em>security
+properties</em> the building blocks possess so that they can be used and combined to
+overcome a particular challenge.</p>
+
+<p>This is why &quot;crypto designers&quot; usually talk about things like pseudo-random
+functions, pseudo-random permutations, hash functions, signatures and
+zero-knowledge proofs and not about HMAC, AES, SHA2, DSA, or Schnorr signatures.
+These abstractions are useful for design because they focus on, and make
+very explicit, the security properties one gets from the object. For example,
+HMAC is a PRF but HMAC is other things as well. If, in my previous post I had said:</p>
+
+<blockquote>
+<p>More formally, we would write that for all $i$,
+$\textrm{HMAC}_K(w_i) = (\ell_i, p_i),$</p>
+</blockquote>
+
+<p>one might wonder why I' m using HMAC. Which property exactly of HMAC are we
+taking advantage of? What is the problem we're trying to solve by using HMAC
+here? Why HMAC and not something else?</p>
+
+<h2 id="limitations-of-abstractions">Limitations of Abstractions</h2>
+
+<p>So there are benefits to thinking in terms of theoretical abstractions for the
+purpose of design. Unfortunately there are also serious downsides.</p>
+
+<p>The most obvious one is that it makes the jump from design to engineering
+harder. As discussed above, one has to know or figure out what the abstraction
+corresponds to in practice and sometimes the abstraction can be more than one
+level deep (e.g., a PRF should be instantiated with HMAC and HMAC
+should be instantiated with SHA2).</p>
+
+<p>The second problem is efficiency. It might not matter
+how a primitive is instantiated for the purpose of a design exercise, but it does
+matter for practice since different primitives achieve different levels of
+efficiency.</p>
+
+<p>And finally, it matters for security. The reason is that many of the
+abstractions we have created over the years to make the task of design and
+theory easier to achieve, hide details that---it turns out---have an important impact
+on security.</p>
+
+<p>The best example of this are
+<a href="http://en.wikipedia.org/wiki/Side_channel_attack">side-channel attacks</a>
+which were not captured by the abstractions until very recently <sup class="footnote-ref" id="fnref:1"><a class="footnote" href="#fn:1">1</a></sup>.
+This has had the bizarre consequence that one could design protocols that looked
+fine from a design perspective but that were completely broken in reality.</p>
+
+<p>The fact that side-channels were ignored for so long at the theory and design
+levels also meant that engineers had to take it upon themselves to fix the
+problem. So side-channel expertise has really become a skillset that crypto
+engineers need to have (which adds another layer of complexity to crypto
+engineering) and that designers and theorists severely lack.</p>
+
+<h2 id="conclusions">Conclusions</h2>
+
+<p>So all this to say that for most posts, I'll be discussing design-level problems
+and solutions and using design-level abstractions to do so but it's important to
+keep in mind the limitations of and consequences of this approach.</p>
+
+<p>The main reasons for this decision are that: (1) I only have basic knowledge
+of crypto engineering so I wouldn't have anything interesting to say about it;
+and (2) there are others with more expertise who do have interesting things to
+say.</p>
+
+<p>So if you are interested in crypto engineering, the first thing you should do
+is read Matt Green's <a href="http://blog.cryptographyengineering.com/">blog</a> (though
+Matt also discusses design and theory issues). Other good blogs to read are
+<a href="https://www.imperialviolet.org/">Imperial Violet</a>, <a href="http://www.daemonology.net/blog/">Daeomic
+Dispatches</a> and <a href="http://rdist.root.org/">Root
+Labs</a>. Good resources are the Matasano <a href="http://www.matasano.com/articles/crypto-challenges/">crypto
+challenges</a> and the <a href="http://nacl.cr.yp.to/index.html">NaCl
+project</a>.  Finally, the
+<a href="http://www.chesworkshop.org/}">CHES</a> and <a href="http://realworldcrypto.wordpress.com/">Real-World
+Cryptography</a> workshops are good events
+to attend.</p>
+
+<p>If you are interested in theory and/or design I would recommend the
+<a href="http://mpclounge.wordpress.com/">MPC Lounge</a>, the
+<a href="http://bristolcrypto.blogspot.com/">Bristol Cryptography Blog</a> and
+<a href="http://jonkatz.wordpress.com/}">Random Bits</a> (it hasn't been updated in
+a while but the archives are worth reading).</p>
+
+<p>If you're interested in theory I would recommend
+<a href="http://windowsontheory.org/">Windows on Theory</a> and
+<a href="http://lucatrevisan.wordpress.com/">In Theory</a> (though these cover a
+lot more than crypto).</p>
+<div class="footnotes">
+
+<hr>
+
+<ol>
+<li id="fn:1">There is a recent line of work in cryptographic theory called <em>leakage-resilient cryptography</em> that tries to study the impact of side-channels and tries to inform crypto design. The area is relatively new and a bit late considering side-channels were first demonstrated in 1996 in <a href="http://www.cryptography.com/public/pdf/TimingAttacks.pdf">this paper</a> by Paul Kocher. So far it's not clear whether the work in this area will have any significant impact on crypto design or engineering but I hope it will.<br>
+ <a class="footnote-return" href="#fnref:1">↩</a></li>
+</ol>
+</div>
+
+            </div>
+            <footer class="article-footer">
+    <a data-url="http://outsourcedbits.org/2013/07/28/a-note-on-crypto-design-vs-crypto-engineering" data-id="1183a24c790394b9f7d9d4ffd7bf6ebd" class="article-share-link">
+        Share
+    </a>
+    
+    <a href="http://outsourcedbits.org/2013/07/28/a-note-on-crypto-design-vs-crypto-engineering/#disqus_thread" class="article-comment-link">
+        Comments
+    </a>
+    
+</footer>
+
+        </div>
+
+        
+<nav id="article-nav">
+    
+    <a href="http://outsourcedbits.org/2013/07/23/are-compliance-and-privacy-always-at-odds" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">
+          Older
+      </strong>
+      <div class="article-nav-title">Are Compliance and Privacy Always at Odds?</div>
+    </a>
+    
+
+    
+    <a href="http://outsourcedbits.org/2013/10/06/how-to-search-on-encrypted-data-introduction-part-1" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">
+          Newer
+      </strong>
+      <div class="article-nav-title">How to Search on Encrypted Data: Introduction (Part 1)</div>
+    </a>
+    
+</nav>
+
+
+    </article>
+
+    
+    <section id="comments">
+        <div id="disqus_thread">
+            <div id="disqus_thread"></div>
+<script type="text/javascript">
+    var disqus_shortname = 'outsourcedbits';
+    var disqus_identifier = 'http:\/\/outsourcedbits.org\/2013\/07\/28\/a-note-on-crypto-design-vs-crypto-engineering';
+    var disqus_title = 'A Note on Crypto Design vs Crypto Engineering';
+    var disqus_url = 'http:\/\/outsourcedbits.org\/2013\/07\/28\/a-note-on-crypto-design-vs-crypto-engineering';
+
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+        </div>
+    </section>
+    
+</section>
+
+
+	    
+	    <aside id="sidebar">
+    
+
+    
+
+
+<div class="widget-wrap">
+    <h3 class="widget-title">Categories</h3>
+    <div class="widget">
+        <ul class="category-list">
+            
+            <li class="category-list-item">
+                <a class="category-list-link" href="http://outsourcedbits.org/categories/applied-crypto">
+                    applied-crypto
+                </a>
+                <span class="category-list-count">3</span>
+            </li>
+            
+            <li class="category-list-item">
+                <a class="category-list-link" href="http://outsourcedbits.org/categories/applied-cryptography">
+                    applied-cryptography
+                </a>
+                <span class="category-list-count">1</span>
+            </li>
+            
+            <li class="category-list-item">
+                <a class="category-list-link" href="http://outsourcedbits.org/categories/cloud-computing">
+                    cloud-computing
+                </a>
+                <span class="category-list-count">2</span>
+            </li>
+            
+            <li class="category-list-item">
+                <a class="category-list-link" href="http://outsourcedbits.org/categories/encrypted-search">
+                    encrypted-search
+                </a>
+                <span class="category-list-count">11</span>
+            </li>
+            
+            <li class="category-list-item">
+                <a class="category-list-link" href="http://outsourcedbits.org/categories/graph-encryption">
+                    graph-encryption
+                </a>
+                <span class="category-list-count">1</span>
+            </li>
+            
+            <li class="category-list-item">
+                <a class="category-list-link" href="http://outsourcedbits.org/categories/inference-attacks">
+                    inference-attacks
+                </a>
+                <span class="category-list-count">1</span>
+            </li>
+            
+            <li class="category-list-item">
+                <a class="category-list-link" href="http://outsourcedbits.org/categories/learning">
+                    learning
+                </a>
+                <span class="category-list-count">1</span>
+            </li>
+            
+            <li class="category-list-item">
+                <a class="category-list-link" href="http://outsourcedbits.org/categories/misc">
+                    misc
+                </a>
+                <span class="category-list-count">1</span>
+            </li>
+            
+            <li class="category-list-item">
+                <a class="category-list-link" href="http://outsourcedbits.org/categories/policy">
+                    policy
+                </a>
+                <span class="category-list-count">2</span>
+            </li>
+            
+            <li class="category-list-item">
+                <a class="category-list-link" href="http://outsourcedbits.org/categories/surveillance">
+                    surveillance
+                </a>
+                <span class="category-list-count">2</span>
+            </li>
+            
+        </ul>
+    </div>
+</div>
+
+
+
+    
+
+
+<div class="widget-wrap">
+    <h3 class="widget-title">
+        Tags
+    </h3>
+    <div class="widget">
+        <ul class="category-list">
+            
+            <li class="category-list-item">
+                <a class="category-list-link" href="http://outsourcedbits.org/tags/cryptdb">
+                    cryptdb
+                </a>
+                <span class="category-list-count">1</span>
+            </li>
+            
+            <li class="category-list-item">
+                <a class="category-list-link" href="http://outsourcedbits.org/tags/deterministic-encryption">
+                    deterministic-encryption
+                </a>
+                <span class="category-list-count">1</span>
+            </li>
+            
+            <li class="category-list-item">
+                <a class="category-list-link" href="http://outsourcedbits.org/tags/dte">
+                    dte
+                </a>
+                <span class="category-list-count">1</span>
+            </li>
+            
+            <li class="category-list-item">
+                <a class="category-list-link" href="http://outsourcedbits.org/tags/fhe">
+                    fhe
+                </a>
+                <span class="category-list-count">2</span>
+            </li>
+            
+            <li class="category-list-item">
+                <a class="category-list-link" href="http://outsourcedbits.org/tags/fisa">
+                    fisa
+                </a>
+                <span class="category-list-count">1</span>
+            </li>
+            
+            <li class="category-list-item">
+                <a class="category-list-link" href="http://outsourcedbits.org/tags/functional-encryption">
+                    functional-encryption
+                </a>
+                <span class="category-list-count">1</span>
+            </li>
+            
+            <li class="category-list-item">
+                <a class="category-list-link" href="http://outsourcedbits.org/tags/learning">
+                    learning
+                </a>
+                <span class="category-list-count">1</span>
+            </li>
+            
+            <li class="category-list-item">
+                <a class="category-list-link" href="http://outsourcedbits.org/tags/machine-learning">
+                    machine-learning
+                </a>
+                <span class="category-list-count">1</span>
+            </li>
+            
+            <li class="category-list-item">
+                <a class="category-list-link" href="http://outsourcedbits.org/tags/metadata">
+                    metadata
+                </a>
+                <span class="category-list-count">2</span>
+            </li>
+            
+            <li class="category-list-item">
+                <a class="category-list-link" href="http://outsourcedbits.org/tags/mpc">
+                    mpc
+                </a>
+                <span class="category-list-count">3</span>
+            </li>
+            
+            <li class="category-list-item">
+                <a class="category-list-link" href="http://outsourcedbits.org/tags/msr">
+                    msr
+                </a>
+                <span class="category-list-count">1</span>
+            </li>
+            
+            <li class="category-list-item">
+                <a class="category-list-link" href="http://outsourcedbits.org/tags/nsa">
+                    nsa
+                </a>
+                <span class="category-list-count">2</span>
+            </li>
+            
+            <li class="category-list-item">
+                <a class="category-list-link" href="http://outsourcedbits.org/tags/ope">
+                    ope
+                </a>
+                <span class="category-list-count">1</span>
+            </li>
+            
+            <li class="category-list-item">
+                <a class="category-list-link" href="http://outsourcedbits.org/tags/oram">
+                    oram
+                </a>
+                <span class="category-list-count">1</span>
+            </li>
+            
+            <li class="category-list-item">
+                <a class="category-list-link" href="http://outsourcedbits.org/tags/ot">
+                    ot
+                </a>
+                <span class="category-list-count">1</span>
+            </li>
+            
+            <li class="category-list-item">
+                <a class="category-list-link" href="http://outsourcedbits.org/tags/pets">
+                    pets
+                </a>
+                <span class="category-list-count">1</span>
+            </li>
+            
+            <li class="category-list-item">
+                <a class="category-list-link" href="http://outsourcedbits.org/tags/pir">
+                    pir
+                </a>
+                <span class="category-list-count">1</span>
+            </li>
+            
+            <li class="category-list-item">
+                <a class="category-list-link" href="http://outsourcedbits.org/tags/ppe">
+                    ppe
+                </a>
+                <span class="category-list-count">2</span>
+            </li>
+            
+            <li class="category-list-item">
+                <a class="category-list-link" href="http://outsourcedbits.org/tags/sat">
+                    sat
+                </a>
+                <span class="category-list-count">1</span>
+            </li>
+            
+            <li class="category-list-item">
+                <a class="category-list-link" href="http://outsourcedbits.org/tags/searchable-encryption">
+                    searchable-encryption
+                </a>
+                <span class="category-list-count">1</span>
+            </li>
+            
+            <li class="category-list-item">
+                <a class="category-list-link" href="http://outsourcedbits.org/tags/section-215">
+                    section-215
+                </a>
+                <span class="category-list-count">2</span>
+            </li>
+            
+            <li class="category-list-item">
+                <a class="category-list-link" href="http://outsourcedbits.org/tags/sse">
+                    sse
+                </a>
+                <span class="category-list-count">4</span>
+            </li>
+            
+            <li class="category-list-item">
+                <a class="category-list-link" href="http://outsourcedbits.org/tags/ste">
+                    ste
+                </a>
+                <span class="category-list-count">2</span>
+            </li>
+            
+        </ul>
+    </div>
+</div>
+
+
+
+    
+
+
+<div class="widget-wrap">
+    <h3 class="widget-title">
+        Tag cloud
+    </h3>
+    <div class="widget tagcloud">
+        
+        <a href="http://outsourcedbits.org/tags/cryptdb" style="font-size: 12px;">cryptdb</a>
+        
+        <a href="http://outsourcedbits.org/tags/deterministic-encryption" style="font-size: 12px;">deterministic-encryption</a>
+        
+        <a href="http://outsourcedbits.org/tags/dte" style="font-size: 12px;">dte</a>
+        
+        <a href="http://outsourcedbits.org/tags/fhe" style="font-size: 12px;">fhe</a>
+        
+        <a href="http://outsourcedbits.org/tags/fisa" style="font-size: 12px;">fisa</a>
+        
+        <a href="http://outsourcedbits.org/tags/functional-encryption" style="font-size: 12px;">functional-encryption</a>
+        
+        <a href="http://outsourcedbits.org/tags/learning" style="font-size: 12px;">learning</a>
+        
+        <a href="http://outsourcedbits.org/tags/machine-learning" style="font-size: 12px;">machine-learning</a>
+        
+        <a href="http://outsourcedbits.org/tags/metadata" style="font-size: 12px;">metadata</a>
+        
+        <a href="http://outsourcedbits.org/tags/mpc" style="font-size: 12px;">mpc</a>
+        
+        <a href="http://outsourcedbits.org/tags/msr" style="font-size: 12px;">msr</a>
+        
+        <a href="http://outsourcedbits.org/tags/nsa" style="font-size: 12px;">nsa</a>
+        
+        <a href="http://outsourcedbits.org/tags/ope" style="font-size: 12px;">ope</a>
+        
+        <a href="http://outsourcedbits.org/tags/oram" style="font-size: 12px;">oram</a>
+        
+        <a href="http://outsourcedbits.org/tags/ot" style="font-size: 12px;">ot</a>
+        
+        <a href="http://outsourcedbits.org/tags/pets" style="font-size: 12px;">pets</a>
+        
+        <a href="http://outsourcedbits.org/tags/pir" style="font-size: 12px;">pir</a>
+        
+        <a href="http://outsourcedbits.org/tags/ppe" style="font-size: 12px;">ppe</a>
+        
+        <a href="http://outsourcedbits.org/tags/sat" style="font-size: 12px;">sat</a>
+        
+        <a href="http://outsourcedbits.org/tags/searchable-encryption" style="font-size: 12px;">searchable-encryption</a>
+        
+        <a href="http://outsourcedbits.org/tags/section-215" style="font-size: 12px;">section-215</a>
+        
+        <a href="http://outsourcedbits.org/tags/sse" style="font-size: 12px;">sse</a>
+        
+        <a href="http://outsourcedbits.org/tags/ste" style="font-size: 12px;">ste</a>
+        
+    </div>
+</div>
+
+
+
+
+    <div id="toTop" class="fa fa-chevron-up"></div>
+</aside>
+
+	    
+	</div>
+</div>
+
+<footer id="footer">
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2016
+      Powered by <a href="//gohugo.io">Hugo</a>. Theme by <a href="http://github.com/ppoffice">PPOffice</a>.
+    </div>
+  </div>
+</footer>
+
+
+<script>
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-79501268-1', 'auto');
+ga('send', 'pageview');
+</script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+<script src="http://outsourcedbits.org/fancybox/jquery.fancybox.pack.js"></script>
+<script src="http://outsourcedbits.org/js/script.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.8.0/highlight.min.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+
+
+
+ 
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+  extensions: ["tex2jax.js"],
+  jax: ["input/TeX", "output/HTML-CSS"],
+  tex2jax: {
+    inlineMath: [['$','$'], ['\\(','\\)']],
+    displayMath: [['$$','$$'], ['\\[','\\]']],
+    processEscapes: true,
+    processEnvironments: true,
+    skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
+    TeX: { equationNumbers: { autoNumber: "AMS" },
+         extensions: ["AMSmath.js", "AMSsymbols.js"] }
+  },
+  "HTML-CSS": {availableFonts: ["TeX"]}, 
+  scale: [200]
+});
+</script>
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    
+    
+    
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i = 0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+});
+</script>
+<script type="text/javascript"
+  src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+</body>
+</html>

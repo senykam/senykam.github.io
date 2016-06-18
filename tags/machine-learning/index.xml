@@ -1,0 +1,274 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Machine Learning on Outsourced Bits</title>
+    <link>http://outsourcedbits.org/tags/machine-learning/</link>
+    <description>Recent content in Machine Learning on Outsourced Bits</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Sat, 29 Sep 2012 16:59:14 -0300</lastBuildDate>
+    <atom:link href="http://outsourcedbits.org/tags/machine-learning/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>Applying Fully Homomorphic Encryption (Part 2)</title>
+      <link>http://outsourcedbits.org/2012/09/29/applying-fully-homomorphic-encryption-part-2</link>
+      <pubDate>Sat, 29 Sep 2012 16:59:14 -0300</pubDate>
+      
+      <guid>http://outsourcedbits.org/2012/09/29/applying-fully-homomorphic-encryption-part-2</guid>
+      <description>&lt;p&gt;&lt;em&gt;This is the second part of a series on applying fully-homomorphic encryption.
+In the
+&lt;a href=&#34;http://outsourcedbits.org/2012/06/26/applying-fully-homomorphic-encryption-part-1/&#34;&gt;first&lt;/a&gt;
+post we went over what fully-homomorphic encryption (FHE) and
+shomewhat-homomorphic encryption (SHE) were and how they relate. In this post
+we&#39; ll discuss actual applications.&lt;/em&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;http://outsourcedbits.org/img/grail.jpg&#34; class=&#34;alignright&#34; width=&#34;250&#34;&gt;
+To structure the discussion, I&#39; ll refer to some applications as direct and
+others as indirect. Indirect applications will refer to applications where FHE
+is used as a building block---usually with other components---to construct
+something else of interest. Direct applications, on the other hand, will refer
+to applications where FHE is used (almost) &amp;quot;as-is&amp;quot;.  These are coarse and
+imprecise distinctions and are not particularly meaningful but they will be
+useful for organizational purposes. Roughly speaking, you can think about an
+indirect application as something mostly cryptographers would be excited about
+and a direct application as something everyone else might be excited about.&lt;/p&gt;
+
+&lt;p&gt;Quoting
+&lt;a href=&#34;http://windowsontheory.org/2012/05/02/building-the-swiss-army-knife/&#34;&gt;Barak and Brakerski&lt;/a&gt;, FHE is viewed by cryptographers as a swiss-army knife. This is
+because FHE has all kinds of indirect applications and can be used to construct and
+improve many cryptographic systems ranging from relatively simple
+things like encryption schemes to more complex things like
+&lt;a href=&#34;http://en.wikipedia.org/wiki/Secure_multi-party_computation&#34;&gt;secure multi-party computation&lt;/a&gt;
+(MPC) protocols &lt;sup class=&#34;footnote-ref&#34; id=&#34;fnref:1&#34;&gt;&lt;a class=&#34;footnote&#34; href=&#34;#fn:1&#34;&gt;1&lt;/a&gt;&lt;/sup&gt;. Gentry&#39;s thesis provides a good
+overview of the indirect applications of FHE, including to the design of
+&lt;a href=&#34;http://www.mit.edu/~rothblum/papers/otp.pdf&#34;&gt;one-time programs&lt;/a&gt;,
+&lt;a href=&#34;http://www.cs.ucla.edu/~rafail/PUBLIC/Ostrovsky-Skeith.html&#34;&gt;public-key obfuscation&lt;/a&gt;,
+&lt;a href=&#34;http://en.wikipedia.org/wiki/Proxy_re-encryption&#34;&gt;proxy re-encryption&lt;/a&gt;,
+&lt;a href=&#34;http://www.cs.ucla.edu/~rafail/PUBLIC/09.pdf&#34;&gt;software protection&lt;/a&gt;
+and secure multi-party computation.&lt;/p&gt;
+
+&lt;p&gt;Here I&#39; ll only cover a few possible applications of FHE. The first one is an
+indirect application of FHE to MPC while the rest will be direct applications.&lt;/p&gt;
+
+&lt;h2 id=&#34;secure-multiparty-computation&#34;&gt;Secure Multi-Party Computation&lt;/h2&gt;
+
+&lt;p&gt;An MPC protocol allows mutually distrustful parties to  cooperate securely. By
+this I mean that the parties---each with private data---can use a MPC protocol
+to evaluate any function &lt;span  class=&#34;math&#34;&gt;\(f\)&lt;/span&gt; over their &lt;em&gt;joint&lt;/em&gt; data without having to share
+the data with each other. Note that MPC can achieve this without hardware and
+without trusted third parties.  MPC is a very general cryptographic technology
+and you can frame a huge number of security and privacy problems as instances
+of MPC.  When trying to convey how general and useful it is I usually say that,
+roughly speaking, MPC is useful in any situation where you might think of using
+an NDA.  Of course it is &lt;em&gt;much&lt;/em&gt; more useful than NDAs because the parties will
+never see any of the data!&lt;/p&gt;
+
+&lt;p&gt;MPC is a very active area of research that started in the 80&#39;s and it is still
+going strong. In fact, recent work suggests that it could soon be practical.
+I would even venture to say that over the last few years, MPC has steadily
+moved from an area of theoretical cryptography research to an area of
+&lt;em&gt;applied&lt;/em&gt; cryptography research.&lt;/p&gt;
+
+&lt;p&gt;So what does this have to do with FHE? It turns out that using FHE one can
+design very efficient MPC protocols (asymptotically). The protocols require
+little communication and interaction (the number of communication rounds between
+parties). But to see why this is the case, we first have to understand a little
+bit of how MPC protocols are typically designed.&lt;/p&gt;
+
+&lt;p&gt;Most protocols are based on (abstract)
+&lt;a href=&#34;http://en.wikipedia.org/wiki/Circuit_(computer_theory)&#34;&gt;circuits&lt;/a&gt; as opposed
+to the more familiar  computational models like &lt;a href=&#34;http://en.wikipedia.org/wiki/Random-access_machine&#34;&gt;random-access
+machines&lt;/a&gt; (this is similar
+to how FHE works as discussed in the previous post). To use these protocols,
+the parties first construct a circuit that evaluates the function they wish to
+compute. They then use various techniques to jointly evaluate this circuit on
+their joint inputs.  So, for example, if we consider the case of two-party
+computation where Alice and Bob wish to compute a function &lt;span  class=&#34;math&#34;&gt;\(f\)&lt;/span&gt; on their
+respective inputs &lt;span  class=&#34;math&#34;&gt;\(x\)&lt;/span&gt; and &lt;span  class=&#34;math&#34;&gt;\(y\)&lt;/span&gt;, they first construct a circuit &lt;span  class=&#34;math&#34;&gt;\(C\)&lt;/span&gt; that
+evaluates &lt;span  class=&#34;math&#34;&gt;\(f\)&lt;/span&gt; on two inputs and then run the MPC protocol in order to securely
+compute &lt;span  class=&#34;math&#34;&gt;\(f(x, y)\)&lt;/span&gt;.&lt;/p&gt;
+
+&lt;p&gt;By secure here what I mean is that Alice will not learn any information about
+&lt;span  class=&#34;math&#34;&gt;\(y\)&lt;/span&gt; and Bob will not learn any information about &lt;span  class=&#34;math&#34;&gt;\(x\)&lt;/span&gt; &lt;sup class=&#34;footnote-ref&#34; id=&#34;fnref:2&#34;&gt;&lt;a class=&#34;footnote&#34; href=&#34;#fn:2&#34;&gt;2&lt;/a&gt;&lt;/sup&gt;. Now, there are many
+ways of performing this secure computation but they all have the following
+characteristics: either (1) they require Alice and Bob to send &lt;span  class=&#34;math&#34;&gt;\(\Omega(|C|)\)&lt;/span&gt;
+bits to each other, where &lt;span  class=&#34;math&#34;&gt;\(|C|\)&lt;/span&gt; denotes the size of &lt;span  class=&#34;math&#34;&gt;\(C\)&lt;/span&gt;, i.e., its total number
+of gates; or Alice and Bob will need &lt;span  class=&#34;math&#34;&gt;\(\Omega(|C|)\)&lt;/span&gt; rounds of communication.
+This matters because when we&#39; re working with circuits, the size of a circuit
+reflects the complexity of the function it computes. In other words, for
+&amp;quot;complicated&amp;quot; functions, Alice and Bob will have to exchange &lt;em&gt;a lot&lt;/em&gt; of
+data and/or interact a large number of times.&lt;/p&gt;
+
+&lt;p&gt;With FHE, on the other hand, it is very easy to construct a MPC protocol without
+these limitations. To do this,  Alice just needs to generate a public/private
+key pair for the FHE scheme. She then encrypts her input &lt;span  class=&#34;math&#34;&gt;\(x\)&lt;/span&gt; and sends the
+resulting ciphertext &lt;span  class=&#34;math&#34;&gt;\(\)&lt;/span&gt;c&lt;em&gt;x = E&lt;/em&gt;{pk}(x)&lt;span  class=&#34;math&#34;&gt;\(\)&lt;/span&gt; to Bob. Bob encrypts his input &lt;span  class=&#34;math&#34;&gt;\(y\)&lt;/span&gt;,
+resulting in a ciphertext
+&lt;span  class=&#34;math&#34;&gt;\(
+c_y = E_{pk}(y)
+\)&lt;/span&gt;
+and evaluates the circuit &lt;span  class=&#34;math&#34;&gt;\(C\)&lt;/span&gt; on
+the encryptions on &lt;span  class=&#34;math&#34;&gt;\(c_x\)&lt;/span&gt; and &lt;span  class=&#34;math&#34;&gt;\(c_y\)&lt;/span&gt;, resulting in an encryption &lt;span  class=&#34;math&#34;&gt;\(c^\star\)&lt;/span&gt; of
+&lt;span  class=&#34;math&#34;&gt;\(f(x, y)\)&lt;/span&gt;. Bob then sends &lt;span  class=&#34;math&#34;&gt;\(c^\star\)&lt;/span&gt; back to Alice who decrypts it and sends the
+result back to Bob &lt;sup class=&#34;footnote-ref&#34; id=&#34;fnref:3&#34;&gt;&lt;a class=&#34;footnote&#34; href=&#34;#fn:3&#34;&gt;3&lt;/a&gt;&lt;/sup&gt;.&lt;/p&gt;
+
+&lt;p&gt;The total amount of data exchanged between Alice and Bob in this protocol is
+&lt;span  class=&#34;math&#34;&gt;\(
+|c_x| + |c^\star| + |f(x,y)|,
+\)&lt;/span&gt;
+where &lt;span  class=&#34;math&#34;&gt;\(|c_x|\)&lt;/span&gt;, &lt;span  class=&#34;math&#34;&gt;\(|c^\star|\)&lt;/span&gt; and &lt;span  class=&#34;math&#34;&gt;\(|f(x,y)|\)&lt;/span&gt; refer to the bit length of &lt;span  class=&#34;math&#34;&gt;\(c_x\)&lt;/span&gt;,
+&lt;span  class=&#34;math&#34;&gt;\(c^\star\)&lt;/span&gt; and &lt;span  class=&#34;math&#34;&gt;\(f(x,y)\)&lt;/span&gt;, respectively.  What&#39;s important to note here is that
+this is &lt;em&gt;independent&lt;/em&gt; of the size/complexity of the circuit &lt;span  class=&#34;math&#34;&gt;\(C\)&lt;/span&gt;!  Also,
+the total number of rounds needed is &lt;span  class=&#34;math&#34;&gt;\(1.5\)&lt;/span&gt;, i.e., one round of communication
+plus one message. So, in other words, the FHE-based MPC protocol will have the
+same efficiency in terms of data exchanged and rounds, no matter how
+complicated the function is.&lt;/p&gt;
+
+&lt;p&gt;Another nice application of FHE in the context of MPC is that one can use it to
+design server-aided (or cloud-assisted) MPC protocols. A server-aided MPC
+protocol is like a regular MPC protocol except that the parties can make use of
+an untrusted party to outsource some of their computations. The point here is to
+decrease the computational burden of the parties at the expense of the server
+but, of course, without having to trust it.&lt;/p&gt;
+
+&lt;p&gt;This can greatly improve the efficiency of MPC as explored recently in a
+&lt;a href=&#34;http://eprint.iacr.org/2012/542&#34;&gt;paper&lt;/a&gt; I co-authored with Mohassel and Riva.
+But as shown by Asharov et al in this
+&lt;a href=&#34;http://delta-apache-vm.cs.tau.ac.il/~tromer/papers/tfhe-mpc.pdf&#34;&gt;paper&lt;/a&gt;,  if
+one uses FHE (plus some additional machinery) it is possible to design
+server-aided MPC protocols that are even more efficient from an asymptotic
+point of view (but unfortunately not from a concrete/practical point of view).&lt;/p&gt;
+
+&lt;h2 id=&#34;delegated-computation&#34;&gt;Delegated Computation&lt;/h2&gt;
+
+&lt;p&gt;Of course, the most direct application of FHE is to the problem of outsourced
+computation. Here, Alice wants to evaluate a function &lt;span  class=&#34;math&#34;&gt;\(f\)&lt;/span&gt; over her input &lt;span  class=&#34;math&#34;&gt;\(x\)&lt;/span&gt; but
+she doesn&#39;t have enough resources to do the evaluation herself. Because of this
+she wishes to outsource the computation to another party but she doesn&#39;t trust
+that party with her data.&lt;/p&gt;
+
+&lt;p&gt;FHE provides a perfect solution to this problem.  Alice encrypts &lt;span  class=&#34;math&#34;&gt;\(x\)&lt;/span&gt; and sends
+the ciphertext to the server who evaluates &lt;span  class=&#34;math&#34;&gt;\(f\)&lt;/span&gt; on it and returns an encryption
+of &lt;span  class=&#34;math&#34;&gt;\(f(x)\)&lt;/span&gt;. Alice can then decrypt it to recover &lt;span  class=&#34;math&#34;&gt;\(f(x)\)&lt;/span&gt;. Note that similarly to
+the case of MPC this approach is only secure in the semi-honest model, where we
+assume the server will indeed evaluate the function &lt;span  class=&#34;math&#34;&gt;\(f\)&lt;/span&gt;. What happens if the
+server evaluates some other function &lt;span  class=&#34;math&#34;&gt;\(f&#39; \neq f\)&lt;/span&gt;? Fortunately, there are ways of
+handling this problem.&lt;/p&gt;
+
+&lt;h2 id=&#34;search-on-encrypted-data&#34;&gt;Search on Encrypted Data&lt;/h2&gt;
+
+&lt;p&gt;Another application of FHE that is often cited is to the problem of searching on
+encrypted data. This is a special case of the delegated computation problem
+mentioned above where the client just wants to search through an encrypted file
+collection stored at the server. The idea is that Alice stores an encryption of
+her dataset (e.g., a collection of emails) on the server. Whenever she wants to
+search over her data, she sends an encryption of her keyword and the server
+homomorphically evaluates a search algorithm on the encrypted data and keyword.&lt;/p&gt;
+
+&lt;p&gt;While this obviously works, as far as I know, all the ways of using FHE to
+search on encrypted data require linear time in the length of the data. In other
+words, the keyword will have to be checked (homomorphically) against every word
+in the dataset. In practice, of course, linear-time search is inconceivable for
+many practical scenarios since more often than not search is a latency-sensitive
+operation. Just imagine if a search engine or a desktop search application used
+linear time search.
+In future posts, we&#39; ll see how one can achieve &lt;em&gt;sub-linear&lt;/em&gt; and even
+&lt;a href=&#34;http://en.wikipedia.org/wiki/Output-sensitive_algorithm&#34;&gt;output sensitive&lt;/a&gt;
+time search over encrypted data (albeit with a weaker security guarantee).&lt;/p&gt;
+
+&lt;p&gt;Since Gentry proposed his construction and blueprint in 2009, there has been a
+huge effort to make FHE more practical. While a lot of progress has been made,
+unfortunately, we&#39; re still some way from truly practical FHE. So the natural
+question is: &amp;quot;where are the bottlenecks?&amp;quot;.&lt;/p&gt;
+
+&lt;p&gt;As we discussed in the last post, most FHE schemes are based on Gentry&#39;s
+blueprint which consists of first constructing a SHE and then using Gentry&#39;s
+bootstrapping technique to turn it into a FHE scheme. It turns out that
+bootstrapping is a major bottleneck and that SHE is actually reasonably
+efficient. So if we care about practical applications, then it may be worthwhile
+to explore what exactly we can do with SHE instead.&lt;/p&gt;
+
+&lt;h2 id=&#34;private-healthcare-and-online-ads&#34;&gt;Private Healthcare and Online Ads&lt;/h2&gt;
+
+&lt;p&gt;This question was explored recently by Lauter, Naehrig and Vaikuntanathan in a
+&lt;a href=&#34;http://eprint.iacr.org/2011/405&#34;&gt;paper&lt;/a&gt; where they consider various
+classes of applications and argue that SHE is enough for many of them. The first
+class is a multi-source and single-reader scenario where: (1) encrypted data is
+uploaded to the cloud by many different entities; (2) the cloud does some
+computation over the data; and (3) the encrypted answer is returned to the data
+owner/reader. One example of such a scenario is in healthcare where medical data
+pertaining to a given patient is sent to the cloud by many sources. These
+sources could be, for example, doctors or medical devices owned by the patient.
+All the data is sent encrypted and the cloud processes it homomrphically (e.g.,
+it could run some statistical algorithm or classifier) and return the encrypted
+answer to the patient.&lt;/p&gt;
+
+&lt;p&gt;Another example explored in the paper is online ads. The idea here is that your
+mobile device could use SHE to encrypt and send private information to the cloud
+about your location, browsing history, emails etc. The cloud would store a set
+of ads encrypted under your key and then homomorphically run targeting ad
+algorithm on your data and the ads to figure out which ads to display to you.
+The result would be an encrypted ad that it could then return to you. Because
+your data is encrypted, the cloud will obviously never see your emails, location
+etc.&lt;/p&gt;
+
+&lt;h2 id=&#34;machine-learning-on-encrypted-data&#34;&gt;Machine Learning on Encrypted Data&lt;/h2&gt;
+
+&lt;p&gt;In a more recent &lt;a href=&#34;http://eprint.iacr.org/2012/323&#34;&gt;paper&lt;/a&gt;, Graepel, Lauter and
+Naehrig study the more specific problem of machine learning over encrypted data.
+The setting here is the same as the healthcare scenario described above (i.e.,
+the multi-source single-reader one) where we have doctors or perhaps medical
+devices sending encrypted data pertaining to a patient, say Alice, to the
+cloud.  Here, Graepel et al. consider the setting of
+&lt;a href=&#34;http://en.wikipedia.org/wiki/Supervised_learning&#34;&gt;supervised&lt;/a&gt; learning} where,
+given a set of labeled training data, we want to derive a function that will
+accurately label future data, i.e., a classifier. As one can imagine,
+supervised learning has many applications including to bioinformatics, spam
+detection and speech recognition just to name a few.&lt;/p&gt;
+
+&lt;p&gt;So in this setting, the data sources (i.e., doctors or medical devices) send
+encrypted labeled data to the cloud under Alice&#39;s public key. The cloud then
+runs a machine learning algorithm homomorphically over all the data. This
+results in an encrypted classifier which Alice can now use in the following way.
+Whenever Alice wants to classify some data, she encrypts it under her public key
+and sends it to the cloud which evaluates the classifier on her data
+homomorphically, resulting in an encrypted labeling of her data. The cloud
+returns this to Alice who can then decrypt it using her secret key.&lt;/p&gt;
+
+&lt;p&gt;The high level idea is sound, but remember that in this work the authors are
+only interested in using SHE since it is more practical than FHE. Unfortunately,
+this turns out to be a serious limitation as it requires the algorithms to be
+low-degree polynomials and many are not. What is meant here is that if one views
+the learning and classifying algorithms as a single function, then that function
+has to be a low-degree polynomial.&lt;/p&gt;
+
+&lt;p&gt;This is pretty restrictive, but Graepel et al. still manage to show how one can
+homomorphically evaluate interesting and useful machine learning algorithms
+under this constraint. One example is &lt;a href=&#34;http://en.wikipedia.org/wiki/Linear_discriminant_analysis&#34;&gt;Fisher&#39;s linear
+discrimant&lt;/a&gt;
+classifier &lt;sup class=&#34;footnote-ref&#34; id=&#34;fnref:4&#34;&gt;&lt;a class=&#34;footnote&#34; href=&#34;#fn:4&#34;&gt;4&lt;/a&gt;&lt;/sup&gt;. As suggested in the paper, this this poses an interesting
+challenge for machine learning research: &amp;quot;is it possible to design good machine
+learning algorithms that can be computed using low-degree polynomials&amp;quot;.&lt;/p&gt;
+
+&lt;p&gt;That&#39;s it for applications. In the next and final post in the series we&#39; ll
+discuss the limitations of FHE and SHE and some alternatives.&lt;/p&gt;
+&lt;div class=&#34;footnotes&#34;&gt;
+
+&lt;hr&gt;
+
+&lt;ol&gt;
+&lt;li id=&#34;fn:1&#34;&gt;By simple and complex, here I am not referring to the complexity of constructing the objects (e.g., many encryption schemes, FHE included, are very difficult to construct) but to the complexity of the object&#39;s functionality or &amp;quot;behavior&amp;quot;
+ &lt;a class=&#34;footnote-return&#34; href=&#34;#fnref:1&#34;&gt;↩&lt;/a&gt;&lt;/li&gt;
+&lt;li id=&#34;fn:2&#34;&gt;Technically this is not true because the fact that Alice and Bob learn &lt;span  class=&#34;math&#34;&gt;\(f(x,y)\)&lt;/span&gt; means that they learn something about each other&#39;s input---namely they learn &lt;span  class=&#34;math&#34;&gt;\(f(x,y)\)&lt;/span&gt;. But for the purposes of MPC this is not a problem because it is the best we can do. Indeed, if the goal is to construct a protocol where Alice and Bob will learn &lt;span  class=&#34;math&#34;&gt;\(f(x,y)\)&lt;/span&gt; then we cannot do so without them learning &lt;span  class=&#34;math&#34;&gt;\(f(x,y)\)&lt;/span&gt;. So when we talk about the security of MPC, we usually say that Alice and Bob do not learn anything about each other&#39;s input that they cannot learn from &lt;span  class=&#34;math&#34;&gt;\(f(x,y)\)&lt;/span&gt;
+ &lt;a class=&#34;footnote-return&#34; href=&#34;#fnref:2&#34;&gt;↩&lt;/a&gt;&lt;/li&gt;
+&lt;li id=&#34;fn:3&#34;&gt;I should stress that, as described, the protocol is only secure in a very restricted adversarial model known as the &lt;em&gt;semi-honest&lt;/em&gt; model, where it is assumed that all the parties will follow the protocol but will try to learn whatever they can from the execution. This may seem like a weak and strange adversarial model at first but it is reasonable to consider for the following reasons. First, a protocol that is secure in this model can be safely used in any situation where the adversary is passive, i.e., where it only sees transcripts of the messages sent between parties. One could imagine an adversary that tries to recover information about the parties&#39; inputs after the protocol was executed, for example, from a log of the messages. Second, there are general techniques that can transform any protocol that is secure in this model into a protocol that is secure in stronger and more natural models (e.g., where the adversaries does not have to follow the protocol).
+ &lt;a class=&#34;footnote-return&#34; href=&#34;#fnref:3&#34;&gt;↩&lt;/a&gt;&lt;/li&gt;
+&lt;li id=&#34;fn:4&#34;&gt;A note that SHE cannot handle division which may seem necessary for the classifiers considered in this work. Graepel et al., however, get around this by observing that technically the classifiers work just as well if the values are multiplied through with the denominator. &lt;strong&gt;Note&lt;/strong&gt;: in a previous version of this post I erroneously claimed that the client had to do the division.&lt;br&gt;
+ &lt;a class=&#34;footnote-return&#34; href=&#34;#fnref:4&#34;&gt;↩&lt;/a&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/div&gt;
+</description>
+    </item>
+    
+  </channel>
+</rss>

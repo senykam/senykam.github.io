@@ -1,0 +1,218 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Nsa on Outsourced Bits</title>
+    <link>http://outsourcedbits.org/tags/nsa/</link>
+    <description>Recent content in Nsa on Outsourced Bits</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Tue, 29 Apr 2014 17:21:47 -0300</lastBuildDate>
+    <atom:link href="http://outsourcedbits.org/tags/nsa/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>Is the NSA Metadata Program Legal?</title>
+      <link>http://outsourcedbits.org/2014/04/29/is-the-nsa-metadata-program-legal</link>
+      <pubDate>Tue, 29 Apr 2014 17:21:47 -0300</pubDate>
+      
+      <guid>http://outsourcedbits.org/2014/04/29/is-the-nsa-metadata-program-legal</guid>
+      <description>&lt;p&gt;&lt;img src=&#34;http://outsourcedbits.org/img/justice.jpg&#34; class=&#34;alignright&#34; width=&#34;200&#34;&gt;
+One of the most interesting aspects of the NSA metadata program is whether it
+is legal or not. Unlike the questions we usually think about in computer
+science, this question has no definitive answer. The program is legal in some
+sense, but the logic needed for the argument to go through is so questionable
+that you could just as well say that it&#39;s not.&lt;/p&gt;
+
+&lt;p&gt;Recall that the program requires telephone providers to hand to the NSA (each
+day) the metadata of every US-to-foreign, foreign-to-US and US-to-US call. This
+metadata consists of the origin and destination numbers, the time and duration
+of the call, the international mobile subscriber identity (IMSI) number, the
+trunk identifier and telephone calling card numbers.  This data is stored and
+queried by the NSA and each record has to be deleted after 5 years.&lt;/p&gt;
+
+&lt;p&gt;I had decided to include a high-level overview of this question in an invited
+paper I wrote for the
+&lt;a href=&#34;http://www.dcsec.uni-hannover.de/wahc14.html&#34;&gt;Workshop on Applied Homomorphic Cryptography&lt;/a&gt;
+but I had to take it out due to space restrictions.
+Even though I&#39;ll eventually include the overview in the full version of the
+paper, in the meantime, I thought it might make for a useful blog post;
+especially for computer scientists who are curious about the legal aspects of
+this issue but don&#39;t have the  background to make sense of it.&lt;/p&gt;
+
+&lt;p&gt;The question of whether the NSA metadata program is legal reduces to the
+following two questions: (1) does the program violate the Fourth Amendment of
+the US Constitution?; and (2) is the program compliant with the amendments to
+the Foreign Intelligence Surveillance Act (FISA) put forth in the USA PATRIOT
+Act of 2001 which, in the Government&#39;s view, authorize this program.&lt;/p&gt;
+
+&lt;h2 id=&#34;does-it-violate-the-fourth-amendment&#34;&gt;Does it Violate the Fourth Amendment?&lt;/h2&gt;
+
+&lt;p&gt;The &lt;a href=&#34;https://en.wikipedia.org/wiki/Fourth_Amendment_to_the_United_States_Constitution&#34;&gt;Fourth
+Amendment&lt;/a&gt;
+protects the privacy of American citizens. The Amendment states:&lt;/p&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;The right of the people to be secure in their persons, houses, papers, and
+effects, against unreasonable searches and seizures, shall not be violated,
+and no warrants shall issue, but upon probable cause, supported by oath or
+affirmation, and particularly describing the place to be searched, and the
+persons or things to be seized.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;Roughly speaking, it protects citizens against unreasonable search and seizures
+by requiring the Government to obtain a warrant supported by probable cause
+from an independent
+&lt;a href=&#34;https://en.wikipedia.org/wiki/Magistrate#United_States&#34;&gt;magistrate&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;Historically, courts tended to limit the protections of the Fourth Amendment to
+a person&#39;s physical property, including their home and personal effects, but in
+1967, in &lt;a href=&#34;https://en.wikipedia.org/wiki/Katz_v_United_States&#34;&gt;Katz v. United
+States&lt;/a&gt;, the Supreme Court
+greatly widened the scope of the Fourth Amendment. In particular, the Court
+decided that Fourth Amendment protections apply to &amp;quot;people, not places&amp;quot; and
+that a person is afforded protection as long as they have a &amp;quot;reasonable
+expectation of privacy&amp;quot; in the items or location to be searched.&lt;/p&gt;
+
+&lt;p&gt;Warrantless searches are per se unreasonable under the Fourth Amendment, unless
+they fall within a recognized exception. Given that a warrant embodies the
+notion of of &amp;quot;reasonableness&amp;quot; under the Fourth Amendment, the Government would
+bear a heavy burden to explain exactly how the metadata program---which collects
+metadata on individuals without a warrant---involves a &amp;quot;reasonable&amp;quot; search under
+the Fourth Amendment.&lt;/p&gt;
+
+&lt;p&gt;Following Katz v. United States, however, there were two important cases that
+solidified what is now known as the third party doctrine, which holds that
+Fourth Amendment protections do not apply to information that is voluntarily
+disclosed to a third party since there is then &lt;em&gt;no reasonable expectation
+of privacy with respect to such information&lt;/em&gt;.  These Supreme Court decisions
+were &lt;a href=&#34;https://en.wikipedia.org/wiki/United_States_v_Miller&#34;&gt;United States v. Miller&lt;/a&gt;
+in 1976 and
+&lt;a href=&#34;https://en.wikipedia.org/wiki/Smith_v_Maryland&#34;&gt;Smith v. Maryland&lt;/a&gt;
+in 1979. In the Miller decision, the Supreme Court ruled that the Government did
+not violate the Fourth Amendment by obtaining Miller&#39;s bank records without a
+warrant. In the Smith decision, the Court found no Fourth Amendment violation
+when the Government obtained records of phone numbers dialed by Smith from the
+phone company without a warrant.  Though these decisions were issued in the
+1970&#39;s and concerned bank records and telephone companies, an argument could be
+made that the third party doctrine also extends to ISPs, mobile networks and
+cloud providers.&lt;/p&gt;
+
+&lt;p&gt;So in light of the third party doctrine, the warrantless collection of metadata
+on (potentially) every American may not violate the Fourth Amendment, because
+such metadata has been voluntarily provided by users to their service providers.&lt;/p&gt;
+
+&lt;p&gt;This issue is highly controversial, however, and at least
+&lt;a href=&#34;http://en.wikipedia.org/wiki/Richard_J._Leon&#34;&gt;one judge&lt;/a&gt; has found
+that the scale of the program and the massive technological changes that have
+occurred in the last 30 years mean that the Miller and Smith decisions are not
+necessarily controlling (i.e., completely binding).&lt;/p&gt;
+
+&lt;h2 id=&#34;is-it-compliant-with-the-fisapatriot-act&#34;&gt;Is it Compliant with the FISA/PATRIOT Act?&lt;/h2&gt;
+
+&lt;p&gt;The second question is whether the program exceeds the scope of &lt;a href=&#34;http://en.wikipedia.org/wiki/Section_summary_of_the_Patriot_Act,_Title_II#Section_215:_Access_to_records_and_other_items_under_FISA&#34;&gt;Section
+215&lt;/a&gt;
+of the &lt;a href=&#34;http://en.wikipedia.org/wiki/Patriot_act&#34;&gt;PATRIOT Act&lt;/a&gt;, which amended
+Section 501 of the &lt;a href=&#34;http://en.wikipedia.org/wiki/FISA&#34;&gt;Foreign Intelligence Surveillance
+Act&lt;/a&gt; (FISA).&lt;/p&gt;
+
+&lt;p&gt;FISA is a law from 1978 that prescribes how the Government can conduct domestic
+surveillance for national security-related investigations. The law was initially
+passed to curb the domestic surveillance activities of the Government which
+included abuses such as
+&lt;a href=&#34;http://en.wikipedia.org/wiki/Watergate&#34;&gt;Watergate&lt;/a&gt;, as well as the
+FBI &lt;a href=&#34;http://en.wikipedia.org/wiki/Cointel_Pro&#34;&gt;COINTELPRO&lt;/a&gt; and the
+NSA &lt;a href=&#34;https://en.wikipedia.org/wiki/Project_MINARET&#34;&gt;MINARET&lt;/a&gt; programs.&lt;/p&gt;
+
+&lt;p&gt;One of the law&#39;s provisions was to create a court, referred to as the
+&lt;a href=&#34;http://en.wikipedia.org/wiki/FISA_Court&#34;&gt;FISA&lt;/a&gt;, which was assigned the role of
+providing judicial oversight over the Government&#39;s domestic surveillance
+activities in national security-related investigations.  To protect national
+security,  public visibility into the court&#39;s activities was limited. &lt;sup class=&#34;footnote-ref&#34; id=&#34;fnref:1&#34;&gt;&lt;a class=&#34;footnote&#34; href=&#34;#fn:1&#34;&gt;1&lt;/a&gt;&lt;/sup&gt;&lt;/p&gt;
+
+&lt;p&gt;FISA has been amended several times since its introduction but perhaps the most
+controversial amendment was in Section 215 of the USA PATRIOT Act of 2001.
+Roughly speaking, Section 215 allows the Government to compel a third-party
+provider---without a warrant---to hand over &amp;quot;business records&amp;quot; about a customer
+&amp;quot;if there are reasonable grounds to believe that the tangible things sought are
+relevant to an authorized investigation&amp;quot;.&lt;/p&gt;
+
+&lt;p&gt;Part of the argument for the legality of the NSA metadata program rests on the
+meaning of the term relevant. Indeed, as explained in a
+&lt;a href=&#34;https://www.aclu.org/files/natsec/nsa/br13-09-primary-order.pdf&#34;&gt;declassified opinion&lt;/a&gt;
+from the FISA Court, the court decided to interpret the term
+&amp;quot;relevant&amp;quot; to mean bearing upon or being pertinent to an investigation, as
+opposed to directly related to a specific investigation target (e.g., the
+records of the specific individual being investigated).&lt;/p&gt;
+
+&lt;p&gt;The former interpretation of &amp;quot;relevant&amp;quot; combined with submissions from the NSA
+that their investigative tools required the metadata of all customers in order
+to work properly in any investigation, led the FISA court to hold that the
+program is legal.&lt;/p&gt;
+&lt;div class=&#34;footnotes&#34;&gt;
+
+&lt;hr&gt;
+
+&lt;ol&gt;
+&lt;li id=&#34;fn:1&#34;&gt;If you&#39;re curious about the FISA court and, especially about what it&#39;s door looks like, see  this &lt;a href=&#34;https://konklone.com/post/the-door-to-the-fisa-court&#34;&gt;post&lt;/a&gt; by Eric Mill.
+ &lt;a class=&#34;footnote-return&#34; href=&#34;#fnref:1&#34;&gt;↩&lt;/a&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/div&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Restructuring the NSA Metadata Program</title>
+      <link>http://outsourcedbits.org/2014/03/10/restructuring-the-nsa-metadata-program</link>
+      <pubDate>Mon, 10 Mar 2014 12:05:03 -0300</pubDate>
+      
+      <guid>http://outsourcedbits.org/2014/03/10/restructuring-the-nsa-metadata-program</guid>
+      <description>&lt;p&gt;&lt;img src=&#34;http://outsourcedbits.org/img/design.jpg&#34; class=&#34;alignright&#34; width=&#34;280&#34;&gt;
+I just got back from Barbados where I attended the &lt;a href=&#34;http://fc14.ifca.ai/&#34;&gt;Financial Cryptography and
+Data Security&lt;/a&gt; conference. It was a great event overall with many interesting
+talks and two great workshops.&lt;/p&gt;
+
+&lt;p&gt;One workshop was on &lt;a href=&#34;http://fc14.ifca.ai/bitcoin/index.html&#34;&gt;Bitcoin&lt;/a&gt;  and was the most successful Financial Crypto
+workshop in history! Though I haven&#39;t personally worked on Bitcoin, one of the
+things I enjoyed most about the conference and workshops was the presence of
+the Bitcoin community. The interaction between the academic and Bitcoin
+communities led to some very interesting discussions and ideas. I really hope
+the two communities keep interacting.&lt;/p&gt;
+
+&lt;p&gt;The other workshop was on &lt;a href=&#34;https://www.dcsec.uni-hannover.de/4556.html&#34;&gt;applied homomorphic
+cryptography&lt;/a&gt;. Homomorphic in the
+context of this workshop is to be understood broadly and is meant to include
+all cryptographic technologies that allow for some form of computation on
+encrypted data. As such this includes secure multi-party computation and
+encrypted search.&lt;/p&gt;
+
+&lt;p&gt;I was invited to give the keynote at this workshop and I chose to talk about
+how to restructure the NSA metadata program. My slides are &lt;a href=&#34;http://research.microsoft.com/en-us/um/people/senyk/slides/metacrypt.pdf&#34;&gt;here&lt;/a&gt;. They
+describe---at a very high-level---a new design I refer to as MetaCrypt whose
+goal is to enable some of the functionality the current NSA metadata program
+supports but in a privacy-preserving manner. I first started thinking about
+this problem in July 2013 when I wrote &lt;a href=&#34;http://outsourcedbits.org/2013/07/23/are-compliance-and-privacy-always-at-odds/&#34;&gt;this blog post&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;Since I only had one hour, there are many details missing in the talk. Also,
+since this was a talk aimed at a general crypto audience, &lt;sup class=&#34;footnote-ref&#34; id=&#34;fnref:1&#34;&gt;&lt;a class=&#34;footnote&#34; href=&#34;#fn:1&#34;&gt;1&lt;/a&gt;&lt;/sup&gt; I included a
+variant of the protocol that is easy to describe as opposed to variants that
+are perhaps more efficient and/or provide stronger security guarantees. The
+details and alternative designs will appear later in an accompanying paper but
+I hope that even this high-level description is interesting.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Update:&lt;/strong&gt; my talk and the MetaCrypt project was recently covered by MIT Tech
+Review. See
+&lt;a href=&#34;http://www.technologyreview.com/news/526121/cryptography-could-add-privacy-protections-to-nsa-phone-surveillance/&#34;&gt;here&lt;/a&gt;
+for the article.&lt;/p&gt;
+&lt;div class=&#34;footnotes&#34;&gt;
+
+&lt;hr&gt;
+
+&lt;ol&gt;
+&lt;li id=&#34;fn:1&#34;&gt;The audience included people who focus on number-theoretic primitives, hardware crypto implementations, lattice-based cryptography etc. The ideas I described in the talk, however, required mostly background on secure multi-party computation, &lt;a href=&#34;http://eprint.iacr.org/2006/210.pdf&#34;&gt;searchable symmetric encryption&lt;/a&gt; and especially &lt;a href=&#34;http://eprint.iacr.org/2011/010.pdf&#34;&gt;structured encryption&lt;/a&gt;, which are more recent and not as well-known.&lt;br&gt;
+ &lt;a class=&#34;footnote-return&#34; href=&#34;#fnref:1&#34;&gt;↩&lt;/a&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/div&gt;
+</description>
+    </item>
+    
+  </channel>
+</rss>

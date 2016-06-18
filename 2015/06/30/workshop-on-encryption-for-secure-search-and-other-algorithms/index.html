@@ -1,0 +1,907 @@
+<!DOCTYPE html>
+<html lang="en-us">
+<head>
+    <title>Workshop on Encryption for Secure Search and Other Algorithms &middot; Outsourced Bits</title>
+    <meta name="generator" content="Hugo 0.16" />
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="author" content="Seny Kamara">
+    
+      <meta name="description" content="">
+    
+    
+    <link rel="icon" href="http://outsourcedbits.org/favicon.ico">
+    <link rel="apple-touch-icon" href="http://outsourcedbits.org/apple-touch-icon.png" />
+    <link rel="stylesheet" href="http://outsourcedbits.org/css/style.css">
+    <link rel="stylesheet" href="http://outsourcedbits.org/css/font-awesome.min.css">
+    <link rel="stylesheet" href="http://outsourcedbits.org/css/monokai.css">
+    <link rel="stylesheet" href="http://outsourcedbits.org/fancybox/jquery.fancybox.css">
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400italic,400,600' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Source+Code+Pro' rel='stylesheet' type='text/css'>
+    <meta property="og:title" content="Workshop on Encryption for Secure Search and Other Algorithms" />
+<meta property="og:description" content="I just got back from the Workshop on Encryption for Secure Search and other Algorithms (ESSA) which was held in Bertinoro, Italy, and was organized by Sasha Boldyreva and Bogdan Warinschi. It was a great event and I&#39;d like to thank the organizers for putting this together and doing such a great job. It was really nice to see all the excitement and enthusiasm behind this topic; both from the research community and from industry." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://outsourcedbits.org/2015/06/30/workshop-on-encryption-for-secure-search-and-other-algorithms" />
+
+
+<meta property="og:updated_time" content="2015-06-30T21:43:32-03:00"/>
+
+
+
+
+
+
+
+
+
+
+    
+    
+<meta itemprop="name" content="Workshop on Encryption for Secure Search and Other Algorithms">
+<meta itemprop="description" content="I just got back from the Workshop on Encryption for Secure Search and other Algorithms (ESSA) which was held in Bertinoro, Italy, and was organized by Sasha Boldyreva and Bogdan Warinschi. It was a great event and I&#39;d like to thank the organizers for putting this together and doing such a great job. It was really nice to see all the excitement and enthusiasm behind this topic; both from the research community and from industry.">
+
+
+<meta itemprop="dateModified" content="2015-06-30T21:43:32-03:00" />
+<meta itemprop="wordCount" content="2170">
+
+
+
+<meta itemprop="keywords" content="applied-crypto,applied-cryptography,cloud-computing,encrypted-search,graph-encryption,inference-attacks,learning,misc,policy,surveillance,cryptdb,deterministic-encryption,dte,fhe,fisa,functional-encryption,learning,machine-learning,metadata,mpc,msr,nsa,ope,oram,ot,pets,pir,ppe,sat,searchable-encryption,section-215,sse,ste," />
+
+    
+
+  <meta name="twitter:card" content="summary"/>
+
+
+
+<meta name="twitter:title" content="Workshop on Encryption for Secure Search and Other Algorithms"/>
+<meta name="twitter:description" content="I just got back from the Workshop on Encryption for Secure Search and other Algorithms (ESSA) which was held in Bertinoro, Italy, and was organized by Sasha Boldyreva and Bogdan Warinschi. It was a great event and I&#39;d like to thank the organizers for putting this together and doing such a great job. It was really nice to see all the excitement and enthusiasm behind this topic; both from the research community and from industry."/>
+<meta name="twitter:site" content="@senykam"/>
+
+
+    
+
+    
+</head>
+<body>
+<div class="container">
+
+
+<div id="container">
+	<header id="header">
+  <div id="header-main" class="header-inner">
+    <div class="outer">
+      <a href="http://outsourcedbits.org/" id="logo"><span class="site-title">Outsourced Bits</span></a>
+      <nav id="main-nav">
+          
+
+          
+
+          
+      </nav>
+        <nav id="sub-nav">
+          <div class="profile" id="profile-nav">
+            <a id="profile-anchor" href="javascript:;"><img class="avatar" src="http://outsourcedbits.org//img/sk.jpg"><i class="fa fa-caret-down"></i></a>
+          </div>
+        </nav>
+        <div id="search-form-wrap">
+          <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form">
+              <input type="search" name="q" results="0" class="search-form-input" placeholder="Search">
+              <button type="submit" class="search-form-submit">
+              </button>
+              <input type="hidden" name="q" value="site:http://outsourcedbits.org/">
+         </form>
+        </div>
+    </div>
+  </div>
+  <div id="main-nav-mobile" class="header-sub header-inner">
+    <table class="menu outer">
+      <tbody>
+          <tr>
+          
+
+          
+
+          
+          <td>
+          <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form">
+          <input type="search" name="q" results="0" class="search-form-input" placeholder="Search">
+          <input type="hidden" name="q" value="site:http://outsourcedbits.org/">
+          </form>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+</header>
+
+   	
+   	<div class="outer">
+   		
+	    <aside id="profile">
+  <div class="inner profile-inner">
+    <div class="base-info profile-block">
+      <img id="avatar" src="http://outsourcedbits.org/img/sk.jpg" width="200" class="avatar">
+      
+      
+      <p class="mybio">My name is Seny Kamara. I am an Associate Professor of <a href="http://cs.brown.edu">Computer Science</a> at <a href="http://brown.edu">Brown</a>. Prior to that, I was a researcher at Microsoft Research. <br><br> My work is focused on designing and studying cryptographic algorithms,
+protocols and systems; often motivated by privacy issues in cloud computing,
+surveillance and databases. <br><br> This is a blog about my research and interests. For more about my work see my
+<a href="http://cs.brown.edu/~seny">homepage</a>.</p>
+      <span id="location"><i class="fa fa-map-marker"></i>Rio</span>
+      
+    </div>
+    
+    <div class="contact-info profile-block">
+      <table class="contact-list">
+        <tr>
+          
+<td><a href="//github.com/senykam" target="_blank" title="GitHub"><i class="fa fa-github"></i></a></td>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<td><a href="//twitter.com/senykam" target="_blank" title="Twitter"><i class="fa fa-twitter"></i></a></td>
+
+
+          <td><a href="" target="_blank" title="RSS"><i class="fa fa-rss"></i></a></td>
+        </tr>
+      </table>
+    </div>
+  </div>
+</aside>
+
+	    
+
+	    
+<section id="main">
+
+    <article id="page-undefined" class="article article-type-page" itemscope="" itemprop="blogPost">
+        <div class="article-inner">
+            
+
+            <header class="article-header">
+    <a href="http://outsourcedbits.org/2015/06/30/workshop-on-encryption-for-secure-search-and-other-algorithms">
+    <h1 class="article-title" itemprop="name">
+        Workshop on Encryption for Secure Search and Other Algorithms
+    </h1>
+    </a>
+    <div class="article-meta">
+        <div class="article-date">
+            <i class="fa fa-calendar"></i>
+            <time datetime="2015-06-30 21:43:32 -0300 STD" itemprop="datePublished">2015-06-30</time>
+            &middot;
+            2170
+            words
+            &middot;
+            11
+            minute read
+        </div>
+
+        
+        
+            
+            
+            <div class="article-category">
+                <i class="fa fa-folder"></i>
+                
+                <a class="article-category-link" href="http://outsourcedbits.org/categories/encrypted-search">Encrypted Search</a>
+                
+                
+            </div>
+            
+        
+
+        
+            
+            
+        
+    </div>
+</header>
+
+            <div class="article-entry" itemprop="articleBody">
+                <p><img src="/img/bertinoro.gif" class="alignright" width="250">
+I just got back from the Workshop on Encryption for Secure Search and other
+Algorithms (ESSA) which was held in Bertinoro, Italy, and was organized by
+Sasha Boldyreva and Bogdan Warinschi. It was a great event and I'd like to
+thank the organizers for putting this together and doing such a great job. It
+was really nice to see all the excitement and enthusiasm behind this topic;
+both from the research community and from industry.</p>
+
+<p>Since a few people have already asked me for details about the event I figured
+I would just write brief summaries of the talks. I think the slides will be
+posted soon so if you are interested you should be able to get more details on
+the workshop page <a href="http://www.cs.bris.ac.uk/essa/">ESSA</a>.</p>
+
+<p>The first talk was by Christopher Bosch who gave a survey of encrypted search.
+The talk was based on a paper Christopher published last year. This a really
+extensive and thorough survey and a great contribution to the field. The
+authors go over a large number of papers and try to organize and categorize
+them; drawing conclusions and research directions from the broad perspective
+they gained from writing the survey. It is a great reference for anyone
+interested in this field.</p>
+
+<p><em>Kaoru Kurosawa</em> gave a talk on two of his papers. In the first paper, the
+authors describe a universally composable (UC) variant of adaptive semantic
+security (i.e., CKA2-security) for SSE. The main difference with the standard
+definition is that the UC variant requires correctness and the simulation is
+strengthened by requiring it to be black-box (i.e., there exists a simulator
+for all adversaries). Kaoru then described a construction that achieves this
+strong notion of security. In the second part of the talk Kaoru discussed a
+more recent paper of his that describes an SSE scheme that handles very
+expressive queries but without revealing the expression (not just the keywords
+in the query but the form/structure of the query). This is accomplished using a
+new variant of garbled circuits which is very interesting in its own right.</p>
+
+<p><em>Emily Shen</em> talked about her work on substring matching on encrypted data. This
+is done using an encrypted suffix tree, i.e., using a (interactive) structured
+encryption scheme for suffix trees. In this work, however, she was concerned
+with a stronger model of security where the server can be malicious. This last
+constraint required her to strengthen the standard definition of security for
+structured encryption. The construction was very nice but a bit too involved to
+describe here so I recommend reading the paper for more details.</p>
+
+<p><em>Nathan Chenette</em> gave a nice overview of the state of the art of fuzzy
+searching on encrypted data in the property-preserving model. After describing
+the different approaches he gave stronger definitions for this primitive.
+Unfortunately, to achieve this notion there is what seems to be an inherent
+ciphertext expansion so he described a weaker notion that allows for more
+space-efficient constructions.</p>
+
+<p><em>Kevin Lewi</em> talked about his work on order revealing encryption (ORE). ORE is
+similar to order-preserving encryption (OPE) in that it allows for comparisons
+over ciphertexts. But there is one important distinction: unlike OPE, ORE does
+not require the comparison operation over ciphertexts to be &quot;less than&quot;. In
+other words, to compare two OPE ciphertexts one can simply execute a
+&quot;greater/lesser than&quot; operation whereas with ORE one might have to execute some
+other arbitrary operation. This is an important relaxation and allows the
+authors to overcome impossibility results for OPE which say that OPE schemes
+have to leak more than just the order. The construction Kevin presented is
+based on obfuscation techniques but does not require the full power of
+obfuscation. In particular it avoids the use of Barrington's theorem (though it
+makes use of multi-linear maps) which as Kevin said makes the scheme at least
+&quot;implementable&quot; but not practical.</p>
+
+<p><em>Murat Kantarcioglu</em> described a few of his works including a paper that
+initiated research on concrete inference attacks; that is, attacks on encrypted
+search solutions that use statistical and optimization techniques to exploit
+leakage. He described the attack he and his co-authors use to try to recover
+the queries a user makes by exploiting the access pattern leakage of SSE. This
+attack is known as the IKK attack and is currently the best inference attack we
+have against access pattern leakage. The second part of the talk covered ways
+to mitigate these kinds of attacks and Murat described a clever way  of using
+differential privacy for this.</p>
+
+<p><em>David Cash</em> also discussed inference attacks. In addition to standard inference
+attacks, however, he also described attacks where the adversary exploits more
+than leakage and, in particular, knows or chooses some of documents.  The
+findings were very interesting. One thing that came out of this study was that
+the IKK attack-while very interesting in theory-is not really practical. There
+are several technical reasons for this but I' ll leave you to read David's paper
+when it appears if you are interested. This study also looked at a new class of
+schemes (not SSE/structured schemes) that have appeared in the literature
+recently and showed that they were vulnerable to adversaries who know and/or
+can choose documents (though to be fair they were not designed with that
+adversarial model in mind).</p>
+
+<p>Unfortunately, <em>Hugo Krawczyk</em> couldn' t make it to the workshop at the last
+second so <em>Stas Jarecki</em> gave his talk. This was a nice overview of the work on
+SSE done by the IBM/Rutgers/UC Irvine team (from now on referred to as IRI) for
+the IARPA SPAR project. It covered a series of papers including their paper
+from CRYPTO' 13 that shows how to achieve conjunctive queries in sub-linear
+time. The talk then continued with more recent papers that focused on schemes
+with good I/O complexity and even more expressive queries. The talk had a nice
+blend of theory and systems, in particular illustrating how systems constraints
+like I/O complexity can sometime force you to find new and interesting
+solutions.</p>
+
+<p><em>Vlad Kolesnikov</em> talked about the system that Columbia and Bell Labs designed
+for the IARPA competition. This system-called Blind Seer-even had a cool logo
+which we learned was designed by Vlad himself! At a high level, this system
+makes use of garbled circuits and bloom filters and is designed to work in a
+3/4-party model that includes a data owner, a policy server and an index
+server. Vlad described several bottlenecks they encountered and all the clever
+optimizations they had to design to make the system perform. There was some
+discussion about how Blind Seer compared to the IRI system. In the end, it
+seemed that the two were incomparable and achieved different tradeoffs between
+leakage and efficiency.</p>
+
+<p><em>Adam O'Neill</em> presented his recent work on modular OPE (MOPE). MOPE is a variant
+of OPE where a random shift and modular operation is applied to the plaintext
+before an OPE encryption is done. Turns out this can improve the security of
+OPE but not when OPE is used to do range queries. Adam described a few
+techniques to address this that didn' t seem to affect the efficiency of the
+schemes. He also showed experimental results to back this up.</p>
+
+<p><em>Radu Sion</em> talked about the new cloud security startup he' s doing. He couldn' t
+say much about the technical aspects of what they are doing but he went over
+some of the services they are providing and showed demoes, some of which
+included searching on encrypted data. Since this was a &quot;sensitive&quot; talk and
+Radu himself had to be careful not to reveal too much I' ll stop here at the
+risk of revealing things he may not want made public on a larger scale.</p>
+
+<p><em>Paul Grubbs</em> gave a talk that went over what he' s been working on at SkyHigh
+networks. He talked about ongoing projects SkyHigh was doing with OPE,
+deterministic encryption and format-preserving encryption.  In addition he
+discussed future projects the company was planning on doing with SSE. This talk
+was nice in that it provided a different perspective on crypto than what you
+typically get in academic settings. In particular, Paul described how the
+solutions they considered and worked on had to fit various business and
+legal/regulatory constraints. This is something I' ve been exposed to at MSR and
+I definitely think that seeing how technology gets (or doesn' t get) deployed in
+the real world is very useful in developing and sharpening your intuition about
+what research areas are more or less promising in terms of impact.</p>
+
+<p><em>Mayank Varia</em> gave a great talk on the testing framework Lincoln Labs built to
+evaluate the encrypted search systems for the IARPA competition. I have to say
+this was one of my favorite talks. The scale of what they built was truly
+impressive. The system is composed of various frameworks. One part of the
+system is just for generating realistic data and queries and they do this using
+machine  learning techniques on real data. The query generation is very
+flexible however, and you can use it to generate data and queries with specific
+characteristics for your tests. The second component is a measurement
+framework. The third component was an automated system for generating graphs
+and visualizations of the experimental results in LaTex! Overall what they
+built sounded very impressive and I think that we should try to adopt it as a
+standard way of testing/evaluating encrypted search solutions. I think the
+encrypted search community is lucky to have such a framework so we should take
+advantage of it. Mayank said that they are working on getting the code up on
+GitHub so I' ll update this post as soon as it' s up.</p>
+
+<p><em>David Wu</em> talked about a new protocol for privacy-preserving location
+services. Suppose you want to find out how to get from point A to point B but
+don’t want to disclose your location to the server that stores the maps and the
+server doesn' t want to reveal its own data. Without privacy, one can solve this
+problem by representing the map as a graph and computing the shortest path so
+the problem David was interested in was can you design a practical two-party
+protocol for shortest paths.  David showed how to do this by first proposing a
+very nice way to compress the representation of the graph in a way that doesn' t
+affect the shortest paths and then computing the shortest paths on the new
+representation via oblivious transfer. David then presented benchmarks of their
+protocol for the city of Los Angeles.</p>
+
+<p><em>Florian Bourse</em> presented new constructions of functional encryption schemes for
+inner products. Unlike previous general-purpose FE schemes the goal of this
+work was to provide simple and efficient constructions. Florian discussed two
+constructions, one based on DDH and another based on LWE. Note that the
+functionality considered by Florian is slightly different than &quot;inner product
+encryption&quot; of Katz, Sahai, Waters and Shen, Shi and Waters. In the latter
+works, the decryption returns one bit of information: whether the inner product
+is equal to 0 or not. Here, the decryption returns the actual inner product.</p>
+
+<p><em>Tarik Moataz</em> talked about ORAM with constant bandwidth. What is meant in the
+literature by constant-bandwidth ORAM is a bit technical but, roughly speaking,
+one can think of it as the requirement that the metadata exchanged with the
+server is smaller than the data blocks. Previous work on constant-bandwidth
+ORAM had two limitations. The first is that they achieved only amortized
+constant-bandwidth. The second is that they only work with very large blocks
+and as such only make sense for limited kinds of applications (using standard
+parameters, they would have 4MB blocks). Tarik showed to get around these two
+limitations, giving a worst-case constant-bandwidth ORAM with much smaller
+block size. In addition, the scheme also improves the computational cost at the
+server.</p>
+
+<p><em>Stas Jarecki</em> talked about RAM-based MPC (i.e., MPC protocols that work in the
+RAM model as opposed to over circuits). The standard way to do this is to use
+two-party computation (2PC) to securely compute the client algorithm of an ORAM
+scheme. Roughly speaking, this requires the ORAM client algorithm to be
+MPC-friendly so that the resulting solution is efficient. While most schemes
+consider only the two-party setting, Stas argued that it is interesting to look
+at three parties as well since better efficiency could be achieved in that
+setting. In fact, Stas described a protocol for this setting which was a lot
+more efficient than protocols for the two-party setting.</p>
+
+<p><em>Leo Reyzin</em> gave a survey of entropy notions in cryptography. Leo went over
+Shannon entropy, min-entropy and average conditional min-entropy in each case
+giving a very nice and intuitive explanation of why and when these notions
+should be applied. He also discussed computational variants of entropy
+including HILL entropy  and what is known and not known about it. Entropy
+notions in crypto are a bit subtle and can be hard to work with and
+unfortunately there isn't much material to learn from so Leo' s survey was
+extremely useful.</p>
+
+            </div>
+            <footer class="article-footer">
+    <a data-url="http://outsourcedbits.org/2015/06/30/workshop-on-encryption-for-secure-search-and-other-algorithms" data-id="d6e489c4b86dbe5195b7ba79416f7722" class="article-share-link">
+        Share
+    </a>
+    
+    <a href="http://outsourcedbits.org/2015/06/30/workshop-on-encryption-for-secure-search-and-other-algorithms/#disqus_thread" class="article-comment-link">
+        Comments
+    </a>
+    
+</footer>
+
+        </div>
+
+        
+<nav id="article-nav">
+    
+    <a href="http://outsourcedbits.org/2015/04/15/applied-crypto-highlights-searchable-encryption-with-ranked-results" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">
+          Older
+      </strong>
+      <div class="article-nav-title">Applied Crypto Highlights: Searchable Encryption with Ranked Results</div>
+    </a>
+    
+
+    
+    <a href="http://outsourcedbits.org/2015/09/07/attacking-encrypted-database-systems" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">
+          Newer
+      </strong>
+      <div class="article-nav-title">Attacking Encrypted Database Systems</div>
+    </a>
+    
+</nav>
+
+
+    </article>
+
+    
+    <section id="comments">
+        <div id="disqus_thread">
+            <div id="disqus_thread"></div>
+<script type="text/javascript">
+    var disqus_shortname = 'outsourcedbits';
+    var disqus_identifier = 'http:\/\/outsourcedbits.org\/2015\/06\/30\/workshop-on-encryption-for-secure-search-and-other-algorithms';
+    var disqus_title = 'Workshop on Encryption for Secure Search and Other Algorithms';
+    var disqus_url = 'http:\/\/outsourcedbits.org\/2015\/06\/30\/workshop-on-encryption-for-secure-search-and-other-algorithms';
+
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+        </div>
+    </section>
+    
+</section>
+
+
+	    
+	    <aside id="sidebar">
+    
+
+    
+
+
+<div class="widget-wrap">
+    <h3 class="widget-title">Categories</h3>
+    <div class="widget">
+        <ul class="category-list">
+            
+            <li class="category-list-item">
+                <a class="category-list-link" href="http://outsourcedbits.org/categories/applied-crypto">
+                    applied-crypto
+                </a>
+                <span class="category-list-count">3</span>
+            </li>
+            
+            <li class="category-list-item">
+                <a class="category-list-link" href="http://outsourcedbits.org/categories/applied-cryptography">
+                    applied-cryptography
+                </a>
+                <span class="category-list-count">1</span>
+            </li>
+            
+            <li class="category-list-item">
+                <a class="category-list-link" href="http://outsourcedbits.org/categories/cloud-computing">
+                    cloud-computing
+                </a>
+                <span class="category-list-count">2</span>
+            </li>
+            
+            <li class="category-list-item">
+                <a class="category-list-link" href="http://outsourcedbits.org/categories/encrypted-search">
+                    encrypted-search
+                </a>
+                <span class="category-list-count">11</span>
+            </li>
+            
+            <li class="category-list-item">
+                <a class="category-list-link" href="http://outsourcedbits.org/categories/graph-encryption">
+                    graph-encryption
+                </a>
+                <span class="category-list-count">1</span>
+            </li>
+            
+            <li class="category-list-item">
+                <a class="category-list-link" href="http://outsourcedbits.org/categories/inference-attacks">
+                    inference-attacks
+                </a>
+                <span class="category-list-count">1</span>
+            </li>
+            
+            <li class="category-list-item">
+                <a class="category-list-link" href="http://outsourcedbits.org/categories/learning">
+                    learning
+                </a>
+                <span class="category-list-count">1</span>
+            </li>
+            
+            <li class="category-list-item">
+                <a class="category-list-link" href="http://outsourcedbits.org/categories/misc">
+                    misc
+                </a>
+                <span class="category-list-count">1</span>
+            </li>
+            
+            <li class="category-list-item">
+                <a class="category-list-link" href="http://outsourcedbits.org/categories/policy">
+                    policy
+                </a>
+                <span class="category-list-count">2</span>
+            </li>
+            
+            <li class="category-list-item">
+                <a class="category-list-link" href="http://outsourcedbits.org/categories/surveillance">
+                    surveillance
+                </a>
+                <span class="category-list-count">2</span>
+            </li>
+            
+        </ul>
+    </div>
+</div>
+
+
+
+    
+
+
+<div class="widget-wrap">
+    <h3 class="widget-title">
+        Tags
+    </h3>
+    <div class="widget">
+        <ul class="category-list">
+            
+            <li class="category-list-item">
+                <a class="category-list-link" href="http://outsourcedbits.org/tags/cryptdb">
+                    cryptdb
+                </a>
+                <span class="category-list-count">1</span>
+            </li>
+            
+            <li class="category-list-item">
+                <a class="category-list-link" href="http://outsourcedbits.org/tags/deterministic-encryption">
+                    deterministic-encryption
+                </a>
+                <span class="category-list-count">1</span>
+            </li>
+            
+            <li class="category-list-item">
+                <a class="category-list-link" href="http://outsourcedbits.org/tags/dte">
+                    dte
+                </a>
+                <span class="category-list-count">1</span>
+            </li>
+            
+            <li class="category-list-item">
+                <a class="category-list-link" href="http://outsourcedbits.org/tags/fhe">
+                    fhe
+                </a>
+                <span class="category-list-count">2</span>
+            </li>
+            
+            <li class="category-list-item">
+                <a class="category-list-link" href="http://outsourcedbits.org/tags/fisa">
+                    fisa
+                </a>
+                <span class="category-list-count">1</span>
+            </li>
+            
+            <li class="category-list-item">
+                <a class="category-list-link" href="http://outsourcedbits.org/tags/functional-encryption">
+                    functional-encryption
+                </a>
+                <span class="category-list-count">1</span>
+            </li>
+            
+            <li class="category-list-item">
+                <a class="category-list-link" href="http://outsourcedbits.org/tags/learning">
+                    learning
+                </a>
+                <span class="category-list-count">1</span>
+            </li>
+            
+            <li class="category-list-item">
+                <a class="category-list-link" href="http://outsourcedbits.org/tags/machine-learning">
+                    machine-learning
+                </a>
+                <span class="category-list-count">1</span>
+            </li>
+            
+            <li class="category-list-item">
+                <a class="category-list-link" href="http://outsourcedbits.org/tags/metadata">
+                    metadata
+                </a>
+                <span class="category-list-count">2</span>
+            </li>
+            
+            <li class="category-list-item">
+                <a class="category-list-link" href="http://outsourcedbits.org/tags/mpc">
+                    mpc
+                </a>
+                <span class="category-list-count">3</span>
+            </li>
+            
+            <li class="category-list-item">
+                <a class="category-list-link" href="http://outsourcedbits.org/tags/msr">
+                    msr
+                </a>
+                <span class="category-list-count">1</span>
+            </li>
+            
+            <li class="category-list-item">
+                <a class="category-list-link" href="http://outsourcedbits.org/tags/nsa">
+                    nsa
+                </a>
+                <span class="category-list-count">2</span>
+            </li>
+            
+            <li class="category-list-item">
+                <a class="category-list-link" href="http://outsourcedbits.org/tags/ope">
+                    ope
+                </a>
+                <span class="category-list-count">1</span>
+            </li>
+            
+            <li class="category-list-item">
+                <a class="category-list-link" href="http://outsourcedbits.org/tags/oram">
+                    oram
+                </a>
+                <span class="category-list-count">1</span>
+            </li>
+            
+            <li class="category-list-item">
+                <a class="category-list-link" href="http://outsourcedbits.org/tags/ot">
+                    ot
+                </a>
+                <span class="category-list-count">1</span>
+            </li>
+            
+            <li class="category-list-item">
+                <a class="category-list-link" href="http://outsourcedbits.org/tags/pets">
+                    pets
+                </a>
+                <span class="category-list-count">1</span>
+            </li>
+            
+            <li class="category-list-item">
+                <a class="category-list-link" href="http://outsourcedbits.org/tags/pir">
+                    pir
+                </a>
+                <span class="category-list-count">1</span>
+            </li>
+            
+            <li class="category-list-item">
+                <a class="category-list-link" href="http://outsourcedbits.org/tags/ppe">
+                    ppe
+                </a>
+                <span class="category-list-count">2</span>
+            </li>
+            
+            <li class="category-list-item">
+                <a class="category-list-link" href="http://outsourcedbits.org/tags/sat">
+                    sat
+                </a>
+                <span class="category-list-count">1</span>
+            </li>
+            
+            <li class="category-list-item">
+                <a class="category-list-link" href="http://outsourcedbits.org/tags/searchable-encryption">
+                    searchable-encryption
+                </a>
+                <span class="category-list-count">1</span>
+            </li>
+            
+            <li class="category-list-item">
+                <a class="category-list-link" href="http://outsourcedbits.org/tags/section-215">
+                    section-215
+                </a>
+                <span class="category-list-count">2</span>
+            </li>
+            
+            <li class="category-list-item">
+                <a class="category-list-link" href="http://outsourcedbits.org/tags/sse">
+                    sse
+                </a>
+                <span class="category-list-count">4</span>
+            </li>
+            
+            <li class="category-list-item">
+                <a class="category-list-link" href="http://outsourcedbits.org/tags/ste">
+                    ste
+                </a>
+                <span class="category-list-count">2</span>
+            </li>
+            
+        </ul>
+    </div>
+</div>
+
+
+
+    
+
+
+<div class="widget-wrap">
+    <h3 class="widget-title">
+        Tag cloud
+    </h3>
+    <div class="widget tagcloud">
+        
+        <a href="http://outsourcedbits.org/tags/cryptdb" style="font-size: 12px;">cryptdb</a>
+        
+        <a href="http://outsourcedbits.org/tags/deterministic-encryption" style="font-size: 12px;">deterministic-encryption</a>
+        
+        <a href="http://outsourcedbits.org/tags/dte" style="font-size: 12px;">dte</a>
+        
+        <a href="http://outsourcedbits.org/tags/fhe" style="font-size: 12px;">fhe</a>
+        
+        <a href="http://outsourcedbits.org/tags/fisa" style="font-size: 12px;">fisa</a>
+        
+        <a href="http://outsourcedbits.org/tags/functional-encryption" style="font-size: 12px;">functional-encryption</a>
+        
+        <a href="http://outsourcedbits.org/tags/learning" style="font-size: 12px;">learning</a>
+        
+        <a href="http://outsourcedbits.org/tags/machine-learning" style="font-size: 12px;">machine-learning</a>
+        
+        <a href="http://outsourcedbits.org/tags/metadata" style="font-size: 12px;">metadata</a>
+        
+        <a href="http://outsourcedbits.org/tags/mpc" style="font-size: 12px;">mpc</a>
+        
+        <a href="http://outsourcedbits.org/tags/msr" style="font-size: 12px;">msr</a>
+        
+        <a href="http://outsourcedbits.org/tags/nsa" style="font-size: 12px;">nsa</a>
+        
+        <a href="http://outsourcedbits.org/tags/ope" style="font-size: 12px;">ope</a>
+        
+        <a href="http://outsourcedbits.org/tags/oram" style="font-size: 12px;">oram</a>
+        
+        <a href="http://outsourcedbits.org/tags/ot" style="font-size: 12px;">ot</a>
+        
+        <a href="http://outsourcedbits.org/tags/pets" style="font-size: 12px;">pets</a>
+        
+        <a href="http://outsourcedbits.org/tags/pir" style="font-size: 12px;">pir</a>
+        
+        <a href="http://outsourcedbits.org/tags/ppe" style="font-size: 12px;">ppe</a>
+        
+        <a href="http://outsourcedbits.org/tags/sat" style="font-size: 12px;">sat</a>
+        
+        <a href="http://outsourcedbits.org/tags/searchable-encryption" style="font-size: 12px;">searchable-encryption</a>
+        
+        <a href="http://outsourcedbits.org/tags/section-215" style="font-size: 12px;">section-215</a>
+        
+        <a href="http://outsourcedbits.org/tags/sse" style="font-size: 12px;">sse</a>
+        
+        <a href="http://outsourcedbits.org/tags/ste" style="font-size: 12px;">ste</a>
+        
+    </div>
+</div>
+
+
+
+
+    <div id="toTop" class="fa fa-chevron-up"></div>
+</aside>
+
+	    
+	</div>
+</div>
+
+<footer id="footer">
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2016
+      Powered by <a href="//gohugo.io">Hugo</a>. Theme by <a href="http://github.com/ppoffice">PPOffice</a>.
+    </div>
+  </div>
+</footer>
+
+
+<script>
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-79501268-1', 'auto');
+ga('send', 'pageview');
+</script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+<script src="http://outsourcedbits.org/fancybox/jquery.fancybox.pack.js"></script>
+<script src="http://outsourcedbits.org/js/script.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.8.0/highlight.min.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+
+
+
+ 
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+  extensions: ["tex2jax.js"],
+  jax: ["input/TeX", "output/HTML-CSS"],
+  tex2jax: {
+    inlineMath: [['$','$'], ['\\(','\\)']],
+    displayMath: [['$$','$$'], ['\\[','\\]']],
+    processEscapes: true,
+    processEnvironments: true,
+    skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
+    TeX: { equationNumbers: { autoNumber: "AMS" },
+         extensions: ["AMSmath.js", "AMSsymbols.js"] }
+  },
+  "HTML-CSS": {availableFonts: ["TeX"]}, 
+  scale: [200]
+});
+</script>
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    
+    
+    
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i = 0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+});
+</script>
+<script type="text/javascript"
+  src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+</body>
+</html>

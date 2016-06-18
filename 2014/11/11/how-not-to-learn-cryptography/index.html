@@ -1,0 +1,1031 @@
+<!DOCTYPE html>
+<html lang="en-us">
+<head>
+    <title>How Not to Learn Cryptography &middot; Outsourced Bits</title>
+    <meta name="generator" content="Hugo 0.16" />
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="author" content="Seny Kamara">
+    
+      <meta name="description" content="">
+    
+    
+    <link rel="icon" href="http://outsourcedbits.org/favicon.ico">
+    <link rel="apple-touch-icon" href="http://outsourcedbits.org/apple-touch-icon.png" />
+    <link rel="stylesheet" href="http://outsourcedbits.org/css/style.css">
+    <link rel="stylesheet" href="http://outsourcedbits.org/css/font-awesome.min.css">
+    <link rel="stylesheet" href="http://outsourcedbits.org/css/monokai.css">
+    <link rel="stylesheet" href="http://outsourcedbits.org/fancybox/jquery.fancybox.css">
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400italic,400,600' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Source+Code+Pro' rel='stylesheet' type='text/css'>
+    <meta property="og:title" content="How Not to Learn Cryptography" />
+<meta property="og:description" content="People often ask me how to get started in cryptography. What&#39;s interesting is that most of the time they also want to know how I personally got started. This is interesting to me because it suggests that people are looking for more than a list of books or papers to read or set of exercises to solve; they&#39;re really looking for a broader strategy on how to learn the subject. In this post I&#39;ll discuss some possible strategies." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://outsourcedbits.org/2014/11/11/how-not-to-learn-cryptography" />
+
+
+<meta property="og:updated_time" content="2014-11-11T20:36:57-03:00"/>
+
+
+
+
+
+
+
+
+
+
+    
+    
+<meta itemprop="name" content="How Not to Learn Cryptography">
+<meta itemprop="description" content="People often ask me how to get started in cryptography. What&#39;s interesting is that most of the time they also want to know how I personally got started. This is interesting to me because it suggests that people are looking for more than a list of books or papers to read or set of exercises to solve; they&#39;re really looking for a broader strategy on how to learn the subject. In this post I&#39;ll discuss some possible strategies.">
+
+
+<meta itemprop="dateModified" content="2014-11-11T20:36:57-03:00" />
+<meta itemprop="wordCount" content="3017">
+
+
+
+<meta itemprop="keywords" content="applied-crypto,applied-cryptography,cloud-computing,encrypted-search,graph-encryption,inference-attacks,learning,misc,policy,surveillance,cryptdb,deterministic-encryption,dte,fhe,fisa,functional-encryption,learning,machine-learning,metadata,mpc,msr,nsa,ope,oram,ot,pets,pir,ppe,sat,searchable-encryption,section-215,sse,ste," />
+
+    
+
+  <meta name="twitter:card" content="summary"/>
+
+
+
+<meta name="twitter:title" content="How Not to Learn Cryptography"/>
+<meta name="twitter:description" content="People often ask me how to get started in cryptography. What&#39;s interesting is that most of the time they also want to know how I personally got started. This is interesting to me because it suggests that people are looking for more than a list of books or papers to read or set of exercises to solve; they&#39;re really looking for a broader strategy on how to learn the subject. In this post I&#39;ll discuss some possible strategies."/>
+<meta name="twitter:site" content="@senykam"/>
+
+
+    
+
+    
+</head>
+<body>
+<div class="container">
+
+
+<div id="container">
+	<header id="header">
+  <div id="header-main" class="header-inner">
+    <div class="outer">
+      <a href="http://outsourcedbits.org/" id="logo"><span class="site-title">Outsourced Bits</span></a>
+      <nav id="main-nav">
+          
+
+          
+
+          
+      </nav>
+        <nav id="sub-nav">
+          <div class="profile" id="profile-nav">
+            <a id="profile-anchor" href="javascript:;"><img class="avatar" src="http://outsourcedbits.org//img/sk.jpg"><i class="fa fa-caret-down"></i></a>
+          </div>
+        </nav>
+        <div id="search-form-wrap">
+          <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form">
+              <input type="search" name="q" results="0" class="search-form-input" placeholder="Search">
+              <button type="submit" class="search-form-submit">
+              </button>
+              <input type="hidden" name="q" value="site:http://outsourcedbits.org/">
+         </form>
+        </div>
+    </div>
+  </div>
+  <div id="main-nav-mobile" class="header-sub header-inner">
+    <table class="menu outer">
+      <tbody>
+          <tr>
+          
+
+          
+
+          
+          <td>
+          <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form">
+          <input type="search" name="q" results="0" class="search-form-input" placeholder="Search">
+          <input type="hidden" name="q" value="site:http://outsourcedbits.org/">
+          </form>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+</header>
+
+   	
+   	<div class="outer">
+   		
+	    <aside id="profile">
+  <div class="inner profile-inner">
+    <div class="base-info profile-block">
+      <img id="avatar" src="http://outsourcedbits.org/img/sk.jpg" width="200" class="avatar">
+      
+      
+      <p class="mybio">My name is Seny Kamara. I am an Associate Professor of <a href="http://cs.brown.edu">Computer Science</a> at <a href="http://brown.edu">Brown</a>. Prior to that, I was a researcher at Microsoft Research. <br><br> My work is focused on designing and studying cryptographic algorithms,
+protocols and systems; often motivated by privacy issues in cloud computing,
+surveillance and databases. <br><br> This is a blog about my research and interests. For more about my work see my
+<a href="http://cs.brown.edu/~seny">homepage</a>.</p>
+      <span id="location"><i class="fa fa-map-marker"></i>Rio</span>
+      
+    </div>
+    
+    <div class="contact-info profile-block">
+      <table class="contact-list">
+        <tr>
+          
+<td><a href="//github.com/senykam" target="_blank" title="GitHub"><i class="fa fa-github"></i></a></td>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<td><a href="//twitter.com/senykam" target="_blank" title="Twitter"><i class="fa fa-twitter"></i></a></td>
+
+
+          <td><a href="" target="_blank" title="RSS"><i class="fa fa-rss"></i></a></td>
+        </tr>
+      </table>
+    </div>
+  </div>
+</aside>
+
+	    
+
+	    
+<section id="main">
+
+    <article id="page-undefined" class="article article-type-page" itemscope="" itemprop="blogPost">
+        <div class="article-inner">
+            
+
+            <header class="article-header">
+    <a href="http://outsourcedbits.org/2014/11/11/how-not-to-learn-cryptography">
+    <h1 class="article-title" itemprop="name">
+        How Not to Learn Cryptography
+    </h1>
+    </a>
+    <div class="article-meta">
+        <div class="article-date">
+            <i class="fa fa-calendar"></i>
+            <time datetime="2014-11-11 20:36:57 -0300 -0300" itemprop="datePublished">2014-11-11</time>
+            &middot;
+            3017
+            words
+            &middot;
+            15
+            minute read
+        </div>
+
+        
+        
+
+        
+            
+            
+            <div class="article-category">
+                <i class="fa fa-tags"></i>
+                
+                <a class="article-category-link" href="http://outsourcedbits.org/tags/learning">Learning</a>
+                
+                
+            </div>
+            
+        
+    </div>
+</header>
+
+            <div class="article-entry" itemprop="articleBody">
+                <!-- banner = "img/studying.jpg" -->
+
+<!-- ![studying](/img/studying.jpg) -->
+
+<p><img src="/img/studying.jpg" class="alignright" width="250">
+People often ask me how to get started in cryptography. What's interesting is
+that most of the time they also want to know how I <em>personally</em> got started.
+This is interesting to me because it suggests that people are looking for more
+than a list of books or papers to read or set of exercises to solve; they're
+really looking for a broader <em>strategy</em> on how to learn the subject.  In
+this post I'll discuss some possible strategies.</p>
+
+<p>First, let me stress that I am only considering strategies for learning crypto
+design and theory.  Also, what I have in mind when I say &quot;learning crypto&quot; is
+not getting to the point of understanding an average paper, but getting to the
+point of generating such papers yourself (or at least the ideas in them).  If
+your end goal is crypto engineering then the strategies may or may not be
+helpful---I'm not an expert so I can't really say either way ( though I'd like
+to think that improving your understanding of how primitives and protocols are
+designed can be helpful).</p>
+
+<p>I should say from the outset that the way I personally got started in
+cryptography is probably one of the worst possible ways to do it. It was highly
+inefficient and had a very low probability of success. This was mainly because
+I didn't have the proper background when I started and I didn't have the right
+resources at my disposal.  These two things are very important and one of two
+things is likely to happen if you don't have them: (1) it will take you so
+long that you'll get fed up and give up; or (2) you'll become a crank (and
+believe me, there are a ton of cranks out there selling crypto products).</p>
+
+<p>When devising and implementing your strategy, you should keep these outcomes in
+mind because it will be very important to avoid them at all costs.</p>
+
+<h2 id="how-to-do-it">How to Do It</h2>
+
+<p>The best strategy for learning crypto design and theory is to get a Ph.D. at a
+University with a cryptography group. Getting a Ph.D. in some random field like
+mechanical engineering or biology does not count! If you are  interested in
+symmetric cryptography (i.e., block cipher and hash function design and
+cryptanalysis), then a good place to start are European Universities since a
+large fraction of the experts are there. If you're interested in crypto theory
+then the US or Israel.  Of course there are strong groups in each area
+everywhere.</p>
+
+<p>If you have found a University and are trying to evaluate the group is, then a
+<em>very rough</em> sanity check is to look at their publication record. If this
+is a theory group then you should be looking for CRYPTO, Eurocrypt, Asiacrypt,
+TCC, FOCS, STOC publications.  If this is a more applied group, then you should
+be looking for publications at CCS, CHES, IEEE Security and Privacy (also known
+as Oakland) and Usenix Security. CRYPTO, Eurocrypt and Asiacrypt are not
+particularly good indicators of quality for applied crypto.  If this is a
+symmetric crypto and cryptanalysis group then you should look for papers at
+Fast Software Encryption (FSE) and Selected Areas in Cryptography (SAC).
+Similarly to applied crypto, CRYPTO, Eurocrypt and Asiacrypt are not
+necessarily good indicators of quality in this area.</p>
+
+<p>But you shouldn't get too caught up in this, however.  The publication system in
+cryptography is screwed up so you shouldn't necessarily dismiss group $A$ because
+it has less STOC papers than group $B$; or less CCS papers than group $C$. This is
+just a very coarse metric that---absent of any other signals---can be used to
+distinguish between very good groups and very bad ones. Another good thing to check
+is where the students that graduate from that group end up. Do they end up with
+jobs that you would like?</p>
+
+<p>So why is getting a Ph.D. from a good group the best strategy? Simply because
+it is the most efficient way to learn the material. The background needed for
+crypto is not part of a traditional education, neither in math nor in computer
+science, so it's unlikely that you'll have learned what you need in  undergrad.
+So you have two choices: (1) learn it on you own; or (2) learn it in graduate
+school.</p>
+
+<p>In grad school  you will have a set of classes carefully chosen and prepared for
+you.  You'll have an advisor that will guide you through the process, telling
+you what you need to learn, what you don't need to learn, what your weaknesses
+are, what you need to improve, what problems to work on and the best strategies to
+solve those problems. You'll also have fellow students that will help and
+motivate you throughout.</p>
+
+<p>Note that for most Ph.D. programs in computer science you don't have to pay
+anything. Your tuition is taken care of by the department or by your advisor's
+grants. In addition, you receive a stipend which takes care of housing, food
+etc. So if you're in a position to devote $5$ years of your life to learning
+cryptography, then I think grad school in a crypto group is by far the best
+strategy.</p>
+
+<h2 id="how-not-to-do-it">How Not to Do It</h2>
+
+<p>So you can't go to grad school or you can but somewhere without a crypto group
+and you still really want to learn crypto design and theory. Here is one possible
+strategy---the one I used.</p>
+
+<p>I'll assume you have a standard systems-focused computer science undergrad
+degree. In my case, for example, I had a strong systems background in undergrad
+(e.g., compilers, OS, networking, architecture) and a very weak theory
+background (just calculus, intro to algorithms and a linear algebra class so
+bad no one ever attended). To be brutally honest, this kind of background is
+useless for cryptography and if this is the point at which you're at then you
+have to understand that you'll be starting from scratch.</p>
+
+<p>There are three things you should be shooting for: (1) developing mathematical
+maturity; $(2)$ learning how to debug; (3) acquiring the basics.</p>
+
+<p>By mathematical maturity, I mean the ability to understand and use basic
+mathematical language, notation and concepts. It's basically having the right
+context in place for doing math.  Knowing how to parse mathematical statements
+and proofs and generally-speaking, knowing how to read between the lines and
+how to fill in the missing pieces.</p>
+
+<p>By  debugging, what I mean is that you have to get to a point where you can
+reliably tell whether you have fully understood some idea or not. When you are
+starting out and working  alone, this is extremely difficult especially for an
+area like cryptography which can be so subtle. If you don't acquire this skill,
+however, you will end up a crank: that is, someone that has read a lot,
+understood very little, and is completely unaware of how confused and wrong
+they are.  Many  people who are self-taught end up like this so you have to be
+careful.</p>
+
+<p>The problem with most of the advice given for learning a hard subject is that
+they focus on the third stage; typically by pointing to papers or books.  But
+papers and books are useless if you don't have the first two skills.</p>
+
+<h2 id="acquiring-mathematical-maturity">Acquiring Mathematical Maturity</h2>
+
+<p>Of course, the easiest way to acquire mathematical maturity is to get an
+undergraduate education in math. <sup class="footnote-ref" id="fnref:1"><a class="footnote" href="#fn:1">1</a></sup></p>
+
+<p>Maturity is probably the skill that takes the longest to acquire.  Math and
+theoretical areas of computer science are expressed through definitions, theorems
+and proofs.  A definition is a precise description of some object or process. A
+theorem is a precise statement concerning some object or process and a proof is
+an argument as to why the statement is true.  You should be comfortable with
+this paradigm because everything you will see further down the line will be
+expressed this way. But understanding this paradigm means you'll have to be
+comfortable with basic notions like quantifiers (i.e., existential and universal),
+basic proof structures (e.g., direct and by contradiction), basic logic,
+elementary probability, etc.</p>
+
+<p>By comfortable, I don't mean a casual, superficial understanding of these things.
+What I mean is you should be able to properly formulate definitions, theorem
+statements and proofs yourself and be able understand why some formulations are
+better than others.</p>
+
+<p>You shouldn't think of mathematical formalisms as pedantic, boring and academic.
+Yes, in some cases they can be overkill because you may have a good intuitive
+understanding of an idea, but there will be times where your intuition
+fails and that's when having a good grasp of the formal approach will help you.
+Cryptography, in particular, is very unintuitive so formalism is even more
+important---especially when you are starting out.</p>
+
+<p>Most books on cryptography will not help you acquire mathematical maturity
+because it is assumed that the reader has it. If you are coming from a purely
+systems background though, you may not have had the opportunity to develop it
+(as was my case, for example). And reading math books is usually even worse
+since mathematicians learn this stuff very early on.</p>
+
+<p>So what can you do? The approach I took was to just read everything  I could
+find in math, theoretical computer science and cryptography. Once in a while, I
+would get lucky and find a paper with a decent explanation of some basic
+concept (e.g., some basic probability argument or a slightly more detailed
+proof structure) but most of the time I had to reconstruct the missing the
+pieces and context on my own.</p>
+
+<p>Obviously, this is easy to do when you have the basics but it is incredibly
+difficult and frustrating when you don't.  As you can imagine it took forever
+to fill in the gaps in my knowledge.   Therefore, the ideal approach would be
+to find a book or lecture notes that focus on this stuff. And---luckily for
+you---Timothy Gowers has written an excellent series of blog posts on these
+very things so you should read them:</p>
+
+<ol>
+<li>Basic Logic
+
+<ol>
+<li><a href="http://gowers.wordpress.com/2011/09/25/basic-logic-connectives-and-and-or/">And &amp; Or</a></li>
+<li><a href="http://gowers.wordpress.com/2011/09/26/basic-logic-connectives-not/">Not</a></li>
+<li><a href="http://gowers.wordpress.com/2011/09/28/basic-logic-connectives-implies/">Implies</a></li>
+<li><a href="http://gowers.wordpress.com/2011/09/30/basic-logic-quantifiers/">Quantifiers</a></li>
+<li><a href="http://gowers.wordpress.com/2011/10/02/basic-logic-relationships-between-statements-negation/">Negation</a></li>
+<li><a href="http://gowers.wordpress.com/2011/10/05/basic-logic-relationships-between-statements-converses-and-contrapositives/">Converse and contrapositive</a></li>
+<li><a href="http://gowers.wordpress.com/2011/10/07/basic-logic-tips-for-handling-variables/">Handling variables</a></li>
+<li><a href="http://gowers.wordpress.com/2011/10/09/basic-logic-summary/">Summary</a></li>
+</ol></li>
+<li>Functions
+
+<ol>
+<li><a href="http://gowers.wordpress.com/2011/10/11/injections-surjections-and-all-that/">Injections, surjections, etc.</a></li>
+<li><a href="http://gowers.wordpress.com/2011/10/13/domains-codomains-ranges-images-preimages-inverse-images/">Co-domains, ranges, images</a></li>
+</ol></li>
+<li><a href="http://gowers.wordpress.com/2011/10/16/permutations/">Permutations</a></li>
+<li>Definitions
+
+<ol>
+<li><a href="http://gowers.wordpress.com/2011/10/23/definitions/">Definitions</a></li>
+<li><a href="http://gowers.wordpress.com/2011/10/25/alternative-definitions/">Alternative definitions</a></li>
+</ol></li>
+<li><a href="http://gowers.wordpress.com/2011/10/30/equivalence-relations/">Equivalence relations</a></li>
+</ol>
+
+<h2 id="debugging">Debugging</h2>
+
+<p>Being able to detect whether you've made a mistake is an important and difficult
+skill to acquire in any subject. This is exacerbated in security and
+cryptography since we cannot ascertain the security of something experimentally.
+Luckily, in crypto we do have a methodology for debugging: namely,
+<em>provable security</em>. The provable security paradigm (or more appropriately,
+the reductionist paradigm) consists of the following steps. One first formulates
+a security definition that captures the security properties/guarantees that are
+expected from the system. Then, one describes a cryptographic scheme/protocol
+for the problem at hand. Finally, one proves that the scheme/protocol satisfies
+the security definition (usually, under some assumption).</p>
+
+<p>The provable security paradigm originated in the 80s' and has been used ever
+since in the cryptography community to analyze the security of many primitives.
+There are many benefits to this paradigm but one of the main ones is that it is
+a great debugging tool. When trying to prove the security of your primitive, you
+will sometimes find that the proof will not go through for some reason and, more
+often than not, it is because of a subtle weakness in your protocol that you did
+not pick up when first designing it.</p>
+
+<p>I want to stress that the provable security paradigm is not foolproof and that
+it has its limits. For example, there are entire areas of cryptography like
+block cipher and hash function design where its usefulness has, historically,
+been very limited. Also, problems can occur if the definition being used is
+wrong or too weak for the application being considered. And, of course, there
+could be errors in the proofs of security. So the framework should be used
+with these limitations in mind because a blind adherence to it could lead you
+astray.</p>
+
+<p>In my opinion the best place to start learning the provable security paradigm
+(and crypto in general) is the textbook
+<a href="http://www.amazon.com/Introduction-Cryptography-Chapman-Network-Security/dp/1466570261/ref=sr_1_1?ie=UTF8&amp;qid=1415685096&amp;sr=8-1&amp;keywords=katz+lindell"><em>Introduction to Modern Cryptography</em></a>
+by Jonathan Katz and Yehuda Lindell. I really wish this book was out when I was
+learning crypto because it would have saved me a huge amount of time. The book
+teaches you all the basics of cryptography while explaining how security
+definitions work and how to prove  various constructions secure. Unlike many
+mathematically-inclined books it goes over the details of proofs and doesn't
+just leave everything as an exercise (which can be incredibly frustrating for
+people who are trying to learn the material alone and without any background).
+After Katz-Lindell, I would  recommend <em>Foundations of Cryptography</em> Vol.
+<a href="http://www.amazon.com/Foundations-Cryptography-1-Basic-Tools/dp/0521035368/ref=sr_1_2?ie=UTF8&amp;qid=1415685162&amp;sr=8-2&amp;keywords=oded+goldreich">1</a> and
+<a href="http://www.amazon.com/Foundations-Cryptography-Volume-Basic-Applications/dp/052111991X/ref=pd_bxgy_b_img_y">2</a>&quot;
+by Oded Goldreich. These texts, however, are a <em>lot</em> more advanced and you
+likely won't need the material unless you are doing research.</p>
+
+<h2 id="learning-the-basics">Learning the Basics</h2>
+
+<p>Of course, another crucial step is learning the basics. The simplest thing to do
+here is to just read Katz-Lindell. In addition you can also watch Jonathan Katz' and
+Dan Boneh's MOOCS which are
+<a href="https://www.coursera.org/course/cryptography">here</a> and
+<a href="https://www.coursera.org/course/crypto">here</a>, respectively.</p>
+
+<h2 id="putting-it-all-together">Putting it All Together</h2>
+
+<p>So you've read Timothy Gowers' blog posts and acquired the basic mathematical
+concepts, you've read Katz-Lindell and understood the basics of provably
+security and you've watched the MOOCs so you know all the basic cryptographic
+primitives and what they are used for. At this point you should be able to read
+crypto papers and follow along.  What you may not be able to do, however, is
+design and analyze your own crypto protocols.</p>
+
+<p>To make the jump from understanding other people's work to creating your own, I
+think the only thing you can really do is to formulate your own problem and try to
+solve do it. Whether you succeed is not important, what matters is that you will
+be applying everything you learned at once and this will force you to understand how
+these ideas relate to each other and interact.</p>
+
+<p>While I think it's a good idea to work on your own problems at this stage to
+gain experience in applying what you've learned,
+it is very important to keep in mind that <em>you don't know what you're doing yet</em>.
+In particular, you may have gained a false sense of confidence after reading the books and
+watching the MOOCs so if you're not careful you'll be headed down the
+path of crankdom. To avoid this, it is crucial that you get feedback on your
+ideas from people who are more experienced than you. This is not an  option, it is
+crucial! <sup class="footnote-ref" id="fnref:2"><a class="footnote" href="#fn:2">2</a></sup></p>
+
+<p>But how do you get experts to give you feedback if you don't know any? This is a
+difficult question that I faced as well at one point. Here's the trick I used. I
+basically got to the point where I could hold a semi-intelligent conversation
+with a professional cryptographer. This does not mean that I could impress them.
+Just that I knew enough of the basic concepts and techniques that I could have a
+reasonable $10$ minute conversation about some crypto paper I had read. Once I
+could do this, I tried my luck. For example, I attended crypto seminars at
+Universities close by. This lead  to me talking about research with professors
+there and eventually starting to work on projects together.</p>
+
+<p>What is important to realize here is that people---especially successful
+people---are very busy and they just don't have the time to teach you
+cryptography. If they are professors, then they already have students they are
+working with and if they work in industry then they have interns and an
+employer they are committed to. So if you want to learn from them you should
+have something to offer.</p>
+
+<p>But what can you offer if you are just starting out? Well, if you think about
+it you have one thing that they don't: namely, <em>time</em>. Remember that these
+experts are very busy so they probably have a ton of project ideas they would
+like to work on but that will never see the light of day.  What you can offer
+to them is your time. You can start by implementing their ideas and evaluating
+them experimentally (this is assuming you have a strong engineering
+background). By doing this you are providing value to them and, most
+importantly, you get a chance to demonstrate that you have a good work ethic,
+that you are committed and that you are easy to work with.  On your end, you
+will learn and internalize their ideas better and put yourself in a position to
+possibly improve upon them. Once you have a good working relationship and some
+preliminary ideas on how to improve their work, you are well on your way.</p>
+
+<h2 id="conclusions">Conclusions</h2>
+
+<p>So these were my high-level strategies for learning cryptography. If you can,
+just get a Ph.D. at a place with a good crypto group (remember that Ph.D.'s in
+computer science are effectively free). If you really can't do that for some
+reason, then you can try out the second strategy I outlined. But you should
+realize that it will be painful.</p>
+
+<p>Good luck!</p>
+<div class="footnotes">
+
+<hr>
+
+<ol>
+<li id="fn:1">A math education will teach you the building blocks from which most cryptographic protocols are built (e.g.,  number theory, algebra etc.) but it won't teach you specifically how to design crypto primitives and protocols or how to understand and analyze their security.
+ <a class="footnote-return" href="#fnref:1">↩</a></li>
+<li id="fn:2">At one point when I was just starting to learn crypto I wrote up some ideas I had. Someone I knew agreed to do an introduction with a well-known cryptographer so I could send him my ideas.  After reading my ideas, he (very politely) told me that  what I was doing made no sense, explained why and then (again very politely) proceeded to explain why working together would be too difficult given the stage at which I was.  This was one (by far) of the most important stages in my development. This small  feedback that he provided made me realize that I had acquired a false sense of confidence and that I still had a <em>huge</em> amount of work to do! Looking back, this was invaluable and I'm grateful to him to this day.
+ <a class="footnote-return" href="#fnref:2">↩</a></li>
+</ol>
+</div>
+
+            </div>
+            <footer class="article-footer">
+    <a data-url="http://outsourcedbits.org/2014/11/11/how-not-to-learn-cryptography" data-id="df7bf200715b18dcdef2203994a85c68" class="article-share-link">
+        Share
+    </a>
+    
+    <a href="http://outsourcedbits.org/2014/11/11/how-not-to-learn-cryptography/#disqus_thread" class="article-comment-link">
+        Comments
+    </a>
+    
+</footer>
+
+        </div>
+
+        
+<nav id="article-nav">
+    
+    <a href="http://outsourcedbits.org/2014/10/02/microsoft-research-svc-and-applied-theory" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">
+          Older
+      </strong>
+      <div class="article-nav-title">Microsoft Research SVC and Applied Theory</div>
+    </a>
+    
+
+    
+    <a href="http://outsourcedbits.org/2014/11/13/microsoft-research-internships" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">
+          Newer
+      </strong>
+      <div class="article-nav-title">Microsoft Research Internships</div>
+    </a>
+    
+</nav>
+
+
+    </article>
+
+    
+    <section id="comments">
+        <div id="disqus_thread">
+            <div id="disqus_thread"></div>
+<script type="text/javascript">
+    var disqus_shortname = 'outsourcedbits';
+    var disqus_identifier = 'http:\/\/outsourcedbits.org\/2014\/11\/11\/how-not-to-learn-cryptography';
+    var disqus_title = 'How Not to Learn Cryptography';
+    var disqus_url = 'http:\/\/outsourcedbits.org\/2014\/11\/11\/how-not-to-learn-cryptography';
+
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+        </div>
+    </section>
+    
+</section>
+
+
+	    
+	    <aside id="sidebar">
+    
+
+    
+
+
+<div class="widget-wrap">
+    <h3 class="widget-title">Categories</h3>
+    <div class="widget">
+        <ul class="category-list">
+            
+            <li class="category-list-item">
+                <a class="category-list-link" href="http://outsourcedbits.org/categories/applied-crypto">
+                    applied-crypto
+                </a>
+                <span class="category-list-count">3</span>
+            </li>
+            
+            <li class="category-list-item">
+                <a class="category-list-link" href="http://outsourcedbits.org/categories/applied-cryptography">
+                    applied-cryptography
+                </a>
+                <span class="category-list-count">1</span>
+            </li>
+            
+            <li class="category-list-item">
+                <a class="category-list-link" href="http://outsourcedbits.org/categories/cloud-computing">
+                    cloud-computing
+                </a>
+                <span class="category-list-count">2</span>
+            </li>
+            
+            <li class="category-list-item">
+                <a class="category-list-link" href="http://outsourcedbits.org/categories/encrypted-search">
+                    encrypted-search
+                </a>
+                <span class="category-list-count">11</span>
+            </li>
+            
+            <li class="category-list-item">
+                <a class="category-list-link" href="http://outsourcedbits.org/categories/graph-encryption">
+                    graph-encryption
+                </a>
+                <span class="category-list-count">1</span>
+            </li>
+            
+            <li class="category-list-item">
+                <a class="category-list-link" href="http://outsourcedbits.org/categories/inference-attacks">
+                    inference-attacks
+                </a>
+                <span class="category-list-count">1</span>
+            </li>
+            
+            <li class="category-list-item">
+                <a class="category-list-link" href="http://outsourcedbits.org/categories/learning">
+                    learning
+                </a>
+                <span class="category-list-count">1</span>
+            </li>
+            
+            <li class="category-list-item">
+                <a class="category-list-link" href="http://outsourcedbits.org/categories/misc">
+                    misc
+                </a>
+                <span class="category-list-count">1</span>
+            </li>
+            
+            <li class="category-list-item">
+                <a class="category-list-link" href="http://outsourcedbits.org/categories/policy">
+                    policy
+                </a>
+                <span class="category-list-count">2</span>
+            </li>
+            
+            <li class="category-list-item">
+                <a class="category-list-link" href="http://outsourcedbits.org/categories/surveillance">
+                    surveillance
+                </a>
+                <span class="category-list-count">2</span>
+            </li>
+            
+        </ul>
+    </div>
+</div>
+
+
+
+    
+
+
+<div class="widget-wrap">
+    <h3 class="widget-title">
+        Tags
+    </h3>
+    <div class="widget">
+        <ul class="category-list">
+            
+            <li class="category-list-item">
+                <a class="category-list-link" href="http://outsourcedbits.org/tags/cryptdb">
+                    cryptdb
+                </a>
+                <span class="category-list-count">1</span>
+            </li>
+            
+            <li class="category-list-item">
+                <a class="category-list-link" href="http://outsourcedbits.org/tags/deterministic-encryption">
+                    deterministic-encryption
+                </a>
+                <span class="category-list-count">1</span>
+            </li>
+            
+            <li class="category-list-item">
+                <a class="category-list-link" href="http://outsourcedbits.org/tags/dte">
+                    dte
+                </a>
+                <span class="category-list-count">1</span>
+            </li>
+            
+            <li class="category-list-item">
+                <a class="category-list-link" href="http://outsourcedbits.org/tags/fhe">
+                    fhe
+                </a>
+                <span class="category-list-count">2</span>
+            </li>
+            
+            <li class="category-list-item">
+                <a class="category-list-link" href="http://outsourcedbits.org/tags/fisa">
+                    fisa
+                </a>
+                <span class="category-list-count">1</span>
+            </li>
+            
+            <li class="category-list-item">
+                <a class="category-list-link" href="http://outsourcedbits.org/tags/functional-encryption">
+                    functional-encryption
+                </a>
+                <span class="category-list-count">1</span>
+            </li>
+            
+            <li class="category-list-item">
+                <a class="category-list-link" href="http://outsourcedbits.org/tags/learning">
+                    learning
+                </a>
+                <span class="category-list-count">1</span>
+            </li>
+            
+            <li class="category-list-item">
+                <a class="category-list-link" href="http://outsourcedbits.org/tags/machine-learning">
+                    machine-learning
+                </a>
+                <span class="category-list-count">1</span>
+            </li>
+            
+            <li class="category-list-item">
+                <a class="category-list-link" href="http://outsourcedbits.org/tags/metadata">
+                    metadata
+                </a>
+                <span class="category-list-count">2</span>
+            </li>
+            
+            <li class="category-list-item">
+                <a class="category-list-link" href="http://outsourcedbits.org/tags/mpc">
+                    mpc
+                </a>
+                <span class="category-list-count">3</span>
+            </li>
+            
+            <li class="category-list-item">
+                <a class="category-list-link" href="http://outsourcedbits.org/tags/msr">
+                    msr
+                </a>
+                <span class="category-list-count">1</span>
+            </li>
+            
+            <li class="category-list-item">
+                <a class="category-list-link" href="http://outsourcedbits.org/tags/nsa">
+                    nsa
+                </a>
+                <span class="category-list-count">2</span>
+            </li>
+            
+            <li class="category-list-item">
+                <a class="category-list-link" href="http://outsourcedbits.org/tags/ope">
+                    ope
+                </a>
+                <span class="category-list-count">1</span>
+            </li>
+            
+            <li class="category-list-item">
+                <a class="category-list-link" href="http://outsourcedbits.org/tags/oram">
+                    oram
+                </a>
+                <span class="category-list-count">1</span>
+            </li>
+            
+            <li class="category-list-item">
+                <a class="category-list-link" href="http://outsourcedbits.org/tags/ot">
+                    ot
+                </a>
+                <span class="category-list-count">1</span>
+            </li>
+            
+            <li class="category-list-item">
+                <a class="category-list-link" href="http://outsourcedbits.org/tags/pets">
+                    pets
+                </a>
+                <span class="category-list-count">1</span>
+            </li>
+            
+            <li class="category-list-item">
+                <a class="category-list-link" href="http://outsourcedbits.org/tags/pir">
+                    pir
+                </a>
+                <span class="category-list-count">1</span>
+            </li>
+            
+            <li class="category-list-item">
+                <a class="category-list-link" href="http://outsourcedbits.org/tags/ppe">
+                    ppe
+                </a>
+                <span class="category-list-count">2</span>
+            </li>
+            
+            <li class="category-list-item">
+                <a class="category-list-link" href="http://outsourcedbits.org/tags/sat">
+                    sat
+                </a>
+                <span class="category-list-count">1</span>
+            </li>
+            
+            <li class="category-list-item">
+                <a class="category-list-link" href="http://outsourcedbits.org/tags/searchable-encryption">
+                    searchable-encryption
+                </a>
+                <span class="category-list-count">1</span>
+            </li>
+            
+            <li class="category-list-item">
+                <a class="category-list-link" href="http://outsourcedbits.org/tags/section-215">
+                    section-215
+                </a>
+                <span class="category-list-count">2</span>
+            </li>
+            
+            <li class="category-list-item">
+                <a class="category-list-link" href="http://outsourcedbits.org/tags/sse">
+                    sse
+                </a>
+                <span class="category-list-count">4</span>
+            </li>
+            
+            <li class="category-list-item">
+                <a class="category-list-link" href="http://outsourcedbits.org/tags/ste">
+                    ste
+                </a>
+                <span class="category-list-count">2</span>
+            </li>
+            
+        </ul>
+    </div>
+</div>
+
+
+
+    
+
+
+<div class="widget-wrap">
+    <h3 class="widget-title">
+        Tag cloud
+    </h3>
+    <div class="widget tagcloud">
+        
+        <a href="http://outsourcedbits.org/tags/cryptdb" style="font-size: 12px;">cryptdb</a>
+        
+        <a href="http://outsourcedbits.org/tags/deterministic-encryption" style="font-size: 12px;">deterministic-encryption</a>
+        
+        <a href="http://outsourcedbits.org/tags/dte" style="font-size: 12px;">dte</a>
+        
+        <a href="http://outsourcedbits.org/tags/fhe" style="font-size: 12px;">fhe</a>
+        
+        <a href="http://outsourcedbits.org/tags/fisa" style="font-size: 12px;">fisa</a>
+        
+        <a href="http://outsourcedbits.org/tags/functional-encryption" style="font-size: 12px;">functional-encryption</a>
+        
+        <a href="http://outsourcedbits.org/tags/learning" style="font-size: 12px;">learning</a>
+        
+        <a href="http://outsourcedbits.org/tags/machine-learning" style="font-size: 12px;">machine-learning</a>
+        
+        <a href="http://outsourcedbits.org/tags/metadata" style="font-size: 12px;">metadata</a>
+        
+        <a href="http://outsourcedbits.org/tags/mpc" style="font-size: 12px;">mpc</a>
+        
+        <a href="http://outsourcedbits.org/tags/msr" style="font-size: 12px;">msr</a>
+        
+        <a href="http://outsourcedbits.org/tags/nsa" style="font-size: 12px;">nsa</a>
+        
+        <a href="http://outsourcedbits.org/tags/ope" style="font-size: 12px;">ope</a>
+        
+        <a href="http://outsourcedbits.org/tags/oram" style="font-size: 12px;">oram</a>
+        
+        <a href="http://outsourcedbits.org/tags/ot" style="font-size: 12px;">ot</a>
+        
+        <a href="http://outsourcedbits.org/tags/pets" style="font-size: 12px;">pets</a>
+        
+        <a href="http://outsourcedbits.org/tags/pir" style="font-size: 12px;">pir</a>
+        
+        <a href="http://outsourcedbits.org/tags/ppe" style="font-size: 12px;">ppe</a>
+        
+        <a href="http://outsourcedbits.org/tags/sat" style="font-size: 12px;">sat</a>
+        
+        <a href="http://outsourcedbits.org/tags/searchable-encryption" style="font-size: 12px;">searchable-encryption</a>
+        
+        <a href="http://outsourcedbits.org/tags/section-215" style="font-size: 12px;">section-215</a>
+        
+        <a href="http://outsourcedbits.org/tags/sse" style="font-size: 12px;">sse</a>
+        
+        <a href="http://outsourcedbits.org/tags/ste" style="font-size: 12px;">ste</a>
+        
+    </div>
+</div>
+
+
+
+
+    <div id="toTop" class="fa fa-chevron-up"></div>
+</aside>
+
+	    
+	</div>
+</div>
+
+<footer id="footer">
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2016
+      Powered by <a href="//gohugo.io">Hugo</a>. Theme by <a href="http://github.com/ppoffice">PPOffice</a>.
+    </div>
+  </div>
+</footer>
+
+
+<script>
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-79501268-1', 'auto');
+ga('send', 'pageview');
+</script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+<script src="http://outsourcedbits.org/fancybox/jquery.fancybox.pack.js"></script>
+<script src="http://outsourcedbits.org/js/script.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.8.0/highlight.min.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+
+
+
+ 
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+  extensions: ["tex2jax.js"],
+  jax: ["input/TeX", "output/HTML-CSS"],
+  tex2jax: {
+    inlineMath: [['$','$'], ['\\(','\\)']],
+    displayMath: [['$$','$$'], ['\\[','\\]']],
+    processEscapes: true,
+    processEnvironments: true,
+    skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
+    TeX: { equationNumbers: { autoNumber: "AMS" },
+         extensions: ["AMSmath.js", "AMSsymbols.js"] }
+  },
+  "HTML-CSS": {availableFonts: ["TeX"]}, 
+  scale: [200]
+});
+</script>
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    
+    
+    
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i = 0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+});
+</script>
+<script type="text/javascript"
+  src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+</body>
+</html>

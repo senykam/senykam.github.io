@@ -1,0 +1,1024 @@
+<!DOCTYPE html>
+<html lang="en-us">
+<head>
+    <title>Applied Crypto Highlights: Searchable Encryption with Ranked Results &middot; Outsourced Bits</title>
+    <meta name="generator" content="Hugo 0.16" />
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="author" content="Seny Kamara">
+    
+      <meta name="description" content="">
+    
+    
+    <link rel="icon" href="http://outsourcedbits.org/favicon.ico">
+    <link rel="apple-touch-icon" href="http://outsourcedbits.org/apple-touch-icon.png" />
+    <link rel="stylesheet" href="http://outsourcedbits.org/css/style.css">
+    <link rel="stylesheet" href="http://outsourcedbits.org/css/font-awesome.min.css">
+    <link rel="stylesheet" href="http://outsourcedbits.org/css/monokai.css">
+    <link rel="stylesheet" href="http://outsourcedbits.org/fancybox/jquery.fancybox.css">
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400italic,400,600' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Source+Code+Pro' rel='stylesheet' type='text/css'>
+    <meta property="og:title" content="Applied Crypto Highlights: Searchable Encryption with Ranked Results" />
+<meta property="og:description" content="This is the second in a series of guest posts highlighting new research in applied cryptography. This post is written by Foteini Baldimtsi who is a postdoc at Boston University and Olya Ohrimenko who is a postdoc at Microsoft Research. Note that Olya is on the job market this year. Modern cloud services let their users outsource data as well as request computations on it. Due to potentially sensitive content of users&#39; data and distrust in cloud services, it is natural for users to outsource their data encrypted." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://outsourcedbits.org/2015/04/15/applied-crypto-highlights-searchable-encryption-with-ranked-results" />
+
+
+<meta property="og:updated_time" content="2015-04-15T20:57:14-03:00"/>
+
+
+
+
+
+
+
+
+
+
+    
+    
+<meta itemprop="name" content="Applied Crypto Highlights: Searchable Encryption with Ranked Results">
+<meta itemprop="description" content="This is the second in a series of guest posts highlighting new research in applied cryptography. This post is written by Foteini Baldimtsi who is a postdoc at Boston University and Olya Ohrimenko who is a postdoc at Microsoft Research. Note that Olya is on the job market this year. Modern cloud services let their users outsource data as well as request computations on it. Due to potentially sensitive content of users&#39; data and distrust in cloud services, it is natural for users to outsource their data encrypted.">
+
+
+<meta itemprop="dateModified" content="2015-04-15T20:57:14-03:00" />
+<meta itemprop="wordCount" content="2778">
+
+
+
+<meta itemprop="keywords" content="applied-crypto,applied-cryptography,cloud-computing,encrypted-search,graph-encryption,inference-attacks,learning,misc,policy,surveillance,cryptdb,deterministic-encryption,dte,fhe,fisa,functional-encryption,learning,machine-learning,metadata,mpc,msr,nsa,ope,oram,ot,pets,pir,ppe,sat,searchable-encryption,section-215,sse,ste," />
+
+    
+
+  <meta name="twitter:card" content="summary"/>
+
+
+
+<meta name="twitter:title" content="Applied Crypto Highlights: Searchable Encryption with Ranked Results"/>
+<meta name="twitter:description" content="This is the second in a series of guest posts highlighting new research in applied cryptography. This post is written by Foteini Baldimtsi who is a postdoc at Boston University and Olya Ohrimenko who is a postdoc at Microsoft Research. Note that Olya is on the job market this year. Modern cloud services let their users outsource data as well as request computations on it. Due to potentially sensitive content of users&#39; data and distrust in cloud services, it is natural for users to outsource their data encrypted."/>
+<meta name="twitter:site" content="@senykam"/>
+
+
+    
+
+    
+</head>
+<body>
+<div class="container">
+
+
+<div id="container">
+	<header id="header">
+  <div id="header-main" class="header-inner">
+    <div class="outer">
+      <a href="http://outsourcedbits.org/" id="logo"><span class="site-title">Outsourced Bits</span></a>
+      <nav id="main-nav">
+          
+
+          
+
+          
+      </nav>
+        <nav id="sub-nav">
+          <div class="profile" id="profile-nav">
+            <a id="profile-anchor" href="javascript:;"><img class="avatar" src="http://outsourcedbits.org//img/sk.jpg"><i class="fa fa-caret-down"></i></a>
+          </div>
+        </nav>
+        <div id="search-form-wrap">
+          <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form">
+              <input type="search" name="q" results="0" class="search-form-input" placeholder="Search">
+              <button type="submit" class="search-form-submit">
+              </button>
+              <input type="hidden" name="q" value="site:http://outsourcedbits.org/">
+         </form>
+        </div>
+    </div>
+  </div>
+  <div id="main-nav-mobile" class="header-sub header-inner">
+    <table class="menu outer">
+      <tbody>
+          <tr>
+          
+
+          
+
+          
+          <td>
+          <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form">
+          <input type="search" name="q" results="0" class="search-form-input" placeholder="Search">
+          <input type="hidden" name="q" value="site:http://outsourcedbits.org/">
+          </form>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+</header>
+
+   	
+   	<div class="outer">
+   		
+	    <aside id="profile">
+  <div class="inner profile-inner">
+    <div class="base-info profile-block">
+      <img id="avatar" src="http://outsourcedbits.org/img/sk.jpg" width="200" class="avatar">
+      
+      
+      <p class="mybio">My name is Seny Kamara. I am an Associate Professor of <a href="http://cs.brown.edu">Computer Science</a> at <a href="http://brown.edu">Brown</a>. Prior to that, I was a researcher at Microsoft Research. <br><br> My work is focused on designing and studying cryptographic algorithms,
+protocols and systems; often motivated by privacy issues in cloud computing,
+surveillance and databases. <br><br> This is a blog about my research and interests. For more about my work see my
+<a href="http://cs.brown.edu/~seny">homepage</a>.</p>
+      <span id="location"><i class="fa fa-map-marker"></i>Rio</span>
+      
+    </div>
+    
+    <div class="contact-info profile-block">
+      <table class="contact-list">
+        <tr>
+          
+<td><a href="//github.com/senykam" target="_blank" title="GitHub"><i class="fa fa-github"></i></a></td>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<td><a href="//twitter.com/senykam" target="_blank" title="Twitter"><i class="fa fa-twitter"></i></a></td>
+
+
+          <td><a href="" target="_blank" title="RSS"><i class="fa fa-rss"></i></a></td>
+        </tr>
+      </table>
+    </div>
+  </div>
+</aside>
+
+	    
+
+	    
+<section id="main">
+
+    <article id="page-undefined" class="article article-type-page" itemscope="" itemprop="blogPost">
+        <div class="article-inner">
+            
+
+            <header class="article-header">
+    <a href="http://outsourcedbits.org/2015/04/15/applied-crypto-highlights-searchable-encryption-with-ranked-results">
+    <h1 class="article-title" itemprop="name">
+        Applied Crypto Highlights: Searchable Encryption with Ranked Results
+    </h1>
+    </a>
+    <div class="article-meta">
+        <div class="article-date">
+            <i class="fa fa-calendar"></i>
+            <time datetime="2015-04-15 20:57:14 -0300 STD" itemprop="datePublished">2015-04-15</time>
+            &middot;
+            2778
+            words
+            &middot;
+            14
+            minute read
+        </div>
+
+        
+        
+            
+            
+            <div class="article-category">
+                <i class="fa fa-folder"></i>
+                
+                <a class="article-category-link" href="http://outsourcedbits.org/categories/encrypted-search">Encrypted search</a>
+                &middot;
+                
+                <a class="article-category-link" href="http://outsourcedbits.org/categories/applied-cryptography">Applied Cryptography</a>
+                
+                
+            </div>
+            
+        
+
+        
+            
+            
+            <div class="article-category">
+                <i class="fa fa-tags"></i>
+                
+                <a class="article-category-link" href="http://outsourcedbits.org/tags/sse">SSE</a>
+                &middot;
+                
+                <a class="article-category-link" href="http://outsourcedbits.org/tags/ste">STE</a>
+                
+                
+            </div>
+            
+        
+    </div>
+</header>
+
+            <div class="article-entry" itemprop="articleBody">
+                <p><em>This is the second in a series of guest posts highlighting new research in
+applied cryptography. This post is written by <a href="http://www.baldimtsi.com/">Foteini
+Baldimtsi</a> who is a postdoc at Boston University and
+<a href="http://research.microsoft.com/en-us/people/oohrim/">Olya Ohrimenko</a> who is a
+postdoc at Microsoft Research.  Note that Olya is on the job market this year.</em></p>
+
+<p><img src="/img/steam.jpg" class="alignright" width="250">
+Modern cloud services let their users outsource data as well as request
+computations on it.  Due to potentially sensitive content of users' data and
+distrust in cloud services, it is natural for users to outsource their data
+encrypted.  It is, however, important for the users to still be able to use
+cloud services for performing computations on the encrypted data.  In this
+article we consider an important class of such computations: search over
+outsourced encrypted data.  Searchable Encryption has attracted a lot of
+attention from research community and has been thoroughly described by Seny
+in <a href="http://outsourcedbits.org/2013/10/06/how-to-search-on-encrypted-data-part-1">previous blog posts</a>.</p>
+
+<p>Search functionality alone, however, might not be enough when one considers a
+large amount of data.  Ideally, users would like to not only receive the
+matching results, but get them back sorted according to how relevant they are
+to their query (just like a search engine does!). In this blog post we describe
+our <a href="http://fc15.ifca.ai/preproceedings/paper_89.pdf">recent result</a> from
+the conference on Financial Cryptography and Data Security 2015 which builds on
+top of searchable encryption techniques to return <em>ranked results</em> to
+users' queries. Our goal is to create a scheme that is efficient and achieves a
+high level of privacy against a curious cloud server.</p>
+
+<h2 id="ranking-search-results-on-plaintext-data">Ranking search results on plaintext data</h2>
+
+<p>Let us start by briefly describing how ranking would be done if users did not
+take into account the privacy of their data and outsourced it in an unencrypted
+format. Literature on information retrieval offers an abundance of ranking
+methods. For our paper, we chose the  $\mbox{tf-idf}$ ranking method due to its
+simplicity, popularity and the fact that it supports free text queries. This method
+is effective since it is based on term/keyword frequency (tf) and inverse
+document frequency (idf).</p>
+
+<p>Let $D=D_1,\dots,D_n$ be a document collection  of $n$ documents, in which there
+exist $m$ unique terms/keywords $t_1,\dots,t_m$. First, for every term, $t$, we
+compute its frequency ($\mbox{tf}$) in each document $D_i$ as well as its inverse
+document frequency ($\mbox{idf}$) in the entire collection (it captures how common the term is
+in the whole document collection). Then, for each term and document we compute</p>
+
+<p><span  class="math">\[
+\mbox{tf-idf}_{t,D_i} = \mbox{tf}_{t,d} \times \mbox{idf}_{t}
+\]</span></p>
+
+<p>and store the score values in the rank table, $T$:</p>
+
+<p><figure><img src="/img/searchindextable.jpg" alt="" title="$\mbox{tf-idf}$ rank table, $T$, outsourced to the cloud"><figcaption>$\mbox{tf-idf}$ rank table, $T$, outsourced to the cloud</figcaption></figure></p>
+
+<p>Note that if a term does not appear in a table, then we store $0.00$ as a rank.
+This table could be either computed by the owner of the document collection and
+outsourced to the cloud, or computed by the cloud itself since it
+receives the actual document collection $D$ in the clear.</p>
+
+<p>Now suppose that a user wants to query the cloud for the multi-keyword query &quot;searchable
+encryption&quot;. Then, the cloud first searches for the terms &quot;searchable&quot; and
+&quot;encryption&quot; in the table, adds the corresponding rows together to get the
+overall score of the query, sorts the scores, and returns the relevant
+documents in a sorted order.</p>
+
+<h2 id="ranking-search-results-on-encrypted-data">Ranking search results on encrypted data</h2>
+
+<p>A user that wishes to protect her privacy is likely to outsource her document
+collection to the cloud in an encrypted format: $E(D_1),\dots,E(D_n)$. In order
+to be able to perform <em>ranked search</em>, the user has to create the rank
+table $T$ and send it to the cloud (as opposed to outsourcing plaintext data
+where the cloud could also compute the rank table itself). Since the rank table
+contains information about the distribution of words in individual documents and
+the whole collection, it has to be encrypted as well. However, in order for the
+server to be able to return ranked results using the $\mbox{tf-idf}$ method
+described above, encrypted$T$ should be able to support the following
+operations:</p>
+
+<ol>
+<li>search for terms/keywords</li>
+<li>add numerical values</li>
+<li>sort a list of numerical values.</li>
+</ol>
+
+<p>For the first operation one could simply encrypt the keywords on the table
+using a <a href="http://outsourcedbits.org/2013/10/06/how-to-search-on-encrypted-data-part-1/">searchable
+encryption</a>
+(SE) scheme. Then, whenever the user wants to search for a phrase, she sends to
+the cloud an SE trapdoor for each keyword in the phrase.  The server can then
+use the trapdoors to locate the keywords in the table.</p>
+
+<p>The next two operations refer to the numerical entries on the table which
+should be encrypted in a way that supports addition and sorting. A natural
+solution would be to encrypt these values under a <a href="http://outsourcedbits.org/2012/06/26/applying-fully-homomorphic-encryption-part-1/">fully-homomorphic
+encryption</a>
+scheme that can support any type of computation over encrypted data. However,
+the resulting solution would be very inefficient to be applied in practice.
+Another potential solution would be to encrypt the numerical values under an
+<a href="http://www.cc.gatech.edu/aboldyre/papers/bclo.pdf">order-preserving
+encryption</a> (OPE) scheme.
+However, this would be sufficient only for single-keyword queries, since OPE
+schemes cannot support homomorphic addition (and, even if they did, they would
+<a href="http://luca-giuzzi.unibs.it/corsi/Support/papers-cryptography/RAD78.pdf">not be
+secure</a>.
+Note that for single keyword queries, OPE might not be ideal since it leaks the
+rank order of the documents for each keyword (see also the discussion
+<a href="http://outsourcedbits.org/2013/10/14/how-to-search-on-encrypted-data-part-2/">here</a>.</p>
+
+<p>Given that we aim for an efficient and provably secure
+solution, we propose to encrypt the numerical values of the rank table using
+the <a href="http://en.wikipedia.org/wiki/Paillier_cryptosystem">Paillier encryption
+scheme</a>: a semi-homomorphic
+scheme that supports the addition of encrypted values.  (For the rest of this
+post, we use $[a]$ to denote the encryption of value $a$ using this scheme.) %a
+semi-homomorphic encryption scheme.  By the properties of Paillier, the server
+can add the corresponding rows of $T$ when a query is received.  What is still
+left to discuss is, how the server can also sort these encrypted values.  In
+the rest of the post, we describe our private sorting mechanism over encrypted
+values.</p>
+
+<p>Our private sorting mechanism requires to equip the cloud server with a secure
+co-processor (e.g., <a href="http://www-03.ibm.com/security/cryptocards/pciecc/overview.shtml">IBM
+PCIe</a>, <a href="https://software.intel.com/en-us/blogs/2013/09/26/protecting-application-secrets-with-intel-sgx">Intel
+SGX</a>,
+<a href="https://technet.microsoft.com/en-us/library/cc749022%28v=ws.10%29.aspx">Windows
+TPM</a>.
+The secure co-processor is then given the decryption key of the
+semi-homomorphic encryption scheme which lets him assist the cloud server in
+sorting.  For the protocol to proceed, we assume that the co-processor does not
+collude with the cloud server and both of them are following the protocol in an
+honest-but-curious way. That is, neither of them deviates from the protocol but
+both are curious to learn more about user's data.</p>
+
+<p><figure><img src="/img/introimagesingleuserslim.jpg" alt="" title="An overview of the interactions between the user, the cloud server $S_1$ and the co-processor $S_2$."><figcaption>An overview of the interactions between the user, the cloud server $S_1$ and the co-processor $S_2$.</figcaption></figure></p>
+
+<p>Regarding the privacy of our scheme, we design our protocol in such a way that:
+(a) the co-processor learns nothing about the values being sorted and (b) the
+cloud server, as in SE,  learns the search pattern (i.e., whether a keyword was
+queried before or not), but learns nothing about the ranking of the documents.
+For example, he does not learn which document ranks higher for user's query.</p>
+
+<h2 id="private-sort">Private Sort</h2>
+
+<p>We now develop a sorting protocol that the cloud server and the co-processor
+can use to jointly sort encrypted ranking data of the documents. From now on we
+denote the cloud server by $S_1$ and the co-processor  by $S_2$.  Our private
+sort is a two-party protocol between  $S_1$ and $S_2$ where $S_1$ has an
+encrypted array of $n$ elements $[A] = { [A_1], [A_2], \ldots, [A_n]}$ and
+$S_2$ has the secret key that can decrypt $A$.<br>
+By the end of the protocol, $S_1$ should obtain $[B] = {[B_1],
+[B_2], \ldots, [B_n]}$ where $[B]$ is an encryption of$A$ sorted. Since $S_1$
+and $S_2$ are both curious, we are interested in protecting the content of $A$
+and$B$ from both of them and we are willing to reveal <em>only</em> the size of
+$A$,$n$. Hence, $S_2$ should only assist $S_1$ in sorting without seeing the
+encrypted content of $A$ or $B$, otherwise he can trivially decrypt it.  On the
+other side of the protocol, nothing about the decryption key nor plaintext
+values of $A$ and $B$ should be leaked to $S_1$.  For example, we do not want
+to leak to neither $S_1$ nor $S_2$ values of elements in $A$, their comparison
+result with other elements, and their new location in $B$ (in the paper we
+express these properties using simulation based security definitions).</p>
+
+<p><strong>Private Sort Construction Overview.</strong>
+As can be seen from the definitions, the participation of $S_1$ and $S_2$ in
+private sort should not reveal anything about the content of the data to either
+of them. Hence, any method we use for comparison and sorting must appear
+independent of the data. We note, however, that many sorting algorithms access
+the data depending on the comparison result and data content (e.g., quicksort).
+This does not fit our model where everything about the data, including
+individual comparisons, should be protected from $S_1$ and $S_2$.</p>
+
+<p>Fortunately, there are sorting algorithms where data comparisons are determined
+by the size of the data to be sorted, $n$ in our case, and not the data
+content. One such algorithm is a
+<a href="http://dl.acm.org/citation.cfm?id=1468121">sorting network</a> by K.
+Batcher which relies on Two-Element Sort circuit. This circuit takes two
+elements and outputs them in a sorted order.
+Then the network consists of $O(\log n)$ layers where every layer has $O(n)$ Two-Element Sort circuits,
+where constants in big-O are determined by $n$.
+In order to sort the data, one simply passes it through the network.
+Moving the data through the network depends only on $n$ and the Two-Element Sort.
+Hence, if we develop a private Two-Element Sort, the implementation
+of private Batcher's network becomes trivial.</p>
+
+<h3 id="private-twoelement-sort">Private Two-Element Sort</h3>
+
+<p>As the name suggests, Private Two-Element Sort is a special case of Private Sort, as defined above, for the case $n=2$. That is, $S_1$ has two encrypted elements $[a]$ and $[b]$ and wishes to obtain $[c]$ and $[d]$ where $c = \min(a,b)$ and $d = \max(a,b)$. Similarly,$S_2$ has the secret key of the encryption. The security definition is also the same and informally states that neither $S_1$ nor $S_2$ learn anything about $a$ and $b$.</p>
+
+<p>We first describe operations that are required to perform Two-Element Private Sort without encryption and then for every operation give its private version. The sorting consists of:</p>
+
+<ol>
+<li>$t := a &gt; b$ (Set bit $t$ to the result of comparing $a$ and $b$).</li>
+<li>$c := (1-t)a + tb$ (Use $t$ to select the minimum of $a$ and $b$).</li>
+<li>$d := ta + (1-t)b$ (Use $t$ to select the maximum of $a$ and $b$).</li>
+</ol>
+
+<p>Note that these three operations have to be performed on encrypted data:
+$a$ and $b$ are part of the encrypted input of $S_1$,
+bit $t$ and values $c$ and $d$ also should be encrypted to protect their content from $S_1$.
+Moreover, neither of these values should be shown to$S_2$ since he can trivially decrypt them,
+violating privacy guarantees against$S_2$.</p>
+
+<p>We show how to perform above operations over encrypted data one by one, starting first with
+a <em>Private Comparison</em> protocol for computing $[t]$ and following with
+a <em>Private Select</em> protocol for computing $[c]$ and $[d]$.</p>
+
+<p><strong>Private Comparison.</strong>
+This protocol is a variation of a classical Andrew Yao's <a href="http://research.cs.wisc.edu/areas/sec/yao1982-ocr.pdf">Millionaire's problem</a>:
+$S_1$ has $[a]$ and $[b]$ and wishes to obtain $[t]$, where
+$t = (a &gt; b)$ and $S_2$ has the private key of the encryption scheme.
+Although there is more than one way of doing so, we pick an efficient
+algorithm from a recent result by <a href="http://www.internetsociety.org/sites/default/files/04_1_2.pdf">Bost et al.</a>, which is a correction of the original <a href="http://bioinformatics.tudelft.nl/sites/default/files/Comparing%20encrypted%20data.pdf">protocol</a> by T.Veugen.
+This algorithm lets $S_1$ and $S_2$ compare $a$ and $b$ using
+number of interactions that is logarithmic in the number of bits in each element.</p>
+
+<p>Note that neither $S_1$ nor $S_2$ learn the values of $a$, $b$, and $t$.
+In addition, $S_2$ does not learn the ciphertexts corresponding to these values.</p>
+
+<p><strong>Private Select.</strong>
+Given the comparison bit $t$, we now devise a private algorithm for using this
+bit to select the minimum and the maximum value of $a$ and $b$ (that is
+performing operations 2 and 3 above).  Recall that $S_1$ has to obtain $[c]$
+and $[d]$ with $S_2$ &quot;blindly&quot; assisting him in the protocol.</p>
+
+<p>We wish to use simple cryptographic operations in order to compute $c$ and $d$.
+That is, we use semi-homomorphic cryptographic techniques as opposed to
+fully-homomorphic ones.  To this end, we use an interesting property of layered
+Paillier Encryption.  We omit many details from here and only point out the
+features that we need.</p>
+
+<p>We denote messages encrypted using first and second layers of Paillier Encryption as
+$[m]$ and $[![m]!]$, respectively.
+We recall that Paillier Encryption supports addition of ciphertexts as well
+as multiplication by a constant, i.e., $[m_1][m_2] = [m_1+m_2]$ and $[m]^{C} = [Cm]$.
+The same operations hold for ciphertexts of the second layer.
+However, what is more interesting is that the ciphertext of the first layer
+is in the same domain as the plaintext of the second layer, which
+allows the following operations:</p>
+
+<p>This trick allows us to implement the functionality of private select for $c$,
+and similarly for $d$, as follows:</p>
+
+<p><span  class="math">\[[\![[c]]\!] := [\![[a]]\!]^{[1-t]} [\![[b]]\!]^{[t]} =  [\![[(1-t)a + tb]]\!]\,\]</span></p>
+
+<p>where $c$ and $d$ are doubly encrypted.</p>
+
+<p>Recall that the output of Two-Element Private Sort is a building block of the
+general sort, where $c$ and $d$ participate in further invocations of
+Two-Element Private Sort.  To make the values $c$ and $d$ usable in the next
+layer of Batcher's network, $S_1$ uses $S_2$ to strip off the extra layer of
+encryption.  $S_1$ blinds the value he needs to strip via $[![[c+r]]!]$, and
+sends it to $S_2$, who decrypts the ciphertext and sends back only $[c+r]$.
+Using homomorphic properties of Paillier, $S_1$ subtracts $r$ to get $[c]$.
+The similar protocol is executed for $d$.  %Note that this protocol requires
+one interaction with $S_2$.</p>
+
+<h3 id="private-nelement-sort">Private $n$-Element Sort</h3>
+
+<p>Let us now show how to sort an array of $n$ elements using our Private Two-Element Sort.
+%We are now ready to combine all the building blocks.
+$S_1$ executes Batcher's sorting network layer by layer.
+For each layer in the network and for every sorting gate in this layer,
+he engages with $S_2$ in Private Two-Element Sort.
+He uses the outputs of this layer as inputs to the next layer
+of the network. (See Figure\ref{fig:batcher} for an illustration.)</p>
+
+<p><figure><img src="/img/batcher1.jpg" alt="" title="Example of privately sorting an encrypted array of four elements $5,1,2,9$ where $[m]$ denotes a Paillier encryption of message $m$ and $\mathsf{pairs}_i$ denotes a pair of elements to be sorted. Note that only $S_1$ stores values in the arrays $A_i$ while $S_2$ blindly assists $S_1$ in sorting the values."><figcaption>Example of privately sorting an encrypted array of four elements $5,1,2,9$ where $[m]$ denotes a Paillier encryption of message $m$ and $\mathsf{pairs}_i$ denotes a pair of elements to be sorted. Note that only $S_1$ stores values in the arrays $A_i$ while $S_2$ blindly assists $S_1$ in sorting the values.</figcaption></figure></p>
+
+<p><strong>Sketch of Privacy Analysis.</strong>
+We note that the number of times $S_1$ engages with $S_2$ in the protocol does
+not reveal either of them anything about the data content.  Each engagement is
+an execution of Private Two-Element Sort which, in turn, is a call to Private
+Comparison and two calls to Private Select.  Private comparison guarantees
+privacy against $S_1$ and $S_2$ as long as they are non-colluding honest
+adversaries.  Private select relies on homomorphic properties of Paillier and
+requires only the re-encryption step from $S_2$.  Since $S_2$ receives a
+blinded value he does not learn the value of $c$ or $d$.  Moreover, since the
+values of $c$ and $d$ are re-randomized we can treat $O(n (\log n)^2)$ calls to
+Two-Element Private Sort independently.</p>
+
+<h2 id="conclusion">Conclusion</h2>
+
+<p>We constructed a private sort mechanism that allows a cloud server $S_1$ to sort
+a list of encrypted data without learning anything about their order (while
+assisted by a non-colluding co-processor $S_2$). As discussed in the beginning
+of our post, this tool lets a user store his encrypted documents in
+a cloud server and receive ranked results when searching on them.</p>
+
+<p>The method, as described in the post, assumes that the rank table has an entry
+for every keyword-document pair, even if a keyword does not appear in
+this document zero is stored.
+In the <a href="https://eprint.iacr.org/2014/1017">full version</a> of the paper, we show that
+we can relax this requirement and store only information for documents where
+keyword appears, hence, significantly reducing the size of $T$ and query time for the server.
+If we do so, we can add ranking to the optimal SE technique by <a href="http://research.microsoft.com/apps/pubs/?id=102088">Curtmola et al.</a> for single keyword queries or to the technique by <a href="https://eprint.iacr.org/2013/169">Cash et al.</a>
+for efficiently answering Boolean queries on encrypted data (see earlier <a href="http://outsourcedbits.org/2014/08/21/how-to-search-on-encrypted-data-searchable-symmetric-encryption-part-5/#comment-2512">blog post</a> for more details on each).
+Although the resulting scheme gives a significant performance
+improvement and protects the ranking of the documents,
+it inherits the leakage of the access pattern (i.e., identifiers of the documents where each query keyword appears)
+from the corresponding SE technique.</p>
+
+<p>Our work leaves several interesting open questions, including:
+how to efficiently update the collection?
+how can a user verify the ranking result it receives?
+is a non-colluding co-processor provably necessary to solve multi-keyword
+ranked search? Any ideas? :)</p>
+
+            </div>
+            <footer class="article-footer">
+    <a data-url="http://outsourcedbits.org/2015/04/15/applied-crypto-highlights-searchable-encryption-with-ranked-results" data-id="12f79282efdf02e36e4972cd99a329c5" class="article-share-link">
+        Share
+    </a>
+    
+    <a href="http://outsourcedbits.org/2015/04/15/applied-crypto-highlights-searchable-encryption-with-ranked-results/#disqus_thread" class="article-comment-link">
+        Comments
+    </a>
+    
+</footer>
+
+        </div>
+
+        
+<nav id="article-nav">
+    
+    <a href="http://outsourcedbits.org/2014/12/09/applied-crypto-highlights-restricted-oblivious-rams-and-hidden-volume-encryption" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">
+          Older
+      </strong>
+      <div class="article-nav-title">Applied Crypto Highlights: Restricted Oblivious RAMs and Hidden Volume Encryption</div>
+    </a>
+    
+
+    
+    <a href="http://outsourcedbits.org/2015/06/30/workshop-on-encryption-for-secure-search-and-other-algorithms" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">
+          Newer
+      </strong>
+      <div class="article-nav-title">Workshop on Encryption for Secure Search and Other Algorithms</div>
+    </a>
+    
+</nav>
+
+
+    </article>
+
+    
+    <section id="comments">
+        <div id="disqus_thread">
+            <div id="disqus_thread"></div>
+<script type="text/javascript">
+    var disqus_shortname = 'outsourcedbits';
+    var disqus_identifier = 'http:\/\/outsourcedbits.org\/2015\/04\/15\/applied-crypto-highlights-searchable-encryption-with-ranked-results';
+    var disqus_title = 'Applied Crypto Highlights: Searchable Encryption with Ranked Results';
+    var disqus_url = 'http:\/\/outsourcedbits.org\/2015\/04\/15\/applied-crypto-highlights-searchable-encryption-with-ranked-results';
+
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+        </div>
+    </section>
+    
+</section>
+
+
+	    
+	    <aside id="sidebar">
+    
+
+    
+
+
+<div class="widget-wrap">
+    <h3 class="widget-title">Categories</h3>
+    <div class="widget">
+        <ul class="category-list">
+            
+            <li class="category-list-item">
+                <a class="category-list-link" href="http://outsourcedbits.org/categories/applied-crypto">
+                    applied-crypto
+                </a>
+                <span class="category-list-count">3</span>
+            </li>
+            
+            <li class="category-list-item">
+                <a class="category-list-link" href="http://outsourcedbits.org/categories/applied-cryptography">
+                    applied-cryptography
+                </a>
+                <span class="category-list-count">1</span>
+            </li>
+            
+            <li class="category-list-item">
+                <a class="category-list-link" href="http://outsourcedbits.org/categories/cloud-computing">
+                    cloud-computing
+                </a>
+                <span class="category-list-count">2</span>
+            </li>
+            
+            <li class="category-list-item">
+                <a class="category-list-link" href="http://outsourcedbits.org/categories/encrypted-search">
+                    encrypted-search
+                </a>
+                <span class="category-list-count">11</span>
+            </li>
+            
+            <li class="category-list-item">
+                <a class="category-list-link" href="http://outsourcedbits.org/categories/graph-encryption">
+                    graph-encryption
+                </a>
+                <span class="category-list-count">1</span>
+            </li>
+            
+            <li class="category-list-item">
+                <a class="category-list-link" href="http://outsourcedbits.org/categories/inference-attacks">
+                    inference-attacks
+                </a>
+                <span class="category-list-count">1</span>
+            </li>
+            
+            <li class="category-list-item">
+                <a class="category-list-link" href="http://outsourcedbits.org/categories/learning">
+                    learning
+                </a>
+                <span class="category-list-count">1</span>
+            </li>
+            
+            <li class="category-list-item">
+                <a class="category-list-link" href="http://outsourcedbits.org/categories/misc">
+                    misc
+                </a>
+                <span class="category-list-count">1</span>
+            </li>
+            
+            <li class="category-list-item">
+                <a class="category-list-link" href="http://outsourcedbits.org/categories/policy">
+                    policy
+                </a>
+                <span class="category-list-count">2</span>
+            </li>
+            
+            <li class="category-list-item">
+                <a class="category-list-link" href="http://outsourcedbits.org/categories/surveillance">
+                    surveillance
+                </a>
+                <span class="category-list-count">2</span>
+            </li>
+            
+        </ul>
+    </div>
+</div>
+
+
+
+    
+
+
+<div class="widget-wrap">
+    <h3 class="widget-title">
+        Tags
+    </h3>
+    <div class="widget">
+        <ul class="category-list">
+            
+            <li class="category-list-item">
+                <a class="category-list-link" href="http://outsourcedbits.org/tags/cryptdb">
+                    cryptdb
+                </a>
+                <span class="category-list-count">1</span>
+            </li>
+            
+            <li class="category-list-item">
+                <a class="category-list-link" href="http://outsourcedbits.org/tags/deterministic-encryption">
+                    deterministic-encryption
+                </a>
+                <span class="category-list-count">1</span>
+            </li>
+            
+            <li class="category-list-item">
+                <a class="category-list-link" href="http://outsourcedbits.org/tags/dte">
+                    dte
+                </a>
+                <span class="category-list-count">1</span>
+            </li>
+            
+            <li class="category-list-item">
+                <a class="category-list-link" href="http://outsourcedbits.org/tags/fhe">
+                    fhe
+                </a>
+                <span class="category-list-count">2</span>
+            </li>
+            
+            <li class="category-list-item">
+                <a class="category-list-link" href="http://outsourcedbits.org/tags/fisa">
+                    fisa
+                </a>
+                <span class="category-list-count">1</span>
+            </li>
+            
+            <li class="category-list-item">
+                <a class="category-list-link" href="http://outsourcedbits.org/tags/functional-encryption">
+                    functional-encryption
+                </a>
+                <span class="category-list-count">1</span>
+            </li>
+            
+            <li class="category-list-item">
+                <a class="category-list-link" href="http://outsourcedbits.org/tags/learning">
+                    learning
+                </a>
+                <span class="category-list-count">1</span>
+            </li>
+            
+            <li class="category-list-item">
+                <a class="category-list-link" href="http://outsourcedbits.org/tags/machine-learning">
+                    machine-learning
+                </a>
+                <span class="category-list-count">1</span>
+            </li>
+            
+            <li class="category-list-item">
+                <a class="category-list-link" href="http://outsourcedbits.org/tags/metadata">
+                    metadata
+                </a>
+                <span class="category-list-count">2</span>
+            </li>
+            
+            <li class="category-list-item">
+                <a class="category-list-link" href="http://outsourcedbits.org/tags/mpc">
+                    mpc
+                </a>
+                <span class="category-list-count">3</span>
+            </li>
+            
+            <li class="category-list-item">
+                <a class="category-list-link" href="http://outsourcedbits.org/tags/msr">
+                    msr
+                </a>
+                <span class="category-list-count">1</span>
+            </li>
+            
+            <li class="category-list-item">
+                <a class="category-list-link" href="http://outsourcedbits.org/tags/nsa">
+                    nsa
+                </a>
+                <span class="category-list-count">2</span>
+            </li>
+            
+            <li class="category-list-item">
+                <a class="category-list-link" href="http://outsourcedbits.org/tags/ope">
+                    ope
+                </a>
+                <span class="category-list-count">1</span>
+            </li>
+            
+            <li class="category-list-item">
+                <a class="category-list-link" href="http://outsourcedbits.org/tags/oram">
+                    oram
+                </a>
+                <span class="category-list-count">1</span>
+            </li>
+            
+            <li class="category-list-item">
+                <a class="category-list-link" href="http://outsourcedbits.org/tags/ot">
+                    ot
+                </a>
+                <span class="category-list-count">1</span>
+            </li>
+            
+            <li class="category-list-item">
+                <a class="category-list-link" href="http://outsourcedbits.org/tags/pets">
+                    pets
+                </a>
+                <span class="category-list-count">1</span>
+            </li>
+            
+            <li class="category-list-item">
+                <a class="category-list-link" href="http://outsourcedbits.org/tags/pir">
+                    pir
+                </a>
+                <span class="category-list-count">1</span>
+            </li>
+            
+            <li class="category-list-item">
+                <a class="category-list-link" href="http://outsourcedbits.org/tags/ppe">
+                    ppe
+                </a>
+                <span class="category-list-count">2</span>
+            </li>
+            
+            <li class="category-list-item">
+                <a class="category-list-link" href="http://outsourcedbits.org/tags/sat">
+                    sat
+                </a>
+                <span class="category-list-count">1</span>
+            </li>
+            
+            <li class="category-list-item">
+                <a class="category-list-link" href="http://outsourcedbits.org/tags/searchable-encryption">
+                    searchable-encryption
+                </a>
+                <span class="category-list-count">1</span>
+            </li>
+            
+            <li class="category-list-item">
+                <a class="category-list-link" href="http://outsourcedbits.org/tags/section-215">
+                    section-215
+                </a>
+                <span class="category-list-count">2</span>
+            </li>
+            
+            <li class="category-list-item">
+                <a class="category-list-link" href="http://outsourcedbits.org/tags/sse">
+                    sse
+                </a>
+                <span class="category-list-count">4</span>
+            </li>
+            
+            <li class="category-list-item">
+                <a class="category-list-link" href="http://outsourcedbits.org/tags/ste">
+                    ste
+                </a>
+                <span class="category-list-count">2</span>
+            </li>
+            
+        </ul>
+    </div>
+</div>
+
+
+
+    
+
+
+<div class="widget-wrap">
+    <h3 class="widget-title">
+        Tag cloud
+    </h3>
+    <div class="widget tagcloud">
+        
+        <a href="http://outsourcedbits.org/tags/cryptdb" style="font-size: 12px;">cryptdb</a>
+        
+        <a href="http://outsourcedbits.org/tags/deterministic-encryption" style="font-size: 12px;">deterministic-encryption</a>
+        
+        <a href="http://outsourcedbits.org/tags/dte" style="font-size: 12px;">dte</a>
+        
+        <a href="http://outsourcedbits.org/tags/fhe" style="font-size: 12px;">fhe</a>
+        
+        <a href="http://outsourcedbits.org/tags/fisa" style="font-size: 12px;">fisa</a>
+        
+        <a href="http://outsourcedbits.org/tags/functional-encryption" style="font-size: 12px;">functional-encryption</a>
+        
+        <a href="http://outsourcedbits.org/tags/learning" style="font-size: 12px;">learning</a>
+        
+        <a href="http://outsourcedbits.org/tags/machine-learning" style="font-size: 12px;">machine-learning</a>
+        
+        <a href="http://outsourcedbits.org/tags/metadata" style="font-size: 12px;">metadata</a>
+        
+        <a href="http://outsourcedbits.org/tags/mpc" style="font-size: 12px;">mpc</a>
+        
+        <a href="http://outsourcedbits.org/tags/msr" style="font-size: 12px;">msr</a>
+        
+        <a href="http://outsourcedbits.org/tags/nsa" style="font-size: 12px;">nsa</a>
+        
+        <a href="http://outsourcedbits.org/tags/ope" style="font-size: 12px;">ope</a>
+        
+        <a href="http://outsourcedbits.org/tags/oram" style="font-size: 12px;">oram</a>
+        
+        <a href="http://outsourcedbits.org/tags/ot" style="font-size: 12px;">ot</a>
+        
+        <a href="http://outsourcedbits.org/tags/pets" style="font-size: 12px;">pets</a>
+        
+        <a href="http://outsourcedbits.org/tags/pir" style="font-size: 12px;">pir</a>
+        
+        <a href="http://outsourcedbits.org/tags/ppe" style="font-size: 12px;">ppe</a>
+        
+        <a href="http://outsourcedbits.org/tags/sat" style="font-size: 12px;">sat</a>
+        
+        <a href="http://outsourcedbits.org/tags/searchable-encryption" style="font-size: 12px;">searchable-encryption</a>
+        
+        <a href="http://outsourcedbits.org/tags/section-215" style="font-size: 12px;">section-215</a>
+        
+        <a href="http://outsourcedbits.org/tags/sse" style="font-size: 12px;">sse</a>
+        
+        <a href="http://outsourcedbits.org/tags/ste" style="font-size: 12px;">ste</a>
+        
+    </div>
+</div>
+
+
+
+
+    <div id="toTop" class="fa fa-chevron-up"></div>
+</aside>
+
+	    
+	</div>
+</div>
+
+<footer id="footer">
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2016
+      Powered by <a href="//gohugo.io">Hugo</a>. Theme by <a href="http://github.com/ppoffice">PPOffice</a>.
+    </div>
+  </div>
+</footer>
+
+
+<script>
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-79501268-1', 'auto');
+ga('send', 'pageview');
+</script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+<script src="http://outsourcedbits.org/fancybox/jquery.fancybox.pack.js"></script>
+<script src="http://outsourcedbits.org/js/script.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.8.0/highlight.min.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+
+
+
+ 
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+  extensions: ["tex2jax.js"],
+  jax: ["input/TeX", "output/HTML-CSS"],
+  tex2jax: {
+    inlineMath: [['$','$'], ['\\(','\\)']],
+    displayMath: [['$$','$$'], ['\\[','\\]']],
+    processEscapes: true,
+    processEnvironments: true,
+    skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
+    TeX: { equationNumbers: { autoNumber: "AMS" },
+         extensions: ["AMSmath.js", "AMSsymbols.js"] }
+  },
+  "HTML-CSS": {availableFonts: ["TeX"]}, 
+  scale: [200]
+});
+</script>
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    
+    
+    
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i = 0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+});
+</script>
+<script type="text/javascript"
+  src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+</body>
+</html>

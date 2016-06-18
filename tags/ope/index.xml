@@ -1,0 +1,267 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Ope on Outsourced Bits</title>
+    <link>http://outsourcedbits.org/tags/ope/</link>
+    <description>Recent content in Ope on Outsourced Bits</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Mon, 07 Sep 2015 22:11:02 -0300</lastBuildDate>
+    <atom:link href="http://outsourcedbits.org/tags/ope/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>Attacking Encrypted Database Systems</title>
+      <link>http://outsourcedbits.org/2015/09/07/attacking-encrypted-database-systems</link>
+      <pubDate>Mon, 07 Sep 2015 22:11:02 -0300</pubDate>
+      
+      <guid>http://outsourcedbits.org/2015/09/07/attacking-encrypted-database-systems</guid>
+      <description>&lt;p&gt;&lt;img src=&#34;http://outsourcedbits.org/img/edb.png&#34; class=&#34;alignright&#34; width=&#34;250&#34;&gt;
+&lt;a href=&#34;http://cryptoonline.com/&#34;&gt;Muhammad Naveed&lt;/a&gt;, &lt;a href=&#34;http://web.cecs.pdx.edu/~cvwright/&#34;&gt;Charles
+Wright&lt;/a&gt; and I recently posted a paper that
+describes inference attacks on encrypted database (EDB) systems like
+&lt;a href=&#34;http://css.csail.mit.edu/cryptdb/&#34;&gt;CryptDB&lt;/a&gt;,
+&lt;a href=&#34;http://research.microsoft.com/en-us/projects/cipherbase/&#34;&gt;Cipherbase&lt;/a&gt;,&lt;br&gt;
+&lt;a href=&#34;https://github.com/google/encrypted-bigquery-client&#34;&gt;Google&#39;s Encrypted BigQuery demo&lt;/a&gt; and &lt;a href=&#34;https://msdn.microsoft.com/en-us/library/mt163865.aspx?f=255&amp;amp;MSPPError=-2147217396&#34;&gt;Microsoft SQL Server 2016 Always Encrypted&lt;/a&gt;.
+These systems are based on property-preserving encryption (PPE) schemes which
+are a class of encryptions schemes that leak certain properties of their
+plaintexts.  Examples include &lt;a href=&#34;https://en.wikipedia.org/wiki/Deterministic_encryption&#34;&gt;deterministic
+encryption&lt;/a&gt; (DTE) and
+order-preserving encryption (OPE).&lt;/p&gt;
+
+&lt;p&gt;The paper is
+&lt;a href=&#34;http://research.microsoft.com/en-us/um/people/senyk/pubs/edb.pdf&#34;&gt;here&lt;/a&gt; and
+will be presented in October at the &lt;a href=&#34;http://www.sigsac.org/ccs/CCS2015/index.html&#34;&gt;ACM Conference on Computer and
+Communication Security&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;This was an interesting project for several reasons.  For one thing, it was fun to do
+cryptanalysis! Even though we make use of old and basic ideas like frequency
+analysis and of even more obvious ideas like plain sorting, we did get the chance
+to work on some non-trivial attacks based on combinatorial optimization. We
+hope to post more about this in the future and we have upcoming work that
+explores new interesting technical questions that came out of this.&lt;/p&gt;
+
+&lt;p&gt;We also got to work  with real medical data and we believe our results provide
+a fair, accurate and realistic security evaluation of these PPE-based EDB
+systems. In particular, it provides a concrete and real-world analysis of the
+security one would get if one were to use them in an electronic medical records
+(EMR) setting, which is an important motivating scenario for these systems
+(see, e.g.,
+[&lt;a href=&#34;http://people.csail.mit.edu/nickolai/papers/raluca-cryptdb.pdf&#34;&gt;PRZB11&lt;/a&gt;]).&lt;/p&gt;
+
+&lt;h2 id=&#34;rebuttals&#34;&gt;Rebuttals&lt;/h2&gt;
+
+&lt;p&gt;The results of the paper were recently covered by the media (e.g.,
+&lt;a href=&#34;http://www.forbes.com/sites/thomasbrewster/2015/09/03/microsoft-dumb-attacks-cracks-next-gen-cryptography/&#34;&gt;Forbes&lt;/a&gt;
+and &lt;a href=&#34;http://arstechnica.com/security/2015/09/ms-researchers-claim-to-crack-encrypted-database-with-old-simple-trick/&#34;&gt;Ars
+Technica&lt;/a&gt;
+and on Microsoft Research&#39;s own
+&lt;a href=&#34;http://blogs.technet.com/b/inside_microsoft_research/archive/2015/09/03/database-security-arms-race-researchers-make-advances.aspx&#34;&gt;blog&lt;/a&gt;).
+Some of the designers of these systems found our work  important, even saying
+that it is&lt;/p&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;valuable because it gives database customers a better understanding of the
+security precautions they need to consider, especially if they are charged with
+handling very sensitive data such as electronic medical records.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;Others, however, dispute our results.  The three arguments we have seen so far
+(in the Forbes and Ars Technica pieces) are that: (1) we did not break the
+systems; (2) we used them in a way they were not intended for; and (3)
+that users are warned on how to use them correctly.&lt;/p&gt;
+
+&lt;p&gt;The high-level point we
+would like to make here is that  &lt;em&gt;we absolutely did use them in the way
+they were intended&lt;/em&gt; and if you read this entire post you will see why.  You
+will also see why the user warnings mentioned in the articles (which we could not
+find in the referenced paper) do not prevent the attacks.&lt;/p&gt;
+
+&lt;h2 id=&#34;how-we-used-the-systems&#34;&gt;How We Used the Systems&lt;/h2&gt;
+
+&lt;p&gt;First, we should be clear that we never claimed to have broken anything.  But
+in our opinion, this is not a meaningful question anyways due to the way these
+PPE-based EDB systems  and their underlying cryptography phrase their security
+claims. Roughly speaking, these systems are usually claimed to be secure under
+what I will refer to as &lt;em&gt;functionality assumptions&lt;/em&gt;. &lt;sup class=&#34;footnote-ref&#34; id=&#34;fnref:1&#34;&gt;&lt;a class=&#34;footnote&#34; href=&#34;#fn:1&#34;&gt;1&lt;/a&gt;&lt;/sup&gt;&lt;/p&gt;
+
+&lt;p&gt;The problem here is that these assumptions essentially cripple the
+functionality of these systems in a way that make them a lot less useful and
+interesting than what most people believe or expect.  In fact, in some
+cases these  assumptions can almost obviate the systems&#39; entire purpose.&lt;/p&gt;
+
+&lt;p&gt;For example, PPE-based EDB systems are typically claimed to be secure if a
+database administrator labels all &amp;quot;sensitive&amp;quot; fields (for some undefined
+notion of sensitivity) so that they are encrypted with standard encryption
+schemes. But of course, this also means that these fields then cannot be
+queried at all---ever.  So this leaves us with  an EDB system that only works
+over &lt;em&gt;non-sensitive&lt;/em&gt; data.  If it&#39;s non-sensitive, one could ask how much
+value we are getting from encrypting it at all. Is
+this really the point of an encrypted DB system? To do SQL over encrypted
+&lt;em&gt;non-sensitive&lt;/em&gt; data? Is this really consistent with how these systems are
+motivated and understood?&lt;/p&gt;
+
+&lt;p&gt;The point is that to claim that these systems are secure, you effectively have
+to cripple them until you have to use  regular plain encryption---at least for
+the kinds of data you actually care to protect.&lt;/p&gt;
+
+&lt;p&gt;What&#39;s going on is that there is an underlying tradeoff in these systems
+between security and utility and the &lt;em&gt;technical&lt;/em&gt; (i.e., the fine print)
+security claims these systems make essentially cripples their utility.  Yet,
+the crippled version of these systems is not what will be used in practice and
+it is not how these systems are understood by most people (engineers and
+researchers alike).  Indeed, the main claim these systems make is that one can
+run real-world applications on top of them. In particular, applications like
+electronic medical records (EMR).&lt;/p&gt;
+
+&lt;p&gt;So in our work, we were not interested in &amp;quot;breaking&amp;quot; these systems because,
+under the right &lt;em&gt;functional assumptions&lt;/em&gt; one can always claim they are
+secure. That would be a meaningless exercise.&lt;/p&gt;
+
+&lt;p&gt;What we set out to do was to answer a different question that is actually relevant to
+practice: &amp;quot;what security do we get when we run an EMR application on top of
+these systems?&amp;quot; In our opinion, this is not only a fair question; it is the
+most basic question one should ask about these systems. This is a concrete and
+real-world question that cannot be dismissed using assumptions and caveats.&lt;/p&gt;
+
+&lt;p&gt;So how do we answer such a question? Our approach was to analyze&lt;br&gt;
+attributes that are relevant to  EMR systems.&lt;/p&gt;
+
+&lt;p&gt;To support the EMR system, the EDB needs to support queries on these attributes
+which means that they need to be encrypted with the appropriate PPE
+scheme (i.e., their onion needs to be peeled to either order-preserving
+encryption or deterministic encryption depending on the type of query).  And
+when this happens, the question is: &amp;quot;what information is leaked?&amp;quot;&lt;/p&gt;
+
+&lt;p&gt;That is what our paper explores and this is not only a fair question it is a
+question that has been asked about other encrypted search solutions.&lt;/p&gt;
+
+&lt;p&gt;Of course, in choosing attributes to analyze we were limited by our data. That
+is, there are many attributes used in EMR systems but we didn&#39;t have data for
+all of them. We felt it was important to use real data here and not synthetic
+data so we preferred to limit the attributes we analyzed than to compromise the
+integrity of the experiments.  In the end, the set of attributes that are
+relevant to EMRs and that we had data for were: sex, race, age, admission
+month, whether the patient died, primary payer, length of stay, mortality risk,
+disease severity, major diagnostic category, admission type and admission
+source.&lt;/p&gt;
+
+&lt;p&gt;We believe it is fair to say that any reasonable EMR system would need to query
+these attributes.  We even confirmed that the
+&lt;a href=&#34;http://www.open-emr.org/&#34;&gt;OpenEMR&lt;/a&gt; system (which is used as
+motivation in
+[&lt;a href=&#34;http://people.csail.mit.edu/nickolai/papers/raluca-cryptdb.pdf&#34;&gt;PRZB11&lt;/a&gt;]
+queries sex, race, age, admission month, patient died and primary payer. So the
+claim that we are using these systems in a way they were not intended to is
+completely unfounded.&lt;/p&gt;
+
+&lt;h2 id=&#34;how-should-they-be-used&#34;&gt;How Should They be Used?&lt;/h2&gt;
+
+&lt;p&gt;In the rebuttal from the Forbes article, we also see the following claim:&lt;/p&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;OPE encryption should be used for &amp;quot;high-entropy values&amp;quot; where the order does
+not reveal much and that CryptDB was still a worthy way to protect information.
+&amp;quot;This is how the CryptDB paper says it should be used.&amp;quot;&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;First, there is no such statement in the CryptDB paper---at least we could not
+find one.  Second, even if this warning were given to users and DB
+administrators,  &lt;em&gt;the system would still be vulnerable to the attacks we
+describe!&lt;/em&gt; In fact, the attacks would still work even if the data had the
+&lt;em&gt;maximum&lt;/em&gt; possible entropy.&lt;/p&gt;
+
+&lt;p&gt;Let&#39;s see how. In Section 6.1 of our paper, we describe a really obvious
+&amp;quot;attack&amp;quot; we refer to as the &lt;em&gt;sorting attack&lt;/em&gt;. Here is how it works.
+Suppose we are analyzing some attribute, say age, which can range over a given
+number of values. In the case of age, this would be from 0 to 124. Now
+suppose I give you an OPE-encrypted column of ages; that is, a set of OPE
+encryptions of the ages in the DB. Now further suppose that every possible age
+is represented in this column. In such a case, we say that the column is
+&lt;em&gt;dense&lt;/em&gt;.  Now to recover the plaintext values from this OPE-encrypted
+column, one simply needs to sort it---which can be done since OPE reveals
+order. At this point, it simply follows that the smallest ciphertext will
+correspond to 0, the second smallest to &lt;span  class=&#34;math&#34;&gt;\(1\)&lt;/span&gt; and so on and so forth.&lt;/p&gt;
+
+&lt;p&gt;Of course, the statement &amp;quot;OPE should be used for high-entropy values&amp;quot; is a
+bit vague. In fact, it could be interpreted in two different ways but, as we
+will see, in each case it leads to problems.  Note that by entropy, in
+cryptography we usually mean
+&lt;a href=&#34;https://en.wikipedia.org/wiki/Min_entropy&#34;&gt;min-entropy&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Interpretation #1.&lt;/strong&gt;
+The values themselves are sampled from some arbitrary distribution (perhaps
+even with low min-entropy) but the adversary knows nothing about them so we treat them
+as high min-entropy. This is completely unrealistic. Designing and using
+cryptography against adversaries with no auxiliary information is meaningless
+since auxiliary information is available. In particular, our paper implicitly makes this
+point since we were able to leverage publicly-available auxiliary information
+to mount our attacks.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Interpretation #2.&lt;/strong&gt;
+Each value in the column is actually sampled from a high min-entropy distribution.
+Let&#39; s assume this is the case and suppose the range of the attribute space is
+&lt;span  class=&#34;math&#34;&gt;\(n\)&lt;/span&gt;. Furthermore, let&#39;s go as far as saying that the values are sampled
+uniformly at random---which has &lt;em&gt;maximum&lt;/em&gt; min-entropy.&lt;/p&gt;
+
+&lt;p&gt;By the
+&lt;a href=&#34;https://en.wikipedia.org/wiki/Coupon_collector%27s_problem&#34;&gt;coupon collector&lt;/a&gt;
+problem, we can expect to see all values after  &lt;span  class=&#34;math&#34;&gt;\(\theta(n \log n)\)&lt;/span&gt;
+samples.  More concretely, this means that we can expect the OPE-encrypted
+column to be dense after &lt;span  class=&#34;math&#34;&gt;\(\theta(n \log n)\)&lt;/span&gt; patients are registered in the DB.
+So for example, for the &amp;quot;age&amp;quot; attribute which has &lt;span  class=&#34;math&#34;&gt;\(n = 125\)&lt;/span&gt;, we should expect
+the column to be dense---and therefore vulnerable to sorting---after 604
+patients appear in the DB. To give you an idea of how small that is, the
+largest hospital in our dataset had 121,664 patients and exactly 827 out of
+1050 hospitals in our dataset had more than 604 patients (i.e., 79%).&lt;/p&gt;
+
+&lt;!-- % \paragraph{Interpretation $$\#3$$.}
+% The histogram of the encrypted column (when viewed as a distribution) has high
+% min-entropy. Let&#39;s assume, again, the uniform distribution which has maximum
+% min-entropy. In this case, this will mean that every element in the attribute
+% space appears the exact same number of times.  But, as long as they appear at
+% least once, the column will be dense, and therefore vulnerable to sorting. 
+--&gt;
+
+&lt;p&gt;This discussion highlights some of the pitfalls with the kind of functional
+assumptions used in the security claims of these systems. They are often vague,
+hard to interpret, hard to make actionable and, as above, sometimes do not even provide
+security.&lt;/p&gt;
+
+&lt;h2 id=&#34;are-edb-systems-doomed&#34;&gt;Are EDB Systems Doomed?&lt;/h2&gt;
+
+&lt;p&gt;We personally do not think so. There are alternative ways of designing EDB
+systems that are currently being investigated in various research labs. What
+our work shows is that the EDB systems &lt;em&gt;we&lt;/em&gt; looked at do not provide the
+level of security required for EMR systems and, most likely, other databases
+with similar demographic information. More generally, our work does suggest
+that &lt;em&gt;PPE-based&lt;/em&gt; EDB systems (i.e., based on deterministic and
+order-preserving encryption) might not be the way to go but this does not mean
+that reasonably secure and efficient EDB systems are impossible to design.&lt;/p&gt;
+
+&lt;!--
+% \section*{Isn&#39;t this Better than Nothing?}
+% Since releasing our paper, another argument we have heard (though not in the
+% rebuttals mentioned above) is that even if these systems aren&#39;t perfect they
+% are better than nothing; that it&#39;s better to use them than not to.  
+% 
+% This is not a clearcut argument in our opinion. The reality is that the use of
+% encryption comes with expectations. The standard role of encryption in secure
+% system design is, roughly speaking, to reduce the attack surface of the system.
+% In other words, instead of having to protect a dataset or DB, one only has to
+% worry about protecting the key. When people hear *encrypted* they tend to
+% think that their data is secure. As such, they become less careful with it 
+--&gt;
+&lt;div class=&#34;footnotes&#34;&gt;
+
+&lt;hr&gt;
+
+&lt;ol&gt;
+&lt;li id=&#34;fn:1&#34;&gt;Please note that I am not trying to define a formal concept here, I am only using the term &lt;em&gt;functional assumption&lt;/em&gt; for ease of exposition.  Also, these assumptions are very different than, e.g., computational assumptions as typically used in cryptography.  Computational assumptions usually do not limit the utility of a primitive whereas the kind of assumptions we are talking about here do. So the argument that, e.g., high min-entropy assumptions are perfectly fine because we typically use assumptions anyways does not hold.&lt;br&gt;
+ &lt;a class=&#34;footnote-return&#34; href=&#34;#fnref:1&#34;&gt;↩&lt;/a&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/div&gt;
+</description>
+    </item>
+    
+  </channel>
+</rss>
