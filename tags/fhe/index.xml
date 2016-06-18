@@ -2,19 +2,19 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Fhe on Outsourced Bits</title>
-    <link>http://outsourcedbits.org/tags/fhe/</link>
+    <link>http://senykam.github.io/tags/fhe/</link>
     <description>Recent content in Fhe on Outsourced Bits</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <lastBuildDate>Sat, 29 Sep 2012 16:59:14 -0300</lastBuildDate>
-    <atom:link href="http://outsourcedbits.org/tags/fhe/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="http://senykam.github.io/tags/fhe/index.xml" rel="self" type="application/rss+xml" />
     
     <item>
       <title>Applying Fully Homomorphic Encryption (Part 2)</title>
-      <link>http://outsourcedbits.org/2012/09/29/applying-fully-homomorphic-encryption-part-2</link>
+      <link>http://senykam.github.io/2012/09/29/applying-fully-homomorphic-encryption-part-2</link>
       <pubDate>Sat, 29 Sep 2012 16:59:14 -0300</pubDate>
       
-      <guid>http://outsourcedbits.org/2012/09/29/applying-fully-homomorphic-encryption-part-2</guid>
+      <guid>http://senykam.github.io/2012/09/29/applying-fully-homomorphic-encryption-part-2</guid>
       <description>&lt;p&gt;&lt;em&gt;This is the second part of a series on applying fully-homomorphic encryption.
 In the
 &lt;a href=&#34;http://outsourcedbits.org/2012/06/26/applying-fully-homomorphic-encryption-part-1/&#34;&gt;first&lt;/a&gt;
@@ -22,7 +22,7 @@ post we went over what fully-homomorphic encryption (FHE) and
 shomewhat-homomorphic encryption (SHE) were and how they relate. In this post
 we&#39; ll discuss actual applications.&lt;/em&gt;&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&#34;http://outsourcedbits.org/img/grail.jpg&#34; class=&#34;alignright&#34; width=&#34;250&#34;&gt;
+&lt;p&gt;&lt;img src=&#34;http://senykam.github.io/img/grail.jpg&#34; class=&#34;alignright&#34; width=&#34;250&#34;&gt;
 To structure the discussion, I&#39; ll refer to some applications as direct and
 others as indirect. Indirect applications will refer to applications where FHE
 is used as a building block---usually with other components---to construct
@@ -272,14 +272,14 @@ discuss the limitations of FHE and SHE and some alternatives.&lt;/p&gt;
     
     <item>
       <title>Applying Fully Homomorphic Encryption (Part 1)</title>
-      <link>http://outsourcedbits.org/2012/06/26/applying-fully-homomorphic-encryption-part-1</link>
+      <link>http://senykam.github.io/2012/06/26/applying-fully-homomorphic-encryption-part-1</link>
       <pubDate>Tue, 26 Jun 2012 16:48:56 -0300</pubDate>
       
-      <guid>http://outsourcedbits.org/2012/06/26/applying-fully-homomorphic-encryption-part-1</guid>
+      <guid>http://senykam.github.io/2012/06/26/applying-fully-homomorphic-encryption-part-1</guid>
       <description>&lt;p&gt;&lt;em&gt;This is the first part of a series on applying fully-homomorphic encryption.
 See part &lt;a href=&#34;http://outsourcedbits.org/2012/06/26/applying-fully-homomorphic-encryption-part-2/&#34;&gt;2&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&#34;http://outsourcedbits.org/img/grail.jpg&#34; class=&#34;alignright&#34; width=&#34;250&#34;&gt;
+&lt;p&gt;&lt;img src=&#34;http://senykam.github.io/img/grail.jpg&#34; class=&#34;alignright&#34; width=&#34;250&#34;&gt;
 In 2009, Craig Gentry published a paper showing---for the first time---how to
 construct a fully-homomorphic encryption (FHE) scheme. This was a landmark
 event in cryptographic research that will eventually have huge practical

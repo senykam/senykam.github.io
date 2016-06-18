@@ -2,25 +2,25 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Applied Crypto on Outsourced Bits</title>
-    <link>http://outsourcedbits.org/categories/applied-crypto/</link>
+    <link>http://senykam.github.io/categories/applied-crypto/</link>
     <description>Recent content in Applied Crypto on Outsourced Bits</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <lastBuildDate>Tue, 09 Dec 2014 20:40:06 -0300</lastBuildDate>
-    <atom:link href="http://outsourcedbits.org/categories/applied-crypto/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="http://senykam.github.io/categories/applied-crypto/index.xml" rel="self" type="application/rss+xml" />
     
     <item>
       <title>Applied Crypto Highlights: Restricted Oblivious RAMs and Hidden Volume Encryption</title>
-      <link>http://outsourcedbits.org/2014/12/09/applied-crypto-highlights-restricted-oblivious-rams-and-hidden-volume-encryption</link>
+      <link>http://senykam.github.io/2014/12/09/applied-crypto-highlights-restricted-oblivious-rams-and-hidden-volume-encryption</link>
       <pubDate>Tue, 09 Dec 2014 20:40:06 -0300</pubDate>
       
-      <guid>http://outsourcedbits.org/2014/12/09/applied-crypto-highlights-restricted-oblivious-rams-and-hidden-volume-encryption</guid>
+      <guid>http://senykam.github.io/2014/12/09/applied-crypto-highlights-restricted-oblivious-rams-and-hidden-volume-encryption</guid>
       <description>&lt;p&gt;&lt;em&gt;This is the first in a series of guest posts highlighting new research in
 applied cryptography. This post is written by &lt;a href=&#34;http://www.ccs.neu.edu/home/travism/&#34;&gt;Travis
 Mayberry&lt;/a&gt; from Northeastern University.
 Note that Travis is graduating this year and will be on the job market.&lt;/em&gt;&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&#34;http://outsourcedbits.org/img/steam.jpg&#34; class=&#34;alignright&#34; width=&#34;250&#34;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;http://senykam.github.io/img/steam.jpg&#34; class=&#34;alignright&#34; width=&#34;250&#34;&gt;&lt;/p&gt;
 
 &lt;h2 id=&#34;oram-background&#34;&gt;ORAM Background&lt;/h2&gt;
 
@@ -285,10 +285,10 @@ the area.&lt;/p&gt;
     
     <item>
       <title>Thoughts on Applied Cryptography Research</title>
-      <link>http://outsourcedbits.org/2014/12/05/thoughts-on-applied-cryptography-research</link>
+      <link>http://senykam.github.io/2014/12/05/thoughts-on-applied-cryptography-research</link>
       <pubDate>Fri, 05 Dec 2014 20:37:48 -0300</pubDate>
       
-      <guid>http://outsourcedbits.org/2014/12/05/thoughts-on-applied-cryptography-research</guid>
+      <guid>http://senykam.github.io/2014/12/05/thoughts-on-applied-cryptography-research</guid>
       <description>&lt;p&gt;If you follow me on Twitter you have no doubt heard my occasional outbursts and
 rants on what I perceive to be biases in the current publication model in
 cryptography. In short, I think that top cryptography conferences are heavily
@@ -360,11 +360,11 @@ in the comments that your paper was not invited to be discussed.&lt;/p&gt;
     
     <item>
       <title>A Note on Crypto Design vs Crypto Engineering</title>
-      <link>http://outsourcedbits.org/2013/07/28/a-note-on-crypto-design-vs-crypto-engineering</link>
+      <link>http://senykam.github.io/2013/07/28/a-note-on-crypto-design-vs-crypto-engineering</link>
       <pubDate>Sun, 28 Jul 2013 23:03:34 -0300</pubDate>
       
-      <guid>http://outsourcedbits.org/2013/07/28/a-note-on-crypto-design-vs-crypto-engineering</guid>
-      <description>&lt;p&gt;&lt;img src=&#34;http://outsourcedbits.org/img/hand.jpg&#34; class=&#34;alignright&#34; width=&#34;150&#34;&gt;
+      <guid>http://senykam.github.io/2013/07/28/a-note-on-crypto-design-vs-crypto-engineering</guid>
+      <description>&lt;p&gt;&lt;img src=&#34;http://senykam.github.io/img/hand.jpg&#34; class=&#34;alignright&#34; width=&#34;150&#34;&gt;
 In my
 &lt;a href=&#34;http://outsourcedbits.org/2013/07/23/are-compliance-and-privacy-always-at-odds/&#34;&gt;previous
 post&lt;/a&gt;,

@@ -2,26 +2,26 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Outsourced Bits</title>
-    <link>http://outsourcedbits.org/</link>
+    <link>http://senykam.github.io/</link>
     <description>Recent content on Outsourced Bits</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <lastBuildDate>Thu, 16 Jun 2016 12:32:12 -0300</lastBuildDate>
-    <atom:link href="http://outsourcedbits.org/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="http://senykam.github.io/index.xml" rel="self" type="application/rss+xml" />
     
     <item>
       <title>Graph Encryption: Going Beyond Encrypted Keyword Search</title>
-      <link>http://outsourcedbits.org/2016/06/16/graph-encryption-going-beyond-encrypted-keyword-search</link>
+      <link>http://senykam.github.io/2016/06/16/graph-encryption-going-beyond-encrypted-keyword-search</link>
       <pubDate>Thu, 16 Jun 2016 12:32:12 -0300</pubDate>
       
-      <guid>http://outsourcedbits.org/2016/06/16/graph-encryption-going-beyond-encrypted-keyword-search</guid>
+      <guid>http://senykam.github.io/2016/06/16/graph-encryption-going-beyond-encrypted-keyword-search</guid>
       <description>&lt;p&gt;&lt;em&gt;This is a guest post by &lt;a href=&#34;http://www.xianruimeng.org/&#34;&gt;Xianrui Meng&lt;/a&gt; from
 Boston University about a paper he presented at CCS 2015, written in
 collaboration with &lt;a href=&#34;https://www.cs.bgu.ac.il/~kobbi/&#34;&gt;Kobbi Nissim&lt;/a&gt;, &lt;a href=&#34;http://www.cs.bu.edu/~gkollios/&#34;&gt;George
 Kollios&lt;/a&gt;  and myself. Note that Xianrui is on
 the job market.&lt;/em&gt;&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&#34;http://outsourcedbits.org/img/graph21.jpg&#34; class=&#34;alignright&#34; width=&#34;250&#34;&gt;
+&lt;p&gt;&lt;img src=&#34;http://senykam.github.io/img/graph21.jpg&#34; class=&#34;alignright&#34; width=&#34;250&#34;&gt;
 Encrypted search has attracted a lot of attention from practitioners and
 researchers in academia and industry. In previous posts, Seny already described
 different ways one can search on encrypted data. Here, I would like to discuss
@@ -313,11 +313,11 @@ schemes?  Any briliant ideas? Talk to us! :-)&lt;/p&gt;
     
     <item>
       <title>Attacking Encrypted Database Systems</title>
-      <link>http://outsourcedbits.org/2015/09/07/attacking-encrypted-database-systems</link>
+      <link>http://senykam.github.io/2015/09/07/attacking-encrypted-database-systems</link>
       <pubDate>Mon, 07 Sep 2015 22:11:02 -0300</pubDate>
       
-      <guid>http://outsourcedbits.org/2015/09/07/attacking-encrypted-database-systems</guid>
-      <description>&lt;p&gt;&lt;img src=&#34;http://outsourcedbits.org/img/edb.png&#34; class=&#34;alignright&#34; width=&#34;250&#34;&gt;
+      <guid>http://senykam.github.io/2015/09/07/attacking-encrypted-database-systems</guid>
+      <description>&lt;p&gt;&lt;img src=&#34;http://senykam.github.io/img/edb.png&#34; class=&#34;alignright&#34; width=&#34;250&#34;&gt;
 &lt;a href=&#34;http://cryptoonline.com/&#34;&gt;Muhammad Naveed&lt;/a&gt;, &lt;a href=&#34;http://web.cecs.pdx.edu/~cvwright/&#34;&gt;Charles
 Wright&lt;/a&gt; and I recently posted a paper that
 describes inference attacks on encrypted database (EDB) systems like
@@ -567,11 +567,11 @@ that reasonably secure and efficient EDB systems are impossible to design.&lt;/p
     
     <item>
       <title>Workshop on Encryption for Secure Search and Other Algorithms</title>
-      <link>http://outsourcedbits.org/2015/06/30/workshop-on-encryption-for-secure-search-and-other-algorithms</link>
+      <link>http://senykam.github.io/2015/06/30/workshop-on-encryption-for-secure-search-and-other-algorithms</link>
       <pubDate>Tue, 30 Jun 2015 21:43:32 -0300</pubDate>
       
-      <guid>http://outsourcedbits.org/2015/06/30/workshop-on-encryption-for-secure-search-and-other-algorithms</guid>
-      <description>&lt;p&gt;&lt;img src=&#34;http://outsourcedbits.org/img/bertinoro.gif&#34; class=&#34;alignright&#34; width=&#34;250&#34;&gt;
+      <guid>http://senykam.github.io/2015/06/30/workshop-on-encryption-for-secure-search-and-other-algorithms</guid>
+      <description>&lt;p&gt;&lt;img src=&#34;http://senykam.github.io/img/bertinoro.gif&#34; class=&#34;alignright&#34; width=&#34;250&#34;&gt;
 I just got back from the Workshop on Encryption for Secure Search and other
 Algorithms (ESSA) which was held in Bertinoro, Italy, and was organized by
 Sasha Boldyreva and Bogdan Warinschi. It was a great event and I&#39;d like to
@@ -775,17 +775,17 @@ extremely useful.&lt;/p&gt;
     
     <item>
       <title>Applied Crypto Highlights: Searchable Encryption with Ranked Results</title>
-      <link>http://outsourcedbits.org/2015/04/15/applied-crypto-highlights-searchable-encryption-with-ranked-results</link>
+      <link>http://senykam.github.io/2015/04/15/applied-crypto-highlights-searchable-encryption-with-ranked-results</link>
       <pubDate>Wed, 15 Apr 2015 20:57:14 -0300</pubDate>
       
-      <guid>http://outsourcedbits.org/2015/04/15/applied-crypto-highlights-searchable-encryption-with-ranked-results</guid>
+      <guid>http://senykam.github.io/2015/04/15/applied-crypto-highlights-searchable-encryption-with-ranked-results</guid>
       <description>&lt;p&gt;&lt;em&gt;This is the second in a series of guest posts highlighting new research in
 applied cryptography. This post is written by &lt;a href=&#34;http://www.baldimtsi.com/&#34;&gt;Foteini
 Baldimtsi&lt;/a&gt; who is a postdoc at Boston University and
 &lt;a href=&#34;http://research.microsoft.com/en-us/people/oohrim/&#34;&gt;Olya Ohrimenko&lt;/a&gt; who is a
 postdoc at Microsoft Research.  Note that Olya is on the job market this year.&lt;/em&gt;&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&#34;http://outsourcedbits.org/img/steam.jpg&#34; class=&#34;alignright&#34; width=&#34;250&#34;&gt;
+&lt;p&gt;&lt;img src=&#34;http://senykam.github.io/img/steam.jpg&#34; class=&#34;alignright&#34; width=&#34;250&#34;&gt;
 Modern cloud services let their users outsource data as well as request
 computations on it.  Due to potentially sensitive content of users&#39; data and
 distrust in cloud services, it is natural for users to outsource their data
@@ -828,7 +828,7 @@ in the whole document collection). Then, for each term and document we compute&l
 
 &lt;p&gt;and store the score values in the rank table, $T$:&lt;/p&gt;
 
-&lt;p&gt;&lt;figure&gt;&lt;img src=&#34;http://outsourcedbits.org/img/searchindextable.jpg&#34; alt=&#34;&#34; title=&#34;$\mbox{tf-idf}$ rank table, $T$, outsourced to the cloud&#34;&gt;&lt;figcaption&gt;$\mbox{tf-idf}$ rank table, $T$, outsourced to the cloud&lt;/figcaption&gt;&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;&lt;figure&gt;&lt;img src=&#34;http://senykam.github.io/img/searchindextable.jpg&#34; alt=&#34;&#34; title=&#34;$\mbox{tf-idf}$ rank table, $T$, outsourced to the cloud&#34;&gt;&lt;figcaption&gt;$\mbox{tf-idf}$ rank table, $T$, outsourced to the cloud&lt;/figcaption&gt;&lt;/figure&gt;&lt;/p&gt;
 
 &lt;p&gt;Note that if a term does not appear in a table, then we store $0.00$ as a rank.
 This table could be either computed by the owner of the document collection and
@@ -909,7 +909,7 @@ collude with the cloud server and both of them are following the protocol in an
 honest-but-curious way. That is, neither of them deviates from the protocol but
 both are curious to learn more about user&#39;s data.&lt;/p&gt;
 
-&lt;p&gt;&lt;figure&gt;&lt;img src=&#34;http://outsourcedbits.org/img/introimagesingleuserslim.jpg&#34; alt=&#34;&#34; title=&#34;An overview of the interactions between the user, the cloud server $S_1$ and the co-processor $S_2$.&#34;&gt;&lt;figcaption&gt;An overview of the interactions between the user, the cloud server $S_1$ and the co-processor $S_2$.&lt;/figcaption&gt;&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;&lt;figure&gt;&lt;img src=&#34;http://senykam.github.io/img/introimagesingleuserslim.jpg&#34; alt=&#34;&#34; title=&#34;An overview of the interactions between the user, the cloud server $S_1$ and the co-processor $S_2$.&#34;&gt;&lt;figcaption&gt;An overview of the interactions between the user, the cloud server $S_1$ and the co-processor $S_2$.&lt;/figcaption&gt;&lt;/figure&gt;&lt;/p&gt;
 
 &lt;p&gt;Regarding the privacy of our scheme, we design our protocol in such a way that:
 (a) the co-processor learns nothing about the values being sorted and (b) the
@@ -1041,7 +1041,7 @@ he engages with $S_2$ in Private Two-Element Sort.
 He uses the outputs of this layer as inputs to the next layer
 of the network. (See Figure\ref{fig:batcher} for an illustration.)&lt;/p&gt;
 
-&lt;p&gt;&lt;figure&gt;&lt;img src=&#34;http://outsourcedbits.org/img/batcher1.jpg&#34; alt=&#34;&#34; title=&#34;Example of privately sorting an encrypted array of four elements $5,1,2,9$ where $[m]$ denotes a Paillier encryption of message $m$ and $\mathsf{pairs}_i$ denotes a pair of elements to be sorted. Note that only $S_1$ stores values in the arrays $A_i$ while $S_2$ blindly assists $S_1$ in sorting the values.&#34;&gt;&lt;figcaption&gt;Example of privately sorting an encrypted array of four elements $5,1,2,9$ where $[m]$ denotes a Paillier encryption of message $m$ and $\mathsf{pairs}_i$ denotes a pair of elements to be sorted. Note that only $S_1$ stores values in the arrays $A_i$ while $S_2$ blindly assists $S_1$ in sorting the values.&lt;/figcaption&gt;&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;&lt;figure&gt;&lt;img src=&#34;http://senykam.github.io/img/batcher1.jpg&#34; alt=&#34;&#34; title=&#34;Example of privately sorting an encrypted array of four elements $5,1,2,9$ where $[m]$ denotes a Paillier encryption of message $m$ and $\mathsf{pairs}_i$ denotes a pair of elements to be sorted. Note that only $S_1$ stores values in the arrays $A_i$ while $S_2$ blindly assists $S_1$ in sorting the values.&#34;&gt;&lt;figcaption&gt;Example of privately sorting an encrypted array of four elements $5,1,2,9$ where $[m]$ denotes a Paillier encryption of message $m$ and $\mathsf{pairs}_i$ denotes a pair of elements to be sorted. Note that only $S_1$ stores values in the arrays $A_i$ while $S_2$ blindly assists $S_1$ in sorting the values.&lt;/figcaption&gt;&lt;/figure&gt;&lt;/p&gt;
 
 &lt;p&gt;&lt;strong&gt;Sketch of Privacy Analysis.&lt;/strong&gt;
 We note that the number of times $S_1$ engages with $S_2$ in the protocol does
@@ -1086,16 +1086,16 @@ ranked search? Any ideas? :)&lt;/p&gt;
     
     <item>
       <title>Applied Crypto Highlights: Restricted Oblivious RAMs and Hidden Volume Encryption</title>
-      <link>http://outsourcedbits.org/2014/12/09/applied-crypto-highlights-restricted-oblivious-rams-and-hidden-volume-encryption</link>
+      <link>http://senykam.github.io/2014/12/09/applied-crypto-highlights-restricted-oblivious-rams-and-hidden-volume-encryption</link>
       <pubDate>Tue, 09 Dec 2014 20:40:06 -0300</pubDate>
       
-      <guid>http://outsourcedbits.org/2014/12/09/applied-crypto-highlights-restricted-oblivious-rams-and-hidden-volume-encryption</guid>
+      <guid>http://senykam.github.io/2014/12/09/applied-crypto-highlights-restricted-oblivious-rams-and-hidden-volume-encryption</guid>
       <description>&lt;p&gt;&lt;em&gt;This is the first in a series of guest posts highlighting new research in
 applied cryptography. This post is written by &lt;a href=&#34;http://www.ccs.neu.edu/home/travism/&#34;&gt;Travis
 Mayberry&lt;/a&gt; from Northeastern University.
 Note that Travis is graduating this year and will be on the job market.&lt;/em&gt;&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&#34;http://outsourcedbits.org/img/steam.jpg&#34; class=&#34;alignright&#34; width=&#34;250&#34;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;http://senykam.github.io/img/steam.jpg&#34; class=&#34;alignright&#34; width=&#34;250&#34;&gt;&lt;/p&gt;
 
 &lt;h2 id=&#34;oram-background&#34;&gt;ORAM Background&lt;/h2&gt;
 
@@ -1360,10 +1360,10 @@ the area.&lt;/p&gt;
     
     <item>
       <title>Thoughts on Applied Cryptography Research</title>
-      <link>http://outsourcedbits.org/2014/12/05/thoughts-on-applied-cryptography-research</link>
+      <link>http://senykam.github.io/2014/12/05/thoughts-on-applied-cryptography-research</link>
       <pubDate>Fri, 05 Dec 2014 20:37:48 -0300</pubDate>
       
-      <guid>http://outsourcedbits.org/2014/12/05/thoughts-on-applied-cryptography-research</guid>
+      <guid>http://senykam.github.io/2014/12/05/thoughts-on-applied-cryptography-research</guid>
       <description>&lt;p&gt;If you follow me on Twitter you have no doubt heard my occasional outbursts and
 rants on what I perceive to be biases in the current publication model in
 cryptography. In short, I think that top cryptography conferences are heavily
@@ -1435,14 +1435,14 @@ in the comments that your paper was not invited to be discussed.&lt;/p&gt;
     
     <item>
       <title>Workshop on Surveillance and Technology</title>
-      <link>http://outsourcedbits.org/2014/11/26/workshop-on-surveillance-and-technology</link>
+      <link>http://senykam.github.io/2014/11/26/workshop-on-surveillance-and-technology</link>
       <pubDate>Wed, 26 Nov 2014 20:22:09 -0300</pubDate>
       
-      <guid>http://outsourcedbits.org/2014/11/26/workshop-on-surveillance-and-technology</guid>
+      <guid>http://senykam.github.io/2014/11/26/workshop-on-surveillance-and-technology</guid>
       <description>&lt;p&gt;&lt;em&gt;This is an announcement for a workshop that I am organizing in conjunction with
 the &lt;a href=&#34;https://petsymposium.org/2015/&#34;&gt;Privacy Enhancing Technologies Symposium&lt;/a&gt; (PETS).&lt;/em&gt;&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&#34;http://outsourcedbits.org/img/camera.jpg&#34; class=&#34;alignright&#34; width=&#34;250&#34;&gt;
+&lt;p&gt;&lt;img src=&#34;http://senykam.github.io/img/camera.jpg&#34; class=&#34;alignright&#34; width=&#34;250&#34;&gt;
 Due to the Snowden disclosures, mass surveillance has become one of the most
 highly-discussed and controversial issues in politics, policy, technology and
 international affairs. Modern surveillance, however, relies heavily on
@@ -1486,10 +1486,10 @@ announced later.&lt;/p&gt;
     
     <item>
       <title>Microsoft Research Internships</title>
-      <link>http://outsourcedbits.org/2014/11/13/microsoft-research-internships</link>
+      <link>http://senykam.github.io/2014/11/13/microsoft-research-internships</link>
       <pubDate>Thu, 13 Nov 2014 20:09:06 -0300</pubDate>
       
-      <guid>http://outsourcedbits.org/2014/11/13/microsoft-research-internships</guid>
+      <guid>http://senykam.github.io/2014/11/13/microsoft-research-internships</guid>
       <description>&lt;p&gt;One of the best things about working at MSR is the internship program. For a
 sense of what an MSR internship is like, I recommend
 &lt;a href=&#34;http://www.pgbovine.net/PhD-memoir-intermission.htm&#34;&gt;this&lt;/a&gt; essay by
@@ -1585,15 +1585,15 @@ clearly the rejection is not a reflection of your work.&lt;/p&gt;
     
     <item>
       <title>How Not to Learn Cryptography</title>
-      <link>http://outsourcedbits.org/2014/11/11/how-not-to-learn-cryptography</link>
+      <link>http://senykam.github.io/2014/11/11/how-not-to-learn-cryptography</link>
       <pubDate>Tue, 11 Nov 2014 20:36:57 -0300</pubDate>
       
-      <guid>http://outsourcedbits.org/2014/11/11/how-not-to-learn-cryptography</guid>
+      <guid>http://senykam.github.io/2014/11/11/how-not-to-learn-cryptography</guid>
       <description>&lt;!-- banner = &#34;img/studying.jpg&#34; --&gt;
 
 &lt;!-- ![studying](/img/studying.jpg) --&gt;
 
-&lt;p&gt;&lt;img src=&#34;http://outsourcedbits.org/img/studying.jpg&#34; class=&#34;alignright&#34; width=&#34;250&#34;&gt;
+&lt;p&gt;&lt;img src=&#34;http://senykam.github.io/img/studying.jpg&#34; class=&#34;alignright&#34; width=&#34;250&#34;&gt;
 People often ask me how to get started in cryptography. What&#39;s interesting is
 that most of the time they also want to know how I &lt;em&gt;personally&lt;/em&gt; got started.
 This is interesting to me because it suggests that people are looking for more
@@ -1920,10 +1920,10 @@ realize that it will be painful.&lt;/p&gt;
     
     <item>
       <title>Microsoft Research SVC and Applied Theory</title>
-      <link>http://outsourcedbits.org/2014/10/02/microsoft-research-svc-and-applied-theory</link>
+      <link>http://senykam.github.io/2014/10/02/microsoft-research-svc-and-applied-theory</link>
       <pubDate>Thu, 02 Oct 2014 20:34:21 -0300</pubDate>
       
-      <guid>http://outsourcedbits.org/2014/10/02/microsoft-research-svc-and-applied-theory</guid>
+      <guid>http://senykam.github.io/2014/10/02/microsoft-research-svc-and-applied-theory</guid>
       <description>&lt;p&gt;Most people have heard by now about the closing of the Microsoft Research
 Silicon Valley Campus (SVC) Lab. It definitely came as a shock to everyone
 (including other MSR researchers) and many people have commented online about
@@ -1958,13 +1958,13 @@ find great homes.&lt;/p&gt;
     
     <item>
       <title>How to Search on Encrypted Data: Searchable Symmetric Encryption (Part 5)</title>
-      <link>http://outsourcedbits.org/2014/08/21/how-to-search-on-encrypted-data-searchable-symmetric-encryption-part-5</link>
+      <link>http://senykam.github.io/2014/08/21/how-to-search-on-encrypted-data-searchable-symmetric-encryption-part-5</link>
       <pubDate>Thu, 21 Aug 2014 17:33:58 -0300</pubDate>
       
-      <guid>http://outsourcedbits.org/2014/08/21/how-to-search-on-encrypted-data-searchable-symmetric-encryption-part-5</guid>
+      <guid>http://senykam.github.io/2014/08/21/how-to-search-on-encrypted-data-searchable-symmetric-encryption-part-5</guid>
       <description>&lt;p&gt;&lt;em&gt;This is the fifth part of a series on searching on encrypted data. See parts &lt;a href=&#34;https://outsourcedbits.org/2013/10/14/how-to-search-on-encrypted-data-part-1/&#34;&gt;1&lt;/a&gt;, &lt;a href=&#34;https://outsourcedbits.org/2013/10/30/how-to-search-on-encrypted-data-part-2/&#34;&gt;2&lt;/a&gt;, &lt;a href=&#34;https://outsourcedbits.org/2013/12/20/how-to-search-on-encrypted-data-part-3/&#34;&gt;3&lt;/a&gt; and &lt;a href=&#34;https://outsourcedbits.org/2014/08/21/how-to-search-on-encrypted-data-part-4-oblivious-rams/&#34;&gt;4&lt;/a&gt;.&lt;/em&gt;&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&#34;http://outsourcedbits.org/img/search.jpg&#34; class=&#34;alignright&#34; width=&#34;250&#34;&gt;
+&lt;p&gt;&lt;img src=&#34;http://senykam.github.io/img/search.jpg&#34; class=&#34;alignright&#34; width=&#34;250&#34;&gt;
 In the previous post we covered the most secure way to search on encrypted
 data: oblivious RAMs (ORAM).  I always recommend ORAM-based solutions for
 encrypted search whenever  possible; namely, for small- to moderate-size data
@@ -2470,11 +2470,11 @@ conjunctions and disjunctions!&lt;/p&gt;
     
     <item>
       <title>Is the NSA Metadata Program Legal?</title>
-      <link>http://outsourcedbits.org/2014/04/29/is-the-nsa-metadata-program-legal</link>
+      <link>http://senykam.github.io/2014/04/29/is-the-nsa-metadata-program-legal</link>
       <pubDate>Tue, 29 Apr 2014 17:21:47 -0300</pubDate>
       
-      <guid>http://outsourcedbits.org/2014/04/29/is-the-nsa-metadata-program-legal</guid>
-      <description>&lt;p&gt;&lt;img src=&#34;http://outsourcedbits.org/img/justice.jpg&#34; class=&#34;alignright&#34; width=&#34;200&#34;&gt;
+      <guid>http://senykam.github.io/2014/04/29/is-the-nsa-metadata-program-legal</guid>
+      <description>&lt;p&gt;&lt;img src=&#34;http://senykam.github.io/img/justice.jpg&#34; class=&#34;alignright&#34; width=&#34;200&#34;&gt;
 One of the most interesting aspects of the NSA metadata program is whether it
 is legal or not. Unlike the questions we usually think about in computer
 science, this question has no definitive answer. The program is legal in some
@@ -2620,11 +2620,11 @@ program is legal.&lt;/p&gt;
     
     <item>
       <title>Restructuring the NSA Metadata Program</title>
-      <link>http://outsourcedbits.org/2014/03/10/restructuring-the-nsa-metadata-program</link>
+      <link>http://senykam.github.io/2014/03/10/restructuring-the-nsa-metadata-program</link>
       <pubDate>Mon, 10 Mar 2014 12:05:03 -0300</pubDate>
       
-      <guid>http://outsourcedbits.org/2014/03/10/restructuring-the-nsa-metadata-program</guid>
-      <description>&lt;p&gt;&lt;img src=&#34;http://outsourcedbits.org/img/design.jpg&#34; class=&#34;alignright&#34; width=&#34;280&#34;&gt;
+      <guid>http://senykam.github.io/2014/03/10/restructuring-the-nsa-metadata-program</guid>
+      <description>&lt;p&gt;&lt;img src=&#34;http://senykam.github.io/img/design.jpg&#34; class=&#34;alignright&#34; width=&#34;280&#34;&gt;
 I just got back from Barbados where I attended the &lt;a href=&#34;http://fc14.ifca.ai/&#34;&gt;Financial Cryptography and
 Data Security&lt;/a&gt; conference. It was a great event overall with many interesting
 talks and two great workshops.&lt;/p&gt;
@@ -2675,13 +2675,13 @@ for the article.&lt;/p&gt;
     
     <item>
       <title>How to Search on Encrypted Data: Oblivious RAMs (Part 4)</title>
-      <link>http://outsourcedbits.org/2013/12/20/how-to-search-on-encrypted-data-oblivious-rams-part-4</link>
+      <link>http://senykam.github.io/2013/12/20/how-to-search-on-encrypted-data-oblivious-rams-part-4</link>
       <pubDate>Fri, 20 Dec 2013 11:23:34 -0300</pubDate>
       
-      <guid>http://outsourcedbits.org/2013/12/20/how-to-search-on-encrypted-data-oblivious-rams-part-4</guid>
+      <guid>http://senykam.github.io/2013/12/20/how-to-search-on-encrypted-data-oblivious-rams-part-4</guid>
       <description>&lt;p&gt;&lt;em&gt;This is the fourth part of a series on searching on encrypted data. See parts &lt;a href=&#34;http://outsourcedbits.org/2013/10/06/how-to-search-on-encrypted-data-part-1/&#34;&gt;1&lt;/a&gt;, &lt;a href=&#34;https://outsourcedbits.org/2013/10/30/how-to-search-on-encrypted-data-part-2/&#34;&gt;2&lt;/a&gt;, &lt;a href=&#34;https://outsourcedbits.org/2013/12/20/how-to-search-on-encrypted-data-part-3-oblivious-rams/&#34;&gt;3&lt;/a&gt; and &lt;a href=&#34;https://outsourcedbits.org/2014/08/21/how-to-search-on-encrypted-data-searchable-symmetric-encryption-part-5/&#34;&gt;5&lt;/a&gt;.&lt;/em&gt;&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&#34;http://outsourcedbits.org/img/search.jpg&#34; class=&#34;alignright&#34; width=&#34;250&#34;&gt;
+&lt;p&gt;&lt;img src=&#34;http://senykam.github.io/img/search.jpg&#34; class=&#34;alignright&#34; width=&#34;250&#34;&gt;
 In the previous posts we covered two different ways to search on encrypted data.
 The first was based on property-preserving encryption (in particular, on
 deterministic encryption), achieved &lt;em&gt;sub-linear&lt;/em&gt; search time but had weak
@@ -3286,13 +3286,13 @@ than the ORAM-based solution.&lt;/p&gt;
     
     <item>
       <title>How to Search on Encrypted Data: Functional Encryption (Part 3)</title>
-      <link>http://outsourcedbits.org/2013/10/30/how-to-search-on-encrypted-data-functional-encryption-part-3</link>
+      <link>http://senykam.github.io/2013/10/30/how-to-search-on-encrypted-data-functional-encryption-part-3</link>
       <pubDate>Wed, 30 Oct 2013 11:02:40 -0300</pubDate>
       
-      <guid>http://outsourcedbits.org/2013/10/30/how-to-search-on-encrypted-data-functional-encryption-part-3</guid>
+      <guid>http://senykam.github.io/2013/10/30/how-to-search-on-encrypted-data-functional-encryption-part-3</guid>
       <description>&lt;p&gt;&lt;em&gt;This is the third part of a series on searching on encrypted data. See parts &lt;a href=&#34;http://outsourcedbits.org/2013/10/06/how-to-search-on-encrypted-data-part-1/&#34;&gt;1&lt;/a&gt;, &lt;a href=&#34;https://outsourcedbits.org/2013/10/30/how-to-search-on-encrypted-data-part-2/&#34;&gt;2&lt;/a&gt;, &lt;a href=&#34;https://outsourcedbits.org/2013/12/20/how-to-search-on-encrypted-data-part-4-oblivious-rams/&#34;&gt;4&lt;/a&gt; and &lt;a href=&#34;https://outsourcedbits.org/2014/08/21/how-to-search-on-encrypted-data-searchable-symmetric-encryption-part-5/&#34;&gt;5&lt;/a&gt;.&lt;/em&gt;&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&#34;http://outsourcedbits.org/img/search.jpg&#34; class=&#34;alignright&#34; width=&#34;250&#34;&gt;
+&lt;p&gt;&lt;img src=&#34;http://senykam.github.io/img/search.jpg&#34; class=&#34;alignright&#34; width=&#34;250&#34;&gt;
 Previously, we covered the simplest solution for encrypted search  which
 consisted of using a deterministic encryption scheme (more generally, using a
 property-preserving encryption scheme) to encrypt keywords. This resulted in an

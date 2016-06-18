@@ -2,19 +2,19 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Msr on Outsourced Bits</title>
-    <link>http://outsourcedbits.org/tags/msr/</link>
+    <link>http://senykam.github.io/tags/msr/</link>
     <description>Recent content in Msr on Outsourced Bits</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <lastBuildDate>Thu, 13 Nov 2014 20:09:06 -0300</lastBuildDate>
-    <atom:link href="http://outsourcedbits.org/tags/msr/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="http://senykam.github.io/tags/msr/index.xml" rel="self" type="application/rss+xml" />
     
     <item>
       <title>Microsoft Research Internships</title>
-      <link>http://outsourcedbits.org/2014/11/13/microsoft-research-internships</link>
+      <link>http://senykam.github.io/2014/11/13/microsoft-research-internships</link>
       <pubDate>Thu, 13 Nov 2014 20:09:06 -0300</pubDate>
       
-      <guid>http://outsourcedbits.org/2014/11/13/microsoft-research-internships</guid>
+      <guid>http://senykam.github.io/2014/11/13/microsoft-research-internships</guid>
       <description>&lt;p&gt;One of the best things about working at MSR is the internship program. For a
 sense of what an MSR internship is like, I recommend
 &lt;a href=&#34;http://www.pgbovine.net/PhD-memoir-intermission.htm&#34;&gt;this&lt;/a&gt; essay by

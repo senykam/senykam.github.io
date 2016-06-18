@@ -2,20 +2,20 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Nsa on Outsourced Bits</title>
-    <link>http://outsourcedbits.org/tags/nsa/</link>
+    <link>http://senykam.github.io/tags/nsa/</link>
     <description>Recent content in Nsa on Outsourced Bits</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <lastBuildDate>Tue, 29 Apr 2014 17:21:47 -0300</lastBuildDate>
-    <atom:link href="http://outsourcedbits.org/tags/nsa/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="http://senykam.github.io/tags/nsa/index.xml" rel="self" type="application/rss+xml" />
     
     <item>
       <title>Is the NSA Metadata Program Legal?</title>
-      <link>http://outsourcedbits.org/2014/04/29/is-the-nsa-metadata-program-legal</link>
+      <link>http://senykam.github.io/2014/04/29/is-the-nsa-metadata-program-legal</link>
       <pubDate>Tue, 29 Apr 2014 17:21:47 -0300</pubDate>
       
-      <guid>http://outsourcedbits.org/2014/04/29/is-the-nsa-metadata-program-legal</guid>
-      <description>&lt;p&gt;&lt;img src=&#34;http://outsourcedbits.org/img/justice.jpg&#34; class=&#34;alignright&#34; width=&#34;200&#34;&gt;
+      <guid>http://senykam.github.io/2014/04/29/is-the-nsa-metadata-program-legal</guid>
+      <description>&lt;p&gt;&lt;img src=&#34;http://senykam.github.io/img/justice.jpg&#34; class=&#34;alignright&#34; width=&#34;200&#34;&gt;
 One of the most interesting aspects of the NSA metadata program is whether it
 is legal or not. Unlike the questions we usually think about in computer
 science, this question has no definitive answer. The program is legal in some
@@ -161,11 +161,11 @@ program is legal.&lt;/p&gt;
     
     <item>
       <title>Restructuring the NSA Metadata Program</title>
-      <link>http://outsourcedbits.org/2014/03/10/restructuring-the-nsa-metadata-program</link>
+      <link>http://senykam.github.io/2014/03/10/restructuring-the-nsa-metadata-program</link>
       <pubDate>Mon, 10 Mar 2014 12:05:03 -0300</pubDate>
       
-      <guid>http://outsourcedbits.org/2014/03/10/restructuring-the-nsa-metadata-program</guid>
-      <description>&lt;p&gt;&lt;img src=&#34;http://outsourcedbits.org/img/design.jpg&#34; class=&#34;alignright&#34; width=&#34;280&#34;&gt;
+      <guid>http://senykam.github.io/2014/03/10/restructuring-the-nsa-metadata-program</guid>
+      <description>&lt;p&gt;&lt;img src=&#34;http://senykam.github.io/img/design.jpg&#34; class=&#34;alignright&#34; width=&#34;280&#34;&gt;
 I just got back from Barbados where I attended the &lt;a href=&#34;http://fc14.ifca.ai/&#34;&gt;Financial Cryptography and
 Data Security&lt;/a&gt; conference. It was a great event overall with many interesting
 talks and two great workshops.&lt;/p&gt;

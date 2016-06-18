@@ -2,19 +2,19 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Machine Learning on Outsourced Bits</title>
-    <link>http://outsourcedbits.org/tags/machine-learning/</link>
+    <link>http://senykam.github.io/tags/machine-learning/</link>
     <description>Recent content in Machine Learning on Outsourced Bits</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <lastBuildDate>Sat, 29 Sep 2012 16:59:14 -0300</lastBuildDate>
-    <atom:link href="http://outsourcedbits.org/tags/machine-learning/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="http://senykam.github.io/tags/machine-learning/index.xml" rel="self" type="application/rss+xml" />
     
     <item>
       <title>Applying Fully Homomorphic Encryption (Part 2)</title>
-      <link>http://outsourcedbits.org/2012/09/29/applying-fully-homomorphic-encryption-part-2</link>
+      <link>http://senykam.github.io/2012/09/29/applying-fully-homomorphic-encryption-part-2</link>
       <pubDate>Sat, 29 Sep 2012 16:59:14 -0300</pubDate>
       
-      <guid>http://outsourcedbits.org/2012/09/29/applying-fully-homomorphic-encryption-part-2</guid>
+      <guid>http://senykam.github.io/2012/09/29/applying-fully-homomorphic-encryption-part-2</guid>
       <description>&lt;p&gt;&lt;em&gt;This is the second part of a series on applying fully-homomorphic encryption.
 In the
 &lt;a href=&#34;http://outsourcedbits.org/2012/06/26/applying-fully-homomorphic-encryption-part-1/&#34;&gt;first&lt;/a&gt;
@@ -22,7 +22,7 @@ post we went over what fully-homomorphic encryption (FHE) and
 shomewhat-homomorphic encryption (SHE) were and how they relate. In this post
 we&#39; ll discuss actual applications.&lt;/em&gt;&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&#34;http://outsourcedbits.org/img/grail.jpg&#34; class=&#34;alignright&#34; width=&#34;250&#34;&gt;
+&lt;p&gt;&lt;img src=&#34;http://senykam.github.io/img/grail.jpg&#34; class=&#34;alignright&#34; width=&#34;250&#34;&gt;
 To structure the discussion, I&#39; ll refer to some applications as direct and
 others as indirect. Indirect applications will refer to applications where FHE
 is used as a building block---usually with other components---to construct

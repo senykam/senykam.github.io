@@ -2,26 +2,26 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Graph Encryption on Outsourced Bits</title>
-    <link>http://outsourcedbits.org/categories/graph-encryption/</link>
+    <link>http://senykam.github.io/categories/graph-encryption/</link>
     <description>Recent content in Graph Encryption on Outsourced Bits</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <lastBuildDate>Thu, 16 Jun 2016 12:32:12 -0300</lastBuildDate>
-    <atom:link href="http://outsourcedbits.org/categories/graph-encryption/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="http://senykam.github.io/categories/graph-encryption/index.xml" rel="self" type="application/rss+xml" />
     
     <item>
       <title>Graph Encryption: Going Beyond Encrypted Keyword Search</title>
-      <link>http://outsourcedbits.org/2016/06/16/graph-encryption-going-beyond-encrypted-keyword-search</link>
+      <link>http://senykam.github.io/2016/06/16/graph-encryption-going-beyond-encrypted-keyword-search</link>
       <pubDate>Thu, 16 Jun 2016 12:32:12 -0300</pubDate>
       
-      <guid>http://outsourcedbits.org/2016/06/16/graph-encryption-going-beyond-encrypted-keyword-search</guid>
+      <guid>http://senykam.github.io/2016/06/16/graph-encryption-going-beyond-encrypted-keyword-search</guid>
       <description>&lt;p&gt;&lt;em&gt;This is a guest post by &lt;a href=&#34;http://www.xianruimeng.org/&#34;&gt;Xianrui Meng&lt;/a&gt; from
 Boston University about a paper he presented at CCS 2015, written in
 collaboration with &lt;a href=&#34;https://www.cs.bgu.ac.il/~kobbi/&#34;&gt;Kobbi Nissim&lt;/a&gt;, &lt;a href=&#34;http://www.cs.bu.edu/~gkollios/&#34;&gt;George
 Kollios&lt;/a&gt;  and myself. Note that Xianrui is on
 the job market.&lt;/em&gt;&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&#34;http://outsourcedbits.org/img/graph21.jpg&#34; class=&#34;alignright&#34; width=&#34;250&#34;&gt;
+&lt;p&gt;&lt;img src=&#34;http://senykam.github.io/img/graph21.jpg&#34; class=&#34;alignright&#34; width=&#34;250&#34;&gt;
 Encrypted search has attracted a lot of attention from practitioners and
 researchers in academia and industry. In previous posts, Seny already described
 different ways one can search on encrypted data. Here, I would like to discuss

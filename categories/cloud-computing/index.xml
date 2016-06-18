@@ -2,20 +2,20 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Cloud Computing on Outsourced Bits</title>
-    <link>http://outsourcedbits.org/categories/cloud-computing/</link>
+    <link>http://senykam.github.io/categories/cloud-computing/</link>
     <description>Recent content in Cloud Computing on Outsourced Bits</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <lastBuildDate>Sun, 10 Jun 2012 16:40:17 -0300</lastBuildDate>
-    <atom:link href="http://outsourcedbits.org/categories/cloud-computing/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="http://senykam.github.io/categories/cloud-computing/index.xml" rel="self" type="application/rss+xml" />
     
     <item>
       <title>Cloud Adversarial Models</title>
-      <link>http://outsourcedbits.org/2012/06/10/cloud-adversarial-models</link>
+      <link>http://senykam.github.io/2012/06/10/cloud-adversarial-models</link>
       <pubDate>Sun, 10 Jun 2012 16:40:17 -0300</pubDate>
       
-      <guid>http://outsourcedbits.org/2012/06/10/cloud-adversarial-models</guid>
-      <description>&lt;p&gt;&lt;img src=&#34;http://outsourcedbits.org/img/sith.jpg&#34; class=&#34;alignright&#34; width=&#34;250&#34;&gt;
+      <guid>http://senykam.github.io/2012/06/10/cloud-adversarial-models</guid>
+      <description>&lt;p&gt;&lt;img src=&#34;http://senykam.github.io/img/sith.jpg&#34; class=&#34;alignright&#34; width=&#34;250&#34;&gt;
 Last April I attended a workshop organized by the NSF on cloud security (see
 &lt;a href=&#34;http://www.cccblog.org/2012/04/20/cise-researchers-discuss-security-for-cloud-computing/&#34;&gt;here&lt;/a&gt;
 for an overview from the Computing Community Consortium blog). The goal was to
@@ -100,11 +100,11 @@ trivially circumvented with a warrant or subpoena.&lt;/p&gt;
     
     <item>
       <title>A Key to the Cloud</title>
-      <link>http://outsourcedbits.org/2012/05/26/a-key-to-the-cloud</link>
+      <link>http://senykam.github.io/2012/05/26/a-key-to-the-cloud</link>
       <pubDate>Sat, 26 May 2012 16:33:28 -0300</pubDate>
       
-      <guid>http://outsourcedbits.org/2012/05/26/a-key-to-the-cloud</guid>
-      <description>&lt;p&gt;&lt;img src=&#34;http://outsourcedbits.org/img/cloud.jpg&#34; class=&#34;alignright&#34; width=&#34;220&#34;&gt;
+      <guid>http://senykam.github.io/2012/05/26/a-key-to-the-cloud</guid>
+      <description>&lt;p&gt;&lt;img src=&#34;http://senykam.github.io/img/cloud.jpg&#34; class=&#34;alignright&#34; width=&#34;220&#34;&gt;
 At this point most people would agree that cloud computing represents a major
 shift in computing. Consider, for example, that many tech companies are
 entirely cloud-based. This includes the more established like Netflix and

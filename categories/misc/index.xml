@@ -2,19 +2,19 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Misc on Outsourced Bits</title>
-    <link>http://outsourcedbits.org/categories/misc/</link>
+    <link>http://senykam.github.io/categories/misc/</link>
     <description>Recent content in Misc on Outsourced Bits</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <lastBuildDate>Thu, 02 Oct 2014 20:34:21 -0300</lastBuildDate>
-    <atom:link href="http://outsourcedbits.org/categories/misc/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="http://senykam.github.io/categories/misc/index.xml" rel="self" type="application/rss+xml" />
     
     <item>
       <title>Microsoft Research SVC and Applied Theory</title>
-      <link>http://outsourcedbits.org/2014/10/02/microsoft-research-svc-and-applied-theory</link>
+      <link>http://senykam.github.io/2014/10/02/microsoft-research-svc-and-applied-theory</link>
       <pubDate>Thu, 02 Oct 2014 20:34:21 -0300</pubDate>
       
-      <guid>http://outsourcedbits.org/2014/10/02/microsoft-research-svc-and-applied-theory</guid>
+      <guid>http://senykam.github.io/2014/10/02/microsoft-research-svc-and-applied-theory</guid>
       <description>&lt;p&gt;Most people have heard by now about the closing of the Microsoft Research
 Silicon Valley Campus (SVC) Lab. It definitely came as a shock to everyone
 (including other MSR researchers) and many people have commented online about

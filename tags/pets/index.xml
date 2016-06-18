@@ -2,23 +2,23 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Pets on Outsourced Bits</title>
-    <link>http://outsourcedbits.org/tags/pets/</link>
+    <link>http://senykam.github.io/tags/pets/</link>
     <description>Recent content in Pets on Outsourced Bits</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <lastBuildDate>Wed, 26 Nov 2014 20:22:09 -0300</lastBuildDate>
-    <atom:link href="http://outsourcedbits.org/tags/pets/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="http://senykam.github.io/tags/pets/index.xml" rel="self" type="application/rss+xml" />
     
     <item>
       <title>Workshop on Surveillance and Technology</title>
-      <link>http://outsourcedbits.org/2014/11/26/workshop-on-surveillance-and-technology</link>
+      <link>http://senykam.github.io/2014/11/26/workshop-on-surveillance-and-technology</link>
       <pubDate>Wed, 26 Nov 2014 20:22:09 -0300</pubDate>
       
-      <guid>http://outsourcedbits.org/2014/11/26/workshop-on-surveillance-and-technology</guid>
+      <guid>http://senykam.github.io/2014/11/26/workshop-on-surveillance-and-technology</guid>
       <description>&lt;p&gt;&lt;em&gt;This is an announcement for a workshop that I am organizing in conjunction with
 the &lt;a href=&#34;https://petsymposium.org/2015/&#34;&gt;Privacy Enhancing Technologies Symposium&lt;/a&gt; (PETS).&lt;/em&gt;&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&#34;http://outsourcedbits.org/img/camera.jpg&#34; class=&#34;alignright&#34; width=&#34;250&#34;&gt;
+&lt;p&gt;&lt;img src=&#34;http://senykam.github.io/img/camera.jpg&#34; class=&#34;alignright&#34; width=&#34;250&#34;&gt;
 Due to the Snowden disclosures, mass surveillance has become one of the most
 highly-discussed and controversial issues in politics, policy, technology and
 international affairs. Modern surveillance, however, relies heavily on

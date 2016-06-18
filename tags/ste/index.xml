@@ -2,26 +2,26 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Ste on Outsourced Bits</title>
-    <link>http://outsourcedbits.org/tags/ste/</link>
+    <link>http://senykam.github.io/tags/ste/</link>
     <description>Recent content in Ste on Outsourced Bits</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <lastBuildDate>Thu, 16 Jun 2016 12:32:12 -0300</lastBuildDate>
-    <atom:link href="http://outsourcedbits.org/tags/ste/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="http://senykam.github.io/tags/ste/index.xml" rel="self" type="application/rss+xml" />
     
     <item>
       <title>Graph Encryption: Going Beyond Encrypted Keyword Search</title>
-      <link>http://outsourcedbits.org/2016/06/16/graph-encryption-going-beyond-encrypted-keyword-search</link>
+      <link>http://senykam.github.io/2016/06/16/graph-encryption-going-beyond-encrypted-keyword-search</link>
       <pubDate>Thu, 16 Jun 2016 12:32:12 -0300</pubDate>
       
-      <guid>http://outsourcedbits.org/2016/06/16/graph-encryption-going-beyond-encrypted-keyword-search</guid>
+      <guid>http://senykam.github.io/2016/06/16/graph-encryption-going-beyond-encrypted-keyword-search</guid>
       <description>&lt;p&gt;&lt;em&gt;This is a guest post by &lt;a href=&#34;http://www.xianruimeng.org/&#34;&gt;Xianrui Meng&lt;/a&gt; from
 Boston University about a paper he presented at CCS 2015, written in
 collaboration with &lt;a href=&#34;https://www.cs.bgu.ac.il/~kobbi/&#34;&gt;Kobbi Nissim&lt;/a&gt;, &lt;a href=&#34;http://www.cs.bu.edu/~gkollios/&#34;&gt;George
 Kollios&lt;/a&gt;  and myself. Note that Xianrui is on
 the job market.&lt;/em&gt;&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&#34;http://outsourcedbits.org/img/graph21.jpg&#34; class=&#34;alignright&#34; width=&#34;250&#34;&gt;
+&lt;p&gt;&lt;img src=&#34;http://senykam.github.io/img/graph21.jpg&#34; class=&#34;alignright&#34; width=&#34;250&#34;&gt;
 Encrypted search has attracted a lot of attention from practitioners and
 researchers in academia and industry. In previous posts, Seny already described
 different ways one can search on encrypted data. Here, I would like to discuss
@@ -313,17 +313,17 @@ schemes?  Any briliant ideas? Talk to us! :-)&lt;/p&gt;
     
     <item>
       <title>Applied Crypto Highlights: Searchable Encryption with Ranked Results</title>
-      <link>http://outsourcedbits.org/2015/04/15/applied-crypto-highlights-searchable-encryption-with-ranked-results</link>
+      <link>http://senykam.github.io/2015/04/15/applied-crypto-highlights-searchable-encryption-with-ranked-results</link>
       <pubDate>Wed, 15 Apr 2015 20:57:14 -0300</pubDate>
       
-      <guid>http://outsourcedbits.org/2015/04/15/applied-crypto-highlights-searchable-encryption-with-ranked-results</guid>
+      <guid>http://senykam.github.io/2015/04/15/applied-crypto-highlights-searchable-encryption-with-ranked-results</guid>
       <description>&lt;p&gt;&lt;em&gt;This is the second in a series of guest posts highlighting new research in
 applied cryptography. This post is written by &lt;a href=&#34;http://www.baldimtsi.com/&#34;&gt;Foteini
 Baldimtsi&lt;/a&gt; who is a postdoc at Boston University and
 &lt;a href=&#34;http://research.microsoft.com/en-us/people/oohrim/&#34;&gt;Olya Ohrimenko&lt;/a&gt; who is a
 postdoc at Microsoft Research.  Note that Olya is on the job market this year.&lt;/em&gt;&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&#34;http://outsourcedbits.org/img/steam.jpg&#34; class=&#34;alignright&#34; width=&#34;250&#34;&gt;
+&lt;p&gt;&lt;img src=&#34;http://senykam.github.io/img/steam.jpg&#34; class=&#34;alignright&#34; width=&#34;250&#34;&gt;
 Modern cloud services let their users outsource data as well as request
 computations on it.  Due to potentially sensitive content of users&#39; data and
 distrust in cloud services, it is natural for users to outsource their data
@@ -366,7 +366,7 @@ in the whole document collection). Then, for each term and document we compute&l
 
 &lt;p&gt;and store the score values in the rank table, $T$:&lt;/p&gt;
 
-&lt;p&gt;&lt;figure&gt;&lt;img src=&#34;http://outsourcedbits.org/img/searchindextable.jpg&#34; alt=&#34;&#34; title=&#34;$\mbox{tf-idf}$ rank table, $T$, outsourced to the cloud&#34;&gt;&lt;figcaption&gt;$\mbox{tf-idf}$ rank table, $T$, outsourced to the cloud&lt;/figcaption&gt;&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;&lt;figure&gt;&lt;img src=&#34;http://senykam.github.io/img/searchindextable.jpg&#34; alt=&#34;&#34; title=&#34;$\mbox{tf-idf}$ rank table, $T$, outsourced to the cloud&#34;&gt;&lt;figcaption&gt;$\mbox{tf-idf}$ rank table, $T$, outsourced to the cloud&lt;/figcaption&gt;&lt;/figure&gt;&lt;/p&gt;
 
 &lt;p&gt;Note that if a term does not appear in a table, then we store $0.00$ as a rank.
 This table could be either computed by the owner of the document collection and
@@ -447,7 +447,7 @@ collude with the cloud server and both of them are following the protocol in an
 honest-but-curious way. That is, neither of them deviates from the protocol but
 both are curious to learn more about user&#39;s data.&lt;/p&gt;
 
-&lt;p&gt;&lt;figure&gt;&lt;img src=&#34;http://outsourcedbits.org/img/introimagesingleuserslim.jpg&#34; alt=&#34;&#34; title=&#34;An overview of the interactions between the user, the cloud server $S_1$ and the co-processor $S_2$.&#34;&gt;&lt;figcaption&gt;An overview of the interactions between the user, the cloud server $S_1$ and the co-processor $S_2$.&lt;/figcaption&gt;&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;&lt;figure&gt;&lt;img src=&#34;http://senykam.github.io/img/introimagesingleuserslim.jpg&#34; alt=&#34;&#34; title=&#34;An overview of the interactions between the user, the cloud server $S_1$ and the co-processor $S_2$.&#34;&gt;&lt;figcaption&gt;An overview of the interactions between the user, the cloud server $S_1$ and the co-processor $S_2$.&lt;/figcaption&gt;&lt;/figure&gt;&lt;/p&gt;
 
 &lt;p&gt;Regarding the privacy of our scheme, we design our protocol in such a way that:
 (a) the co-processor learns nothing about the values being sorted and (b) the
@@ -579,7 +579,7 @@ he engages with $S_2$ in Private Two-Element Sort.
 He uses the outputs of this layer as inputs to the next layer
 of the network. (See Figure\ref{fig:batcher} for an illustration.)&lt;/p&gt;
 
-&lt;p&gt;&lt;figure&gt;&lt;img src=&#34;http://outsourcedbits.org/img/batcher1.jpg&#34; alt=&#34;&#34; title=&#34;Example of privately sorting an encrypted array of four elements $5,1,2,9$ where $[m]$ denotes a Paillier encryption of message $m$ and $\mathsf{pairs}_i$ denotes a pair of elements to be sorted. Note that only $S_1$ stores values in the arrays $A_i$ while $S_2$ blindly assists $S_1$ in sorting the values.&#34;&gt;&lt;figcaption&gt;Example of privately sorting an encrypted array of four elements $5,1,2,9$ where $[m]$ denotes a Paillier encryption of message $m$ and $\mathsf{pairs}_i$ denotes a pair of elements to be sorted. Note that only $S_1$ stores values in the arrays $A_i$ while $S_2$ blindly assists $S_1$ in sorting the values.&lt;/figcaption&gt;&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;&lt;figure&gt;&lt;img src=&#34;http://senykam.github.io/img/batcher1.jpg&#34; alt=&#34;&#34; title=&#34;Example of privately sorting an encrypted array of four elements $5,1,2,9$ where $[m]$ denotes a Paillier encryption of message $m$ and $\mathsf{pairs}_i$ denotes a pair of elements to be sorted. Note that only $S_1$ stores values in the arrays $A_i$ while $S_2$ blindly assists $S_1$ in sorting the values.&#34;&gt;&lt;figcaption&gt;Example of privately sorting an encrypted array of four elements $5,1,2,9$ where $[m]$ denotes a Paillier encryption of message $m$ and $\mathsf{pairs}_i$ denotes a pair of elements to be sorted. Note that only $S_1$ stores values in the arrays $A_i$ while $S_2$ blindly assists $S_1$ in sorting the values.&lt;/figcaption&gt;&lt;/figure&gt;&lt;/p&gt;
 
 &lt;p&gt;&lt;strong&gt;Sketch of Privacy Analysis.&lt;/strong&gt;
 We note that the number of times $S_1$ engages with $S_2$ in the protocol does

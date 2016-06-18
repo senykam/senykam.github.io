@@ -2,22 +2,22 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Functional Encryption on Outsourced Bits</title>
-    <link>http://outsourcedbits.org/tags/functional-encryption/</link>
+    <link>http://senykam.github.io/tags/functional-encryption/</link>
     <description>Recent content in Functional Encryption on Outsourced Bits</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <lastBuildDate>Wed, 30 Oct 2013 11:02:40 -0300</lastBuildDate>
-    <atom:link href="http://outsourcedbits.org/tags/functional-encryption/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="http://senykam.github.io/tags/functional-encryption/index.xml" rel="self" type="application/rss+xml" />
     
     <item>
       <title>How to Search on Encrypted Data: Functional Encryption (Part 3)</title>
-      <link>http://outsourcedbits.org/2013/10/30/how-to-search-on-encrypted-data-functional-encryption-part-3</link>
+      <link>http://senykam.github.io/2013/10/30/how-to-search-on-encrypted-data-functional-encryption-part-3</link>
       <pubDate>Wed, 30 Oct 2013 11:02:40 -0300</pubDate>
       
-      <guid>http://outsourcedbits.org/2013/10/30/how-to-search-on-encrypted-data-functional-encryption-part-3</guid>
+      <guid>http://senykam.github.io/2013/10/30/how-to-search-on-encrypted-data-functional-encryption-part-3</guid>
       <description>&lt;p&gt;&lt;em&gt;This is the third part of a series on searching on encrypted data. See parts &lt;a href=&#34;http://outsourcedbits.org/2013/10/06/how-to-search-on-encrypted-data-part-1/&#34;&gt;1&lt;/a&gt;, &lt;a href=&#34;https://outsourcedbits.org/2013/10/30/how-to-search-on-encrypted-data-part-2/&#34;&gt;2&lt;/a&gt;, &lt;a href=&#34;https://outsourcedbits.org/2013/12/20/how-to-search-on-encrypted-data-part-4-oblivious-rams/&#34;&gt;4&lt;/a&gt; and &lt;a href=&#34;https://outsourcedbits.org/2014/08/21/how-to-search-on-encrypted-data-searchable-symmetric-encryption-part-5/&#34;&gt;5&lt;/a&gt;.&lt;/em&gt;&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&#34;http://outsourcedbits.org/img/search.jpg&#34; class=&#34;alignright&#34; width=&#34;250&#34;&gt;
+&lt;p&gt;&lt;img src=&#34;http://senykam.github.io/img/search.jpg&#34; class=&#34;alignright&#34; width=&#34;250&#34;&gt;
 Previously, we covered the simplest solution for encrypted search  which
 consisted of using a deterministic encryption scheme (more generally, using a
 property-preserving encryption scheme) to encrypt keywords. This resulted in an
