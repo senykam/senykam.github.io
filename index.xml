@@ -721,7 +721,7 @@ GitHub so I&#39; ll update this post as soon as it&#39; s up.&lt;/p&gt;
 
 &lt;p&gt;&lt;em&gt;David Wu&lt;/em&gt; talked about a new protocol for privacy-preserving location
 services. Suppose you want to find out how to get from point A to point B but
-don’t want to disclose your location to the server that stores the maps and the
+don&#39; t want to disclose your location to the server that stores the maps and the
 server doesn&#39; t want to reveal its own data. Without privacy, one can solve this
 problem by representing the map as a graph and computing the shortest path so
 the problem David was interested in was can you design a practical two-party
@@ -1370,12 +1370,12 @@ cryptography. In short, I think that top cryptography conferences are heavily
 biased against certain areas of cryptography and for others.&lt;/p&gt;
 
 &lt;p&gt;Some of the areas that I think have a much harder time getting into top-tier
-crypto conferences include Applied Cryptography. I don’t think this is
+crypto conferences include Applied Cryptography. I don&#39; t think this is
 particularly controversial and, from what I hear, CRYPTO has even tried to
 rectify this recently (e.g., by accepting some applied MPC papers).&lt;/p&gt;
 
 &lt;p&gt;Nevertheless, this is a serious problem for applied crypto research since
-applied crypto papers don’t really have a home. Realistically, your choice in
+applied crypto papers don&#39; t really have a home. Realistically, your choice in
 venues include CCS, NDSS, Usenix, Oakland and Financial Crypto. Notice that all
 these conferences are security conferences and as such they only have a limited
 number of places for crypto research. And a consequence of this is that
@@ -1388,7 +1388,7 @@ track of new results (having ePrint helps a bit here) and even harder to build
 any kind of community since no one is at the same place at the same time. This
 impacts possible collaborations, opportunities for students etc.&lt;/p&gt;
 
-&lt;p&gt;Another issue is that these papers don’t get the visibility they deserve and
+&lt;p&gt;Another issue is that these papers don&#39; t get the visibility they deserve and
 this is problematic because some of the work is very strong and, more
 importantly, this is the work that has the most potential for impact. Think
 about that for a second: the type of work that has the highest chance of having
@@ -1399,7 +1399,7 @@ can this not be a serious problem for the community?&lt;/p&gt;
 they deserve, less people tend to work on applied problems. I may be cynical,
 but unfortunately I think many researchers choose their problems (at least in
 part) as a function of the recognition they might receive from their community
-for their work. I can’t always blame researchers for this since the academic
+for their work. I can&#39; t always blame researchers for this since the academic
 system is setup to incentivize this (especially when you are student). With the
 current situation, therefore, I suspect that many researchers and students who
 might be interested in (or at least open to) applied work may shy away from it
@@ -1411,22 +1411,22 @@ applied crypto.&lt;/p&gt;
 
 &lt;p&gt;Obviously, I would like this to be fixed somehow especially so that applied
 crypto can still attract good students. But my sense is that the larger crypto
-community doesn’t really care that much (modulo, perhaps, the alleged efforts
+community doesn&#39; t really care that much (modulo, perhaps, the alleged efforts
 made by CRYPTO recently).&lt;/p&gt;
 
 &lt;p&gt;In the meantime, I thought it might be good to highlight a few applied crypto
 papers written by up-and-coming researchers (i.e., mostly students, postdocs
 and junior researchers) that I find particularly interesting. So I asked a
 handful of young researchers if they would be interested in writing guest posts
-summarizing some of their work. I’ll be posting some of these summaries in a
+summarizing some of their work. I&#39; ll be posting some of these summaries in a
 new series that will start soon. How long the series will be will obviously
 depend on how many people are interested in writing. Hopefully we will have at
 least two or three.&lt;/p&gt;
 
 &lt;p&gt;Let me stress that this series will obviously be subjective and biased towards
-topics that I like and people that I know (though I won’t be hesitant to invite
-people I don’t know if I like their work). This is unavoidable since these are
-papers that I‘m inviting to be summarized on my blog. So please do not complain
+topics that I like and people that I know (though I won&#39; t be hesitant to invite
+people I don&#39; t know if I like their work). This is unavoidable since these are
+papers that I&#39; m inviting to be summarized on my blog. So please do not complain
 in the comments that your paper was not invited to be discussed.&lt;/p&gt;
 
 &lt;p&gt;With that out of the way, I hope you enjoy the series.&lt;/p&gt;
@@ -2138,9 +2138,9 @@ So in the end, what we tried to argue in
 asking  for from an SSE security definition is a guarantee that:&lt;/p&gt;
 
 &lt;blockquote&gt;
-&lt;p&gt;&lt;em&gt;&amp;quot;the adversary cannot learn anything about the data and the queries beyond
+&lt;p&gt;&lt;em&gt;the adversary cannot learn anything about the data and the queries beyond
 the explicitly allowed leakage; even if the adversary can make adaptive
-queries to a search oracle.&amp;quot;&lt;/em&gt;&lt;/p&gt;
+queries to a search oracle.&lt;/em&gt;&lt;/p&gt;
 &lt;/blockquote&gt;
 
 &lt;p&gt;But once we settled on this definition and formalized it, the following natural

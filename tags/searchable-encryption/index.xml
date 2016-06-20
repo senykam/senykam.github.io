@@ -191,9 +191,9 @@ So in the end, what we tried to argue in
 asking  for from an SSE security definition is a guarantee that:&lt;/p&gt;
 
 &lt;blockquote&gt;
-&lt;p&gt;&lt;em&gt;&amp;quot;the adversary cannot learn anything about the data and the queries beyond
+&lt;p&gt;&lt;em&gt;the adversary cannot learn anything about the data and the queries beyond
 the explicitly allowed leakage; even if the adversary can make adaptive
-queries to a search oracle.&amp;quot;&lt;/em&gt;&lt;/p&gt;
+queries to a search oracle.&lt;/em&gt;&lt;/p&gt;
 &lt;/blockquote&gt;
 
 &lt;p&gt;But once we settled on this definition and formalized it, the following natural
