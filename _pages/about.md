@@ -2,7 +2,7 @@
 layout: about
 title: about
 permalink: /
-subtitle: <a href='https://mongodb.com'>MongoDB</a>
+subtitle: 
 
 profile:
   align: right
