@@ -1,4 +1,4 @@
 User-agent: *
 Disallow:
 
-Sitemap: https://senykam.github.io/al-folio/sitemap.xml
+Sitemap: https://senykam.github.io/sitemap.xml
