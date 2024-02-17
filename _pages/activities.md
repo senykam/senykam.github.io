@@ -7,38 +7,6 @@ nav: true
 nav_order: 6
 ---
 
-#### Student Advising 
-+ Postdoc: [Tarik Moataz](https://tarikmoataz.com/) (2016-2019) 
-
-+ PhD  students: 
-[Victor Youdom Kemmoe](https://vicxekro.github.io/mypage/), 
-[Kweku Kwegyir-Aggrey](https://kweku.me/),
-Leah Rosenbloom (co-advised with Anna Lysyanskaya) 
-
-+ Graduated PhD students:
-[Archita Agarwal](https://cs.brown.edu/~aa12/), 
-[Ghous Amjad](https://cs.brown.edu/~gamjad), 
-[Marilyn George](https://cs.brown.edu/~mgeorge5/), 
-[Lucy Qin](https://lucyq.in),  
-[Sam Zhao](https://zheguang.github.io) (co-advised with Stan Zdonik)
-
-+ MongoDB interns:
-[Jaspal Singh](https://jaspal.owlstown.net/)
-
-+ MSR interns: 
-[Sherman Chow](https://staff.ie.cuhk.edu.hk/~smchow/), 
-[Anurag Khandelwal](http://anuragkhandelwal.com),
-[Xianrui Meng](https://www.xianruimeng.org),
-[Naveed Muhammad](https://cryptoonline.com), 
-[Tarik Moataz](https://cs.brown.edu/~tmoataz/),
-[Olya Ohrimenko](https://www.microsoft.com/en-us/research/people/oohrim/), 
-[Charalampos Papamanthou](https://www.ece.umd.edu/~cpap/), 
-[Mariana Raykova](https://www.cs.yale.edu/homes/raykova-mariana/), 
-[Ben Riva](https://sites.google.com/site/b3nr1va/),
-[Saeed Sadeghian](https://saeedsadeghian.com),
-Lei Wei 
-
-
 #### Congressional Testimony
 * U.S. House Committee on Space, Science and Technology ([statement](https://republicans-science.house.gov/_cache/files/1/f/1f75079e-0248-47f3-9da3-e040fcef99bb/C5211DF57EAF1F86B0DEDB14A7CF5FB4.2021-05-19-testimony-kamara.pdf), [video](https://youtu.be/HhEjtMm_l7g)) 
 * U.S. House Committee on Financial Services ([statement](https://cs.brown.edu/~seny/pubs/fsc-testimony.pdf), [video](https://www.youtube.com/live/F_FDbCUOMWA?si=8G2W1mumR8ILRahT)) 
