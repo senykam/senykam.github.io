@@ -72,7 +72,7 @@ x_username: # your X handle
 mastodon_username: # your mastodon instance+username in the format instance.tld/@username
 linkedin_username: # your LinkedIn user name
 telegram_username: # your Telegram user name
-scholar_userid: #TY9L1ecAAAAJ # your Google Scholar ID
+scholar_userid: TY9L1ecAAAAJ # your Google Scholar ID
 semanticscholar_id: # your Semantic Scholar ID
 whatsapp_number: # your WhatsApp number (full phone number in international format. Omit any zeroes, brackets, or dashes when adding the phone number in international format.)
 orcid_id: # your ORCID ID
@@ -122,8 +122,8 @@ bing_site_verification: # out your bing-site-verification ID (Bing Webmaster)
 # Blog
 # -----------------------------------------------------------------------------
 
-blog_name: al-folio # blog_name will be displayed in your blog page
-blog_description: a simple whitespace theme for academics
+blog_name: Writing # blog_name will be displayed in your blog page
+blog_description: 
 permalink: /blog/:year/:title/
 
 # Pagination
@@ -173,6 +173,9 @@ collections:
   projects:
     output: true
     permalink: /projects/:path/
+  activities:
+    output:true
+    permalink: /activities/:path/
 
 announcements:
   enabled: true
