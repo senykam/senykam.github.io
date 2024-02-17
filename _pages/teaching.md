@@ -7,7 +7,7 @@ nav: true
 nav_order: 6
 ---
 
-At Brown, I taught several classes in Computer Science including:
+#### Courses 
 * CS 16: Introduction to Algorithms and Data Structures from 2017 to 2021
 * CS 2952V: Algorithms for the People in [2020](https://cs.brown.edu/~seny/2952v/)
 * CS 2950V: Topics in Applied Cryptography in 2016, 2017, [2018](https://cs.brown.edu/~seny/2950v-f18/) and [2019](https://cs.brown.edu/~seny/2950v/)  
@@ -22,9 +22,9 @@ At Brown, I taught several classes in Computer Science including:
 Leah Rosenbloom (co-advised with Anna Lysyanskaya) 
 
 + Graduated PhD students:
-[Archita Agarwal](https://cs.brown.edu/~aa12/), 
+[Archita Agarwal](https://architaagarwal.com/Ghous), 
 [Ghous Amjad](https://cs.brown.edu/~gamjad), 
-[Marilyn George](https://cs.brown.edu/~mgeorge5/), 
+[Marilyn George](https://marilyngeorge.com/), 
 [Lucy Qin](https://lucyq.in),  
 [Sam Zhao](https://zheguang.github.io) (co-advised with Stan Zdonik)
 
