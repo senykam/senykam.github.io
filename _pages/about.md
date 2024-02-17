@@ -41,5 +41,5 @@ Initiative](https://dsi.brown.edu), the [Center for Human Rights and
 Humanitarian Studies](https://watson.brown.edu/chrhs/) and the [Policy
 Lab](https://thepolicylab.brown.edu/).
 
-*I am not taking on new PhD students.*
+*Note: Unfortunately, I am not able to take on new PhD students.*
 

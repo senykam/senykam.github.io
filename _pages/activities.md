@@ -7,9 +7,35 @@ nav: true
 nav_order: 6
 ---
 
-#### Interviews 
-* A [Q&A](https://www.nature.com/articles/s43588-022-00196-2) with Nature on crypto & technology for the people  
-* Developments in cryptography with PBS's White House Chronicle ([video](https://vimeo.com/310867887))
+#### Student Advising 
+
++ Postdoc: [Tarik Moataz](https://tarikmoataz.com/) (2016-2019) 
+
++ PhD  students: 
+[Marilyn George](https://cs.brown.edu/~mgeorge5/), 
+[Victor Youdom Kemmoe](https://vicxekro.github.io/mypage/), 
+[Kweku Kwegyir-Aggrey](https://kweku.me/),
+Leah Rosenbloom (co-advised with Anna Lysyanskaya), 
+[Lucy Qin](https://lucyq.in), 
+
++ Graduated PhD students:
+[Archita Agarwal](https://cs.brown.edu/~aa12/), 
+[Ghous Amjad](https://cs.brown.edu/~gamjad), 
+[Sam Zhao](https://zheguang.github.io) (co-advised with Stan Zdonik)
+
++ MSR interns: 
+[Sherman Chow](https://staff.ie.cuhk.edu.hk/~smchow/), 
+[Anurag Khandelwal](http://anuragkhandelwal.com),
+[Xianrui Meng](https://www.xianruimeng.org),
+[Naveed Muhammad](https://cryptoonline.com), 
+[Tarik Moataz](https://cs.brown.edu/~tmoataz/),
+[Olya Ohrimenko](https://www.microsoft.com/en-us/research/people/oohrim/), 
+[Charalampos Papamanthou](https://www.ece.umd.edu/~cpap/), 
+[Mariana Raykova](https://www.cs.yale.edu/homes/raykova-mariana/), 
+[Ben Riva](https://sites.google.com/site/b3nr1va/),
+[Saeed Sadeghian](https://saeedsadeghian.com),
+Lei Wei 
+
 
 #### Congressional Testimony
 * U.S. House Committee on Space, Science and Technology ([statement](https://republicans-science.house.gov/_cache/files/1/f/1f75079e-0248-47f3-9da3-e040fcef99bb/C5211DF57EAF1F86B0DEDB14A7CF5FB4.2021-05-19-testimony-kamara.pdf), [video](https://youtu.be/HhEjtMm_l7g)) 
@@ -51,4 +77,18 @@ post](https://cdt.org/insights/outside-looking-in-approaches-to-content-moderati
 * Are compliance and privacy always at odds? ([blog](https://esl.cs.brown.edu/blog/are-compliance-and-privacy-always-at-odds/), [Lawfare](https://www.lawfaremedia.org/article/way-forward-bulk-collection))
 * How not to learn cryptography ([blog](https://esl.cs.brown.edu/blog/how-not-to-learn-cryptography/))
 
+#### Interviews 
+* A [Q&A](https://www.nature.com/articles/s43588-022-00196-2) with Nature on crypto & technology for the people  
+* Developments in cryptography with PBS's White House Chronicle ([video](https://vimeo.com/310867887))
 
+
+#### Some articles about our work
+* A Plan to Stop Data Breaches with Dead Simple Encryption ([Wired](https://www.wired.com/story/field-level-encryption-databases-mongobd/))
+* MongoDB Moves Encryption Out of the Server ([Wired](https://duo.com/decipher/mongodb-moves-encryption-out-of-the-server))
+* A Long-Awaited Defense Against Data Leaks May Have Just Arrived ([Wired](https://www.wired.com/story/mongodb-queryable-encryption-databases/))
+* How Cryptography Lets Down Marginalized Communities ([Wired](https://www.wired.com/story/seny-kamara-crypto-encryption-underserved-communities/))
+* This Encrypted Gun Registry Might Bridge a Partisan Divide ([Wired](https://www.wired.com/story/national-gun-registry-encrypted-decentralized/))
+* An App That Encrypts Your Photos From Camera to Cloud ([Wired](https://www.wired.com/story/pixek-app-encrypts-photos-from-camera-to-cloud/))
+* From your photos to your location: "structured encryption" could be the next big thing in privacy protection ([CBC Spark Radio](https://www.cbc.ca/radio/spark/384-companies-can-t-share-data-encrypted-photo-storage-and-more-1.4528003/from-your-photos-to-your-location-structured-encryption-could-be-the-next-big-thing-in-privacy-protection-1.4528018))
+* Using structured encryption to search protected photos in the cloud ([Boing Boing](https://boingboing.net/2018/01/22/real-world-crypto.html))
+ 
