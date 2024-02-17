@@ -8,20 +8,22 @@ nav_order: 6
 ---
 
 #### Student Advising 
-
 + Postdoc: [Tarik Moataz](https://tarikmoataz.com/) (2016-2019) 
 
 + PhD  students: 
-[Marilyn George](https://cs.brown.edu/~mgeorge5/), 
 [Victor Youdom Kemmoe](https://vicxekro.github.io/mypage/), 
 [Kweku Kwegyir-Aggrey](https://kweku.me/),
-Leah Rosenbloom (co-advised with Anna Lysyanskaya), 
-[Lucy Qin](https://lucyq.in), 
+Leah Rosenbloom (co-advised with Anna Lysyanskaya) 
 
 + Graduated PhD students:
 [Archita Agarwal](https://cs.brown.edu/~aa12/), 
 [Ghous Amjad](https://cs.brown.edu/~gamjad), 
+[Marilyn George](https://cs.brown.edu/~mgeorge5/), 
+[Lucy Qin](https://lucyq.in),  
 [Sam Zhao](https://zheguang.github.io) (co-advised with Stan Zdonik)
+
++ MongoDB interns:
+[Jaspal Singh](https://jaspal.owlstown.net/)
 
 + MSR interns: 
 [Sherman Chow](https://staff.ie.cuhk.edu.hk/~smchow/), 
