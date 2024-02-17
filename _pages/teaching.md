@@ -22,7 +22,7 @@ nav_order: 6
 Leah Rosenbloom (co-advised with Anna Lysyanskaya) 
 
 + Graduated PhD students:
-[Archita Agarwal](https://architaagarwal.com/Ghous), 
+[Archita Agarwal](https://architaagarwal.com), 
 [Ghous Amjad](https://cs.brown.edu/~gamjad), 
 [Marilyn George](https://marilyngeorge.com/), 
 [Lucy Qin](https://lucyq.in),  
