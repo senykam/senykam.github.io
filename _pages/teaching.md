@@ -17,7 +17,6 @@ nav_order: 6
 + Postdoc: [Tarik Moataz](https://tarikmoataz.com/) (2016-2019) 
 
 + PhD  students: 
-[Victor Youdom Kemmoe](https://vicxekro.github.io/mypage/), 
 [Kweku Kwegyir-Aggrey](https://kweku.me/),
 Leah Rosenbloom (co-advised with Anna Lysyanskaya) 
 
