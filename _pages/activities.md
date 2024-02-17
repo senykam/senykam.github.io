@@ -11,7 +11,7 @@ nav_order: 6
 * A [Q&A](https://www.nature.com/articles/s43588-022-00196-2) with Nature on crypto & technology for the people  
 * Developments in cryptography with PBS's White House Chronicle ([video](https://vimeo.com/310867887))
 
-### Congressional Testimony
+#### Congressional Testimony
 * U.S. House Committee on Space, Science and Technology ([statement](https://republicans-science.house.gov/_cache/files/1/f/1f75079e-0248-47f3-9da3-e040fcef99bb/C5211DF57EAF1F86B0DEDB14A7CF5FB4.2021-05-19-testimony-kamara.pdf), [video](https://youtu.be/HhEjtMm_l7g)) 
 * U.S. House Committee on Financial Services ([statement](https://cs.brown.edu/~seny/pubs/fsc-testimony.pdf), [video](https://www.youtube.com/live/F_FDbCUOMWA?si=8G2W1mumR8ILRahT)) 
 
@@ -23,6 +23,19 @@ nav_order: 6
 post](https://cdt.org/insights/outside-looking-in-approaches-to-content-moderation-in-end-to-end-encrypted-systems/))
 * [National Academies of Sciences](https://www.nationalacademies.org/) report on encryption and exceptional access ([report](https://nap.nationalacademies.org/catalog/25010/decrypting-the-encryption-debate-a-framework-for-decision-makers))
  
+#### Surveys
+* Summer School @ Selected Areas in Cryptography (SAC), 2019
+    * Encrypted search: intro and basics ([slides](https://cs.brown.edu/people/seny/slides/es_intro_and_basics.pdf))
+    * Encrypted search: leakage attacks ([slides](https://cs.brown.edu/people/seny/slides/es_leakage_attacks.pdf))
+    * Encrypted search: leakage suppression ([slids](https://cs.brown.edu/people/seny/slides/es_leakage_suppression.pdf))
+* How to Search on Encrypted Data
+    * Introduction ([blog](https://esl.cs.brown.edu/blog/how-to-search-on-encrypted-data-introduction-part-1/))
+    * Deterministic encryption ([blog](https://esl.cs.brown.edu/blog/how-to-search-on-encrypted-data-deterministic-encryption-part-2/))
+    * Functional encryption ([blog](https://esl.cs.brown.edu/blog/how-to-search-on-encrypted-data-functional-encryption-part-3/))
+    * Oblivious RAM ([blog](https://esl.cs.brown.edu/blog/how-to-search-on-encrypted-data-oblivious-rams-part-4/))
+    * Searchable symmetric encryption ([blog](https://esl.cs.brown.edu/blog/how-to-search-on-encrypted-data-searchable-symmetric-encryption-part-5/))
+
+
 #### Conferences & Workshops
 * Workshop on the [Theory and Practice of Encrypted Search](https://esl.cs.brown.edu/tpes/)
 * A 3-part series on Technology and Structural Inequity with the [Center for the Study of Race and Ethnicity in America](https://www.brown.edu/academics/race-ethnicity/home)
@@ -31,3 +44,11 @@ post](https://cdt.org/insights/outside-looking-in-approaches-to-content-moderati
     * Policing and Technology ([info](https://www.brown.edu/academics/race-ethnicity/events/technology-and-structural-inequality-series-policing-and-technology), [video](https://youtu.be/1FIQD8Sa934))
     * Bias and Discrimination in AI ([info](https://www.brown.edu/academics/race-ethnicity/events/technology-and-structural-inequality-series-bias-and-discrimination-ai), [video](https://youtu.be/z6pRfIM9QJc))
 * ICERM workshop on Encrypted Search ([info](https://icerm.brown.edu/topical_workshops/tw19-1-es/), [videos](https://icerm.brown.edu/topical_workshops/tw19-1-es/#lecturevideos)) 
+
+#### Older writing
+* Is the NSA metadata program legal ([blog](https://esl.cs.brown.edu/blog/is-the-nsa-metadata-program-legal/))
+* Restructuring the NSA metadata program ([blog](https://esl.cs.brown.edu/blog/restructuring-the-nsa-metadata-program/), [MIT Tech Review](https://www.technologyreview.com/2014/04/09/251050/cryptography-could-add-privacy-protections-to-nsa-phone-surveillance/))
+* Are compliance and privacy always at odds? ([blog](https://esl.cs.brown.edu/blog/are-compliance-and-privacy-always-at-odds/), [Lawfare](https://www.lawfaremedia.org/article/way-forward-bulk-collection))
+* How not to learn cryptography ([blog](https://esl.cs.brown.edu/blog/how-not-to-learn-cryptography/))
+
+
