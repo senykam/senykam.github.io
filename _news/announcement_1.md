@@ -5,4 +5,4 @@ inline: true
 related_posts: false
 ---
 
-After 7 wonderful years at Brown, I joined MongoDB full time. 
+After 7 great years at Brown, I joined MongoDB full time. 
