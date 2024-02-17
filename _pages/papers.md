@@ -7,6 +7,26 @@ nav: true
 nav_order: 2
 ---
 
++ **Bayesian Leakage Analysis: A Framework for Analyzing Leakage in Encrypted Search**  
+Seny Kamara and Tarik Moataz  
+IACR ePrint  
+(full [pdf](https://eprint.iacr.org/2023/813.pdf)
+
++ **MAPLE: MArkov Process Leakage attacks on Encrypted Search**  
+Seny Kamara, MongoDB, Abdelkarim Kati, Tarik Moataz, Jamie DeMaria, Andrew Park, Amos Treiber  
+Privacy Enhancing Technologies (PETS) '24  
+(full [pdf](https://eprint.iacr.org/2023/810.pdf))
+
++ **Injection-Secure Structured and Searchable Symmetric Encryption.**  
+Ghous Amjad, Seny Kamara and Tarik Moataz  
+Asiacrypt '23  
+(full [pdf](https://eprint.iacr.org/2023/533.pdf)
+ 
++ **Synq: Public Policy Analytics Over Encrypted Data**  
+Zachary Espiritu, Marilyn George, Seny Kamara, Lucy Qin  
+IEEE Security & Privacy (Oakland) '24
+(proceedings [pdf](https://csdl-downloads.ieeecomputer.org/proceedings/sp/2024/3130/00/313000a085.pdf?Expires=1708203210&Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9jc2RsLWRvd25sb2Fkcy5pZWVlY29tcHV0ZXIub3JnL3Byb2NlZWRpbmdzL3NwLzIwMjQvMzEzMC8wMC8zMTMwMDBhMDg1LnBkZiIsIkNvbmRpdGlvbiI6eyJEYXRlTGVzc1RoYW4iOnsiQVdTOkVwb2NoVGltZSI6MTcwODIwMzIxMH19fV19&Signature=Kp0ETkjoMpsH9qV3pLPIA0zAUFpTjy3MogYJl6FGjIqAKCS3kIuVhbfhizdGTh~p~d5QfFq1DOb5ZQu7dSOA~ixUqHofhg-GADJVGDu~4Gw0z9ULGpnKT0Pup6mTT8Rne3LSDEjkel55-8l9MPv4lbALZvXxUdVoaKadfI8aBLaGtRb0lNAg1vS4kgyyEgy-i~Or3Yw0y~EGy25U2q50ng9bfHlZaRyFrHVZPF2vcZg56WQv-lJ2WYy~2x4v19hgwF5cJ-dzmLiOwROkUdwwP4vcQE8~7loOL8ANvGyzvbn7G8rn0R1JSMEz4emjOHc-rn3apEaa8mr9WakvG~Lwwg__&Key-Pair-Id=K12PMWTCQBDMDT))
+
 + **Outside Looking In: Approaches to Content Moderation in End-to-End Encrypted Systems**  
 Seny Kamara, Mallory Knodel, Emma Llansó, Greg Nojeim, Lucy Qin, Dhanaraj Thakur, Caitlin Vogus  
 Report for Center for Democracy and Technology '21  
@@ -58,7 +78,7 @@ Seny Kamara, Tarik Moataz, Stan Zdonik, Zheguang Zhao
 IACR ePrint   
 (full [pdf](https://eprint.iacr.org/2020/274.pdf))
 
-+  **Encrypted Distributed Hash Tables**   
++  **Encrypted Distributed Dictionaries**   
 Archita Agarwal, Seny Kamara   
 IACR ePrint   
 (full [pdf](https://eprint.iacr.org/2019/1126.pdf), [blog](https://blog.cs.brown.edu/2020/04/09/encrypting-distributed-databases-provable-security/), [Archita's talk](https://icerm.brown.edu/video_archive/?play=1959))  
