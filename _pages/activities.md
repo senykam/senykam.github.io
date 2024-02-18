@@ -39,6 +39,7 @@ post](https://cdt.org/insights/outside-looking-in-approaches-to-content-moderati
 * ICERM workshop on Encrypted Search ([info](https://icerm.brown.edu/topical_workshops/tw19-1-es/), [videos](https://icerm.brown.edu/topical_workshops/tw19-1-es/#lecturevideos)) 
 
 #### Older writing
+* The FBI's COINTELPRO ([blog](http://algosforthepeople.org/)) 
 * Is the NSA metadata program legal ([blog](https://esl.cs.brown.edu/blog/is-the-nsa-metadata-program-legal/))
 * Restructuring the NSA metadata program ([blog](https://esl.cs.brown.edu/blog/restructuring-the-nsa-metadata-program/), [MIT Tech Review](https://www.technologyreview.com/2014/04/09/251050/cryptography-could-add-privacy-protections-to-nsa-phone-surveillance/))
 * Are compliance and privacy always at odds? ([blog](https://esl.cs.brown.edu/blog/are-compliance-and-privacy-always-at-odds/), [Lawfare](https://www.lawfaremedia.org/article/way-forward-bulk-collection))
