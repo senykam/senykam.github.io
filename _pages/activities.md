@@ -7,10 +7,6 @@ nav: true
 nav_order: 6
 ---
 
-#### Congressional Testimony
-* U.S. House Committee on Space, Science and Technology ([statement](https://republicans-science.house.gov/_cache/files/1/f/1f75079e-0248-47f3-9da3-e040fcef99bb/C5211DF57EAF1F86B0DEDB14A7CF5FB4.2021-05-19-testimony-kamara.pdf), [video](https://youtu.be/HhEjtMm_l7g)) 
-* U.S. House Committee on Financial Services ([statement](https://cs.brown.edu/~seny/pubs/fsc-testimony.pdf), [video](https://www.youtube.com/live/F_FDbCUOMWA?si=8G2W1mumR8ILRahT)) 
-
 #### Reports 
 * [Center for
   Democracy and Technology](https://cdt.org/) report on on end-to-end encryption and content moderation 
