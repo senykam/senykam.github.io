@@ -20,10 +20,7 @@ post](https://cdt.org/insights/outside-looking-in-approaches-to-content-moderati
 * [National Academies of Sciences](https://www.nationalacademies.org/) report on encryption and exceptional access ([report](https://nap.nationalacademies.org/catalog/25010/decrypting-the-encryption-debate-a-framework-for-decision-makers))
  
 #### Surveys
-* Summer School @ Selected Areas in Cryptography (SAC), 2019
-    * Encrypted search: intro and basics ([slides](https://cs.brown.edu/people/seny/slides/es_intro_and_basics.pdf))
-    * Encrypted search: leakage attacks ([slides](https://cs.brown.edu/people/seny/slides/es_leakage_attacks.pdf))
-    * Encrypted search: leakage suppression ([slids](https://cs.brown.edu/people/seny/slides/es_leakage_suppression.pdf))
+
 * How to Search on Encrypted Data
     * Introduction ([blog](https://esl.cs.brown.edu/blog/how-to-search-on-encrypted-data-introduction-part-1/))
     * Deterministic encryption ([blog](https://esl.cs.brown.edu/blog/how-to-search-on-encrypted-data-deterministic-encryption-part-2/))
