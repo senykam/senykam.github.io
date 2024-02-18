@@ -8,12 +8,12 @@ nav_order: 6
 ---
 
 #### Reports 
-* [Center for
-  Democracy and Technology](https://cdt.org/) report on on end-to-end encryption and content moderation 
+* Center for
+  Democracy and Technology report on on end-to-end encryption and content moderation 
 ([report](https://cdt.org/wp-content/uploads/2021/08/CDT-Outside-Looking-In-Approaches-to-Content-Moderation-in-End-to-End-Encrypted-Systems-updated-20220113.pdf),
 [blog
 post](https://cdt.org/insights/outside-looking-in-approaches-to-content-moderation-in-end-to-end-encrypted-systems/))
-* [National Academies of Sciences](https://www.nationalacademies.org/) report on encryption and exceptional access ([report](https://nap.nationalacademies.org/catalog/25010/decrypting-the-encryption-debate-a-framework-for-decision-makers))
+* National Academies of Sciences report on encryption and exceptional access ([report](https://nap.nationalacademies.org/catalog/25010/decrypting-the-encryption-debate-a-framework-for-decision-makers))
  
 #### Surveys
 
