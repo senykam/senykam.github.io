@@ -1,20 +1,27 @@
 ---
 layout: page
 permalink: /talks/
-title: selected talks 
+title: talks 
 description: 
 nav: true
 nav_order: 5 
 ---
 
-+ **Crypto for the People (Part 2)**  
-Usenix Enigma '22  
-([video](https://youtu.be/ZdFJ2dZDogI?si=RnheK3qe5azrdzbX)
+#### Selected Keynotes
+* **Encrypted Distributed Systems**  
+Principles of Distributed Computing (PODC) '22  
+([slides](pdf/podc.pdf))
 
-+ **Crypto for the People**  
+* **Crypto for the People (Part 2)**  
+Usenix Enigma '22  
+([slides](pdf/enigma.pdf), [video](https://youtu.be/ZdFJ2dZDogI?si=RnheK3qe5azrdzbX)
+
+* **Crypto for the People**  
 CRYPTO '20, August 2020  
 ([video](https://www.youtube.com/live/Ygq9ci0GFhA?si=1J3D9ef-13nzOn74)
 
+
+#### Selected Invited Talks
 + **Algorithms for the People**  
 Haverford College. Haverford, PA, February 2020   
 Mozilla. June 2020
