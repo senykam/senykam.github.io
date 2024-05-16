@@ -5,4 +5,4 @@ inline: true
 related_posts: false
 ---
 
-Take a look at the [Re-imagining Cryptography and Privacy](https://recapworkshop.online/) (ReCAP) workshop organized by [Alishah](https://alishahc.com/), [Leah](https://namisa.art/) and [Lucy](https://lucyq.in/) organized 
+Take a look at the [Re-imagining Cryptography and Privacy](https://recapworkshop.online/) (ReCAP) workshop organized by [Alishah](https://alishahc.com/), [Leah](https://namisa.art/) and [Lucy](https://lucyq.in/). I found it to be a really inspiring event.  
