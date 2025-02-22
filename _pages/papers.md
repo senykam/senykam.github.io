@@ -17,7 +17,7 @@ IACR ePrint
 (full [pdf](https://eprint.iacr.org/2023/813.pdf))
 
 + **MAPLE: MArkov Process Leakage attacks on Encrypted Search**  
-Seny Kamara, MongoDB, Abdelkarim Kati, Tarik Moataz, Jamie DeMaria, Andrew Park, Amos Treiber  
+Seny Kamara, Abdelkarim Kati, Tarik Moataz, Jamie DeMaria, Andrew Park, Amos Treiber  
 Privacy Enhancing Technologies (PETS) '24  
 (full [pdf](https://eprint.iacr.org/2023/810.pdf))
 
