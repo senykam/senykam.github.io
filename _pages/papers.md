@@ -6,8 +6,12 @@ description:
 nav: true
 nav_order: 2
 ---
++ **Subliminal Encrypted Multi-Maps and Black-Box Leakage Absorption**  
+Amine Bahi, Seny Kamara, Tarik Moataz, Guevara Noubiri 
+IACR ePrint  
+(full [pdf](https://eprint.iacr.org/2024/1708.pdf))
 
-+ **Bayesian Leakage Analysis: A Framework for Analyzing Leakage in Encrypted Search**  
++ **Bayesian Leakage Analysis: A Framework for Analyzing Leakage in Cryptography**  
 Seny Kamara and Tarik Moataz  
 IACR ePrint  
 (full [pdf](https://eprint.iacr.org/2023/813.pdf))
@@ -25,7 +29,7 @@ Asiacrypt '23
 + **Synq: Public Policy Analytics Over Encrypted Data**  
 Zachary Espiritu, Marilyn George, Seny Kamara, Lucy Qin  
 IEEE Security & Privacy (Oakland) '24  
-(proceedings [pdf](https://csdl-downloads.ieeecomputer.org/proceedings/sp/2024/3130/00/313000a085.pdf?Expires=1708203210&Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9jc2RsLWRvd25sb2Fkcy5pZWVlY29tcHV0ZXIub3JnL3Byb2NlZWRpbmdzL3NwLzIwMjQvMzEzMC8wMC8zMTMwMDBhMDg1LnBkZiIsIkNvbmRpdGlvbiI6eyJEYXRlTGVzc1RoYW4iOnsiQVdTOkVwb2NoVGltZSI6MTcwODIwMzIxMH19fV19&Signature=Kp0ETkjoMpsH9qV3pLPIA0zAUFpTjy3MogYJl6FGjIqAKCS3kIuVhbfhizdGTh~p~d5QfFq1DOb5ZQu7dSOA~ixUqHofhg-GADJVGDu~4Gw0z9ULGpnKT0Pup6mTT8Rne3LSDEjkel55-8l9MPv4lbALZvXxUdVoaKadfI8aBLaGtRb0lNAg1vS4kgyyEgy-i~Or3Yw0y~EGy25U2q50ng9bfHlZaRyFrHVZPF2vcZg56WQv-lJ2WYy~2x4v19hgwF5cJ-dzmLiOwROkUdwwP4vcQE8~7loOL8ANvGyzvbn7G8rn0R1JSMEz4emjOHc-rn3apEaa8mr9WakvG~Lwwg__&Key-Pair-Id=K12PMWTCQBDMDT))
+(proceedings [pdf](https://marilyngeorge.com/papers/synq.pdf)
 
 + **Outside Looking In: Approaches to Content Moderation in End-to-End Encrypted Systems**  
 Seny Kamara, Mallory Knodel, Emma Llansó, Greg Nojeim, Lucy Qin, Dhanaraj Thakur, Caitlin Vogus  
