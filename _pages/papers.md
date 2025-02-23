@@ -29,7 +29,7 @@ Asiacrypt '23
 + **Synq: Public Policy Analytics Over Encrypted Data**  
 Zachary Espiritu, Marilyn George, Seny Kamara, Lucy Qin  
 IEEE Security & Privacy (Oakland) '24  
-(proceedings [pdf](https://marilyngeorge.com/papers/synq.pdf)
+(proceedings [pdf](https://marilyngeorge.com/papers/synq.pdf))
 
 + **Outside Looking In: Approaches to Content Moderation in End-to-End Encrypted Systems**  
 Seny Kamara, Mallory Knodel, Emma Llansó, Greg Nojeim, Lucy Qin, Dhanaraj Thakur, Caitlin Vogus  
