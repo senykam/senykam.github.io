@@ -14,9 +14,9 @@ IACR ePrint
 (full [pdf](https://eprint.iacr.org/2024/1708.pdf))
 
 + **Concurrent Encrypted Multi-Maps**  
-Archita Agarwal, Seny Kamara, Tarik Moataz
-Asiacrypt '24 
-(full [pdf](pdf/cemm.pdf)
+Archita Agarwal, Seny Kamara, Tarik Moataz 
+Asiacrypt '24  
+(full [pdf](pdf/cemm.pdf))
 
 + **Bayesian Leakage Analysis: A Framework for Analyzing Leakage in Cryptography**  
 Seny Kamara and Tarik Moataz  
