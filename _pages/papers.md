@@ -14,7 +14,7 @@ IACR ePrint
 (full [pdf](https://eprint.iacr.org/2024/1708.pdf))
 
 + **Concurrent Encrypted Multi-Maps**  
-Archita Agarwal, Seny Kamara, Tarik Moataz 
+Archita Agarwal, Seny Kamara, Tarik Moataz   
 Asiacrypt '24  
 (proceedings [pdf](https://link.springer.com/chapter/10.1007/978-981-96-0894-2_6))
 
