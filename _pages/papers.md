@@ -6,10 +6,17 @@ description:
 nav: true
 nav_order: 2
 ---
+
+
 + **Subliminal Encrypted Multi-Maps and Black-Box Leakage Absorption**  
 Amine Bahi, Seny Kamara, Tarik Moataz, Guevara Noubiri 
 IACR ePrint  
 (full [pdf](https://eprint.iacr.org/2024/1708.pdf))
+
++ **Concurrent Encrypted Multi-Maps**  
+Archita Agarwal, Seny Kamara, Tarik Moataz
+Asiacrypt '24 
+(full [pdf](pdf/cemm.pdf)
 
 + **Bayesian Leakage Analysis: A Framework for Analyzing Leakage in Cryptography**  
 Seny Kamara and Tarik Moataz  
@@ -50,7 +57,7 @@ Eurocrypt '21
 + **A Decentralized and Encrypted National Gun Registry**  
 Seny Kamara, Tarik Moataz, Andrew Park, Lucy Qin  
 IEEE Symposium on Security and Privacy (Oakland) '21  
-(full [pdf](pubs/gunreg.pdf))
+(full [pdf](https://eprint.iacr.org/2021/107.pdf))
 
 + **Encrypted Databases: From Theory to Practice**  
 Zheguang Zhao, Seny Kamara, Tarik Moataz, Stan Zdonik  
@@ -65,7 +72,7 @@ IACR ePrint
 + **Encrypted Key Value Stores**  
 Archita Agarwal, Seny Kamara  
 Indocrypt '20   
-(proceedings [pdf](pubs/ekv.pdf)) 
+(proceedings [pdf](pdf/ekv.pdf)) 
 
 + **Encrypted Blockchain Databases**  
 Daniel Adkins, Archita Agarwal, Seny Kamara, Tarik Moataz  
