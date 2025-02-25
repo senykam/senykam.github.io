@@ -65,8 +65,8 @@ Conference on Innovative Data Systems Research (CIDR) '21
 (proceedings [pdf](http://cidrdb.org/cidr2021/papers/cidr2021_paper23.pdf))
 
 + **Adversarial Level Agreements for Two-Party Protocols**  
-Marilyn George, Seny Kamara  
-IACR ePrint  
+Marilyn George, Seny Kamara   
+AsiaCCS '22   
 (full [pdf](https://eprint.iacr.org/2020/1249.pdf))   
 
 + **Encrypted Key Value Stores**  
