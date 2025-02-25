@@ -45,7 +45,7 @@ Report for Center for Democracy and Technology '21
 
 + **Cryptanalysis of Encrypted Search with LEAKER: A framework for LEakage AttacK Evaluation on Real-world data**  
 Seny Kamara, Abdelkarim Kati, Tarik Moataz, Thomas Schneider, Amos Treiber, Michael Yonli  
-IACR ePrint  
+IEEE European Symposium on Security and Privacy, 2022  
 (full [pdf](https://eprint.iacr.org/2021/1035.pdf))   
 
 
