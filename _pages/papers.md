@@ -86,7 +86,7 @@ Archita Agarwal, Seny Kamara
 
 +  **Revisiting Leakage-Abuse Attacks**   
 Laura Blackstone, Seny Kamara, Tarik Moataz   
-NDSS '20  
+Network and Distributed System Security Symposium (NDSS) '20   
 (full [pdf](https://eprint.iacr.org/2019/1175.pdf))
 
 +  **Computationally Volume-Hiding Structured Encryption**   
@@ -101,12 +101,12 @@ Eurosec '19
 
 +  **Encrypted Databases for Differential Privacy**   
 Archita Agarwal, Maurice Herlihy, Seny Kamara, Tarik Moataz   
-PETS '19  
+Privacy Enhancing Technologies (PETS) '19    
 (full [pdf](https://eprint.iacr.org/2018/860.pdf))
 
 + **Breach-Resistant Structured Encryption**  
 Ghous Amjad, Seny Kamara, Tarik Moataz  
-PETS '19  
+Privacy Enhancing Technologies (PETS) '19    
 (full [pdf](https://eprint.iacr.org/2018/195.pdf))
 
 
@@ -117,7 +117,7 @@ Asiacrypt '18
 
 + **Structured Encryption and Leakage Suppression**  
 Seny Kamara, Tarik Moataz, Olya Ohrimenko  
-CRYPTO '18  
+Crypto '18  
 (proceedings [pdf](https://eprint.iacr.org/2018/551.pdf))
 
 
