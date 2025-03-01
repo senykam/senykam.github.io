@@ -8,7 +8,7 @@ nav_order: 2
 ---
 
 + **Bayesian Leakage Analysis: A Framework for Analyzing Leakage in Cryptography**  
-Zachary Espiritu, Seny Kamara and Tarik Moataz  
+Zachary Espiritu, Seny Kamara, Tarik Moataz  
 (full [pdf](https://eprint.iacr.org/2023/813.pdf))
 
 + **Subliminal Encrypted Multi-Maps and Black-Box Leakage Absorption**  
@@ -18,7 +18,7 @@ Amine Bahi, Seny Kamara, Tarik Moataz, Guevara Noubir
 + **Concurrent Encrypted Multi-Maps**  
 Archita Agarwal, Seny Kamara, Tarik Moataz   
 Asiacrypt '24  
-(proceedings [pdf](https://link.springer.com/chapter/10.1007/978-981-96-0894-2_6))
+(proceedings [pdf](/assets/pdf/cemm.pdf))
 
 
 + **Synq: Public Policy Analytics Over Encrypted Data**  
@@ -186,7 +186,7 @@ Financial Cryptography and Data Security (FC) '13
 +  **Salus: A System for Server-Aided Secure Function Evaluation**   
 Seny Kamara, Payman Mohassel and Ben Riva   
 Conference on Computer and Communications Security (CCS) '12    
-(full [pdf](http://eprint.iacr.org/2012/542.pdf)) 
+(full [pdf](http://eprint.iacr.org/2012/542.pdf), [errata](/assets/notes/salus-errata.md)) 
 
 + **Dynamic Searchable Symmetric Encryption**   
 Seny Kamara, Charalampos Papamanthou and Tom Roeder   

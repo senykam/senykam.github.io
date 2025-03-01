@@ -1,0 +1,1 @@
+An experimental error was made when measuring the communication of the protocols so the values provided in Table 1 are not quite correct. Unfortunately since we lost access to the code we were not able to rerun the experiments but we do not believe the values were off by too much. Apologies for any inconvenience.  
