@@ -9,6 +9,7 @@ nav_order: 2
 
 + **Bayesian Leakage Analysis: A Framework for Analyzing Leakage in Cryptography**  
 Zachary Espiritu, Seny Kamara, Tarik Moataz  
+Communications in Cryptography  
 (full [pdf](https://eprint.iacr.org/2023/813.pdf))
 
 + **Subliminal Encrypted Multi-Maps and Black-Box Leakage Absorption**  
@@ -196,7 +197,7 @@ Conference on Computer and Communications Security (CCS) '12
 + **Secure Outsourced Computation in a Multi-Tenant Cloud**  
 S. Kamara and M. Raykova  
 Workshop on Cryptography and Security in Clouds '11  
-(proceedings [pdf](pubs/multitenant-cloud.pdf))
+(proceedings [pdf](/assets/pdf/mtenant.pdf))
 
 + **Cryptographic Cloud Storage**   
 Seny Kamara and Kristin Lauter   
@@ -213,6 +214,10 @@ International Symposium on Computer Architecture (ISCA) '12
 M. Chase, S. Kamara, A. Putnam, T. Sherwood, D. Shumow and V. Vaikuntanathan  
 New Directions in Computer Architecture '11 
 
++ **CS2: A Searchable Cryptographic Cloud Storage System**  
+Seny Kamara, Charalampos Papamanthou, Tom Roeder   
+Microsoft Research Technical Report MSR-TR-2011-58 
+(full [pdf](/assets/pdf/cs2.pdf))
 
 + **Structured Encryption and Controlled Disclosure**   
 Melissa Chase and Seny Kamara   
