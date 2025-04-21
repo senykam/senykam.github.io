@@ -32,10 +32,13 @@ theory and systems, including applied and theoretical cryptography, data
 structures and algorithms, databases, networking, game theory and technology
 policy.
 
-At Brown, I co-directed the [Encrypted Systems Lab](https://esl.cs.brown.edu)
-and was affiliated with the CAPS group, the [Data Science
-Initiative](https://dsi.brown.edu), the [Center for Human Rights and
-Humanitarian Studies](https://watson.brown.edu/chrhs/) and the [Policy
+At Brown, I co-founded the [Center for Technological Responsibility,
+Reimagination and Redesign](https://cntr.brown.edu/) (CNTR) with [Suresh
+Venkatasubramanian](https://vivo.brown.edu/display/suresh), co-founded and
+co-directed the [Encrypted Systems Lab](https://esl.cs.brown.edu) with [Tarik
+Moataz](https://tarikmoataz.com/) and was affiliated with the CAPS group, the
+[Data Science Initiative](https://dsi.brown.edu), the [Center for Human Rights
+and Humanitarian Studies](https://watson.brown.edu/chrhs/) and the [Policy
 Lab](https://thepolicylab.brown.edu/).
 
 *Note: Unfortunately, I am not able to take on new PhD students.*
