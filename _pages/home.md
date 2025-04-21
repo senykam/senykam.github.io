@@ -36,7 +36,7 @@ At Brown, I co-founded the [Center for Technological Responsibility,
 Reimagination and Redesign](https://cntr.brown.edu/) (CNTR) with [Suresh
 Venkatasubramanian](https://vivo.brown.edu/display/suresh), co-founded and
 co-directed the [Encrypted Systems Lab](https://esl.cs.brown.edu) with [Tarik
-Moataz](https://tarikmoataz.com/) and was affiliated with the CAPS group, the
+Moataz](https://tarikmoataz.com/), helped setup the [Socially Responsible Computing](https://responsible.cs.brown.edu/) program with [Ugur Cetintemel](https://sites.google.com/a/brown.edu/ugur-cetintemel/), [Kathi Fisler](https://cs.brown.edu/~kfisler/) and [Julia Netter](https://www.julianetter.de/), and chaired the Diversity Committee and Mosaic+ Transition Program with Laura Dobler. I was also affiliated with the CAPS group, the
 [Data Science Initiative](https://dsi.brown.edu), the [Center for Human Rights
 and Humanitarian Studies](https://watson.brown.edu/chrhs/) and the [Policy
 Lab](https://thepolicylab.brown.edu/).
