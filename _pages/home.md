@@ -41,7 +41,7 @@ Moataz](https://tarikmoataz.com/), helped start the [Socially Responsible Comput
 and Humanitarian Studies](https://watson.brown.edu/chrhs/) and the [Policy
 Lab](https://thepolicylab.brown.edu/).
 
-Together with [Alishah Chator](https://alishahc.com/), [Leah Rosenbloom](https://namisa.art/) and [Lucy Qin](https://lucyq.in/), we started the [Community-Driven Cryptography](https://communitydrivencrypto.github.io/) project and the [Re-Imagining Cryptography and Privacy](https://recapworkshop.online/) (ReCAP) Workshop. 
+Together with [Alishah Chator](https://alishahc.com/), [Leah Rosenbloom](https://namisa.art/) and [Lucy Qin](https://lucyq.in/), we founded the [Community-Driven Cryptography](https://communitydrivencrypto.github.io/) project and the [Re-Imagining Cryptography and Privacy](https://recapworkshop.online/) (ReCAP) Workshop. 
 
 *Note: Unfortunately, I am not able to take on new PhD students.*
 
