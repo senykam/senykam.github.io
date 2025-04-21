@@ -32,14 +32,16 @@ theory and systems, including applied and theoretical cryptography, data
 structures and algorithms, databases, networking, game theory and technology
 policy.
 
-At Brown, I co-founded the [Center for Technological Responsibility,
+At Brown, I taught [Algorithms for the People](https://cs.brown.edu/~seny/2952v/), co-founded the [Center for Technological Responsibility,
 Reimagination and Redesign](https://cntr.brown.edu/) (CNTR) with [Suresh
 Venkatasubramanian](https://vivo.brown.edu/display/suresh), co-founded and
 co-directed the [Encrypted Systems Lab](https://esl.cs.brown.edu) with [Tarik
-Moataz](https://tarikmoataz.com/), helped setup the [Socially Responsible Computing](https://responsible.cs.brown.edu/) program with [Ugur Cetintemel](https://sites.google.com/a/brown.edu/ugur-cetintemel/), [Kathi Fisler](https://cs.brown.edu/~kfisler/) and [Julia Netter](https://www.julianetter.de/), and chaired the Diversity Committee and Mosaic+ Transition Program with Laura Dobler. I was also affiliated with the CAPS group, the
+Moataz](https://tarikmoataz.com/), helped start the [Socially Responsible Computing](https://responsible.cs.brown.edu/) program with [Ugur Cetintemel](https://sites.google.com/a/brown.edu/ugur-cetintemel/), [Kathi Fisler](https://cs.brown.edu/~kfisler/) and [Julia Netter](https://www.julianetter.de/), and chaired the Diversity Committee and Mosaic+ Transition Program with Laura Dobler. I was also affiliated with the CAPS group, the
 [Data Science Initiative](https://dsi.brown.edu), the [Center for Human Rights
 and Humanitarian Studies](https://watson.brown.edu/chrhs/) and the [Policy
 Lab](https://thepolicylab.brown.edu/).
+
+Together with [Alishah Chator](https://alishahc.com/), [Leah Rosenbloom](https://namisa.art/) and [Lucy Qin](https://lucyq.in/), we started the [Community-Driven Cryptography](https://communitydrivencrypto.github.io/) project and the [Re-Imagining Cryptography and Privacy](https://recapworkshop.online/) (ReCAP) Workshop. 
 
 *Note: Unfortunately, I am not able to take on new PhD students.*
 
