@@ -7,9 +7,33 @@ nav: true
 nav_order: 2
 ---
 
++ **tigro: Trust Infrastructure for Grassroots Organizing via Grounded Digital Annotations** 
+Leah Namisa Rosenbloom, Seny Kamara, Zachary Espiritu, Tarik Moataz, Amine Bahi, John Wilkinson 
+Privacy Enhancing Technologies Symposium (PETS) '26 
+
++ **Leafblower: A Leakage Attack Against TEE-Based Encrypted Databases** 
+Zachary Espiritu, Seny Kamara, Tarik Moataz, Valentin Ogier 
+IEEE Security & Privacy (Oakland) '26
+(proceedings [pdf](https://zacharyespiritu.com/papers/leafblower-sp2026.pdf))
+
++ **Structured Encryption and Distribution-Aware Leakage Suppression** 
+Marilyn George, Seny Kamara, Tarik Moataz, Zachary Espiritu 
+Asiacrypt '25  
+(proceedings [pdf](https://marilyngeorge.com/papers/da_leak_sup.pdf))
+
++ **PolySys: an Algebraic Leakage Attack Engine** 
+Zachary Espiritu, Seny Kamara, Tarik Moataz, and Andrew Park
+Usenix Security '25 
+(full [pdf](https://eprint.iacr.org/2025/1530.pdf))
+
++ **Updatable Private Set Intersection from Structured Encryption** 
+Archita Agarwal, David Cash, Marilyn George, Seny Kamara, Tarik Moataz, and Jaspal Singh
+Communications in Cryptography 
+(full [pdf](https://cic.iacr.org/p/2/4/25/pdf))
+
 + **Bayesian Leakage Analysis: A Framework for Analyzing Leakage in Cryptography**  
 Zachary Espiritu, Seny Kamara, Tarik Moataz  
-Communications in Cryptography  
+Communications in Cryptography, Volume 2, Number 1  
 (full [pdf](https://eprint.iacr.org/2023/813.pdf))
 
 + **Subliminal Encrypted Multi-Maps and Black-Box Leakage Absorption**  
