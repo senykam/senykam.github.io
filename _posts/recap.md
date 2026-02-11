@@ -1,0 +1,96 @@
+---
+layout: post
+title: Contextualizing Research 
+date: 2026-02-11 21:01:00
+description:  
+tags:  
+draft: true
+categories: 
+---
+
+
+
+Last September, I was asked to give a talk at the [ReCAP](https://recapworkshop.online/) workshop. For those of you who don't know, ReCAP stands for _RE-imagining Cryptography And Privacy_ and was organized by [Alishah Chator](https://alishahc.com/), [Leah Rosenbloom](https://namisa.art/) and [Lucy Qin](https://lucyq.in/).
+
+When Alishah, Leah, and Lucy asked me to speak, the idea was roughly that I would give a talk reflecting on my _Crypto for the People_ talk from CRYPTO 2020. This seemed like a reasonable idea since that talk was over 4 years ago and quite a bit had happened since, including the start of the [Community-Driven Cryptography Project](https://communitydrivencrypto.github.io/) and the ReCAP workshop itself.
+
+This reflection, however, ended up going in a different direction than I anticipated, and the post I'm writing about it now goes in an even newer direction than the talk.
+
+If you're interested in watching some of the talks you can find them here:
+* [The ReCAP Youtube Page](https://www.youtube.com/@ReCAPWorkshop)
+* [Crypto for the People](https://www.youtube.com/watch?v=Ygq9ci0GFhA&t=1s) @ Crypto 2020
+* [Reflecting on Crypto for the People](https://www.youtube.com/watch?v=AOEW6BsOuVQ) @ ReCAP 
+
+#### The Birth of ReCAP
+
+I received a lot of emails after my Crypto for the People talk, but one really stood out. It was from Alishah Chator, and here is an excerpt:
+
+> While I enjoy…academic research, there…are so many hoops to jump through for the sake of personal advancement rather than actual real-world impact. On reflection, I am not sure if I can justify academia as a path for myself unless I know that there is a meaningful service I am providing…
+
+Out of all the emails, the reason this one stood out was that I could really relate to it. In fact, it expressed exactly how I have felt throughout my career in cryptography and computer science. But, with the exception of some of my own PhD students, this was the first time someone else had expressed it as well.
+
+The result of this email was that Alishah and I met and talked, and during our discussion, we decided that perhaps one useful first step towards addressing this malaise would be to find and gather other folks who might feel similarly. The obvious next step was to talk with Leah and Lucy, both of whom I knew had always felt this way as well, and together we cobbled together the _Community-Driven Cryptography Project_.
+
+As meetings were held and discussions progressed, a natural question emerged: _what should the goal of the project be?_ What would be a good way for this group to contribute something useful? After thinking about this for some time, we decided that organizing an event where people who feel this malaise could present their work, share ideas, and come together and meet would be valuable. And this is how the idea of ReCAP came about.
+
+From this point on, Alishah, Leah, and Lucy did all the work, and they should really be given the credit and appreciated for their effort. If you attended ReCAP or watched the talks online and got something from it, please send them a thank-you email. It's always nice to feel like one's efforts are appreciated, and remember that at the time they organized the workshop they were PhD students who were also trying to finish their theses, defend, publish, and find postdocs!
+
+#### Exploring the Malaise
+
+As I was working on my talk and preparing slides on the birth of ReCAP, I couldn't help but think about this common feeling of malaise. After all, it was the thing that brought Alishah, Leah, Lucy, and myself together to start the Community-Driven Cryptography Project and, I believe, it is what brought many of the attendees of ReCAP together.
+
+What I wanted to understand was _why do we feel this way?_ After thinking about it, I think the issue comes from the combination of two things. The first is the fact that cryptography research is decontextualized. It is decontextualized from morality, as Rogaway argues in his paper [The Moral Character of Cryptographic Work](https://web.cs.ucdavis.edu/~rogaway/papers/moral.html), and often from applications, but it is also decontextualized from society and from our experiences as human beings.
+
+Obviously, people are different and have a variety of reasons for wanting to do research and for choosing the problems they work on. But for the purpose of this discussion, I will simplify things and identify three broad goals that tend to drive research:
+
+- _Research for problems_: the goal is to find and solve challenging, well-defined problems. The driving factor is intellectual challenge, and work is evaluated by the difficulty of the problem being solved (think Erdős).
+- _Research for understanding_: the goal is to understand some aspect of the world more deeply. The driving factor is explanatory power, and research is the natural byproduct of that pursuit (think Shannon).
+- _Research for impact_: the goal is to change the world in some particular way. The driving factor is real-world effect, and work is evaluated by the difference it makes (think Dennis Ritchie).
+
+Of course, any given researcher might pursue several of these goals at once, or shift between them over the course of a career. There are obvious limitations to this model, e.g., what about work that solves hard problems _and_ has real-world impact, or elegant solutions that also deepen understanding? I've thought about all the counterexamples, and I acknowledge this is a gross simplification, but it is nonetheless useful.
+
+After being in research for a while, what surprises me is that this is rarely, if ever, discussed, at least explicitly. Isn't one's opinion on the fundamental purpose of research really important? I know this sounds obvious, but when do we as computer scientists ever discuss this? When is the last time you had a conversation with your colleagues about what you and they think the purpose of research is? When have you discussed this subject in a PhD-level computer science course or seminar? When was the last time you discussed this with your advisor? My guess is that for most people reading this, the answer to _all_ of these questions is _never_!
+
+There are likely several reasons for this. One is that I think research-for-problems is the dominant goal in computer science. It's not hard to imagine the reasons for this, given how most educational systems are structured and the type of students who tend to do well in these systems.
+
+But another—less obvious reason—is that even if your goals were originally oriented toward understanding or impact, at some point they likely shifted toward problem-solving; perhaps because of an advisor, or more likely just peer pressure. This shift happened silently; it wasn't the result of an explicit conversation or debate. After carefully studying the papers accepted into top conferences in your field, and after listening to keynotes and distinguished talks, you probably had an internal monologue that went something like:
+
+> I should work on "real" research; on "deep" and "important" problems!
+
+where "real", "deep" and "important" is essentially defined by who else worked on it and tried to solve it. I understand why people think this, and to each their own, but I have to admit that, in my worldview, this perspective does not make sense.
+
+
+#### Decontextualized Research
+
+This is not a trivial abstract philosophical discussion. It's important because how we think about this determines who we hire, fund, promote, and ultimately what our research contributes to the world. My claim is that research-for-problems is disproportionately dominant in computer science, either by nature or by peer pressure. But what does this have to do with ReCAP?
+
+I think that if your primary goal is problem-solving, then the kind of decontextualized research that we do in cryptography (and many other areas of computer science) is perfectly fine. In fact, it is a feature, not a bug, because what you want is a clean, well-defined, and challenging problem you can tackle.
+
+But if your goals are oriented toward understanding—and especially toward impact—then decontextualized research rubs you the wrong way. It leaves you unsatisfied and you might even wonder why you are doing this work and whether you made a mistake in doing research in the first place. And if your goals were originally about understanding or impact but gradually shifted toward problem-solving, you might even start to believe you are not cut out for research. Without wanting to speak for him—though I guess that is exactly what I am doing—I think this is the frame of mind Alishah was in when he emailed me. I think you can "hear" it in his email.
+
+I've learned over time that when you express an opinion, it's also good to clarify what you are _not_ saying, because people tend to infer all kinds of things you never said from your statements. So let me clarify that I am not saying the research-for-problems worldview is wrong or less important. I am saying it is not *my* worldview, and that is OK—not everyone has to share my worldview.
+
+#### Contextualizing Research
+
+With this in mind, I would like to make the case for contextualizing research.
+
+Others have started articulating what contextualization might look like. In his essay [What Happened to the Crypto Dream?](https://www.cs.princeton.edu/~arvindn/publications/crypto-dream-part1.pdf), Arvind Narayanan distinguishes between _crypto for security_ and _crypto for privacy_. In [The Moral Character of Cryptographic Work](https://web.cs.ucdavis.edu/~rogaway/papers/moral.html), Phil Rogaway adds _crypto for crypto_. At first sight, these may just seem like labels the authors used to clarify their arguments, and they are, but I would argue that they are also an acknowledgement that cryptography research operates in, and is shaped by, different _contexts_. Making those contexts explicit is itself a form of contextualization.
+
+Beyond naming contexts, I think a more useful framing than the traditional "theory vs. applied" distinction is one of _decontextualized vs. contextualized_ work. Consider that some of the most "applied" work in cryptography—elliptic curve cryptography, the design of AES—is deeply mathematical and abstract. And some ostensibly "theoretical" work is motivated by very concrete real-world needs. The theory-versus-applied axis does not capture what really differentiates these lines of work. What does is the degree to which the researcher has made explicit the broader context in which the work sits: the people it serves, the systems it will inhabit, the power dynamics it engages with.
+
+Contextualization is important for several reasons. First, the goals of understanding and impact play an essential role in keeping a field relevant. Researchers driven by these goals introduce new directions that emerge not from the internal logic of open problems, but from engagement with the world outside the field. Some of the most consequential work in cryptography has come from precisely this kind of engagement. The Cypherpunks, for example, were motivated by a deeply contextualized vision of privacy and individual autonomy, and that vision led to the development of systems like Tor and Signal—systems that have had an enormous real-world impact. If cryptography is, as Rogaway argues, a field that _rearranges power_, then understanding the contexts in which that rearrangement happens is not optional; it is fundamental to doing the work responsibly.
+
+Second, context shapes technical choices in ways that are easy to overlook. Adversarial models, for instance, are not purely abstract constructs. They encode assumptions about who the adversary is, what resources they have, and what they are trying to accomplish—all of which depend on context. A talk at ReCAP on digital credential systems illustrated this point well: the speaker showed how attending to the power imbalances inherent in credentialing systems led to a fundamentally different adversarial model than what one would arrive at through a purely abstract treatment. Similarly, historical analysis can reveal how past contexts shaped the problems and assumptions we have inherited, and whether those assumptions still hold.
+
+Third, contextualization enriches the intellectual life of a field. It invites perspectives and questions that would not arise from problem-solving alone. It makes room for researchers whose primary goals are understanding or impact to contribute in ways that feel authentic to them, rather than requiring them to adopt a goal that does not fit. This is not a minor point. If researchers driven by understanding or impact feel that they must reorient entirely toward problem-solving in order to belong, the field loses the diversity of perspective that drives genuinely new ideas.
+
+It is worth noting that this dynamic is not unique to cryptography. Other areas of computer science have undergone their own forms of recontextualization. Machine learning, for example, was for many years a relatively self-contained field driven largely by its own internal problems. The recent wave of large-scale deployment forced a recontextualization—sometimes welcome, sometimes not—as questions of fairness, accountability, and societal impact became impossible to ignore. The lesson here is that contextualization will happen eventually, one way or another. The question is whether a field chooses to engage with it proactively and on its own terms.
+
+#### Conclusion
+
+ReCAP is one attempt to answer that question. It is a space where researchers can present work that is explicitly contextualized—work that takes seriously the social, political, and human dimensions of cryptography and privacy. It is a space where the goals of understanding and impact are valued alongside problem-solving, and where the conversations that rarely happen in mainstream venues can take place openly.
+
+I am grateful to Alishah, Leah, and Lucy for creating this space. What started with an email from a PhD student who was struggling to reconcile his values with the norms of his field has grown into something meaningful: a community of researchers who believe that cryptography can and should be more than a collection of elegant problems. I hope that ReCAP continues to grow, and that the conversations it fosters help all of us—regardless of our goals—think more carefully about the contexts in which our work lives.
+
+
+
