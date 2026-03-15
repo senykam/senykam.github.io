@@ -1,0 +1,9 @@
+{
+  "permissions": {
+    "allow": [
+      "WebSearch",
+      "Bash(grep -r include.*figure /Users/seny.kamara/web/senykam.github.io/_posts --include=*.md)",
+      "WebFetch(domain:www.semanticscholar.org)"
+    ]
+  }
+}
