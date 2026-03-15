@@ -16,13 +16,12 @@ nav_order: 6
 #### Student Advising 
 * Postdoc: [Tarik Moataz](https://tarikmoataz.com/) (2016-2019) 
 * PhD  students: 
-[Kweku Kwegyir-Aggrey](https://kweku.me/),
-Leah Rosenbloom (co-advised with Anna Lysyanskaya) 
-* Graduated PhD students:
 [Archita Agarwal](https://architaagarwal.com), 
 [Ghous Amjad](https://cs.brown.edu/~gamjad), 
 [Marilyn George](https://marilyngeorge.com/), 
+[Kweku Kwegyir-Aggrey](https://kweku.me/),
 [Lucy Qin](https://lucyq.in), 
+[Leah Rosenbloom](https://namisa.art/) (co-advised with Anna Lysyanskaya), 
 [Sam Zhao](https://zheguang.github.io) (co-advised with Stan Zdonik)
 *  MongoDB interns:
 [Jaspal Singh](https://jaspal.owlstown.net/)
