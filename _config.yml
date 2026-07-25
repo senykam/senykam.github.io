@@ -8,7 +8,7 @@ middle_name:
 last_name: Kamara 
 email: 
 description: > # the ">" symbol means to ignore newlines until "footer_text:"
-  A simple, whitespace theme for academics. Based on [*folio](https://github.com/bogoli/-folio) design.
+  Research on cryptography, privacy and surveillance, and a formal theory of power.
 footer_text: >
   Powered by <a href="https://jekyllrb.com/" target="_blank">Jekyll</a> with <a href="https://github.com/alshedivat/al-folio">al-folio</a> theme.
   Hosted by <a href="https://pages.github.com/" target="_blank">GitHub Pages</a>.
@@ -16,7 +16,7 @@ keywords: # add your own keywords or leave empty
 lang: en # the language of your site (for example: en, fr, cn, ru, etc.)
 icon:  # the emoji used as the favicon (alternatively, provide image name in /assets/img/)
 
-url: https://senykam.github.io # the base hostname & protocol for your site
+url: https://www.senykamara.com # the base hostname & protocol for your site
 baseurl: # the subpath of your site, e.g. /blog/. Leave blank for root
 last_updated: false # set to true if you want to display last updated in the footer
 impressum_path: # set to path to include impressum link in the footer, use the same path as permalink in a page, helps to conform with EU GDPR
@@ -123,15 +123,18 @@ bing_site_verification: # out your bing-site-verification ID (Bing Webmaster)
 # -----------------------------------------------------------------------------
 
 blog_name: writing # blog_name will be displayed in your blog page
-blog_description: 
-permalink: /blog/:year/:title/
+blog_description:
+permalink: /writing/:year/:title/
 
 # Pagination
 pagination:
   enabled: true
 
+# Disabled: individual pieces are reached through the curated /writing/ and
+# /power/ pages, so LSI-matched "related posts" only add noise. Turning this
+# off also lets the deploy build without --lsi.
 related_blog_posts:
-  enabled: true
+  enabled: false
   max_related: 5
 
 # Giscus comments (RECOMMENDED)
@@ -264,7 +267,10 @@ jekyll-minifier:
 # -----------------------------------------------------------------------------
 
 jekyll-archives:
-  enabled: [year, tags, categories] # enables year, tag and category archives (remove if you need to disable one of them).
+  # Disabled: archive pages are only ever linked from the al-folio blog index,
+  # which this site does not use. Leaving them on generated orphan pages that
+  # nothing links to but that still landed in the sitemap.
+  enabled: [] # [year, tags, categories]
   layouts:
     year: archive-year
     tag: archive-tag

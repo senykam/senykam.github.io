@@ -4,7 +4,7 @@ permalink: /activities/
 title: activities 
 description: 
 nav: true
-nav_order: 6
+nav_order: 4
 ---
 
 #### Reports 
@@ -16,16 +16,6 @@ post](https://cdt.org/insights/outside-looking-in-approaches-to-content-moderati
 
 * National Academies of Sciences report on encryption and exceptional access ([report](https://nap.nationalacademies.org/catalog/25010/decrypting-the-encryption-debate-a-framework-for-decision-makers))
  
-#### Surveys
-
-* How to Search on Encrypted Data
-    * Introduction ([blog](https://esl.cs.brown.edu/blog/how-to-search-on-encrypted-data-introduction-part-1/))
-    * Deterministic encryption ([blog](https://esl.cs.brown.edu/blog/how-to-search-on-encrypted-data-deterministic-encryption-part-2/))
-    * Functional encryption ([blog](https://esl.cs.brown.edu/blog/how-to-search-on-encrypted-data-functional-encryption-part-3/))
-    * Oblivious RAM ([blog](https://esl.cs.brown.edu/blog/how-to-search-on-encrypted-data-oblivious-rams-part-4/))
-    * Searchable symmetric encryption ([blog](https://esl.cs.brown.edu/blog/how-to-search-on-encrypted-data-searchable-symmetric-encryption-part-5/))
-
-
 #### Conferences & Workshops
 * Workshop on the [Theory and Practice of Encrypted Search](https://esl.cs.brown.edu/tpes/)
 * A 3-part series on Technology and Structural Inequity with the [Center for the Study of Race and Ethnicity in America](https://www.brown.edu/academics/race-ethnicity/home)
@@ -34,13 +24,6 @@ post](https://cdt.org/insights/outside-looking-in-approaches-to-content-moderati
     * Policing and Technology ([info](https://www.brown.edu/academics/race-ethnicity/events/technology-and-structural-inequality-series-policing-and-technology), [video](https://youtu.be/1FIQD8Sa934))
     * Bias and Discrimination in AI ([info](https://www.brown.edu/academics/race-ethnicity/events/technology-and-structural-inequality-series-bias-and-discrimination-ai), [video](https://youtu.be/z6pRfIM9QJc))
 * ICERM workshop on Encrypted Search ([info](https://icerm.brown.edu/topical_workshops/tw19-1-es/), [videos](https://icerm.brown.edu/topical_workshops/tw19-1-es/#lecturevideos)) 
-
-#### Older writing
-* The FBI's COINTELPRO ([blog](http://algosforthepeople.org/)) 
-* Is the NSA metadata program legal ([blog](https://esl.cs.brown.edu/blog/is-the-nsa-metadata-program-legal/))
-* Restructuring the NSA metadata program ([blog](https://esl.cs.brown.edu/blog/restructuring-the-nsa-metadata-program/), [MIT Tech Review](https://www.technologyreview.com/2014/04/09/251050/cryptography-could-add-privacy-protections-to-nsa-phone-surveillance/))
-* Are compliance and privacy always at odds? ([blog](https://esl.cs.brown.edu/blog/are-compliance-and-privacy-always-at-odds/), [Lawfare](https://www.lawfaremedia.org/article/way-forward-bulk-collection))
-* How not to learn cryptography ([blog](https://esl.cs.brown.edu/blog/how-not-to-learn-cryptography/))
 
 #### Interviews 
 * A [Q&A](https://www.nature.com/articles/s43588-022-00196-2) with Nature on crypto & technology for the people  

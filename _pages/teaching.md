@@ -4,7 +4,7 @@ permalink: /teaching+students/
 title: teaching+students
 description: 
 nav: true
-nav_order: 6
+nav_order: 5
 ---
 
 #### Courses at Brown  

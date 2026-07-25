@@ -1,0 +1,40 @@
+# Local preview overrides.
+#
+#   bundle exec jekyll serve --config _config.yml,_config.dev.yml
+#
+# The deploy workflow builds with _config.yml alone, so nothing here reaches the
+# live site. Jekyll deep-merges the two files, later keys winning.
+
+# Absolute links (canonical tags, the feed, Open Graph) point at the local
+# server instead of www.senykamara.com while previewing.
+url: http://localhost:4000
+
+# Skip the imagemagick pass. It needs the `convert` binary and regenerates webp
+# variants for every image under assets/img on each build. figure.liquid falls
+# back to the plain <img> when this is off, so images still render locally.
+imagemagick:
+  enabled: false
+
+# jekyll-jupyter-notebook shells out to jupyter to convert any .ipynb in the
+# source. The deploy installs jupyter first; locally we skip the one notebook
+# instead, which nothing on the site references.
+#
+# Jekyll replaces arrays on merge rather than combining them, so this repeats
+# the list from _config.yml. Keep the two in sync if you edit that one.
+exclude:
+  - bin
+  - CONTRIBUTING.md
+  - CUSTOMIZE.md
+  - docker-compose.yml
+  - Dockerfile
+  - FAQ.md
+  - Gemfile
+  - Gemfile.lock
+  - INSTALL.md
+  - LICENSE
+  - package.json
+  - package-lock.json
+  - purgecss.config.js
+  - README.md
+  - vendor
+  - assets/jupyter

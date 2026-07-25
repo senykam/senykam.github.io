@@ -579,6 +579,71 @@ footer.sticky-bottom {
   }
 }
 
+// Pages built as a run of sections (writing, power, talks, activities,
+// teaching). A rule above each h4 separates the sections, so a rule on these
+// pages always means a new section and nothing else. Scoped to the page layout
+// rather than to `.post` so that h4 headings inside a post's body are untouched.
+.page-sections {
+  h4 {
+    border-top: 1px solid var(--global-divider-color);
+    padding-top: 2rem;
+    margin-top: 3rem;
+    margin-bottom: 0.75rem;
+  }
+
+  h4:first-of-type {
+    border-top: none;
+    padding-top: 0;
+    margin-top: 2.5rem;
+  }
+
+  // Bootstrap leaves list padding alone, so plain markdown lists fall back to
+  // the browser default of 40px. Set it once here, for hand-written lists and
+  // generated .entry-list alike, so every bullet on these pages lines up.
+  ul,
+  ol {
+    padding-left: 1.5rem;
+  }
+}
+
+// Entry lists on the writing and power pages. Entries are bullets with no
+// dividers, and titles are stepped down so the section headings dominate.
+.entry-list {
+  margin: 1rem 0 0 0;
+
+  li {
+    list-style: disc;
+    border-bottom: none;
+    padding: 0;
+    margin-bottom: 0.7rem;
+
+    &::marker {
+      color: var(--global-text-color-light);
+    }
+  }
+
+  &.numbered li {
+    list-style: decimal;
+    padding-left: 0.25rem;
+  }
+
+  // Colour is left to the global `a` rule so these match every other link on
+  // the site, rather than the plain-text treatment al-folio gives .post-list.
+  .entry-title {
+    font-size: 1.05rem;
+  }
+
+  .entry-desc {
+    margin: 0.1rem 0 0 0;
+  }
+
+  .entry-meta {
+    color: var(--global-text-color-light);
+    font-size: 0.875rem;
+    margin: 0.1rem 0 0 0;
+  }
+}
+
 .pagination {
   .page-item {
     .page-link {

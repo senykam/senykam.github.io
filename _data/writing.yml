@@ -1,0 +1,58 @@
+# Fixed entries for the /writing/ page, keyed by the section they appear in.
+#
+# These live here rather than in _posts because they are finished and will not
+# change, and because back-dated stubs would show up as new items in the feed.
+# Living writing (notes, essays, new explainers) goes in _posts instead.
+#
+# Each entry takes: title, url, and optionally meta and links. They render
+# through the same include as posts, so the formatting matches. Use `links` for
+# the same piece published elsewhere, which sits inline on the byline. A
+# description field is supported but only the notes display one.
+
+explainers:
+  - title: The FBI's COINTELPRO
+    url: http://algosforthepeople.org/
+    meta: Algorithms for the People
+
+  - title: "How to Search on Encrypted Data: Introduction"
+    url: https://esl.cs.brown.edu/blog/how-to-search-on-encrypted-data-introduction-part-1/
+    meta: Encrypted Systems Lab
+
+  - title: "How to Search on Encrypted Data: Deterministic Encryption"
+    url: https://esl.cs.brown.edu/blog/how-to-search-on-encrypted-data-deterministic-encryption-part-2/
+    meta: Encrypted Systems Lab
+
+  - title: "How to Search on Encrypted Data: Functional Encryption"
+    url: https://esl.cs.brown.edu/blog/how-to-search-on-encrypted-data-functional-encryption-part-3/
+    meta: Encrypted Systems Lab
+
+  - title: "How to Search on Encrypted Data: Oblivious RAM"
+    url: https://esl.cs.brown.edu/blog/how-to-search-on-encrypted-data-oblivious-rams-part-4/
+    meta: Encrypted Systems Lab
+
+  - title: "How to Search on Encrypted Data: Searchable Symmetric Encryption"
+    url: https://esl.cs.brown.edu/blog/how-to-search-on-encrypted-data-searchable-symmetric-encryption-part-5/
+    meta: Encrypted Systems Lab
+
+misc:
+  - title: Restructuring the NSA metadata program
+    url: https://esl.cs.brown.edu/blog/restructuring-the-nsa-metadata-program/
+    meta: Encrypted Systems Lab
+    links:
+      - name: MIT Technology Review
+        url: https://www.technologyreview.com/2014/04/09/251050/cryptography-could-add-privacy-protections-to-nsa-phone-surveillance/
+
+  - title: Is the NSA metadata program legal?
+    url: https://esl.cs.brown.edu/blog/is-the-nsa-metadata-program-legal/
+    meta: Encrypted Systems Lab
+
+  - title: Are compliance and privacy always at odds?
+    url: https://esl.cs.brown.edu/blog/are-compliance-and-privacy-always-at-odds/
+    meta: Encrypted Systems Lab
+    links:
+      - name: Lawfare
+        url: https://www.lawfaremedia.org/article/way-forward-bulk-collection
+
+  - title: How not to learn cryptography
+    url: https://esl.cs.brown.edu/blog/how-not-to-learn-cryptography/
+    meta: Encrypted Systems Lab

@@ -11,17 +11,15 @@ profile:
   more_info: 
 
 news: true # includes a list of news items
-latest_posts: true # includes a list of the newest posts
+latest_posts: false # includes a list of the newest posts
 selected_papers: false # includes a list of papers marked as "selected={true}"
 social: true # includes social icons at the bottom of the page
 ---
 
 I am a Distinguished Scientist and Head of Research at
-[MongoDB](https://mongodb.com). I also hold a Visiting Professor appointment in
-the Department of [Computer Science](https://cs.brown.edu) at [Brown
-University](https://brown.edu). Before its acquisition by MongoDB, I was
-co-founder and Chief Scientist at Aroki Systems and an Associate Professor at
-Brown.  Prior to that, I was a Research Scientist at [Microsoft
+[MongoDB](https://mongodb.com). Before its acquisition by MongoDB, I was
+co-founder and Chief Scientist at Aroki Systems and an Associate Professor of [Computer Science](https://cs.brown.edu) at
+[Brown University](https://brown.edu).  Prior to that, I was a Research Scientist at [Microsoft
 Research](https://research.microsoft.com).
 
 My research is in cryptography and is driven by real-world problems from

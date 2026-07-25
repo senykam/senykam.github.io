@@ -4,6 +4,8 @@ title: Escaping Flatland - STEM vs. Humanities Training
 date: 2026-03-19 06:01:00
 description: Traditional STEM education trains students to flatten complex problems so they can solve them. Humanities training, on the other hand, helps them perceive the full dimensions of the problems they are building for. 
 redirect: https://senykamara.substack.com/p/escaping-flatland
+kind: essay
+venue: Substack
 related_posts: false
 tags:
 categories:
