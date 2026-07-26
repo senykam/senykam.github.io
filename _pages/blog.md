@@ -29,6 +29,11 @@ nav_order: 1
 {% assign explainers = explainers | concat: site.data.writing.explainers %}
 {% include writing_list.liquid items=explainers %}
 
+#### Algorithms for the People
+
+{% assign afp = site.algosforthepeople | sort: "date" | reverse %}
+{% include writing_list.liquid items=afp %}
+
 #### Misc
 
 {% include writing_list.liquid items=site.data.writing.misc %}

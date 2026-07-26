@@ -173,6 +173,12 @@ collections:
       layout: post
     output: true
     permalink: /news/:path/
+  # The recovered Algorithms for the People blog. A collection rather than
+  # _posts so that republishing 2020 archive material does not push entries
+  # into the feed, which is for new writing.
+  algosforthepeople:
+    output: true
+    permalink: /algorithms-for-the-people/:name/
   #projects:
    # output: true
    # permalink: /projects/:path/

@@ -10,9 +10,9 @@
 # description field is supported but only the notes display one.
 
 explainers:
-  - title: The FBI's COINTELPRO
-    url: http://algosforthepeople.org/
-    meta: Algorithms for the People
+  # The FBI's COINTELPRO used to sit here pointing at algosforthepeople.org.
+  # That domain lapsed, and the post is now hosted in the _algosforthepeople
+  # collection, so it renders in its own section instead.
 
   - title: "How to Search on Encrypted Data: Introduction"
     url: https://esl.cs.brown.edu/blog/how-to-search-on-encrypted-data-introduction-part-1/
