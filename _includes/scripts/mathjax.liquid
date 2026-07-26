@@ -1,13 +1,16 @@
 {% if site.enable_math %}
   <!-- MathJax -->
   <script type="text/javascript">
+    // Write all math with $$...$$, inline or display. kramdown parses those as
+    // math spans and hands MathJax \(..\) or \[..\], its defaults.
+    //
+    // Single $...$ is deliberately not enabled. kramdown does not recognise it
+    // as math, so it markdown-processes the contents first: subscript pairs
+    // become <em> and \{ loses its escape. MathJax would then render corrupted
+    // LaTeX rather than failing visibly.
     window.MathJax = {
       tex: {
         tags: 'ams',
-        inlineMath: [
-          ['$', '$'],
-          ['\\(', '\\)'],
-        ],
         processEscapes: true,
       },
     };

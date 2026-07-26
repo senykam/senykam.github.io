@@ -179,6 +179,12 @@ collections:
   algosforthepeople:
     output: true
     permalink: /algorithms-for-the-people/:name/
+  # The Encrypted Systems Lab blog archive, in _esl/. Prepared but not
+  # published: uncommenting these two lines and the matching `archive_note`
+  # default below is all it takes. See _esl/README.md.
+  # esl:
+  #   output: true
+  #   permalink: /encrypted-systems-lab/:title/
   #projects:
    # output: true
    # permalink: /projects/:path/
@@ -255,6 +261,34 @@ defaults:
       path: "assets"
     values:
       sitemap: false
+
+  # Provenance note shown at the foot of each republished archive post. The
+  # archived-post layout renders whatever is set here, so each archive explains
+  # its own origin.
+  - scope:
+      path: ""
+      type: algosforthepeople
+    values:
+      archive_note: >
+        Originally published on <em>Algorithms for the People</em>, the blog that
+        accompanied <a href="https://cs.brown.edu/~seny/2950v/">CS 2950v</a> at
+        Brown. Its domain has since lapsed, and this copy was recovered from the
+        Internet Archive.
+
+  # Uncomment together with the `esl` collection above to publish the Encrypted
+  # Systems Lab archive. `render_with_liquid: false` is required, not optional:
+  # those posts contain LaTeX such as {{\sf N}, which Liquid otherwise reads as
+  # an unterminated variable and the build fails. They contain no Liquid of
+  # their own, so disabling it costs nothing.
+  # - scope:
+  #     path: ""
+  #     type: esl
+  #   values:
+  #     render_with_liquid: false
+  #     archive_note: >
+  #       Originally published on the
+  #       <a href="https://esl.cs.brown.edu/">Encrypted Systems Lab</a> blog at
+  #       Brown.
 
 sass:
   style: compressed

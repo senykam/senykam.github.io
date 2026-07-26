@@ -287,8 +287,13 @@ ul.task-list input[type="checkbox"] {
     color: var(--global-text-color);
   }
 
+  // The navbar and each page's <h1> both read page.title, so lowercasing here
+  // lets front matter stay capitalized for the heading while the nav stays
+  // lowercase. Note this also lowercases acronyms, so a nav item like "CV"
+  // would need its own handling.
   .navbar-nav .nav-item .nav-link {
     color: var(--global-text-color);
+    text-transform: lowercase;
 
     &:hover {
       color: var(--global-hover-color);
@@ -576,6 +581,39 @@ footer.sticky-bottom {
     mjx-container[jax="CHTML"][display="true"] {
       display: unset;
     }
+  }
+}
+
+// Headings inside a post body. Bootstrap sets `margin-top: 0` on every heading
+// and the theme adds nothing back, so a section title sits flush against the
+// paragraph above it with only 0.5rem beneath. Space scales with level, so a
+// section break reads as a bigger gap than a subsection break.
+.post-content {
+  h1 {
+    margin-top: 3.5rem;
+    margin-bottom: 1.25rem;
+  }
+
+  h2 {
+    margin-top: 3rem;
+    margin-bottom: 1rem;
+  }
+
+  h3 {
+    margin-top: 2.25rem;
+    margin-bottom: 0.75rem;
+  }
+
+  h4,
+  h5,
+  h6 {
+    margin-top: 1.75rem;
+    margin-bottom: 0.5rem;
+  }
+
+  // No leading gap when the body opens on a heading.
+  #markdown-content > :first-child {
+    margin-top: 0;
   }
 }
 

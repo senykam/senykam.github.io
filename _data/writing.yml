@@ -2,41 +2,62 @@
 #
 # These live here rather than in _posts because they are finished and will not
 # change, and because back-dated stubs would show up as new items in the feed.
-# Living writing (notes, essays, new explainers) goes in _posts instead.
+# Living writing (notes and essays) goes in _posts instead.
 #
 # Each entry takes: title, url, and optionally meta and links. They render
 # through the same include as posts, so the formatting matches. Use `links` for
 # the same piece published elsewhere, which sits inline on the byline. A
 # description field is supported but only the notes display one.
 
-explainers:
-  # The FBI's COINTELPRO used to sit here pointing at algosforthepeople.org.
-  # That domain lapsed, and the post is now hosted in the _algosforthepeople
-  # collection, so it renders in its own section instead.
+# Ongoing series of notes, each read in order and each with its own page. One
+# entry per series rather than per note, so this section stays a fixed length as
+# the series grow. `posts_kind` names the `kind:` that a series' posts carry, and
+# the byline (how many, how recent) is computed from them so it cannot drift.
+series:
+  - title: Notes on Power
+    url: /power/
+    posts_kind: note
 
+  - title: How to Search on Encrypted Data
+    url: /how-to-search-on-encrypted-data/
+    # Static, because the parts are external links rather than posts and so
+    # cannot be counted the way `posts_kind` counts them. The year is the year
+    # of writing, which predates the Encrypted Systems Lab blog now hosting them.
+    meta: 5 parts &nbsp;&middot;&nbsp; 2013 &nbsp;&middot;&nbsp; archival
+
+# The parts of the How to Search on Encrypted Data series, listed on its own
+# page. `short_title` is what the numbered list shows, so each entry reads as
+# its part name rather than repeating the series title five times.
+how_to_search:
   - title: "How to Search on Encrypted Data: Introduction"
+    short_title: Introduction
     url: https://esl.cs.brown.edu/blog/how-to-search-on-encrypted-data-introduction-part-1/
-    meta: Encrypted Systems Lab
+    date: 2013-10-06
 
   - title: "How to Search on Encrypted Data: Deterministic Encryption"
+    short_title: Deterministic Encryption
     url: https://esl.cs.brown.edu/blog/how-to-search-on-encrypted-data-deterministic-encryption-part-2/
-    meta: Encrypted Systems Lab
+    date: 2013-10-14
 
   - title: "How to Search on Encrypted Data: Functional Encryption"
+    short_title: Functional Encryption
     url: https://esl.cs.brown.edu/blog/how-to-search-on-encrypted-data-functional-encryption-part-3/
-    meta: Encrypted Systems Lab
+    date: 2013-10-30
 
   - title: "How to Search on Encrypted Data: Oblivious RAM"
+    short_title: Oblivious RAM
     url: https://esl.cs.brown.edu/blog/how-to-search-on-encrypted-data-oblivious-rams-part-4/
-    meta: Encrypted Systems Lab
+    date: 2013-12-20
 
   - title: "How to Search on Encrypted Data: Searchable Symmetric Encryption"
+    short_title: Searchable Symmetric Encryption
     url: https://esl.cs.brown.edu/blog/how-to-search-on-encrypted-data-searchable-symmetric-encryption-part-5/
-    meta: Encrypted Systems Lab
+    date: 2014-08-21
 
 misc:
   - title: Restructuring the NSA metadata program
     url: https://esl.cs.brown.edu/blog/restructuring-the-nsa-metadata-program/
+    date: 2014-03-10
     meta: Encrypted Systems Lab
     links:
       - name: MIT Technology Review
@@ -44,10 +65,12 @@ misc:
 
   - title: Is the NSA metadata program legal?
     url: https://esl.cs.brown.edu/blog/is-the-nsa-metadata-program-legal/
+    date: 2014-04-29
     meta: Encrypted Systems Lab
 
   - title: Are compliance and privacy always at odds?
     url: https://esl.cs.brown.edu/blog/are-compliance-and-privacy-always-at-odds/
+    date: 2013-07-23
     meta: Encrypted Systems Lab
     links:
       - name: Lawfare
@@ -55,4 +78,5 @@ misc:
 
   - title: How not to learn cryptography
     url: https://esl.cs.brown.edu/blog/how-not-to-learn-cryptography/
+    date: 2014-11-11
     meta: Encrypted Systems Lab

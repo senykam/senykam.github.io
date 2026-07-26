@@ -37,6 +37,7 @@
 {% endif %}
 {% if include.descriptions and item.description %}<p class="entry-desc">{{ item.description }}</p>{% endif %}
 {% if item.venue %}{% assign where = item.venue %}{% else %}{% assign where = item.meta %}{% endif %}
+{% if item.posts_kind %}{% assign unit = item.unit | default: 'note' %}{% assign sp = site.posts | where_exp: "post", "post.hidden != true" | where: "kind", item.posts_kind | sort: "date" | reverse %}{% capture where %}{{ sp.size }} {{ unit }}{% if sp.size != 1 %}s{% endif %}{% if sp.size > 0 %} &nbsp;&middot;&nbsp; most recent {{ sp.first.date | date: '%B %Y' }}{% endif %}{% endcapture %}{% endif %}
 <p class="entry-meta">{% if item.date %}{{ item.date | date: '%B %-d, %Y' }}{% if where %} &nbsp;&middot;&nbsp; {% endif %}{% endif %}{{ where }}{% if item.links %} &nbsp;&middot;&nbsp; {% for link in item.links %}<a href="{{ link.url }}" target="_blank">{{ link.name }}</a>{% unless forloop.last %}, {% endunless %}{% endfor %}{% endif %}</p>
 </li>
 {% endfor %}

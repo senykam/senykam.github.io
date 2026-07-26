@@ -3,16 +3,20 @@ layout: post
 ---
 {{ content }}
 
-<hr>
+{% comment %}
+  Provenance note for republished archive material. The text comes from
+  `archive_note`, set per collection under `defaults` in _config.yml, so each
+  archive explains its own origin and this layout stays generic.
+{% endcomment %}
 
-<p class="post-meta">
-  Originally published on <em>Algorithms for the People</em>, the blog that
-  accompanied
-  <a href="https://cs.brown.edu/~seny/2950v/">CS 2950v</a> at Brown. Its domain has
-  since lapsed, and this copy was recovered from
-  {% if page.archived %}<a href="{{ page.archived }}">the Internet Archive</a>{% else %}the Internet Archive{% endif %}.
-  {% if page.author contains '2950v' %}
-    The <em>{{ page.author }}</em> byline is group authorship for the students in
-    that year's class, used so that no student is individually identifiable.
-  {% endif %}
-</p>
+{% if page.archive_note %}
+  <hr>
+
+  <p class="post-meta">
+    {{ page.archive_note }}
+    {% if page.author contains '2950v' %}
+      The <em>{{ page.author }}</em> byline is group authorship for the students in
+      that year's class, used so that no student is individually identifiable.
+    {% endif %}
+  </p>
+{% endif %}
