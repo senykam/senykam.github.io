@@ -3,7 +3,7 @@ layout: page
 permalink: /power/
 title: Notes on Power
 description:
-og_image: /assets/img/headers/header-slate.png
+og_image: /assets/img/headers/power-notes-slate.png
 nav: false
 ---
 
