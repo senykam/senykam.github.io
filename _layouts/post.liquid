@@ -56,6 +56,17 @@ layout: default
     </p>
   </header>
 
+  {% comment %}
+    Header image, set per post with `header_image`. It also feeds og:image, so
+    one field drives both the page and the link card. Posts without one, such as
+    the Substack stubs, render unchanged.
+  {% endcomment %}
+  {% if page.header_image %}
+    <figure class="post-header-image">
+      <img src="{{ page.header_image | relative_url }}" alt="{{ page.header_image_alt | default: page.title }}">
+    </figure>
+  {% endif %}
+
   <article class="post-content">
     {% if page.toc and page.toc.beginning %}
       <div id="table-of-contents">

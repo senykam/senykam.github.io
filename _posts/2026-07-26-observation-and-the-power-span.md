@@ -3,6 +3,7 @@ layout: post
 title: "Notes on Power #2: Observations and Power Spans"
 short_title: Observations and Power Spans
 description: Classifies systems by what their participants can know, and defines the power span.
+header_image: /assets/img/headers/header-part-1-foundations.png
 date: 2026-07-26 12:00:00
 permalink: /power/notes/observation-and-the-power-span/
 kind: note

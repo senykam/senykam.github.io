@@ -584,6 +584,18 @@ footer.sticky-bottom {
   }
 }
 
+// Header image at the top of a post, set with `header_image` in front matter.
+.post-header-image {
+  margin: 0 0 2.5rem 0;
+
+  img {
+    display: block;
+    width: 100%;
+    height: auto;
+    border-radius: 6px;
+  }
+}
+
 // Headings inside a post body. Bootstrap sets `margin-top: 0` on every heading
 // and the theme adds nothing back, so a section title sits flush against the
 // paragraph above it with only 0.5rem beneath. Space scales with level, so a
