@@ -5,7 +5,7 @@ short_title: Power Systems
 description: # mirrors the draft's subtitle; blank when there is none
 header_image: /assets/img/headers/header-part-1-foundations.png
 date: 2026-07-19
-permalink: /power/notes/power-systems/
+permalink: /power/notes/1-power-systems/
 kind: note
 project: power
 series_order: 1

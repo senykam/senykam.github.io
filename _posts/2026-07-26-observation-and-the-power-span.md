@@ -5,14 +5,14 @@ short_title: Observations and Power Spans
 description: # mirrors the draft's subtitle; blank when there is none
 header_image: /assets/img/headers/header-part-1-foundations.png
 date: 2026-07-26 12:00:00
-permalink: /power/notes/observation-and-the-power-span/
+permalink: /power/notes/2-observations-and-power-spans/
 kind: note
 project: power
 series_order: 2
 related_posts: false
 ---
 
-In my [last post](/power/notes/power-systems/), I defined power systems and the rules by which they run. That post left two things open. It claimed that how much power an agent holds is a matter of what the agent *could* bring about rather than what it is seen to do, but it did not make that precise. It also introduced the observation function and showed that what an agent can learn is determined by the reaction and observation functions together, but it neither classified systems by what their participants can know nor defined the power over what they see. We first classify systems by what their participants can see and know, and we then define the *power span* of an agent, which is the set of systems the agent can produce by exercising its powers.
+In my [last post](/power/notes/1-power-systems/), I defined power systems and the rules by which they run. That post left two things open. It claimed that how much power an agent holds is a matter of what the agent *could* bring about rather than what it is seen to do, but it did not make that precise. It also introduced the observation function and showed that what an agent can learn is determined by the reaction and observation functions together, but it neither classified systems by what their participants can know nor defined the power over what they see. We first classify systems by what their participants can see and know, and we then define the *power span* of an agent, which is the set of systems the agent can produce by exercising its powers.
 
 ## Different Kinds of Systems
 
