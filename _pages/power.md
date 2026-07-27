@@ -10,7 +10,7 @@ nav: false
 
 {% assign notes = site.posts | where_exp: "post", "post.hidden != true" | where: "kind", "note" | sort: "series_order" %}
 {% if notes.size > 0 %}
-{% include writing_list.liquid items=notes ordered=true descriptions=true %}
+{% include writing_list.liquid items=notes ordered=true %}
 {% else %}
 <p class="post-meta">The first notes are on their way.</p>
 {% endif %}

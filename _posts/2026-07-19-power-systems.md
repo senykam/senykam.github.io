@@ -2,7 +2,7 @@
 layout: post
 title: "Notes on Power #1: Power Systems"
 short_title: Power Systems
-description: 
+description: Defines power systems and applies the definition to a robbery and a job.
 date: 2026-07-19
 permalink: /power/notes/power-systems/
 kind: note
