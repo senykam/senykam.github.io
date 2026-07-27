@@ -13,7 +13,7 @@ related_posts: false
 
 In my [last post](/power/notes/power-systems/), I defined power systems and the rules by which they run. That post left two things open. It claimed that how much power an agent holds is a matter of what the agent *could* bring about rather than what it is seen to do, but it did not make that precise. It also introduced the observation function and showed that what an agent can learn is determined by the reaction and observation functions together, but it neither classified systems by what their participants can know nor defined the power over what they see. We first classify systems by what their participants can see and know, and we then define the *power span* of an agent, which is the set of systems the agent can produce by exercising its powers.
 
-## Four Kinds of Systems
+## Different Kinds of Systems
 
 Recall how observations are produced. In each round of an execution, the reaction function is applied to the round's actions and, in turn, the observation function is applied to the reactions. Each agent $$\mathcal{N}_i$$, therefore, receives the observation $$y_i = \big(\mathsf{obs}(\mathsf{rct}(\bar{a}))\big)_i$$. What an agent can know about the actions of others, and about the reactions to its own actions, is therefore determined by the pair $$(\mathsf{rct}, \mathsf{obs})$$, and different pairs produce different kinds of systems.
 
@@ -67,11 +67,11 @@ $$\mathsf{Sys}\langle \mathcal{N}_i \rangle = \big\{ \mathsf{Sys}' : \mathsf{Sys
 
 **What the span leaves out.** Note that the span captures an agent's power within a running system. It accounts for the gunman's admission, structural and reaction powers but not for his initiation power which is exercised in the surrounding system rather than inside the robbery. We return to it in the next post.
 
-## The Same Decision, Different Power
+## Agents That Act the Same 
 
-One use of the span is that it distinguishes agents that behave identically. Consider a claims adjuster at an insurance company and the executive who wrote the policy the adjuster applies. The adjuster denies a claim by applying the policy exactly as written. The executive would have denied the same claim for the same reason, so on this specific claim the two took the same actions, and a definition of power in terms of actions cannot distinguish them. 
+One use of the span is that it distinguishes agents that behave identically. Consider an employee who processes claims at an insurance company and the executive who wrote the policy the employee applies. The employee denies a claim by applying the policy exactly as written. The executive would have denied the same claim for the same reason, so on this specific claim the two took the same actions, and a definition of power in terms of actions cannot distinguish them. 
 
-There spans, however, can. The adjuster doesn't control any component of the claims process and applies whatever policy is in place, so the adjuster's span contains exactly one system. The executive, on the other hand, can change what the policy covers, who the company insures and what a claim is worth. So the executive's span is a large set of systems that can be produced by rewriting those terms. 
+Their spans, however, can. The employee doesn't control any component of the claims process and applies whatever policy is in place, so the employee's span contains exactly one system. The executive, on the other hand, can change what the policy covers, who the company insures and what a claim is worth. So the executive's span is a large set of systems that can be produced by rewriting those terms. 
 
 ## Conclusion
 
