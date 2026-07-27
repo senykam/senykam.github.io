@@ -3,7 +3,7 @@ layout: post
 title: "Notes on Power #1: Power Systems"
 short_title: Power Systems
 description: 
-date: 2026-07-26
+date: 2026-07-19
 permalink: /power/notes/power-systems/
 kind: note
 project: power
@@ -11,7 +11,7 @@ series_order: 1
 related_posts: false
 ---
 
-In my [last post](https://senykamara.substack.com/p/what-is-power), I described a situation that highlighted the difference between acting inside a system and controlling it. That was an informal distinction and in this post I want to try to make it more formal. I will define *power systems* and apply the definition to two situations: a robbery and a job. The claim is that power is control over the rules of a process and over whether it runs at all, and that how much power someone holds is a matter of what they *could* bring about, not of the outcomes they bring about.  
+In my [What is Power](https://senykamara.substack.com/p/what-is-power) essay, I described a situation that highlighted the difference between acting inside a system and controlling it. That was an informal distinction and in this post I want to try to make it more formal. I will define *power systems* and apply the definition to two situations: a robbery and a job. The claim is that power is control over the rules of a process and over whether it runs at all, and that how much power someone holds is a matter of what they *could* bring about, not of the outcomes they bring about.  
 
 ## Coercion
 
