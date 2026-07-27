@@ -7,8 +7,7 @@ first_name: Seny
 middle_name: 
 last_name: Kamara 
 email: 
-description: > # the ">" symbol means to ignore newlines until "footer_text:"
-  Research on cryptography, privacy and surveillance, and a formal theory of power.
+description: # site-wide fallback for meta/og descriptions. Left blank on purpose: pages set their own, and an inaccurate default is worse than none.
 footer_text: >
   Powered by <a href="https://jekyllrb.com/" target="_blank">Jekyll</a> with <a href="https://github.com/alshedivat/al-folio">al-folio</a> theme.
   Hosted by <a href="https://pages.github.com/" target="_blank">GitHub Pages</a>.

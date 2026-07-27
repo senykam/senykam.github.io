@@ -39,7 +39,10 @@
   {% endif %}
 </title>
 <meta name="author" content="{{ author_name }}">
-<meta name="description" content="{% if page.description %}{{ page.description }}{% else %}{{ site.description }}{% endif %}">
+{% assign page_description = page.description | default: site.description %}
+{% if page_description != blank %}
+  <meta name="description" content="{{ page_description }}">
+{% endif %}
 {% if page.keywords or site.keywords %}
   <meta name="keywords" content="{% if page.keywords %}{{ page.keywords }}{% else %}{{ site.keywords }}{% endif %}">
 {% endif %}
@@ -57,7 +60,7 @@
   <meta property="og:type" content="{% if is_blog_post %}article{% else %}website{% endif %}">
   <meta property="og:title" content="{% if page.title %}{{ title }} | {{ page.title }}{% else %}{{ title }}{% endif %}">
   <meta property="og:url" content="{{ page.url | prepend: site.baseurl | prepend: site.url | remove_first: 'index.html' }}">
-  <meta property="og:description" content="{% if page.description %}{{ page.description }}{% else %}{{ site.description }}{% endif %}">
+  {% if page_description != blank %}<meta property="og:description" content="{{ page_description }}">{% endif %}
   {% comment %}
     One image drives both the page header and the link card. `og_image`
     overrides it when a post wants a different card image from its header.
@@ -71,7 +74,7 @@
   <!-- Twitter card -->
   <meta name="twitter:card" content="summary">
   <meta name="twitter:title" content="{% if page.title %}{{ page.title }}{% else %}{{ title }}{% endif %}">
-  <meta name="twitter:description" content="{% if page.description %}{{ page.description }}{% else %}{{ site.description }}{% endif %}">
+  {% if page_description != blank %}<meta name="twitter:description" content="{{ page_description }}">{% endif %}
   {% if card_image %}
     <meta name="twitter:image" content="{{ card_image | absolute_url }}">
   {% endif %}
