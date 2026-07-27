@@ -1,7 +1,7 @@
 ---
 layout: post
-title: "Notes on Power #2: Observation and the Power Span"
-short_title: Observation and the Power Span
+title: "Notes on Power #2: Observations and Power Spans"
+short_title: Observations and Power Spans
 description:
 date: 2026-07-26 12:00:00
 permalink: /power/notes/observation-and-the-power-span/
